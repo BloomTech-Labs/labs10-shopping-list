@@ -6,5 +6,6 @@ target 'ShoppingList' do
   use_frameworks!
 
   # Pods for ShoppingList
-
+pod 'Popover'
+  
 end
