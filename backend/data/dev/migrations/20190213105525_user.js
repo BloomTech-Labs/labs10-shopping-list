@@ -12,8 +12,7 @@ exports.up = function(knex, Promise) {
         // user profile name
         table.string('name', 255).notNullable();
 
-        // user password string
-        table.string('password', 255).notNullable();
+        // No password column is necessary since all authentication is handled through OAuth
 
         // user profile picture image url
         // defaults to an image of a shopping cart
