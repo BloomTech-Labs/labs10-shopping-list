@@ -13,6 +13,7 @@
 		443C1B3B2214A45200220C28 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B392214A45200220C28 /* Main.storyboard */; };
 		443C1B3D2214A45500220C28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B3C2214A45500220C28 /* Assets.xcassets */; };
 		443C1B402214A45500220C28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B3E2214A45500220C28 /* LaunchScreen.storyboard */; };
+		443C1B492214C5B700220C28 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 443C1B472214C5B700220C28 /* ShoppingList.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		443C1B3C2214A45500220C28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		443C1B3F2214A45500220C28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		443C1B412214A45500220C28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		443C1B482214C5B700220C28 /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F3823A7F0AFA3E748D368C /* Pods-ShoppingList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingList.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList.release.xcconfig"; sourceTree = "<group>"; };
 		D02D1468A28720647C51821F /* Pods-ShoppingList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList.debug.xcconfig"; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				443C1B3C2214A45500220C28 /* Assets.xcassets */,
 				443C1B3E2214A45500220C28 /* LaunchScreen.storyboard */,
 				443C1B412214A45500220C28 /* Info.plist */,
+				443C1B472214C5B700220C28 /* ShoppingList.xcdatamodeld */,
 			);
 			path = ShoppingList;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				443C1B492214C5B700220C28 /* ShoppingList.xcdatamodeld in Sources */,
 				443C1B382214A45200220C28 /* ViewController.swift in Sources */,
 				443C1B362214A45200220C28 /* AppDelegate.swift in Sources */,
 			);
@@ -411,6 +415,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		443C1B472214C5B700220C28 /* ShoppingList.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				443C1B482214C5B700220C28 /* ShoppingList.xcdatamodel */,
+			);
+			currentVersion = 443C1B482214C5B700220C28 /* ShoppingList.xcdatamodel */;
+			path = ShoppingList.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 443C1B2A2214A45100220C28 /* Project object */;
 }
