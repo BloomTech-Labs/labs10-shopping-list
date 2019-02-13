@@ -26,7 +26,7 @@ function getById(id) {
   return db
     .select("*")
     .from("groups")
-    .where("id", id);
+    .where({ id });
 }
 
 /**
