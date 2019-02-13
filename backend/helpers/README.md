@@ -1,0 +1,1 @@
+Helpers directory contains the Knex database queries that will pull data from the database and pass them to the API routers.
