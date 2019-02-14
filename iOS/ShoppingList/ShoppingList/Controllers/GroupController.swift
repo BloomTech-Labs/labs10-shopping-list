@@ -10,18 +10,7 @@ import Foundation
 
 class GroupController {
     
-    
-    // TODO: Remove this once we have way to get the real token
-    func getToken() -> String {
-        return "lalala"
-    }
-    
-    func getUserID() -> Int32 {
-        return Int32(123)
-    }
 
-    
-    
     func newGroup(withName name: String) {
         
         guard let newGroup = CoreDataManager.shared.new(Group.self) else {
@@ -41,6 +30,17 @@ class GroupController {
     }
     
     
+    
+    
+    // MARK: Temporary Functions
+    // TODO: Remove this once we have way to get the real token
+    func getToken() -> String {
+        return "lalala"
+    }
+    
+    func getUserID() -> Int32 {
+        return Int32(123)
+    }
     
     
     
