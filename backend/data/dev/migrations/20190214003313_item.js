@@ -5,16 +5,16 @@ exports.up = function(knex, Promise) {
         //auto-increment primary key for table i.e. item ID
         table.increments('id');
         table.string('name', 255).notNullable();
-        table.integer('purchasedBy').references('id').inTable('users').notNullable();
+        table.integer('purchasedBy').references('id').inTable('users');
         table.integer('groupId').references('id').inTable('groups').notNullable();
         table.boolean('purchased').defaultTo(false);
-        table.real('price').notNullable();
+        table.float('price').notNullable();
         table.integer('quantity').notNullable();
         table.string('measurement', 255);
         table.date('purchasedOn');
 
         // will eventually be a foreign key when category table is created
-        table.string('category', 255); 
+        table.string('category', 255);
 
         // timestamps the moment of user creation (i.e. registration date)
         table.timestamp('createdAt').defaultTo(knex.fn.now());
@@ -23,7 +23,7 @@ exports.up = function(knex, Promise) {
         table.timestamp('updatedAt').defaultTo(knex.fn.now());
 
     });
-  
+
 };
 
 exports.down = function(knex, Promise) {
