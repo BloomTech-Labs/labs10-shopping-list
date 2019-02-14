@@ -7,7 +7,6 @@ exports.up = function(knex, Promise) {
     tbl.increments('id');
 
     tbl.integer('userID').references('id').inTable('users').notNullable();
-    tbl.integer('groupID').references('id').inTable('groups').notNullable();
     tbl.string('name').notNullable();
     tbl.string('token').nullable();
     tbl.timestamp('createdAt').defaultTo(knex.fn.now());
