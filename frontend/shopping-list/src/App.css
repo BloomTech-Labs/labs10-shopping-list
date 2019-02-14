@@ -13,6 +13,7 @@ body p{
   background: #3d3d3d;
   height: 90vh;
   padding-top: 10vh;
+  text-align: center;
 }
 
 .test-container {
@@ -26,6 +27,13 @@ body p{
   height: 80vh;
 }
 
+.navigation-container a {
+  padding: 0px 20px;
+  color: #3d3d3d;
+  font-size: 1.25rem;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif;
+}
 
 
 
