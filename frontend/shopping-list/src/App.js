@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import TestView from './views/testView.js'
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
         <div className='listHeader'>
           <h2>Lamont House</h2>
         </div>
+        <TestView />
       </div>
     );
   }
