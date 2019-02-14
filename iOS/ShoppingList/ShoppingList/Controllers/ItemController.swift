@@ -32,9 +32,8 @@ class ItemController {
 
         
         
-        
-        
-        
+        CoreDataManager.shared.save()
+
     }
     
     
