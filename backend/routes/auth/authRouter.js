@@ -23,17 +23,18 @@ if(process.env.NODE_ENV === 'production'){
     sess.cookie.secure = true; // serves secure cookies in https production
 }
 
-
+authRouter.use(session(sess));
 authRouter.use(passport.initialize());
 authRouter.use(passport.session());
-authRouter.use(session(sess));
+
 
 const auth0_strategy = new Auth0Strategy({
     domain: process.env.AUTH0_DOMAIN,
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
     callbackURL:
-        process.env.AUTH0_CALLBACK_URL || 'http://localhost:9000/api/auth/callback'
+        process.env.AUTH0_CALLBACK_URL || 'http://localhost:9000/api/auth/callback',
+    // passReqToCallback: true,
 },
     async function(accessToken, refreshToken, extraParams, profile, done){
         // accessToken is the token to call Auth0 API (not needed in the most cases)
@@ -61,16 +62,17 @@ authRouter.get('/success', (req, res) => {
 authRouter.get('/login',
     passport.authenticate('auth0', {
         scope: 'openid email profile',
+        // audience: 'https://shoptrak.auth0.com/api/v2/',
 
         // connection: 'google-oauth2'
     }), function(req, res){
         res.redirect('http://localhost:9000/api/auth/success');
     });
 
-authRouter.get('/login/google',
-    passport.authenticate('auth0', {connection: 'google-oauth2'}), function(req, res){
-        res.redirect('http://localhost:9000/api/auth/success');
-    })
+// authRouter.get('/login/google',
+//     passport.authenticate('auth0', {connection: 'google-oauth2'}), function(req, res){
+//         res.redirect('http://localhost:9000/api/auth/success');
+//     })
 
 
 authRouter.get('/callback', function(req, res, next){
