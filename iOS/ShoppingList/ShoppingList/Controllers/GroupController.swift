@@ -22,7 +22,7 @@ class GroupController {
         newGroup.name = name
         newGroup.createdAt = Date()
         newGroup.updatedAt = Date()
-        newGroup.groupID = Int32(Int.random(in: Int.min..<Int.max))
+        newGroup.groupID = Int32.random(in: Int32.min..<Int32.max))
         newGroup.token = getToken()
         newGroup.userID = getUserID()
         
