@@ -2,13 +2,16 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-
+const bodyParser = require('body-parser');
 const server = express();
-//const apiRouter = require('../routes/apiRouter');
+const apiRouter = require('../routes/apiRouter');
+
 
 // initialize server to set content-type to application/json, allows us to easily pass JSON objects through endpoints
 server.use(express.json());
-
+server.use(bodyParser.urlencoded({
+    extended: true
+}));
 // CORS middleware, default cors() permits all cross-origin scripting, 
 // https://github.com/expressjs/cors
 // TODO: this will need to be configured in production
@@ -27,7 +30,7 @@ server.use(helmet());
 server.use(morgan('dev'));
 
 // apiRouter will handle addresses passed to the /api endpoint
-//server.use('/api', apiRouter);
+server.use('/api', apiRouter);
 
 // test http get request
 server.get('/', (req, res) => {

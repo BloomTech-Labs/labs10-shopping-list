@@ -35,6 +35,8 @@ bower_components
 # Dependency directories
 node_modules/
 jspm_packages/
+package-lock.json
+yarn.lock
 
 # IntelliJ IDEA directories
 .idea
@@ -72,3 +74,4 @@ typings/
 .DS_Store
 package-lock.json
 yarn.lock
+
