@@ -62,7 +62,7 @@ authRouter.get('/success', (req, res) => {
 authRouter.get('/login',
     passport.authenticate('auth0', {
         scope: 'openid email profile',
-        // audience: 'https://shoptrak.auth0.com/api/v2/',
+        audience: 'https://shoptrak.auth0.com/api/v2/',
 
         // connection: 'google-oauth2'
     }), function(req, res){
