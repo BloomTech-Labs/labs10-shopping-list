@@ -59,7 +59,7 @@ function add(group) {
  * @returns {*} - Returns the group ID
  */
 function update(id, changes) {
-  return db("group")
+  return db("groups")
     .where({ id })
     .update(changes);
 }

@@ -1,1 +1,0 @@
-Routes directory will contain the Express routers that will be used by our main server for different endpoints.

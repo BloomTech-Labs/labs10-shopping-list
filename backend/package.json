@@ -9,9 +9,11 @@
     "express": "^4.16.4",
     "helmet": "^3.15.1",
     "knex": "^0.16.3",
+    "lodash": "^4.17.11",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.10",
     "pg": "^7.8.0",
+    "require-all": "^3.0.0",
     "sqlite3": "^4.0.6"
   },
   "devDependencies": {},
