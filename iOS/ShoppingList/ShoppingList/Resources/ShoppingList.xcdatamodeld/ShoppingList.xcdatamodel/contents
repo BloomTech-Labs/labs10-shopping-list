@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18A389" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="itemID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Items" inverseName="categoryID" inverseEntity="Items" syncable="YES"/>
+        <relationship name="itemID" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Items" inverseName="categoryID" inverseEntity="Items" syncable="YES"/>
+    </entity>
+    <entity name="Group" representedClassName="Group" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="groupID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="groupId" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Users" inverseName="userID" inverseEntity="Users" syncable="YES"/>
+        <relationship name="groupmemberID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GroupMembers" inverseName="groupid" inverseEntity="GroupMembers" syncable="YES"/>
+        <relationship name="itemID" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Items" inverseName="groupId" inverseEntity="Items" syncable="YES"/>
+        <relationship name="trip" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trip" inverseName="group" inverseEntity="Trip" syncable="YES"/>
     </entity>
     <entity name="GroupMembers" representedClassName="GroupMembers" syncable="YES" codeGenerationType="class">
         <attribute name="groupID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -13,19 +25,8 @@
         <attribute name="total" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="weeklyNotification" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="groupid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Groups" inverseName="groupmemberID" inverseEntity="Groups" syncable="YES"/>
-        <relationship name="userid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Users" inverseName="groupmembersID" inverseEntity="Users" syncable="YES"/>
-    </entity>
-    <entity name="Groups" representedClassName="Groups" syncable="YES" codeGenerationType="class">
-        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="groupID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="groupId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Users" inverseName="userID" inverseEntity="Users" syncable="YES"/>
-        <relationship name="groupmemberID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GroupMembers" inverseName="groupid" inverseEntity="GroupMembers" syncable="YES"/>
-        <relationship name="itemID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Items" inverseName="groupId" inverseEntity="Items" syncable="YES"/>
+        <relationship name="groupid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="groupmemberID" inverseEntity="Group" syncable="YES"/>
+        <relationship name="userid" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Users" inverseName="groupmembersID" inverseEntity="Users" syncable="YES"/>
     </entity>
     <entity name="Items" representedClassName="Items" syncable="YES" codeGenerationType="class">
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
@@ -39,7 +40,8 @@
         <attribute name="quantity" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="categoryID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="itemID" inverseEntity="Category" syncable="YES"/>
-        <relationship name="groupId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Groups" inverseName="itemID" inverseEntity="Groups" syncable="YES"/>
+        <relationship name="groupId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="itemID" inverseEntity="Group" syncable="YES"/>
+        <relationship name="trip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="item" inverseEntity="Trip" syncable="YES"/>
         <relationship name="users" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Users" inverseName="item" inverseEntity="Users" syncable="YES"/>
     </entity>
     <entity name="MobileDevices" representedClassName="MobileDevices" syncable="YES" codeGenerationType="class">
@@ -54,13 +56,22 @@
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="notificationID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Users" syncable="YES"/>
+        <relationship name="notificationID" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Users" syncable="YES"/>
     </entity>
     <entity name="Token" representedClassName="Token" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="token" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="userId" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Users" inverseName="tokenid" inverseEntity="Users" syncable="YES"/>
+    </entity>
+    <entity name="Trip" representedClassName="Trip" syncable="YES" codeGenerationType="class">
+        <attribute name="imageURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="purchasedOn" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="totalPrice" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="trip" inverseEntity="Group" syncable="YES"/>
+        <relationship name="item" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Items" inverseName="trip" inverseEntity="Items" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Users" inverseName="trip" inverseEntity="Users" syncable="YES"/>
     </entity>
     <entity name="Users" representedClassName="Users" syncable="YES" codeGenerationType="class">
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
@@ -73,20 +84,22 @@
         <attribute name="textNotification" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="groupmembersID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GroupMembers" inverseName="userid" inverseEntity="GroupMembers" syncable="YES"/>
-        <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Items" inverseName="users" inverseEntity="Items" syncable="YES"/>
+        <relationship name="item" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Items" inverseName="users" inverseEntity="Items" syncable="YES"/>
         <relationship name="mobileID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MobileDevices" inverseName="mobileID" inverseEntity="MobileDevices" syncable="YES"/>
         <relationship name="notificationID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Users" inverseName="notificationID" inverseEntity="Users" syncable="YES"/>
         <relationship name="tokenid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Token" inverseName="userId" inverseEntity="Token" syncable="YES"/>
-        <relationship name="userID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Groups" inverseName="groupId" inverseEntity="Groups" syncable="YES"/>
+        <relationship name="trip" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trip" inverseName="user" inverseEntity="Trip" syncable="YES"/>
+        <relationship name="userID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="groupId" inverseEntity="Group" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Users" positionX="-37.73828125" positionY="394.203125" width="128" height="268"/>
-        <element name="Groups" positionX="-459.0390625" positionY="132.87109375" width="128" height="178"/>
-        <element name="Items" positionX="-98.4921875" positionY="-71.36328125" width="128" height="238"/>
-        <element name="Category" positionX="-446.7578125" positionY="-34.8046875" width="128" height="88"/>
-        <element name="GroupMembers" positionX="-216" positionY="288" width="128" height="180"/>
-        <element name="Token" positionX="-207" positionY="297" width="128" height="105"/>
-        <element name="MobileDevices" positionX="-198" positionY="324" width="128" height="105"/>
-        <element name="Notification" positionX="-252" positionY="270" width="128" height="135"/>
+        <element name="Category" positionX="-446.33984375" positionY="43.28515625" width="128" height="88"/>
+        <element name="GroupMembers" positionX="146.59375" positionY="160.03125" width="128" height="178"/>
+        <element name="Group" positionX="-444.234375" positionY="159.3515625" width="128" height="193"/>
+        <element name="Items" positionX="-58.5546875" positionY="-75.828125" width="128" height="253"/>
+        <element name="MobileDevices" positionX="355.87890625" positionY="514.66015625" width="128" height="105"/>
+        <element name="Notification" positionX="359.87109375" positionY="366.41796875" width="128" height="133"/>
+        <element name="Token" positionX="356.65234375" positionY="622.2890625" width="128" height="105"/>
+        <element name="Users" positionX="-90.98046875" positionY="417.8125" width="128" height="283"/>
+        <element name="Trip" positionX="-464.6171875" positionY="492.30078125" width="128" height="148"/>
     </elements>
 </model>
