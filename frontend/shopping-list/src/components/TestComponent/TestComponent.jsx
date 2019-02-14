@@ -4,8 +4,12 @@ import PropTypes from "prop-types";
 function TestComponent(props) {
 
   return (
-    <div>
-      <h1>Hello World</h1>
+    <div className = 'test-container'>
+      
+      <div className = 'test-header'>
+      <h1>Welcome!</h1>
+      </div>
+      
     </div>
   );
 }
