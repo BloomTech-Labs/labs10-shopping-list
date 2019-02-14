@@ -8,21 +8,26 @@
 
 import UIKit
 
+let defaults = UserDefaults.standard
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
-        window?.rootViewController = MainViewController.instantiate()
+        
+        let isLoggedIn = defaults.bool(forKey: Keys.isUserLoggedInKey)
+        let loginVC = LoginViewController.instantiate()
+        let mainVC = MainViewController.instantiate()
+        
+        window?.rootViewController = isLoggedIn ? mainVC : loginVC
         
         return true
     }
-
 
 }
 
