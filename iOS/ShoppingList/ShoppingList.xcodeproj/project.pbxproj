@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1423D70A921BE0FF6817A9D5 /* Pods_ShoppingList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */; };
-		443C1B3D2214A45500220C28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B3C2214A45500220C28 /* Assets.xcassets */; };
-		443C1B402214A45500220C28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B3E2214A45500220C28 /* LaunchScreen.storyboard */; };
+		96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96476B4A2215D41300E57EB9 /* ShoppingList.xcdatamodeld */; };
+		96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4D2215D41300E57EB9 /* LaunchScreen.storyboard */; };
+		96476B522215D41300E57EB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4F2215D41300E57EB9 /* Assets.xcassets */; };
 		969A83C62215C9840003BB37 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 969A83C32215C9840003BB37 /* MainViewController.storyboard */; };
 		969A83C72215C9840003BB37 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83C42215C9840003BB37 /* MainViewController.swift */; };
 		969A83C82215C9840003BB37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83C52215C9840003BB37 /* AppDelegate.swift */; };
@@ -44,16 +45,15 @@
 		969A841D2215C99A0003BB37 /* Instantiatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FE2215C99A0003BB37 /* Instantiatable.swift */; };
 		969A841E2215C99A0003BB37 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FF2215C99A0003BB37 /* Identifier.swift */; };
 		969A841F2215C99A0003BB37 /* ViewLoadBeforeInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A84002215C99A0003BB37 /* ViewLoadBeforeInject.swift */; };
-		443C1B492214C5B700220C28 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 443C1B472214C5B700220C28 /* ShoppingList.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		443C1B322214A45100220C28 /* ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingList.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		443C1B3C2214A45500220C28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		443C1B3F2214A45500220C28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		443C1B412214A45500220C28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		443C1B482214C5B700220C28 /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		96476B482215D40700E57EB9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		96476B4B2215D41300E57EB9 /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
+		96476B4E2215D41300E57EB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		96476B4F2215D41300E57EB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		969A83C32215C9840003BB37 /* MainViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
 		969A83C42215C9840003BB37 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		969A83C52215C9840003BB37 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -146,11 +146,6 @@
 				969A83C22215C9840003BB37 /* MainViewController */,
 				969A83C92215C99A0003BB37 /* Frameworks */,
 				969A83C02215C94F0003BB37 /* Resources */,
-				443C1B352214A45200220C28 /* AppDelegate.swift */,
-				443C1B3C2214A45500220C28 /* Assets.xcassets */,
-				443C1B3E2214A45500220C28 /* LaunchScreen.storyboard */,
-				443C1B412214A45500220C28 /* Info.plist */,
-				443C1B472214C5B700220C28 /* ShoppingList.xcdatamodeld */,
 			);
 			path = ShoppingList;
 			sourceTree = "<group>";
@@ -175,9 +170,10 @@
 		969A83C02215C94F0003BB37 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				443C1B3C2214A45500220C28 /* Assets.xcassets */,
-				443C1B3E2214A45500220C28 /* LaunchScreen.storyboard */,
-				443C1B412214A45500220C28 /* Info.plist */,
+				96476B482215D40700E57EB9 /* Info.plist */,
+				96476B4F2215D41300E57EB9 /* Assets.xcassets */,
+				96476B4D2215D41300E57EB9 /* LaunchScreen.storyboard */,
+				96476B4A2215D41300E57EB9 /* ShoppingList.xcdatamodeld */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -363,9 +359,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				443C1B402214A45500220C28 /* LaunchScreen.storyboard in Resources */,
+				96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */,
+				96476B522215D41300E57EB9 /* Assets.xcassets in Resources */,
 				969A83C62215C9840003BB37 /* MainViewController.storyboard in Resources */,
-				443C1B3D2214A45500220C28 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +430,7 @@
 				969A84012215C99A0003BB37 /* ChameleonShorthand.swift in Sources */,
 				969A840B2215C99A0003BB37 /* UIViewController+Chameleon.m in Sources */,
 				969A84182215C99A0003BB37 /* Nib+UIViewController.swift in Sources */,
+				96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */,
 				969A840E2215C99A0003BB37 /* Reusable+NSTableView.swift in Sources */,
 				969A84102215C99A0003BB37 /* Storyboard+NSViewController.swift in Sources */,
 				969A84032215C99A0003BB37 /* ChameleonConstants.m in Sources */,
@@ -456,18 +453,16 @@
 				969A841D2215C99A0003BB37 /* Instantiatable.swift in Sources */,
 				969A841C2215C99A0003BB37 /* Injectable.swift in Sources */,
 				969A840F2215C99A0003BB37 /* Nib+NSViewController.swift in Sources */,
-				443C1B492214C5B700220C28 /* ShoppingList.xcdatamodeld in Sources */,
-				443C1B362214A45200220C28 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		443C1B3E2214A45500220C28 /* LaunchScreen.storyboard */ = {
+		96476B4D2215D41300E57EB9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				443C1B3F2214A45500220C28 /* Base */,
+				96476B4E2215D41300E57EB9 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -658,12 +653,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		443C1B472214C5B700220C28 /* ShoppingList.xcdatamodeld */ = {
+		96476B4A2215D41300E57EB9 /* ShoppingList.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				443C1B482214C5B700220C28 /* ShoppingList.xcdatamodel */,
+				96476B4B2215D41300E57EB9 /* ShoppingList.xcdatamodel */,
 			);
-			currentVersion = 443C1B482214C5B700220C28 /* ShoppingList.xcdatamodel */;
+			currentVersion = 96476B4B2215D41300E57EB9 /* ShoppingList.xcdatamodel */;
 			path = ShoppingList.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
