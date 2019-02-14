@@ -56,7 +56,7 @@
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="notificationID" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Users" syncable="YES"/>
+        <relationship name="notificationID" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Users" inverseName="notificationID" inverseEntity="Users" syncable="YES"/>
     </entity>
     <entity name="Token" representedClassName="Token" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -86,7 +86,7 @@
         <relationship name="groupmembersID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GroupMembers" inverseName="userid" inverseEntity="GroupMembers" syncable="YES"/>
         <relationship name="item" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Items" inverseName="users" inverseEntity="Items" syncable="YES"/>
         <relationship name="mobileID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MobileDevices" inverseName="mobileID" inverseEntity="MobileDevices" syncable="YES"/>
-        <relationship name="notificationID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Users" inverseName="notificationID" inverseEntity="Users" syncable="YES"/>
+        <relationship name="notificationID" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Notification" inverseName="notificationID" inverseEntity="Notification" syncable="YES"/>
         <relationship name="tokenid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Token" inverseName="userId" inverseEntity="Token" syncable="YES"/>
         <relationship name="trip" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trip" inverseName="user" inverseEntity="Trip" syncable="YES"/>
         <relationship name="userID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="groupId" inverseEntity="Group" syncable="YES"/>
