@@ -5,7 +5,7 @@ module.exports = {
   type: 'POST',
   url: '/api/group/',
   handler: (req, res) => {
-    const newGroup = { 
+    const newGroup = {
       userId,
       name,
       token,
