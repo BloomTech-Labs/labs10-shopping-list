@@ -58,7 +58,7 @@ extension CoreDataManager {
     }
     
     
-    // CoreDataManager.shared.new(Recipe.self)
+    // CoreDataManager.shared.new(Group.self)
     func new<M: NSManagedObject>(_ type: M.Type) -> M? {
         
         var modelObject: M?
@@ -102,6 +102,23 @@ extension CoreDataManager {
         
         if managedContext.deletedObjects.count > 0 {
             save()
+        }
+    }
+    
+    
+    // let total = modelController.total(Recipe.self)
+    func total<M: NSManagedObject>(_ type: M.Type) -> Int {
+        
+        let entityName = String(describing: type)
+        let request = NSFetchRequest<M>(entityName: entityName)
+        
+        do {
+            let count = try managedContext.count(for: request)
+            return count
+        }
+        catch {
+            print("Error executing total: \(error)")
+            return 0
         }
     }
 
