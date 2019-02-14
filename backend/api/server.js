@@ -3,6 +3,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+const auth = require('./auth.js');
+
 const server = express();
 //const apiRouter = require('../routes/apiRouter');
 
@@ -28,6 +30,8 @@ server.use(morgan('dev'));
 
 // apiRouter will handle addresses passed to the /api endpoint
 //server.use('/api', apiRouter);
+
+auth(server);
 
 // test http get request
 server.get('/', (req, res) => {

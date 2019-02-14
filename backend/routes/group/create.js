@@ -15,7 +15,7 @@ module.exports = {
     Promise.all(validations).then(() => {
       groupDb.add(newGroup)
         .then((id) => {
-          res.status(201).json( {id: id} );
+          res.status(201).json({ id });
         })
         .catch((err) => {
           console.log(err);
