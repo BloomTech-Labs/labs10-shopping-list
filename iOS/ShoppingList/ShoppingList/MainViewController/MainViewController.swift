@@ -14,7 +14,24 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let newGroup = CoreDataManager.shared.new(Group.self)
+        newGroup?.name = "TestName"
+        newGroup?.createdAt = Date()
+        
+        CoreDataManager.shared.save()
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            
+            print("Total groups: \(CoreDataManager.shared.total(Group.self))")
+            
+        }
+        
     }
+    
+    
+    
 
     
 }

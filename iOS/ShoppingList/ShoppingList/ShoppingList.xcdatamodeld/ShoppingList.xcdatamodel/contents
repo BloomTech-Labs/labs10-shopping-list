@@ -35,8 +35,6 @@
         <attribute name="measurement" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="purchasedBy" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="purchasedOn" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="categoryID" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="itemID" inverseEntity="Category" syncable="YES"/>
@@ -95,7 +93,7 @@
         <element name="Category" positionX="-446.33984375" positionY="43.28515625" width="128" height="88"/>
         <element name="GroupMembers" positionX="146.59375" positionY="160.03125" width="128" height="178"/>
         <element name="Group" positionX="-444.234375" positionY="159.3515625" width="128" height="193"/>
-        <element name="Items" positionX="-58.5546875" positionY="-75.828125" width="128" height="253"/>
+        <element name="Items" positionX="-58.5546875" positionY="-75.828125" width="128" height="223"/>
         <element name="MobileDevices" positionX="355.87890625" positionY="514.66015625" width="128" height="105"/>
         <element name="Notification" positionX="359.87109375" positionY="366.41796875" width="128" height="133"/>
         <element name="Token" positionX="356.65234375" positionY="622.2890625" width="128" height="105"/>
