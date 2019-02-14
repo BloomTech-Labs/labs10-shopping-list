@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1423D70A921BE0FF6817A9D5 /* Pods_ShoppingList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */; };
+		961B84702216176C0079EAFF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961B846F2216176C0079EAFF /* Constants.swift */; };
+		961B8472221618960079EAFF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961B8471221618960079EAFF /* LoginViewController.swift */; };
+		961B8476221618C90079EAFF /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 961B8475221618C90079EAFF /* LoginViewController.storyboard */; };
 		96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96476B4A2215D41300E57EB9 /* ShoppingList.xcdatamodeld */; };
 		96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4D2215D41300E57EB9 /* LaunchScreen.storyboard */; };
 		96476B522215D41300E57EB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4F2215D41300E57EB9 /* Assets.xcassets */; };
@@ -50,6 +53,9 @@
 /* Begin PBXFileReference section */
 		443C1B322214A45100220C28 /* ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		961B846F2216176C0079EAFF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		961B8471221618960079EAFF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		961B8475221618C90079EAFF /* LoginViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
 		96476B482215D40700E57EB9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96476B4B2215D41300E57EB9 /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
 		96476B4E2215D41300E57EB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -143,7 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				969A83C52215C9840003BB37 /* AppDelegate.swift */,
-				969A83C22215C9840003BB37 /* MainViewController */,
+				961B846F2216176C0079EAFF /* Constants.swift */,
+				961B8474221618B50079EAFF /* View Controllers */,
 				969A83C92215C99A0003BB37 /* Frameworks */,
 				969A83C02215C94F0003BB37 /* Resources */,
 			);
@@ -165,6 +172,25 @@
 				B5F3823A7F0AFA3E748D368C /* Pods-ShoppingList.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		961B8473221618A60079EAFF /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				961B8475221618C90079EAFF /* LoginViewController.storyboard */,
+				961B8471221618960079EAFF /* LoginViewController.swift */,
+			);
+			name = LoginViewController;
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		961B8474221618B50079EAFF /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				961B8473221618A60079EAFF /* LoginViewController */,
+				969A83C22215C9840003BB37 /* MainViewController */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 		969A83C02215C94F0003BB37 /* Resources */ = {
@@ -360,6 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */,
+				961B8476221618C90079EAFF /* LoginViewController.storyboard in Resources */,
 				96476B522215D41300E57EB9 /* Assets.xcassets in Resources */,
 				969A83C62215C9840003BB37 /* MainViewController.storyboard in Resources */,
 			);
@@ -419,6 +446,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				961B8472221618960079EAFF /* LoginViewController.swift in Sources */,
 				969A84072215C99A0003BB37 /* Chameleon_.m in Sources */,
 				969A84112215C99A0003BB37 /* Reusable+NSCollectionView.swift in Sources */,
 				969A84092215C99A0003BB37 /* UINavigationController+Chameleon.m in Sources */,
@@ -444,6 +472,7 @@
 				969A84062215C99A0003BB37 /* UIView+ChameleonPrivate.m in Sources */,
 				969A84132215C99A0003BB37 /* Nib.swift in Sources */,
 				969A84082215C99A0003BB37 /* NSArray+Chameleon.m in Sources */,
+				961B84702216176C0079EAFF /* Constants.swift in Sources */,
 				969A840A2215C99A0003BB37 /* UILabel+Chameleon.m in Sources */,
 				969A84162215C99A0003BB37 /* Reusable+UICollectionView.swift in Sources */,
 				969A841A2215C99A0003BB37 /* Storyboard.swift in Sources */,
@@ -599,7 +628,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = LambdaSchool.ShoppingList;
+				PRODUCT_BUNDLE_IDENTIFIER = LambdaSchool.ShopTrak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ShoppingList/Frameworks/Chameleon/ShoppingList-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -621,7 +650,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = LambdaSchool.ShoppingList;
+				PRODUCT_BUNDLE_IDENTIFIER = LambdaSchool.ShopTrak;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ShoppingList/Frameworks/Chameleon/ShoppingList-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
