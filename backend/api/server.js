@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 
 const server = express();
-const apiRouter = require('../routes/apiRouter');
+//const apiRouter = require('../routes/apiRouter');
 
 // initialize server to set content-type to application/json, allows us to easily pass JSON objects through endpoints
 server.use(express.json());
@@ -27,7 +27,7 @@ server.use(helmet());
 server.use(morgan('dev'));
 
 // apiRouter will handle addresses passed to the /api endpoint
-server.use('/api', apiRouter);
+//server.use('/api', apiRouter);
 
 // test http get request
 server.get('/', (req, res) => {

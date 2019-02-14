@@ -1,1 +1,0 @@
-Validators will perform value and type checks on data inputs before sending them to the database.
