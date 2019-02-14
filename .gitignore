@@ -66,3 +66,9 @@ typings/
 # database
 /data/shoppinglist.sqlite3
 .sqlite3
+*.sqlite3
+
+# misc
+.DS_Store
+package-lock.json
+yarn.lock

@@ -1,5 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto');
 
+body h1{
+  font-family: 'Roboto', sans-serif;
+}
 
+body p{
+  font-family: 'Montserrat', sans-serif;
+}
+
+.App{
+  width: 100%;
+  background: #3d3d3d;
+  height: 90vh;
+  padding-top: 10vh;
+}
+
+.test-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+  background: white;
+  height: 80vh;
+}
 
 
 
