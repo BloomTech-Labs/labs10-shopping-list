@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import TestComponent from "../components/TestComponent/TestComponent.jsx";
+import Navigation from '../components/Navigation/Navigation.jsx';
 
 class TitlebarView extends Component {
   state = {
@@ -9,7 +10,9 @@ class TitlebarView extends Component {
 
   render() {
     return (
+      <div className = 'main-view'>
       <TestComponent />
+      </div>
     );
   }
 }

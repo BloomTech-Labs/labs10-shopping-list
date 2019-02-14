@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		112430AB221611B00081784C /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AA221611B00081784C /* CoreDataController.swift */; };
 		1423D70A921BE0FF6817A9D5 /* Pods_ShoppingList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */; };
+		443C1B4C22160D9E00220C28 /* Shopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C1B4B22160D9E00220C28 /* Shopping.swift */; };
 		96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96476B4A2215D41300E57EB9 /* ShoppingList.xcdatamodeld */; };
 		96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4D2215D41300E57EB9 /* LaunchScreen.storyboard */; };
 		96476B522215D41300E57EB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4F2215D41300E57EB9 /* Assets.xcassets */; };
@@ -51,6 +52,7 @@
 /* Begin PBXFileReference section */
 		112430AA221611B00081784C /* CoreDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
 		443C1B322214A45100220C28 /* ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingList.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		443C1B4B22160D9E00220C28 /* Shopping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shopping.swift; sourceTree = "<group>"; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96476B482215D40700E57EB9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96476B4B2215D41300E57EB9 /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
@@ -155,10 +157,19 @@
 				969A83C52215C9840003BB37 /* AppDelegate.swift */,
 				112430AC221611B30081784C /* Controllers */,
 				969A83C22215C9840003BB37 /* MainViewController */,
+				443C1B4A2215F0DA00220C28 /* Model */,
 				969A83C92215C99A0003BB37 /* Frameworks */,
 				969A83C02215C94F0003BB37 /* Resources */,
 			);
 			path = ShoppingList;
+			sourceTree = "<group>";
+		};
+		443C1B4A2215F0DA00220C28 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				443C1B4B22160D9E00220C28 /* Shopping.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		5897CAC300FCDDDF52C3738F /* Frameworks */ = {
@@ -444,6 +455,7 @@
 				96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */,
 				969A840E2215C99A0003BB37 /* Reusable+NSTableView.swift in Sources */,
 				969A84102215C99A0003BB37 /* Storyboard+NSViewController.swift in Sources */,
+				443C1B4C22160D9E00220C28 /* Shopping.swift in Sources */,
 				969A84032215C99A0003BB37 /* ChameleonConstants.m in Sources */,
 				969A841E2215C99A0003BB37 /* Identifier.swift in Sources */,
 				969A84192215C99A0003BB37 /* Reusable+UITableView.swift in Sources */,
