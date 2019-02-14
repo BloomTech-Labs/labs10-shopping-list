@@ -40,4 +40,22 @@ userRouter.post('/', (req, res) => {
     })
 })
 
+
+userRouter.get('/:id', (req, res) => {
+    const id = req.params.id;
+
+    userDb.getById(id).then(user => {
+        console.log(user);
+        if(!user){
+            return res.status(404).json({error: `User with ID ${id} does not exist.`});
+        } else {
+            return res.status(200).json(user);
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Error retrieving user with ID ${id}.`});
+    })
+})
+
 module.exports = userRouter;
