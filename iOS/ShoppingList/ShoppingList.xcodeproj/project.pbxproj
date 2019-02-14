@@ -8,24 +8,103 @@
 
 /* Begin PBXBuildFile section */
 		1423D70A921BE0FF6817A9D5 /* Pods_ShoppingList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */; };
-		443C1B362214A45200220C28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C1B352214A45200220C28 /* AppDelegate.swift */; };
-		443C1B382214A45200220C28 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C1B372214A45200220C28 /* ViewController.swift */; };
-		443C1B3B2214A45200220C28 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B392214A45200220C28 /* Main.storyboard */; };
 		443C1B3D2214A45500220C28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B3C2214A45500220C28 /* Assets.xcassets */; };
 		443C1B402214A45500220C28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B3E2214A45500220C28 /* LaunchScreen.storyboard */; };
+		969A83C62215C9840003BB37 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 969A83C32215C9840003BB37 /* MainViewController.storyboard */; };
+		969A83C72215C9840003BB37 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83C42215C9840003BB37 /* MainViewController.swift */; };
+		969A83C82215C9840003BB37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83C52215C9840003BB37 /* AppDelegate.swift */; };
+		969A84012215C99A0003BB37 /* ChameleonShorthand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83CF2215C99A0003BB37 /* ChameleonShorthand.swift */; };
+		969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83D22215C99A0003BB37 /* UIColor+ChameleonPrivate.m */; };
+		969A84032215C99A0003BB37 /* ChameleonConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83D32215C99A0003BB37 /* ChameleonConstants.m */; };
+		969A84042215C99A0003BB37 /* UIColor+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83D72215C99A0003BB37 /* UIColor+Chameleon.m */; };
+		969A84052215C99A0003BB37 /* UIButton+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83D92215C99A0003BB37 /* UIButton+Chameleon.m */; };
+		969A84062215C99A0003BB37 /* UIView+ChameleonPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83DE2215C99A0003BB37 /* UIView+ChameleonPrivate.m */; };
+		969A84072215C99A0003BB37 /* Chameleon_.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83DF2215C99A0003BB37 /* Chameleon_.m */; };
+		969A84082215C99A0003BB37 /* NSArray+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83E22215C99A0003BB37 /* NSArray+Chameleon.m */; };
+		969A84092215C99A0003BB37 /* UINavigationController+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83E42215C99A0003BB37 /* UINavigationController+Chameleon.m */; };
+		969A840A2215C99A0003BB37 /* UILabel+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83E52215C99A0003BB37 /* UILabel+Chameleon.m */; };
+		969A840B2215C99A0003BB37 /* UIViewController+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83E62215C99A0003BB37 /* UIViewController+Chameleon.m */; };
+		969A840C2215C99A0003BB37 /* UIAppearance+Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83E72215C99A0003BB37 /* UIAppearance+Swift.m */; settings = {COMPILER_FLAGS = "-w"; }; };
+		969A840D2215C99A0003BB37 /* UIImage+ChameleonPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83E82215C99A0003BB37 /* UIImage+ChameleonPrivate.m */; };
+		969A840E2215C99A0003BB37 /* Reusable+NSTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83EE2215C99A0003BB37 /* Reusable+NSTableView.swift */; };
+		969A840F2215C99A0003BB37 /* Nib+NSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83EF2215C99A0003BB37 /* Nib+NSViewController.swift */; };
+		969A84102215C99A0003BB37 /* Storyboard+NSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83F02215C99A0003BB37 /* Storyboard+NSViewController.swift */; };
+		969A84112215C99A0003BB37 /* Reusable+NSCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83F12215C99A0003BB37 /* Reusable+NSCollectionView.swift */; };
+		969A84122215C99A0003BB37 /* Nib+NSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83F22215C99A0003BB37 /* Nib+NSView.swift */; };
+		969A84132215C99A0003BB37 /* Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83F32215C99A0003BB37 /* Nib.swift */; };
+		969A84142215C99A0003BB37 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83F42215C99A0003BB37 /* Reusable.swift */; };
+		969A84152215C99A0003BB37 /* Nib+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83F62215C99A0003BB37 /* Nib+UIView.swift */; };
+		969A84162215C99A0003BB37 /* Reusable+UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83F72215C99A0003BB37 /* Reusable+UICollectionView.swift */; };
+		969A84172215C99A0003BB37 /* Storyboard+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83F82215C99A0003BB37 /* Storyboard+UIViewController.swift */; };
+		969A84182215C99A0003BB37 /* Nib+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83F92215C99A0003BB37 /* Nib+UIViewController.swift */; };
+		969A84192215C99A0003BB37 /* Reusable+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FA2215C99A0003BB37 /* Reusable+UITableView.swift */; };
+		969A841A2215C99A0003BB37 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FB2215C99A0003BB37 /* Storyboard.swift */; };
+		969A841B2215C99A0003BB37 /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FC2215C99A0003BB37 /* Deprecated.swift */; };
+		969A841C2215C99A0003BB37 /* Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FD2215C99A0003BB37 /* Injectable.swift */; };
+		969A841D2215C99A0003BB37 /* Instantiatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FE2215C99A0003BB37 /* Instantiatable.swift */; };
+		969A841E2215C99A0003BB37 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FF2215C99A0003BB37 /* Identifier.swift */; };
+		969A841F2215C99A0003BB37 /* ViewLoadBeforeInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A84002215C99A0003BB37 /* ViewLoadBeforeInject.swift */; };
 		443C1B492214C5B700220C28 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 443C1B472214C5B700220C28 /* ShoppingList.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		443C1B322214A45100220C28 /* ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingList.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		443C1B352214A45200220C28 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		443C1B372214A45200220C28 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		443C1B3A2214A45200220C28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		443C1B3C2214A45500220C28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		443C1B3F2214A45500220C28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		443C1B412214A45500220C28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		443C1B482214C5B700220C28 /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		969A83C32215C9840003BB37 /* MainViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
+		969A83C42215C9840003BB37 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		969A83C52215C9840003BB37 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		969A83CB2215C99A0003BB37 /* ShoppingList-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShoppingList-Bridging-Header.h"; sourceTree = "<group>"; };
+		969A83CC2215C99A0003BB37 /* Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon.h; sourceTree = "<group>"; };
+		969A83CF2215C99A0003BB37 /* ChameleonShorthand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChameleonShorthand.swift; sourceTree = "<group>"; };
+		969A83D12215C99A0003BB37 /* ChameleonMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChameleonMacros.h; sourceTree = "<group>"; };
+		969A83D22215C99A0003BB37 /* UIColor+ChameleonPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ChameleonPrivate.m"; sourceTree = "<group>"; };
+		969A83D32215C99A0003BB37 /* ChameleonConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChameleonConstants.m; sourceTree = "<group>"; };
+		969A83D42215C99A0003BB37 /* UILabel+Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+Chameleon.h"; sourceTree = "<group>"; };
+		969A83D52215C99A0003BB37 /* UINavigationController+Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Chameleon.h"; sourceTree = "<group>"; };
+		969A83D62215C99A0003BB37 /* Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon.h; sourceTree = "<group>"; };
+		969A83D72215C99A0003BB37 /* UIColor+Chameleon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Chameleon.m"; sourceTree = "<group>"; };
+		969A83D82215C99A0003BB37 /* NSArray+Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Chameleon.h"; sourceTree = "<group>"; };
+		969A83D92215C99A0003BB37 /* UIButton+Chameleon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Chameleon.m"; sourceTree = "<group>"; };
+		969A83DA2215C99A0003BB37 /* UIImage+ChameleonPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ChameleonPrivate.h"; sourceTree = "<group>"; };
+		969A83DB2215C99A0003BB37 /* UIAppearance+Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAppearance+Swift.h"; sourceTree = "<group>"; };
+		969A83DC2215C99A0003BB37 /* UIViewController+Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Chameleon.h"; sourceTree = "<group>"; };
+		969A83DD2215C99A0003BB37 /* ChameleonEnums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChameleonEnums.h; sourceTree = "<group>"; };
+		969A83DE2215C99A0003BB37 /* UIView+ChameleonPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ChameleonPrivate.m"; sourceTree = "<group>"; };
+		969A83DF2215C99A0003BB37 /* Chameleon_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chameleon_.m; sourceTree = "<group>"; };
+		969A83E02215C99A0003BB37 /* ChameleonConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChameleonConstants.h; sourceTree = "<group>"; };
+		969A83E12215C99A0003BB37 /* UIColor+ChameleonPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ChameleonPrivate.h"; sourceTree = "<group>"; };
+		969A83E22215C99A0003BB37 /* NSArray+Chameleon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Chameleon.m"; sourceTree = "<group>"; };
+		969A83E32215C99A0003BB37 /* UIColor+Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Chameleon.h"; sourceTree = "<group>"; };
+		969A83E42215C99A0003BB37 /* UINavigationController+Chameleon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Chameleon.m"; sourceTree = "<group>"; };
+		969A83E52215C99A0003BB37 /* UILabel+Chameleon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+Chameleon.m"; sourceTree = "<group>"; };
+		969A83E62215C99A0003BB37 /* UIViewController+Chameleon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Chameleon.m"; sourceTree = "<group>"; };
+		969A83E72215C99A0003BB37 /* UIAppearance+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAppearance+Swift.m"; sourceTree = "<group>"; };
+		969A83E82215C99A0003BB37 /* UIImage+ChameleonPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ChameleonPrivate.m"; sourceTree = "<group>"; };
+		969A83E92215C99A0003BB37 /* UIButton+Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Chameleon.h"; sourceTree = "<group>"; };
+		969A83EA2215C99A0003BB37 /* Chameleon_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon_.h; sourceTree = "<group>"; };
+		969A83EB2215C99A0003BB37 /* UIView+ChameleonPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ChameleonPrivate.h"; sourceTree = "<group>"; };
+		969A83EE2215C99A0003BB37 /* Reusable+NSTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reusable+NSTableView.swift"; sourceTree = "<group>"; };
+		969A83EF2215C99A0003BB37 /* Nib+NSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Nib+NSViewController.swift"; sourceTree = "<group>"; };
+		969A83F02215C99A0003BB37 /* Storyboard+NSViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Storyboard+NSViewController.swift"; sourceTree = "<group>"; };
+		969A83F12215C99A0003BB37 /* Reusable+NSCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reusable+NSCollectionView.swift"; sourceTree = "<group>"; };
+		969A83F22215C99A0003BB37 /* Nib+NSView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Nib+NSView.swift"; sourceTree = "<group>"; };
+		969A83F32215C99A0003BB37 /* Nib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nib.swift; sourceTree = "<group>"; };
+		969A83F42215C99A0003BB37 /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		969A83F62215C99A0003BB37 /* Nib+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Nib+UIView.swift"; sourceTree = "<group>"; };
+		969A83F72215C99A0003BB37 /* Reusable+UICollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reusable+UICollectionView.swift"; sourceTree = "<group>"; };
+		969A83F82215C99A0003BB37 /* Storyboard+UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Storyboard+UIViewController.swift"; sourceTree = "<group>"; };
+		969A83F92215C99A0003BB37 /* Nib+UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Nib+UIViewController.swift"; sourceTree = "<group>"; };
+		969A83FA2215C99A0003BB37 /* Reusable+UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reusable+UITableView.swift"; sourceTree = "<group>"; };
+		969A83FB2215C99A0003BB37 /* Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
+		969A83FC2215C99A0003BB37 /* Deprecated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deprecated.swift; sourceTree = "<group>"; };
+		969A83FD2215C99A0003BB37 /* Injectable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Injectable.swift; sourceTree = "<group>"; };
+		969A83FE2215C99A0003BB37 /* Instantiatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instantiatable.swift; sourceTree = "<group>"; };
+		969A83FF2215C99A0003BB37 /* Identifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
+		969A84002215C99A0003BB37 /* ViewLoadBeforeInject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewLoadBeforeInject.swift; sourceTree = "<group>"; };
 		B5F3823A7F0AFA3E748D368C /* Pods-ShoppingList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingList.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList.release.xcconfig"; sourceTree = "<group>"; };
 		D02D1468A28720647C51821F /* Pods-ShoppingList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,9 +142,11 @@
 		443C1B342214A45200220C28 /* ShoppingList */ = {
 			isa = PBXGroup;
 			children = (
+				969A83C52215C9840003BB37 /* AppDelegate.swift */,
+				969A83C22215C9840003BB37 /* MainViewController */,
+				969A83C92215C99A0003BB37 /* Frameworks */,
+				969A83C02215C94F0003BB37 /* Resources */,
 				443C1B352214A45200220C28 /* AppDelegate.swift */,
-				443C1B372214A45200220C28 /* ViewController.swift */,
-				443C1B392214A45200220C28 /* Main.storyboard */,
 				443C1B3C2214A45500220C28 /* Assets.xcassets */,
 				443C1B3E2214A45500220C28 /* LaunchScreen.storyboard */,
 				443C1B412214A45500220C28 /* Info.plist */,
@@ -89,6 +170,136 @@
 				B5F3823A7F0AFA3E748D368C /* Pods-ShoppingList.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		969A83C02215C94F0003BB37 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				443C1B3C2214A45500220C28 /* Assets.xcassets */,
+				443C1B3E2214A45500220C28 /* LaunchScreen.storyboard */,
+				443C1B412214A45500220C28 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		969A83C22215C9840003BB37 /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				969A83C32215C9840003BB37 /* MainViewController.storyboard */,
+				969A83C42215C9840003BB37 /* MainViewController.swift */,
+			);
+			path = MainViewController;
+			sourceTree = "<group>";
+		};
+		969A83C92215C99A0003BB37 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				969A83CA2215C99A0003BB37 /* Chameleon */,
+				969A83EC2215C99A0003BB37 /* Instantiate */,
+			);
+			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		969A83CA2215C99A0003BB37 /* Chameleon */ = {
+			isa = PBXGroup;
+			children = (
+				969A83CB2215C99A0003BB37 /* ShoppingList-Bridging-Header.h */,
+				969A83CC2215C99A0003BB37 /* Chameleon.h */,
+				969A83CD2215C99A0003BB37 /* Classes */,
+			);
+			path = Chameleon;
+			sourceTree = "<group>";
+		};
+		969A83CD2215C99A0003BB37 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				969A83CE2215C99A0003BB37 /* Swift */,
+				969A83D02215C99A0003BB37 /* Objective-C */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		969A83CE2215C99A0003BB37 /* Swift */ = {
+			isa = PBXGroup;
+			children = (
+				969A83CF2215C99A0003BB37 /* ChameleonShorthand.swift */,
+			);
+			path = Swift;
+			sourceTree = "<group>";
+		};
+		969A83D02215C99A0003BB37 /* Objective-C */ = {
+			isa = PBXGroup;
+			children = (
+				969A83D12215C99A0003BB37 /* ChameleonMacros.h */,
+				969A83D22215C99A0003BB37 /* UIColor+ChameleonPrivate.m */,
+				969A83D32215C99A0003BB37 /* ChameleonConstants.m */,
+				969A83D42215C99A0003BB37 /* UILabel+Chameleon.h */,
+				969A83D52215C99A0003BB37 /* UINavigationController+Chameleon.h */,
+				969A83D62215C99A0003BB37 /* Chameleon.h */,
+				969A83D72215C99A0003BB37 /* UIColor+Chameleon.m */,
+				969A83D82215C99A0003BB37 /* NSArray+Chameleon.h */,
+				969A83D92215C99A0003BB37 /* UIButton+Chameleon.m */,
+				969A83DA2215C99A0003BB37 /* UIImage+ChameleonPrivate.h */,
+				969A83DB2215C99A0003BB37 /* UIAppearance+Swift.h */,
+				969A83DC2215C99A0003BB37 /* UIViewController+Chameleon.h */,
+				969A83DD2215C99A0003BB37 /* ChameleonEnums.h */,
+				969A83DE2215C99A0003BB37 /* UIView+ChameleonPrivate.m */,
+				969A83DF2215C99A0003BB37 /* Chameleon_.m */,
+				969A83E02215C99A0003BB37 /* ChameleonConstants.h */,
+				969A83E12215C99A0003BB37 /* UIColor+ChameleonPrivate.h */,
+				969A83E22215C99A0003BB37 /* NSArray+Chameleon.m */,
+				969A83E32215C99A0003BB37 /* UIColor+Chameleon.h */,
+				969A83E42215C99A0003BB37 /* UINavigationController+Chameleon.m */,
+				969A83E52215C99A0003BB37 /* UILabel+Chameleon.m */,
+				969A83E62215C99A0003BB37 /* UIViewController+Chameleon.m */,
+				969A83E72215C99A0003BB37 /* UIAppearance+Swift.m */,
+				969A83E82215C99A0003BB37 /* UIImage+ChameleonPrivate.m */,
+				969A83E92215C99A0003BB37 /* UIButton+Chameleon.h */,
+				969A83EA2215C99A0003BB37 /* Chameleon_.h */,
+				969A83EB2215C99A0003BB37 /* UIView+ChameleonPrivate.h */,
+			);
+			path = "Objective-C";
+			sourceTree = "<group>";
+		};
+		969A83EC2215C99A0003BB37 /* Instantiate */ = {
+			isa = PBXGroup;
+			children = (
+				969A83ED2215C99A0003BB37 /* macOS */,
+				969A83F32215C99A0003BB37 /* Nib.swift */,
+				969A83F42215C99A0003BB37 /* Reusable.swift */,
+				969A83F52215C99A0003BB37 /* iOS */,
+				969A83FB2215C99A0003BB37 /* Storyboard.swift */,
+				969A83FC2215C99A0003BB37 /* Deprecated.swift */,
+				969A83FD2215C99A0003BB37 /* Injectable.swift */,
+				969A83FE2215C99A0003BB37 /* Instantiatable.swift */,
+				969A83FF2215C99A0003BB37 /* Identifier.swift */,
+				969A84002215C99A0003BB37 /* ViewLoadBeforeInject.swift */,
+			);
+			path = Instantiate;
+			sourceTree = "<group>";
+		};
+		969A83ED2215C99A0003BB37 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				969A83EE2215C99A0003BB37 /* Reusable+NSTableView.swift */,
+				969A83EF2215C99A0003BB37 /* Nib+NSViewController.swift */,
+				969A83F02215C99A0003BB37 /* Storyboard+NSViewController.swift */,
+				969A83F12215C99A0003BB37 /* Reusable+NSCollectionView.swift */,
+				969A83F22215C99A0003BB37 /* Nib+NSView.swift */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		969A83F52215C99A0003BB37 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				969A83F62215C99A0003BB37 /* Nib+UIView.swift */,
+				969A83F72215C99A0003BB37 /* Reusable+UICollectionView.swift */,
+				969A83F82215C99A0003BB37 /* Storyboard+UIViewController.swift */,
+				969A83F92215C99A0003BB37 /* Nib+UIViewController.swift */,
+				969A83FA2215C99A0003BB37 /* Reusable+UITableView.swift */,
+			);
+			path = iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +336,7 @@
 				TargetAttributes = {
 					443C1B312214A45100220C28 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -152,8 +364,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				443C1B402214A45500220C28 /* LaunchScreen.storyboard in Resources */,
+				969A83C62215C9840003BB37 /* MainViewController.storyboard in Resources */,
 				443C1B3D2214A45500220C28 /* Assets.xcassets in Resources */,
-				443C1B3B2214A45200220C28 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,8 +423,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				969A84072215C99A0003BB37 /* Chameleon_.m in Sources */,
+				969A84112215C99A0003BB37 /* Reusable+NSCollectionView.swift in Sources */,
+				969A84092215C99A0003BB37 /* UINavigationController+Chameleon.m in Sources */,
+				969A84122215C99A0003BB37 /* Nib+NSView.swift in Sources */,
+				969A84042215C99A0003BB37 /* UIColor+Chameleon.m in Sources */,
+				969A840C2215C99A0003BB37 /* UIAppearance+Swift.m in Sources */,
+				969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */,
+				969A84152215C99A0003BB37 /* Nib+UIView.swift in Sources */,
+				969A84012215C99A0003BB37 /* ChameleonShorthand.swift in Sources */,
+				969A840B2215C99A0003BB37 /* UIViewController+Chameleon.m in Sources */,
+				969A84182215C99A0003BB37 /* Nib+UIViewController.swift in Sources */,
+				969A840E2215C99A0003BB37 /* Reusable+NSTableView.swift in Sources */,
+				969A84102215C99A0003BB37 /* Storyboard+NSViewController.swift in Sources */,
+				969A84032215C99A0003BB37 /* ChameleonConstants.m in Sources */,
+				969A841E2215C99A0003BB37 /* Identifier.swift in Sources */,
+				969A84192215C99A0003BB37 /* Reusable+UITableView.swift in Sources */,
+				969A84142215C99A0003BB37 /* Reusable.swift in Sources */,
+				969A84052215C99A0003BB37 /* UIButton+Chameleon.m in Sources */,
+				969A83C82215C9840003BB37 /* AppDelegate.swift in Sources */,
+				969A841F2215C99A0003BB37 /* ViewLoadBeforeInject.swift in Sources */,
+				969A83C72215C9840003BB37 /* MainViewController.swift in Sources */,
+				969A84062215C99A0003BB37 /* UIView+ChameleonPrivate.m in Sources */,
+				969A84132215C99A0003BB37 /* Nib.swift in Sources */,
+				969A84082215C99A0003BB37 /* NSArray+Chameleon.m in Sources */,
+				969A840A2215C99A0003BB37 /* UILabel+Chameleon.m in Sources */,
+				969A84162215C99A0003BB37 /* Reusable+UICollectionView.swift in Sources */,
+				969A841A2215C99A0003BB37 /* Storyboard.swift in Sources */,
+				969A84172215C99A0003BB37 /* Storyboard+UIViewController.swift in Sources */,
+				969A841B2215C99A0003BB37 /* Deprecated.swift in Sources */,
+				969A840D2215C99A0003BB37 /* UIImage+ChameleonPrivate.m in Sources */,
+				969A841D2215C99A0003BB37 /* Instantiatable.swift in Sources */,
+				969A841C2215C99A0003BB37 /* Injectable.swift in Sources */,
+				969A840F2215C99A0003BB37 /* Nib+NSViewController.swift in Sources */,
 				443C1B492214C5B700220C28 /* ShoppingList.xcdatamodeld in Sources */,
-				443C1B382214A45200220C28 /* ViewController.swift in Sources */,
 				443C1B362214A45200220C28 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,14 +464,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		443C1B392214A45200220C28 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				443C1B3A2214A45200220C28 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		443C1B3E2214A45500220C28 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -360,17 +596,20 @@
 			baseConfigurationReference = D02D1468A28720647C51821F /* Pods-ShoppingList.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NH6AR4LY3J;
-				INFOPLIST_FILE = ShoppingList/Info.plist;
+				DEVELOPMENT_TEAM = 7LHTMK9AWG;
+				INFOPLIST_FILE = "$(SRCROOT)/ShoppingList/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = LambdaSchool.ShoppingList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ShoppingList/Frameworks/Chameleon/ShoppingList-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -379,17 +618,19 @@
 			baseConfigurationReference = B5F3823A7F0AFA3E748D368C /* Pods-ShoppingList.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = NH6AR4LY3J;
-				INFOPLIST_FILE = ShoppingList/Info.plist;
+				DEVELOPMENT_TEAM = 7LHTMK9AWG;
+				INFOPLIST_FILE = "$(SRCROOT)/ShoppingList/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = LambdaSchool.ShoppingList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "ShoppingList/Frameworks/Chameleon/ShoppingList-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
