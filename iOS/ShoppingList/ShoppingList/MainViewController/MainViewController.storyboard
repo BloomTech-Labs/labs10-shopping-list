@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WgK-Rm-0lC">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="ivK-zN-Rm8">
+            <objects>
+                <viewController id="WgK-Rm-0lC" customClass="MainViewController" customModule="Shopping_List" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="i2M-Tw-f80">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hIb-uV-oUA" userLabel="Header view">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="146"/>
+                                <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SQB-cp-EOJ">
+                                        <rect key="frame" x="87.666666666666686" y="102" width="200" height="29"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="jhV-1t-dLN"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="List"/>
+                                            <segment title="History"/>
+                                        </segments>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </segmentedControl>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0hW-fc-I8X">
+                                        <rect key="frame" x="321" y="40" width="46" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="dkq-ma-Vo1"/>
+                                            <constraint firstAttribute="width" constant="46" id="nEg-IM-Zqm"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="contentEdgeInsets" minX="0.0" minY="-2" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" image="Options"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fko-Jh-lZH">
+                                        <rect key="frame" x="18" y="40" width="295" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="0vn-RD-dkx"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Lamont House"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="Theme"/>
+                                <constraints>
+                                    <constraint firstItem="SQB-cp-EOJ" firstAttribute="centerX" secondItem="hIb-uV-oUA" secondAttribute="centerX" id="5Ia-a5-lry"/>
+                                    <constraint firstItem="fko-Jh-lZH" firstAttribute="top" secondItem="hIb-uV-oUA" secondAttribute="top" constant="40" id="IXG-Ed-HA7"/>
+                                    <constraint firstAttribute="trailing" secondItem="0hW-fc-I8X" secondAttribute="trailing" constant="8" id="Iok-nk-5Es"/>
+                                    <constraint firstItem="fko-Jh-lZH" firstAttribute="leading" secondItem="hIb-uV-oUA" secondAttribute="leading" constant="18" id="L8Q-FF-A9q"/>
+                                    <constraint firstAttribute="bottom" secondItem="SQB-cp-EOJ" secondAttribute="bottom" constant="16" id="Q3M-U3-POM"/>
+                                    <constraint firstItem="0hW-fc-I8X" firstAttribute="leading" secondItem="fko-Jh-lZH" secondAttribute="trailing" constant="8" id="VHe-5A-0rA"/>
+                                    <constraint firstItem="0hW-fc-I8X" firstAttribute="top" secondItem="hIb-uV-oUA" secondAttribute="top" constant="40" id="XiZ-W8-7nT"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.40000000000000002"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UCD-Fp-yTx">
+                                <rect key="frame" x="0.0" y="704" width="375" height="108"/>
+                                <subviews>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r2B-ex-7rg">
+                                        <rect key="frame" x="16" y="16" width="343" height="56"/>
+                                        <color key="backgroundColor" name="Theme"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="56" id="rwO-Oe-Nol"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <state key="normal" title="Add new item">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96624473011217893" green="0.96157688117443896" blue="0.9709125790499189" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="r2B-ex-7rg" firstAttribute="leading" secondItem="UCD-Fp-yTx" secondAttribute="leading" constant="16" id="0z3-VO-HaF"/>
+                                    <constraint firstAttribute="height" constant="108" id="3ge-wC-u5V"/>
+                                    <constraint firstItem="r2B-ex-7rg" firstAttribute="top" secondItem="UCD-Fp-yTx" secondAttribute="top" constant="16" id="pwc-Qa-V3g"/>
+                                    <constraint firstAttribute="trailing" secondItem="r2B-ex-7rg" secondAttribute="trailing" constant="16" id="qEr-wq-UT9"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.050000000000000003"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" name="Background"/>
+                        <constraints>
+                            <constraint firstItem="OTX-De-Wyf" firstAttribute="top" secondItem="hIb-uV-oUA" secondAttribute="bottom" constant="-102" id="93z-T0-7Cl"/>
+                            <constraint firstAttribute="bottom" secondItem="UCD-Fp-yTx" secondAttribute="bottom" id="Edh-nc-GkB"/>
+                            <constraint firstItem="hIb-uV-oUA" firstAttribute="top" secondItem="i2M-Tw-f80" secondAttribute="top" id="LSQ-ZS-9jU"/>
+                            <constraint firstItem="OTX-De-Wyf" firstAttribute="trailing" secondItem="hIb-uV-oUA" secondAttribute="trailing" id="azE-MI-qBX"/>
+                            <constraint firstItem="UCD-Fp-yTx" firstAttribute="leading" secondItem="OTX-De-Wyf" secondAttribute="leading" id="dmc-3B-Pcy"/>
+                            <constraint firstItem="hIb-uV-oUA" firstAttribute="leading" secondItem="OTX-De-Wyf" secondAttribute="leading" id="gA3-jO-gcg"/>
+                            <constraint firstItem="UCD-Fp-yTx" firstAttribute="trailing" secondItem="OTX-De-Wyf" secondAttribute="trailing" id="ocL-4M-7c1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="OTX-De-Wyf"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ggm-TS-pft" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="93.599999999999994" y="138.91625615763547"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Options" width="29" height="32"/>
+        <namedColor name="Background">
+            <color red="0.94900000095367432" green="0.94900000095367432" blue="0.94900000095367432" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Theme">
+            <color red="0.16500000655651093" green="0.57300001382827759" blue="0.18000000715255737" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
