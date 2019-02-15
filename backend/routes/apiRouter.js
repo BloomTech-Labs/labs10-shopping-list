@@ -3,8 +3,8 @@ const apiRouter = express.Router();
 
 // imports the router for '/user' endpoints
 const userRouter = require('./user/userRouter');
-
 const authRouter = require('./auth/authRouter');
+const groupRouter = require('./group/groupRouter');
 
 // this will import the routers from the other API paths and use them for their respective endpoints
 
@@ -19,5 +19,7 @@ apiRouter.get('/', (req, res) => {
 apiRouter.use('/user', userRouter);
 
 apiRouter.use('/auth', authRouter);
+
+apiRouter.use('/group', groupRouter);
 
 module.exports = apiRouter;

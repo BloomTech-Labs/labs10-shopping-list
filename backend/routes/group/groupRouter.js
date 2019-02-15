@@ -80,6 +80,56 @@ groupRouter.get('/:id/users', (req, res) => {
 /**
  * Create new group
  */
+groupRouter.post('/', (req, res) => {
+
+    // First, create the group
+
+    console.log(req.body);
+    let group = {
+        name: req.body.name,
+        userID: req.body.userID
+    }
+
+    groupDb.add(group).then(id => {
+        console.log('groupID', id);
+        if(!id || !id === undefined){
+            return res.status(404).json({error: `Error creating group. Please check your parameters.`})
+        } else {
+            // create user-group link
+            let groupID = id[0];
+            console.log('group id: ', groupID);
+            let groupMember = {
+                userID : group.userID,
+                groupID : groupID,
+                moderator: 1,
+                weeklyNotification: 1,
+                monthlyNotification: 1,
+                total: 0,
+                net: 0
+            }
+
+            groupMembersDb.add(groupMember).then(groupLinkID => {
+                console.log('group-link ID: ', groupLinkID);
+                if(!groupLinkID){
+                    return res.status(404).json({error: `Error creating group-user link.`})
+                } else {
+                    return res.status(201).json({message: `Group created with ID ${groupID}, group-user linked with ID ${groupLinkID}`})
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                return res.status(500).json({error: `Error creating user-group link.`})
+            })
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Error creating group.`})
+    })
+    
+})
+
+
 
 /**
  * Add member to group
@@ -95,3 +145,6 @@ groupRouter.get('/:id/users', (req, res) => {
 
  /** Designate group moderator (true/false)
  */
+
+
+module.exports = groupRouter;
