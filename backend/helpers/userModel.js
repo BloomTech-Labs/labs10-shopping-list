@@ -49,7 +49,7 @@ function add(user) {
  */
 function update(id, changes) {
   return db("users")
-    .where({ id })
+    .where('id', Number(id)) // ensure the id is a number not a string
     .update(changes);
 }
 
