@@ -44,7 +44,8 @@ groupRouter.get('/', (req, res) => {
  */
 
 groupRouter.get('/:id', (req, res) => {
-    groupDb.get().then(group => {
+    const groupID = req.params.id
+    groupDb.getById(groupID).then(group => {
         if(!group){
             return res.status(404).json({error: `Could not find group with ID ${id}.`})
         } else {
@@ -141,22 +142,37 @@ groupRouter.post('/:groupID', (req, res) => {
     const groupID = req.params.groupID;
     const userID = req.body.userID;
 
-    const groupMember = {
-        userID : userID, // the user ID of the group creator
-        groupID : groupID, // the group ID from the groups Database
-        moderator: 0, // set as false when adding to group
-        weeklyNotification: 1, // auto-subscribe to weekly reports
-        monthlyNotification: 1, // auto-subscribe to monthly reports
-        total: 0, // initialize total to 0
-        net: 0 // initialize net to 0
-    }
+    console.log('group ID', groupID);
 
-
-    groupMembersDb.add(groupMember).then(groupLinkID => {
-        if(!groupLinkID){
-            return res.status(404).json({error: `Error creating group-user link.`})
+    // Verify that the group exists
+    groupDb.getById(groupID).then(group => {
+        console.log('group', group);
+        if(!group || group.length === 0){
+            console.log('group does not exist');
+            return res.status(404).json({error: `That group does not exist.`})
         } else {
-            return res.status(201).json({message: `User with ID ${userID} added to group with ID ${groupID} with group-user link ID ${groupLinkID}.`})
+
+            const groupMember = {
+                userID : userID, // the user ID of the group creator
+                groupID : groupID, // the group ID from the groups Database
+                moderator: 0, // set as false when adding to group
+                weeklyNotification: 1, // auto-subscribe to weekly reports
+                monthlyNotification: 1, // auto-subscribe to monthly reports
+                total: 0, // initialize total to 0
+                net: 0 // initialize net to 0
+            }
+
+            groupMembersDb.add(groupMember).then(groupLinkID => {
+                if(!groupLinkID){
+                    return res.status(404).json({error: `Error creating group-user link.`})
+                } else {
+                    return res.status(201).json({message: `User with ID ${userID} added to group with ID ${groupID} with group-user link ID ${groupLinkID}.`})
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                return res.status(500).json({error: `Error adding user to group.`})
+            })
         }
     })
     .catch(err => {
@@ -196,5 +212,9 @@ groupRouter.post('/:groupID', (req, res) => {
  /** Change group moderator (true/false => 1/0)
  */
 
+
+/**
+ * delete group (must delete all user-group links in groupMembers table)
+ */
 
 module.exports = groupRouter;
