@@ -16,6 +16,5 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
         super.viewDidLoad()
     }
 
-    
 }
 
