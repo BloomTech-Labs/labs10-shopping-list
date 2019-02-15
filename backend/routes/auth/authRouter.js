@@ -3,14 +3,6 @@ const authRouter = express.Router();
 const jwt = require('jsonwebtoken');
 // import middleware and packages
 const passport = require('passport');
-// const session = require('express-session');
-
-// const sess = {
-//     secret: process.env.SUPER_SECRET,
-//     cookie: {},
-//     resave: false,
-//     saveUninitialized: true
-// };
 
 const Auth0Strategy = require('passport-auth0');
 
@@ -23,12 +15,10 @@ if(process.env.NODE_ENV === 'production'){
     sess.cookie.secure = true; // serves secure cookies in https production
 }
 
-// authRouter.use(session(sess));
 authRouter.use(passport.initialize());
-// authRouter.use(passport.session());
 
 const auth0_strategy = new Auth0Strategy({
-    state: false,
+    state: false, // our strategy does not need to use sessions, instead will use JWT in localStorage
     domain: process.env.AUTH0_DOMAIN,
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
@@ -41,16 +31,11 @@ const auth0_strategy = new Auth0Strategy({
         // accessToken is the token to call Auth0 API (not needed in the most cases)
         // extraParams.id_token has the JSON Web Token
         // profile has all the information from the user
-        // console.log(accessToken);
-        // console.log('JWT: \n' +  extraParams.id_token + '\n');
-        // const jwt = extraParams.id_token;
-        // // console.log('User Profile', profile);
-        return done(null, profile);
+        return done(null, profile, extraParams);
     }
 );
 
-passport.use(auth0_strategy);
-
+passport.use(auth0_strategy); // use Auth0 strategy as middleware
 
 authRouter.get('/', (req, res) => {
     res.send('This is the /auth root endpoint.');
@@ -64,9 +49,7 @@ authRouter.get('/success', (req, res) => {
 authRouter.get('/login',
     passport.authenticate('auth0', {
         scope: 'openid email profile',
-        // audience: 'https://shoptrak.auth0.com/api/v2/',
-
-        // connection: 'google-oauth2'
+        session: false,
     }), function(req, res){
         res.redirect(process.env.AUTH0_SUCCESS_URL || 'http://localhost:9000/api/auth/success');
     });
@@ -84,17 +67,19 @@ authRouter.get('/callback', function(req, res, next){
             if(err){
                 res.status(500).json({error: `Error logging in.`})
             }
-
-            // generate the token
-            console.log('user', user._json.user);
-            const token = jwt.sign(user._json, process.env.AUTH0_CLIENT_SECRET);
-            console.log('\nTOKEN TOKEN TOKEN TOKEN\n', token);
+            console.log('info', info.id_token);
+            console.log('user', user._json);
+            
+            let token = info.id_token; // collect the generated user token
+            
             // const returnTo = req.session.returnTo;
             // delete req.session.returnTo;
             // res.redirect(returnTo || 'http://localhost:9000/api/auth/success')
-            res.status(200).json({user, token});
+            
+            
+            res.status(200).json({user, token}); // sends back the user profile and the generated JSON web token to the client
 
-            // on the front end, if the user gets a token, redirect to their profile page
+            // on the front end, if the user gets a token, store it, then redirect to their profile page
 
         })
     })(req, res, next);
