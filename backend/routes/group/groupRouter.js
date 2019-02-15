@@ -181,7 +181,7 @@ groupRouter.post('/:groupID', (req, res) => {
     })
 })
 
-/**n
+/**
  * Remove member from group
  */
 

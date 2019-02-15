@@ -6,7 +6,7 @@ const passport = require('passport');
 const session = require('express-session');
 
 const sess = {
-    secret: 'THIS IS TOP FRICCIN SECRET MOM',
+    secret: process.env.SUPER_SECRET,
     cookie: {},
     resave: false,
     saveUninitialized: true

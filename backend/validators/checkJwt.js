@@ -25,7 +25,7 @@ const checkJwt = jwt({
     }),
     
     // audience: `https://shoptrak.auth0.com/api/v2/`,
-    // issuer: `https://${process.env.AUTH0_DOMAIN}`,
+    issuer: `https://${process.env.AUTH0_DOMAIN}/`,
     algorithms: ['RS256']
 });
 
