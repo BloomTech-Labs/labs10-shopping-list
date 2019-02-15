@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import TestComponent from "../components/TestComponent/TestComponent.jsx";
-import Navigation from '../components/Navigation/Navigation.jsx';
+// import Navigation from '../components/Navigation/Navigation.jsx';
 
 class TitlebarView extends Component {
   state = {

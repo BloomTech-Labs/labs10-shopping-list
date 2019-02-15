@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import Navigation from '../../components/Navigation/Navigation.jsx';
 
 function TestComponent(props) {
