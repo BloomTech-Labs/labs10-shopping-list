@@ -1,16 +1,16 @@
 const express = require('express');
 const authRouter = express.Router();
-
+const jwt = require('jsonwebtoken');
 // import middleware and packages
 const passport = require('passport');
-const session = require('express-session');
+// const session = require('express-session');
 
-const sess = {
-    secret: process.env.SUPER_SECRET,
-    cookie: {},
-    resave: false,
-    saveUninitialized: true
-};
+// const sess = {
+//     secret: process.env.SUPER_SECRET,
+//     cookie: {},
+//     resave: false,
+//     saveUninitialized: true
+// };
 
 const Auth0Strategy = require('passport-auth0');
 
@@ -23,12 +23,12 @@ if(process.env.NODE_ENV === 'production'){
     sess.cookie.secure = true; // serves secure cookies in https production
 }
 
-authRouter.use(session(sess));
+// authRouter.use(session(sess));
 authRouter.use(passport.initialize());
-authRouter.use(passport.session());
-
+// authRouter.use(passport.session());
 
 const auth0_strategy = new Auth0Strategy({
+    state: false,
     domain: process.env.AUTH0_DOMAIN,
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
@@ -42,8 +42,9 @@ const auth0_strategy = new Auth0Strategy({
         // extraParams.id_token has the JSON Web Token
         // profile has all the information from the user
         // console.log(accessToken);
-        console.log('JWT: \n' +  extraParams.id_token + '\n');
-        console.log('User Profile', profile);
+        // console.log('JWT: \n' +  extraParams.id_token + '\n');
+        // const jwt = extraParams.id_token;
+        // // console.log('User Profile', profile);
         return done(null, profile);
     }
 );
@@ -67,45 +68,50 @@ authRouter.get('/login',
 
         // connection: 'google-oauth2'
     }), function(req, res){
-        console.log('/login pass auth0', req);
-        res.redirect('http://localhost:9000/api/auth/success');
+        res.redirect(process.env.AUTH0_SUCCESS_URL || 'http://localhost:9000/api/auth/success');
     });
 
-// authRouter.get('/login/google',
-//     passport.authenticate('auth0', {connection: 'google-oauth2'}), function(req, res){
-//         res.redirect('http://localhost:9000/api/auth/success');
-//     })
-
-
 authRouter.get('/callback', function(req, res, next){
-    passport.authenticate('auth0', function(err, user, info){
-        console.log(req.user);
-        if(err){ return next(err) }
-        if(!user){ return res.redirect('http://localhost:9000/api/auth/login'); }
-        req.logIn(user, function(err){
-            if(err){ return next(err); }
-            const returnTo = req.session.returnTo;
-            delete req.session.returnTo;
-            res.redirect(returnTo || 'http://localhost:9000/api/auth/success');
-        });
+    passport.authenticate('auth0', {session: false}, function(err, user, info){
+        if(err) {
+            return next(err);
+        }
+
+        if(!user){
+            return res.redirect('http://localhost:9000/api/auth/login');
+        }
+        req.logIn(user, {session: false}, function(err){
+            if(err){
+                res.status(500).json({error: `Error logging in.`})
+            }
+
+            // generate the token
+            console.log('user', user._json.user);
+            const token = jwt.sign(user._json, process.env.AUTH0_CLIENT_SECRET);
+            console.log('\nTOKEN TOKEN TOKEN TOKEN\n', token);
+            // const returnTo = req.session.returnTo;
+            // delete req.session.returnTo;
+            // res.redirect(returnTo || 'http://localhost:9000/api/auth/success')
+            res.status(200).json({user, token});
+
+            // on the front end, if the user gets a token, redirect to their profile page
+
+        })
     })(req, res, next);
-});
-
-
+})
 
 passport.serializeUser(function(user, done){
-    console.log('serialize', user);
+    // console.log('serialize', user);
     done(null, user);
 });
 
 passport.deserializeUser(function(user, done){
-    console.log('deserialize', user)
+    // console.log('deserialize', user)
     done(null, user);
 })
 
 
 authRouter.get('/logout', (req, res) => {
-    console.log(req.user);
     req.logout();
     res.redirect('http://localhost:9000');
 })
