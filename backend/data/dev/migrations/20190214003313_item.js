@@ -14,7 +14,7 @@ exports.up = function(knex, Promise) {
         table.date('purchasedOn');
 
         // will eventually be a foreign key when category table is created
-        table.string('category', 255);
+        table.string('category', 255).references('id').inTable('categories');
 
         // timestamps the moment of user creation (i.e. registration date)
         table.timestamp('createdAt').defaultTo(knex.fn.now());
