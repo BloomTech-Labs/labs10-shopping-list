@@ -10,7 +10,7 @@ const checkJwt = require('../../validators/checkJwt');
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/group ENDPOINT **/
 /****************************************************************************************************/
 
-/** ADD USER TO DATABASE
+/** ADD GROUP TO DATABASE
  * @param group = {userID: ID of user, name: "name of group"}, this is gathered from the @param req.body
  * @return id = group ID primary key in groups table (e.g. 1, 3, 22, etc.);
  * ID is generated upon group creation
@@ -20,6 +20,9 @@ const checkJwt = require('../../validators/checkJwt');
  *
  * ***********************************************/
 
+/** ADD GROUP
+ * @TODO Add middleware to ensure user is logged in
+ * **/
 groupRouter.post('/', (req, res) => {
     console.log(req.body);
     let group = req.body;
