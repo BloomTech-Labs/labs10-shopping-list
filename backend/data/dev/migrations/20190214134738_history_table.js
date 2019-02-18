@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
         table.increments('id');
         table.integer('purchasedBy').references('id').inTable('users').notNullable();
         table.integer('groupID').references('id').inTable('groups').notNullable();
-        table.integer('itemID').references('id').inTable('groups').notNullable();
+        table.integer('itemID').references('id').inTable('items').notNullable();
         table.float('total').notNullable();
         table.date('purchasedOn').notNullable();
         table.timestamp('createdAt').defaultTo(knex.fn.now());
