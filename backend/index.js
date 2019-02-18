@@ -15,7 +15,7 @@ server.listen(port, () => console.log(`\n Server running on port ${port}. \n`));
 
 // ** start of endpoints code **
 
-// process.setMaxListeners(0);
+process.setMaxListeners(0);
 
 // loops through all routes; coverages all server endpoints
 
