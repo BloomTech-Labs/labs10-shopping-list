@@ -14,7 +14,7 @@ const checkJwt = require('../../validators/checkJwt');
  * @param group = {userID: ID of user, name: "name of group"}, this is gathered from the @param req.body
  * @return id = group ID primary key in groups table (e.g. 1, 3, 22, etc.);
  * ID is generated upon group creation
- * @param group.userID is the id of the user that is the owner of the group
+ * @param group.userID is the id of the user that is the owner of the group. Not nullable.
  * @param group.name is the name of the group. Not nullable.
  * @param group.token is an optional parameter to generate a unique token to invite other members
  *
@@ -38,6 +38,7 @@ groupRouter.post('/', (req, res) => {
             console.log(gid);
             return res.status(200).json({message: `Group added to database with ID ${id[0]}`, id: id[0]});
         }).catch(err => {
+            console.log(err);
             return res.status(500).json({error: `Error when adding group member.`});
         })
     })
