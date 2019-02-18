@@ -15,8 +15,6 @@
 		96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96476B4A2215D41300E57EB9 /* ShoppingList.xcdatamodeld */; };
 		96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4D2215D41300E57EB9 /* LaunchScreen.storyboard */; };
 		96476B522215D41300E57EB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4F2215D41300E57EB9 /* Assets.xcassets */; };
-		969A83C62215C9840003BB37 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 969A83C32215C9840003BB37 /* MainViewController.storyboard */; };
-		969A83C72215C9840003BB37 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83C42215C9840003BB37 /* MainViewController.swift */; };
 		969A83C82215C9840003BB37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83C52215C9840003BB37 /* AppDelegate.swift */; };
 		969A84012215C99A0003BB37 /* ChameleonShorthand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83CF2215C99A0003BB37 /* ChameleonShorthand.swift */; };
 		969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83D22215C99A0003BB37 /* UIColor+ChameleonPrivate.m */; };
@@ -49,6 +47,11 @@
 		969A841D2215C99A0003BB37 /* Instantiatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FE2215C99A0003BB37 /* Instantiatable.swift */; };
 		969A841E2215C99A0003BB37 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FF2215C99A0003BB37 /* Identifier.swift */; };
 		969A841F2215C99A0003BB37 /* ViewLoadBeforeInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A84002215C99A0003BB37 /* ViewLoadBeforeInject.swift */; };
+		96DE302A221637EB00213C3E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE3029221637EA00213C3E /* Constants.swift */; };
+		96DE3032221637FE00213C3E /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96DE302D221637FE00213C3E /* MainViewController.storyboard */; };
+		96DE3033221637FE00213C3E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE302E221637FE00213C3E /* MainViewController.swift */; };
+		96DE3034221637FE00213C3E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE3030221637FE00213C3E /* LoginViewController.swift */; };
+		96DE3035221637FE00213C3E /* LoginViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96DE3031221637FE00213C3E /* LoginViewController.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,8 +65,6 @@
 		96476B4B2215D41300E57EB9 /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
 		96476B4E2215D41300E57EB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		96476B4F2215D41300E57EB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		969A83C32215C9840003BB37 /* MainViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
-		969A83C42215C9840003BB37 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		969A83C52215C9840003BB37 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		969A83CB2215C99A0003BB37 /* ShoppingList-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShoppingList-Bridging-Header.h"; sourceTree = "<group>"; };
 		969A83CC2215C99A0003BB37 /* Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon.h; sourceTree = "<group>"; };
@@ -113,6 +114,11 @@
 		969A83FE2215C99A0003BB37 /* Instantiatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instantiatable.swift; sourceTree = "<group>"; };
 		969A83FF2215C99A0003BB37 /* Identifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
 		969A84002215C99A0003BB37 /* ViewLoadBeforeInject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewLoadBeforeInject.swift; sourceTree = "<group>"; };
+		96DE3029221637EA00213C3E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		96DE302D221637FE00213C3E /* MainViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
+		96DE302E221637FE00213C3E /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		96DE3030221637FE00213C3E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		96DE3031221637FE00213C3E /* LoginViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LoginViewController.storyboard; sourceTree = "<group>"; };
 		B5F3823A7F0AFA3E748D368C /* Pods-ShoppingList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingList.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList.release.xcconfig"; sourceTree = "<group>"; };
 		D02D1468A28720647C51821F /* Pods-ShoppingList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShoppingList.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -161,9 +167,10 @@
 			isa = PBXGroup;
 			children = (
 				969A83C52215C9840003BB37 /* AppDelegate.swift */,
+				96DE3029221637EA00213C3E /* Constants.swift */,
 				96476B4A2215D41300E57EB9 /* ShoppingList.xcdatamodeld */,
+				96DE302B221637FE00213C3E /* View Controllers */,
 				112430AC221611B30081784C /* Controllers */,
-				969A83C22215C9840003BB37 /* MainViewController */,
 				443C1B4A2215F0DA00220C28 /* Model */,
 				969A83C92215C99A0003BB37 /* Frameworks */,
 				969A83C02215C94F0003BB37 /* Resources */,
@@ -204,15 +211,6 @@
 				96476B4D2215D41300E57EB9 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		969A83C22215C9840003BB37 /* MainViewController */ = {
-			isa = PBXGroup;
-			children = (
-				969A83C32215C9840003BB37 /* MainViewController.storyboard */,
-				969A83C42215C9840003BB37 /* MainViewController.swift */,
-			);
-			path = MainViewController;
 			sourceTree = "<group>";
 		};
 		969A83C92215C99A0003BB37 /* Frameworks */ = {
@@ -326,6 +324,33 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
+		96DE302B221637FE00213C3E /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				96DE302C221637FE00213C3E /* MainViewController */,
+				96DE302F221637FE00213C3E /* LoginViewController */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		96DE302C221637FE00213C3E /* MainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				96DE302D221637FE00213C3E /* MainViewController.storyboard */,
+				96DE302E221637FE00213C3E /* MainViewController.swift */,
+			);
+			path = MainViewController;
+			sourceTree = "<group>";
+		};
+		96DE302F221637FE00213C3E /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				96DE3030221637FE00213C3E /* LoginViewController.swift */,
+				96DE3031221637FE00213C3E /* LoginViewController.storyboard */,
+			);
+			path = LoginViewController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -388,8 +413,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */,
+				96DE3035221637FE00213C3E /* LoginViewController.storyboard in Resources */,
+				96DE3032221637FE00213C3E /* MainViewController.storyboard in Resources */,
 				96476B522215D41300E57EB9 /* Assets.xcassets in Resources */,
-				969A83C62215C9840003BB37 /* MainViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +478,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				969A84072215C99A0003BB37 /* Chameleon_.m in Sources */,
+				96DE302A221637EB00213C3E /* Constants.swift in Sources */,
 				969A84112215C99A0003BB37 /* Reusable+NSCollectionView.swift in Sources */,
 				969A84092215C99A0003BB37 /* UINavigationController+Chameleon.m in Sources */,
 				969A84122215C99A0003BB37 /* Nib+NSView.swift in Sources */,
@@ -475,9 +502,10 @@
 				969A84052215C99A0003BB37 /* UIButton+Chameleon.m in Sources */,
 				969A83C82215C9840003BB37 /* AppDelegate.swift in Sources */,
 				969A841F2215C99A0003BB37 /* ViewLoadBeforeInject.swift in Sources */,
-				969A83C72215C9840003BB37 /* MainViewController.swift in Sources */,
 				969A84062215C99A0003BB37 /* UIView+ChameleonPrivate.m in Sources */,
 				969A84132215C99A0003BB37 /* Nib.swift in Sources */,
+				96DE3033221637FE00213C3E /* MainViewController.swift in Sources */,
+				96DE3034221637FE00213C3E /* LoginViewController.swift in Sources */,
 				969A84082215C99A0003BB37 /* NSArray+Chameleon.m in Sources */,
 				969A840A2215C99A0003BB37 /* UILabel+Chameleon.m in Sources */,
 				969A84162215C99A0003BB37 /* Reusable+UICollectionView.swift in Sources */,
