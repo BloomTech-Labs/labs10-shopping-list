@@ -10,6 +10,7 @@
 		112430AB221611B00081784C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AA221611B00081784C /* CoreDataManager.swift */; };
 		112430AE2216267E0081784C /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AD2216267E0081784C /* GroupController.swift */; };
 		112430B0221631350081784C /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AF221631350081784C /* ItemController.swift */; };
+		11B518DC221B29100048C49C /* TripController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B518DB221B29100048C49C /* TripController.swift */; };
 		1423D70A921BE0FF6817A9D5 /* Pods_ShoppingList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */; };
 		96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96476B4A2215D41300E57EB9 /* ShoppingList.xcdatamodeld */; };
 		96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4D2215D41300E57EB9 /* LaunchScreen.storyboard */; };
@@ -54,6 +55,7 @@
 		112430AA221611B00081784C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		112430AD2216267E0081784C /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		112430AF221631350081784C /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
+		11B518DB221B29100048C49C /* TripController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripController.swift; sourceTree = "<group>"; };
 		443C1B322214A45100220C28 /* ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96476B482215D40700E57EB9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 		112430AC221611B30081784C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				11B518DB221B29100048C49C /* TripController.swift */,
 				112430AD2216267E0081784C /* GroupController.swift */,
 				112430AF221631350081784C /* ItemController.swift */,
 				112430AA221611B00081784C /* CoreDataManager.swift */,
@@ -440,6 +443,7 @@
 				969A84112215C99A0003BB37 /* Reusable+NSCollectionView.swift in Sources */,
 				969A84092215C99A0003BB37 /* UINavigationController+Chameleon.m in Sources */,
 				969A84122215C99A0003BB37 /* Nib+NSView.swift in Sources */,
+				11B518DC221B29100048C49C /* TripController.swift in Sources */,
 				969A84042215C99A0003BB37 /* UIColor+Chameleon.m in Sources */,
 				969A840C2215C99A0003BB37 /* UIAppearance+Swift.m in Sources */,
 				969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */,
