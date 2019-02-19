@@ -306,13 +306,15 @@ None
 `token=[string]`<br>
 * **Success Response:**<br>
     * **Code:** 200<br>
-      **Content:** { message: "Group added to database with ID 8", id: 8}
+      **Content:** { message: "Group 13 successfully added.", group: { id: 13 }, groupMember: { id: 9 } }
 * **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
     * **Code:** 404 NOT FOUND<br>
-        **Content:** { error: "Group doesn't exist" }<br>
+        **Content:** { error: "The requested group does not exist." }<br>
     OR<br>
     * **Code:** 500 INTERNAL SERVER ERROR<br>
-        **Content:** { error: "Internal Server Error when adding group." }
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
 
 * **Sample Call:**
   ```javascript
@@ -350,14 +352,16 @@ Update a particular group
 `name=[string]`<br>
 `token=[string]`
 * **Success Response:**<br>
-    * **Code:** 200 OK<br>
-      **Content:** { message: "Group 9 successfully updated."}
+    * **Code:** 200<br>
+      **Content:** { message: "Group 13 successfully updated.", id: 13 }
 * **Error Response:**<br>
     * **Code:** 401 UNAUTHORIZED<br>
         **Content:** { error: "You are unauthorized to make this request." }<br>
-    OR<br>
     * **Code:** 404 NOT FOUND<br>
-        **Content:** { error: "Group 9 doesn't exist" }
+        **Content:** { error: "The requested group does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
 
 * **Sample Call:**
   ```javascript
@@ -396,16 +400,15 @@ Remove a particular group
 None
 * **Success Response:**<br>
     * **Code:** 200<br>
-      **Content:** { message: "Group with ID 10 successfully deleted"}
+      **Content:** { message: "Group 13 successfully removed.", id: 13 }
 * **Error Response:**<br>
     * **Code:** 401 UNAUTHORIZED<br>
         **Content:** { error: "You are unauthorized to make this request." }<br>
-    OR<br>
     * **Code:** 404 NOT FOUND<br>
-        **Content:** { error: "No group found with ID 10" }<br>
+        **Content:** { error: "The requested group does not exist." }<br>
     OR<br>
     * **Code:** 500 INTERNAL SERVER ERROR<br>
-        **Content:** { error: "INTERNAL SERVER ERROR deleting group with ID 9" }
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
 
 * **Sample Call:**
   ```javascript

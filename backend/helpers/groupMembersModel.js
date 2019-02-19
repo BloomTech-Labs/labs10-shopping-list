@@ -6,6 +6,7 @@ module.exports = {
   get,
   getByGroup,
   getByUser,
+  getById,
   add,
   update,
   remove
@@ -41,6 +42,10 @@ function getByUser(id) {
     .where("userId", id);
 }
 
+function getById(groupID, userID) {
+  return db.select("*").from("groupMembers").where({groupID}).where({userID});
+}
+
 /**
  * Adds a new group member to the database
  * @param groupMember - The new group member to add
@@ -62,6 +67,7 @@ function add(groupMember) {
  */
 function update(userID, groupID, changes) {
   return db("groupMembers")
+      .returning("id")
     .where('userID', userID)
     .where('groupID', groupID)
     .update(changes);
@@ -75,6 +81,7 @@ function update(userID, groupID, changes) {
  */
 function remove(userID, groupID) {
   return db("groupMembers")
+      .returning("id")
     .where('userID', userID)
     .where('groupID', groupID)
     .del();

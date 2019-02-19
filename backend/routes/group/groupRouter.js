@@ -37,11 +37,11 @@ groupRouter.post('/', (req, res) => {
             groupMembersDb.add(member).then(mId => {
                 const msg = {
                     message: `Group ${groupId} successfully added.`,
-                    Group: {
-                        id: groupId,
+                    group: {
+                        id: Number(groupId),
                     },
-                    GroupMember: {
-                        id: mId[0],
+                    groupMember: {
+                        id: Number(mId[0]),
                     }
                 }
 
@@ -137,7 +137,7 @@ groupRouter.put('/:id', (req, res) => {
     const changes = req.body;
     groupDb.update(id, changes).then(status => {
         if(status.length >= 1 || !status){
-            return res.status(200).json({message: `Group ${id} successfully updated.`, id: id});
+            return res.status(200).json({message: `Group ${id} successfully updated.`, id: Number(id)});
 
         } else {
             return res.status(404).json({error: `The requested group does not exist.`});
@@ -162,26 +162,42 @@ groupRouter.put('/:id', (req, res) => {
 
 /**************************************************/
 
-groupRouter.delete('/:id', (req, res) => {
-    const id = req.params.id;
+groupRouter.delete('/remove', (req, res) => {
+    const {groupId, userId} = req.body;
+    console.log("groupId -> ", groupId);
+    console.log("userId -> ", userId);
 
-    groupDb.remove(id).then(status => {
-        if(status.length >= 1 || !status){
-            return res.status(200).json({message: `Group ${id} successfully removed.`, id: id});
 
-        } else {
-            return res.status(404).json({error: `The requested group does not exist.`});
-        }
-    })
-        .catch(err => {
-            const error = {
-                message: `Error removing group with ID ${id}.`,
-                data: {
-                    err: err
-                },
+    groupMembersDb.remove(userId, groupId).then(id => {
+        groupDb.remove(groupId).then(status => {
+            if(status.length >= 1 || !status){
+                return res.status(200).json({message: `Group ${status[0]} successfully removed.`, id: Number(groupId)});
+
+            } else {
+                return res.status(404).json({error: `The requested group does not exist.`});
             }
-            return res.status(500).json(error);
         })
+            .catch(err => {
+                const error = {
+                    message: `Error removing group with ID ${groupId}.`,
+                    data: {
+                        err: err
+                    },
+                }
+                return res.status(500).json(error);
+            })
+
+    }).catch(err => {
+        const error = {
+            message: `Error removing group member with ID ${id[0]}.`,
+            data: {
+                err: err
+            },
+        }
+        return res.status(500).json(error);
+    })
+
+
 })
 
 module.exports = groupRouter;
