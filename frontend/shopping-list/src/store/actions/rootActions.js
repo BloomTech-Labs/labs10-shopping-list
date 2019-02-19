@@ -15,3 +15,4 @@ export const testFunction = () => dispatch => {
 
   dispatch({ type: TEST_FAILURE });
 };
+

@@ -9,10 +9,10 @@ const checkJwt = require('../../validators/checkJwt');
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/user ENDPOINT **/
 /****************************************************************************************************/
 
-userRouter.get('/', checkJwt, (req, res) => {
-    console.log(req.body);
-    res.send('This is the /user root endpoint.'); // test the protected middleware by passing the JWT into Authorization header with 'Bearer <TOKEN>' value
-});
+// userRouter.get('/', checkJwt, (req, res) => {
+//     console.log(req.body);
+//     res.send('This is the /user root endpoint.'); // test the protected middleware by passing the JWT into Authorization header with 'Bearer <TOKEN>' value
+// });
 
 /**************************************************/
 
