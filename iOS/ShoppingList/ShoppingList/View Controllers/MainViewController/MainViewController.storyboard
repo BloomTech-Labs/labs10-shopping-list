@@ -42,6 +42,9 @@
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="contentEdgeInsets" minX="0.0" minY="-2" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" image="Options"/>
+                                        <connections>
+                                            <action selector="settingsButtonPressed:" destination="WgK-Rm-0lC" eventType="touchUpInside" id="SbN-wV-dsc"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fko-Jh-lZH">
                                         <rect key="frame" x="18" y="40" width="295" height="60"/>
@@ -50,18 +53,18 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Lamont House"/>
+                                        <state key="normal" title="Group name"/>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" name="Theme"/>
                                 <constraints>
                                     <constraint firstItem="SQB-cp-EOJ" firstAttribute="centerX" secondItem="hIb-uV-oUA" secondAttribute="centerX" id="5Ia-a5-lry"/>
-                                    <constraint firstItem="fko-Jh-lZH" firstAttribute="top" secondItem="hIb-uV-oUA" secondAttribute="top" constant="40" id="IXG-Ed-HA7"/>
+                                    <constraint firstAttribute="bottom" secondItem="0hW-fc-I8X" secondAttribute="bottom" constant="46" id="6eF-mY-62y"/>
+                                    <constraint firstItem="SQB-cp-EOJ" firstAttribute="top" secondItem="fko-Jh-lZH" secondAttribute="bottom" constant="2" id="EgD-ac-pDX"/>
                                     <constraint firstAttribute="trailing" secondItem="0hW-fc-I8X" secondAttribute="trailing" constant="8" id="Iok-nk-5Es"/>
                                     <constraint firstItem="fko-Jh-lZH" firstAttribute="leading" secondItem="hIb-uV-oUA" secondAttribute="leading" constant="18" id="L8Q-FF-A9q"/>
                                     <constraint firstAttribute="bottom" secondItem="SQB-cp-EOJ" secondAttribute="bottom" constant="16" id="Q3M-U3-POM"/>
                                     <constraint firstItem="0hW-fc-I8X" firstAttribute="leading" secondItem="fko-Jh-lZH" secondAttribute="trailing" constant="8" id="VHe-5A-0rA"/>
-                                    <constraint firstItem="0hW-fc-I8X" firstAttribute="top" secondItem="hIb-uV-oUA" secondAttribute="top" constant="40" id="XiZ-W8-7nT"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">

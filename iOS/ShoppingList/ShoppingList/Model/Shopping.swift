@@ -5,7 +5,6 @@
 //  Created by Shopping List on 2/14/19.
 //  Copyright © 2019 Lambda School Labs. All rights reserved.
 //
-
 import Foundation
 
 protocol Shopping {
@@ -18,7 +17,6 @@ protocol Shopping {
     func invite ( userId:Int, groupId: Int, completion: @escaping (GroupList? , Error?)-> Void )
     func addItem (groupId: Int, item: Items, completion: @escaping (GroupList? , Error?)-> Void )
     func markBought (groupId: Int, itemId: Int, completion: @escaping (GroupList? , Error?)-> Void )
-    //func billing(completion: @escaping( [Group]?, Error?)-> Void)
 }
 
 struct UserDetail {
@@ -30,7 +28,7 @@ struct GroupList {
     let group: Group
     let items: [Items]
     let users: [UserDetail]
-    
+
 }
 
 struct Purchase {
@@ -45,5 +43,3 @@ struct GroupHistory {
     let purchases: [Purchase]
     let users: [UserDetail]
 }
-
-// XXX: why are items plural here?

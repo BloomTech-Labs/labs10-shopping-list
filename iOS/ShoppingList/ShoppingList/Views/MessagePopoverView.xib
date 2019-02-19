@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="eJT-Tk-S6e" userLabel="Message popover view" customClass="MessagePopoverView" customModule="ShoppingList" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="260"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the message popover's message. It is a string, that is set when calling the message popover." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sPf-n3-Ig0">
+                    <rect key="frame" x="22" y="20" width="331" height="156"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                    <color key="textColor" white="0.5" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBh-62-Ha1">
+                    <rect key="frame" x="12" y="196" width="351" height="52"/>
+                    <color key="backgroundColor" name="Theme"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="52" id="LgU-rq-jXO"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <state key="normal" title="OK">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="okButtonPressed:" destination="eJT-Tk-S6e" eventType="touchUpInside" id="dEW-am-S80"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" name="Background"/>
+            <constraints>
+                <constraint firstItem="eW6-9g-ujb" firstAttribute="trailing" secondItem="TBh-62-Ha1" secondAttribute="trailing" constant="12" id="3az-nJ-J1u"/>
+                <constraint firstItem="eW6-9g-ujb" firstAttribute="bottom" secondItem="TBh-62-Ha1" secondAttribute="bottom" constant="12" id="EcG-w8-y4N"/>
+                <constraint firstItem="sPf-n3-Ig0" firstAttribute="leading" secondItem="eW6-9g-ujb" secondAttribute="leading" constant="22" id="Kv2-nw-9AV"/>
+                <constraint firstItem="sPf-n3-Ig0" firstAttribute="top" secondItem="eW6-9g-ujb" secondAttribute="top" constant="20" id="QIE-I6-ux2"/>
+                <constraint firstItem="TBh-62-Ha1" firstAttribute="top" secondItem="sPf-n3-Ig0" secondAttribute="bottom" constant="20" id="euF-eF-KDQ"/>
+                <constraint firstItem="TBh-62-Ha1" firstAttribute="leading" secondItem="eW6-9g-ujb" secondAttribute="leading" constant="12" id="oiK-Fe-EKv"/>
+                <constraint firstItem="eW6-9g-ujb" firstAttribute="trailing" secondItem="sPf-n3-Ig0" secondAttribute="trailing" constant="22" id="x3h-xr-5Q7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="eW6-9g-ujb"/>
+            <connections>
+                <outlet property="messageLabel" destination="sPf-n3-Ig0" id="Jio-9J-mKL"/>
+            </connections>
+            <point key="canvasLocation" x="138.40000000000001" y="153.82308845577214"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="Background">
+            <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Theme">
+            <color red="0.16470588235294117" green="0.5725490196078431" blue="0.17647058823529413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

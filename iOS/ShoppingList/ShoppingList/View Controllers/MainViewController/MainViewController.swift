@@ -12,9 +12,20 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
 
     static let storyboardName: StoryboardName = "MainViewController"
     
+    // MARK: - Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    
+    // MARK: - IBActions
+    
+    @IBAction func settingsButtonPressed(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "SettingsTableViewController", bundle: nil)
+        let settingsVC = storyboard.instantiateInitialViewController() ?? SettingsTableViewController.instantiate()
+        present(settingsVC, animated: true, completion: nil)
+    }
+    
 
 }
 
