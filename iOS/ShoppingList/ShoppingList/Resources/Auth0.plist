@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<dict>
-    <key>ClientId</key>
-    <string>YOUR_CLIENT_ID</string>
-    <key>Domain</key>
-    <string>https://shoptrak.auth0.com/api/v2/</string>
-</dict>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-    
-    </dict>
+<dict>
+	<key>ClientId</key>
+	<string>ZANCq9a2udHp804fh7lzjSM3m07LnjBy</string>
+	<key>Domain</key>
+	<string>shoptrak.auth0.com</string>
+</dict>
 </plist>

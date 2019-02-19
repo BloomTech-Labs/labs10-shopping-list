@@ -18,7 +18,7 @@ class TripController {
             return
         }
         
-        newTrip.totalPrice = price
+        newTrip.totalPrice = Int32(price)
         newTrip.purchasedOn = Date()
         newTrip.updatedAt = Date()
         
