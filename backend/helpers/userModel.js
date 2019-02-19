@@ -8,7 +8,7 @@ module.exports = {
   getById,
   get,
   update,
-  getByEmail,
+  getIdByEmail
 }
 
 /**
@@ -21,23 +21,26 @@ function get() {
 
 /**
  * Returns the user of the given ID
- * @param id - The ID of the user
+ * @param id - The ID of the group
  * @returns {*} - Returns all information about the user from the given ID
  */
 function getById(id) {
   return db
-    .select("*")
-    .from("users")
-    .where({ id });
+      .select("*")
+      .from("users")
+      .where({ id });
 }
 
 /**
- * Returns the user of the given email address
- * @param email - The email of the user
- * @returns {*} - Returns all information about the user from the given email
+ * Returns the user ID associated with the given email
+ *
  */
-function getByEmail(email) {
-  return db.select("*").from("users").where({ email });
+
+function getIdByEmail(email){
+  return db
+      .select("id")
+      .from("users")
+      .where({email});
 }
 
 /**
@@ -47,9 +50,8 @@ function getByEmail(email) {
  */
 function add(user) {
   return db("users")
-    .returning("id")
-    .insert(user)
-    .into("users");
+      .insert(user)
+      .into("users");
 }
 
 /**
@@ -59,11 +61,9 @@ function add(user) {
  * @returns {*} - Returns the user ID
  */
 function update(id, changes) {
-  console.log("ID -> ", id);
   return db("users")
-      .returning("id")
-    .where({id})
-    .update(changes);
+      .where('id', Number(id)) // ensure the id is a number not a string
+      .update(changes);
 }
 
 /**
@@ -73,7 +73,6 @@ function update(id, changes) {
  */
 function remove(id) {
   return db("users")
-      .returning("id")
-    .where({ id })
-    .del();
+      .where({ id })
+      .del();
 }
