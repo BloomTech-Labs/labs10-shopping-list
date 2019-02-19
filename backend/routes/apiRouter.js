@@ -6,6 +6,18 @@ const userRouter = require('./user/userRouter');
 
 const authRouter = require('./auth/authRouter');
 
+// imports the router for '/group' endpoints
+const groupRouter = require('./group/groupRouter');
+
+// imports the router for '/subscription' endpoints
+const subscriptionRouter = require('./subscription/subscriptionRouter');
+
+// imports the router for '/item' endpoints
+const itemRouter = require('./item/itemRouter');
+
+// imports the router for '/groupmember' endpoints
+const groupMemberRouter = require('./groupMember/groupMemberRouter');
+
 // this will import the routers from the other API paths and use them for their respective endpoints
 
 // e.g. router.use('/user', userRouter)
@@ -19,5 +31,13 @@ apiRouter.get('/', (req, res) => {
 apiRouter.use('/user', userRouter);
 
 apiRouter.use('/auth', authRouter);
+
+apiRouter.use('/group', groupRouter);
+
+apiRouter.use('/subscription', subscriptionRouter);
+
+apiRouter.use('/item', itemRouter);
+
+apiRouter.use('/groupmember', groupMemberRouter);
 
 module.exports = apiRouter;
