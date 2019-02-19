@@ -1,24 +1,16 @@
 PODS:
-  - Auth0 (1.14.1):
-    - SimpleKeychain
   - Popover (1.2.2)
-  - SimpleKeychain (0.8.1)
 
 DEPENDENCIES:
-  - Auth0
   - Popover
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
-    - Auth0
     - Popover
-    - SimpleKeychain
 
 SPEC CHECKSUMS:
-  Auth0: 064dc115cd99eec7334d1cab565f4d974eecac4d
   Popover: 21e357f86d45c8d9e29a41a4adbca3664d6e511f
-  SimpleKeychain: e2485c28d82fcece35e9e41faeac42ebfe614815
 
-PODFILE CHECKSUM: 91fbfc2320e772a338fd76f6c8be2a77cae69065
+PODFILE CHECKSUM: 0b2a82d7c08c93cc3f80820e575321a31c1d07c7
 
 COCOAPODS: 1.5.3
