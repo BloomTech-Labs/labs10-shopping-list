@@ -11,6 +11,13 @@ if(process.env.NODE_ENV !== 'production'){
 }
 
 if(process.env.NODE_ENV === 'production'){
+    let sess = {
+        secret: 'THIS IS TOP FRICCIN SECRET MOM',
+        cookie: {secure: false},
+        resave: false,
+        saveUninitialized: true
+    };
+
     sess.cookie.secure = true; // serves secure cookies in https production
 }
 
