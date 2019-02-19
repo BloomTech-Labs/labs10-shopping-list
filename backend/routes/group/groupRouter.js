@@ -25,7 +25,6 @@ const checkJwt = require('../../validators/checkJwt');
  * **/
 groupRouter.post('/', (req, res) => {
     let group = req.body;
-    console.log("Group -> ", group);
     groupDb.add(group).then(groupId => {
         const member = {
             userID: group.userID,
@@ -164,9 +163,6 @@ groupRouter.put('/:id', (req, res) => {
 
 groupRouter.delete('/remove', (req, res) => {
     const {groupId, userId} = req.body;
-    console.log("groupId -> ", groupId);
-    console.log("userId -> ", userId);
-
 
     groupMembersDb.remove(userId, groupId).then(id => {
         groupDb.remove(groupId).then(status => {
