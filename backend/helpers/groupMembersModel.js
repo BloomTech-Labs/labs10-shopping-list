@@ -48,6 +48,7 @@ function getByUser(id) {
  */
 function add(groupMember) {
   return db("groupMembers")
+      .returning("id")
     .insert(groupMember)
     .into("groupMembers");
 }
