@@ -3,22 +3,26 @@ PODS:
     - SimpleKeychain
   - Popover (1.2.2)
   - SimpleKeychain (0.8.1)
+  - SwiftKeychainWrapper (3.2.0)
 
 DEPENDENCIES:
   - Auth0
   - Popover
+  - SwiftKeychainWrapper
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Auth0
     - Popover
     - SimpleKeychain
+    - SwiftKeychainWrapper
 
 SPEC CHECKSUMS:
   Auth0: 064dc115cd99eec7334d1cab565f4d974eecac4d
   Popover: 21e357f86d45c8d9e29a41a4adbca3664d6e511f
   SimpleKeychain: e2485c28d82fcece35e9e41faeac42ebfe614815
+  SwiftKeychainWrapper: 82c4c02cdc36f9a24f7edfcaab3e336401caa1a1
 
-PODFILE CHECKSUM: 91fbfc2320e772a338fd76f6c8be2a77cae69065
+PODFILE CHECKSUM: cbd85e6a1cda7e0a8d4327576324916096ce4a12
 
 COCOAPODS: 1.5.3

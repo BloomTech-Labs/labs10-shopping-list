@@ -55,6 +55,9 @@
                                                 <integer key="value" value="8"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="CreateAccountPressed:" destination="ymu-Af-L92" eventType="touchUpInside" id="df1-VL-M9Q"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>

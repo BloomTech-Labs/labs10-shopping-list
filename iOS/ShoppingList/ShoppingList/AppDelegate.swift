@@ -20,10 +20,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
+       
         
         let isLoggedIn = defaults.bool(forKey: Keys.isUserLoggedInKey)
         let loginVC = LoginViewController.instantiate()
         let mainVC = MainViewController.instantiate()
+        
+         
+        
         
         window?.rootViewController = isLoggedIn ? mainVC : loginVC
         

@@ -9,5 +9,6 @@ target 'ShoppingList' do
 pod 'Popover'
 
 pod 'Auth0'
+pod 'SwiftKeychainWrapper'
 
 end
