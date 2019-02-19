@@ -15,8 +15,10 @@ class UserProfile extends React.Component{
     async componentDidMount(){
         const profile = (await axios.get('http://localhost:9000/api/user/2')).data;
 
+        console.log('profile', profile[0]);
+
         this.setState({
-            profile,
+            profile: profile[0],
         })
 
     }

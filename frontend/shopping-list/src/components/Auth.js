@@ -47,6 +47,15 @@ class Auth {
         this.profile = authResult.idTokenPayload;
         // set the time that the id token will expire at
         this.expiresAt = authResult.idTokenPayload.exp * 1000;
+        localStorage.setItem('jwt', authResult.idToken);
+
+        /**
+         * @TODO Once the profile and jwt is generated, run a check against the database
+         * If user email exists, return the user ID to localstorage
+         * If user email does not exist, store profile information, then return user ID to localstorage
+         * 
+         */
+
         resolve();
       });
     })
