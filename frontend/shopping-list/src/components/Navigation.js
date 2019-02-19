@@ -15,15 +15,15 @@ class Navigation extends React.Component{
             <div>
                 Navbar
                 {
-                    !auth0Client.isAuthenticated() && 
+                    !localStorage.getItem('email') && 
                     <button onClick={auth0Client.signIn}>Sign In</button>
                     }
 
                 {
-                    auth0Client.isAuthenticated() && 
+                    localStorage.getItem('email') && 
                     <div>
-                    <span>{auth0Client.getProfile().name}</span>
-                    <button onClick = {this.signOut()}>Sign out</button>
+                    <span>{localStorage.getItem('name')}</span>
+                    <button onClick = {this.signOut}>Sign out</button>
                     </div>
                 }
             </div>

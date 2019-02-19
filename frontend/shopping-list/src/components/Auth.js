@@ -1,8 +1,4 @@
 import auth0 from 'auth0-js';
-import axios from 'axios';
-import {checkEmail} from '../store/actions/rootActions';
-import {connect} from 'react-redux';
-
 
 class Auth {
   constructor() {
@@ -52,6 +48,8 @@ class Auth {
         this.profile = authResult.idTokenPayload;
         // set the time that the id token will expire at
         this.expiresAt = authResult.idTokenPayload.exp * 1000;
+
+        // assign gathered values to localStorage for persistence in the application
         localStorage.setItem('jwt', authResult.idToken);
         localStorage.setItem('email', authResult.idTokenPayload.email);
         localStorage.setItem('name', authResult.idTokenPayload.name);
@@ -74,6 +72,13 @@ class Auth {
     this.idToken = null;
     this.profile = null;
     this.expiresAt = null;
+
+    // clear local storage
+    localStorage.removeItem('name');
+    localStorage.removeItem('email');
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('img_url');
+    localStorage.removeItem('userId');
   }
 }
 
