@@ -10,6 +10,7 @@ import Foundation
 
 class GroupController {
     
+    private var apiRoot = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
 
     func newGroup(withName name: String) {
         
@@ -27,7 +28,10 @@ class GroupController {
         newGroup.userID = getUserID()
         
         CoreDataManager.shared.save()
+        
     }
+    
+
     
     
     
