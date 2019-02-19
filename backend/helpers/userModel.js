@@ -26,9 +26,21 @@ function get() {
  */
 function getById(id) {
   return db
-    .select("*")
-    .from("users")
-    .where({ id });
+      .select("*")
+      .from("users")
+      .where({ id });
+}
+
+/**
+ * Returns the user ID associated with the given email
+ *
+ */
+
+function getIdByEmail(email){
+  return db
+      .select("id")
+      .from("users")
+      .where({email});
 }
 
 /**
@@ -50,8 +62,8 @@ function getIdByEmail(email){
  */
 function add(user) {
   return db("users")
-    .insert(user)
-    .into("users");
+      .insert(user)
+      .into("users");
 }
 
 /**
@@ -62,8 +74,8 @@ function add(user) {
  */
 function update(id, changes) {
   return db("users")
-    .where('id', Number(id)) // ensure the id is a number not a string
-    .update(changes);
+      .where('id', Number(id)) // ensure the id is a number not a string
+      .update(changes);
 }
 
 /**
@@ -73,6 +85,6 @@ function update(id, changes) {
  */
 function remove(id) {
   return db("users")
-    .where({ id })
-    .del();
+      .where({ id })
+      .del();
 }

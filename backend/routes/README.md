@@ -2,7 +2,8 @@
 * [Auth Endpoints](#Auth-Endpoints)
     * [Login](#Login)
 * [User Endpoints](#User-Endpoints)
-    * [Get User](#Get-User)
+    * [Get User By ID](#Get-User-By-ID)
+    * [Get User By Email](#Get-User-By-Email)
     * [Add User](#Add-User)
     * [Update User](#Update-User)
     * [Remove User](#Remove-User)
@@ -47,7 +48,7 @@ None
 
 ## User Endpoints
 ### Protected
-### Get User
+### Get User By ID
 Returns json data about a single user.
 * **URL**<br>
 /api/user/:id
@@ -65,12 +66,52 @@ None
         **Content:** { error: "You are unauthorized to make this request." }<br>
     OR<br>
     * **Code:** 404 NOT FOUND<br>
-        **Content:** { error: "The user you requested does not exist." }
+        **Content:** { message: "The user you requested does not exist."}<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** {message: "Internal Server Error", data: { err: "Error details" } }
 
 * **Sample Call:**
   ```javascript
     $.ajax({
       url: "/api/user/12",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+### Get User By Email
+Returns json data about a single user.
+* **URL**<br>
+/api/user/email/:email
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`email=[string]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { id: 12, email: "annam45@gmail.com", name: "Anna Marie", profilePicture: "https://i.imgur.com/M8kRKQC.png", "subscriptionType": 1, "createdAt": "2019-02-18T21:04:27.039Z", "updatedAt": "2019-02-18T21:04:27.039Z"}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { message: "The user you requested does not exist."}<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** {message: "Internal Server Error", data: { err: "Error details" } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/user/email/annam45@gmail.com",
       dataType: "json",
       type : "GET",
       success : function(r) {
@@ -96,13 +137,15 @@ None
 `subscriptionType=[integer]`
 * **Success Response:**<br>
     * **Code:** 200<br>
-      **Content:** { message: "User added to database with ID 12"}
+      **Content:** { message: "User added to database with ID 12", id: 12}
 * **Error Response:**
     * **Code:** 401 UNAUTHORIZED<br>
-        **Content:** { error: "You are unauthorized to make this request." }<br>
+            **Content:** { error: "You are unauthorized to make this request." }<br>
     OR<br>
     * **Code:** 500 INTERNAL SERVER ERROR<br>
-        **Content:** { error: "Internal Server Error when adding user." }
+        **Content:** {message: "The requested user already exists",<br>
+        data: { err: { name: "error", length: 217, severity: "ERROR", code: "23505", detail: "Key (email)=(rudyhwest@ymail.com) already exists", schema": public", table: "users", constraingt: "users_email_unique", file: "nbtinser.c", line: "434", routine: "_bt_check_unique" } }
+
 
 * **Sample Call:**
   ```javascript
@@ -147,8 +190,12 @@ Updates a single user to the database
     * **Code:** 401 UNAUTHORIZED<br>
         **Content:** { error: "You are unauthorized to make this request." }<br>
     OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested user does not exist."}<br>
+    OR<br>
     * **Code:** 500 INTERNAL SERVER ERROR<br>
-        **Content:** { error: "Internal Server Error when updating user." }
+        **Content:** { message: "Error updating user with ID 999."<br>
+         data: { err: { name: "error", length: 217, severity: "ERROR", code: "23505", detail: "Key (email)=(rudyhwest@ymail.com) already exists", schema": public", table: "users", constraingt: "users_email_unique", file: "nbtinser.c", line: "434", routine: "_bt_check_unique" } }
 
 * **Sample Call:**
   ```javascript
@@ -187,13 +234,13 @@ Removes a single user from the database
 None
 * **Success Response:**<br>
     * **Code:** 200<br>
-      **Content:** { message: "User with ID 1001 deleted successfully"}
+      **Content:** { message: "User 1002 successfully deleted."}
 * **Error Response:**<br>
     * **Code:** 401 UNAUTHORIZED<br>
         **Content:** { error: "You are unauthorized to make this request." }<br>
     OR<br>
     * **Code:** 404 NOT FOUND<br>
-        **Content:** { error: "No user found with ID 1001." }
+        **Content:** { message: "The requested user does not exist."}<br>
 
 * **Sample Call:**
   ```javascript
