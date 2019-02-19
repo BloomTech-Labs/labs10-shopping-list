@@ -11,7 +11,6 @@ class UserProfile extends React.Component{
 
         this.state = {
             input: null,
-            profile: null,
         }
     }
 
@@ -27,10 +26,10 @@ class UserProfile extends React.Component{
 
     render(){
         console.log(this.state.profile);
+        console.log(this.props);
         return (
             <div className = 'user-profile-container'>
             User profile page
-            
             </div>
         )
     }
@@ -39,6 +38,7 @@ class UserProfile extends React.Component{
 const mapStateToProps = state => {
     return {
         //state items
+        userId: state.userId
     }
 }
 

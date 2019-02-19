@@ -5,4 +5,5 @@ export {
   testFunction,
   CHECKING_EMAIL,
   EMAIL_CHECKED,
+  ERROR
 } from "./rootActions";

@@ -7,6 +7,7 @@ export const TEST_SUCCESS = "TEST_SUCCESS";
 export const TEST_FAILURE = "TEST_FAILURE";
 export const CHECKING_EMAIL = 'CHECKING_EMAIL';
 export const EMAIL_CHECKED = 'EMAIL_CHECKED';
+export const ERROR = 'ERROR';
 
 /**
  * Test function
@@ -42,6 +43,9 @@ export const checkEmail = (email) => {
     fetchUserId.then(res => {
       console.log('check email', res.data);
       dispatch({type: EMAIL_CHECKED, payload: res.data});
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
     })
   }
 }

@@ -150,7 +150,7 @@ userRouter.post('/getid', (req, res) => {
     console.log('req body', req.body);
     let email = req.body.email;
     userDb.getIdByEmail(email).then(id => {
-        console.log('email id', id);
+        console.log('email id', id[0]);
         if(!id || id.length === 0){
             console.log('no user found');
             // CREATE NEW USER ENTRY
@@ -160,16 +160,16 @@ userRouter.post('/getid', (req, res) => {
                 profilePicture: req.body.img_url,
             }
             userDb.add(newUser).then(id => {
-                console.log('newuserID', id);
-                return res.status(201).json({message: `New user added to database with ID ${id}.`, id: id});
+                console.log('newuserID', id[0]);
+                return res.status(201).json({message: `New user added to database with ID ${id}.`, id: id[0].id});
             })
             .catch(err => {
                 console.log(err);
                 return res.status(500).json({error: `Error adding new user DB entry.`})
             })
         } else {
-            console.log('user found');
-            return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id});
+            console.log('user found', id[0]);
+            return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
         }
     })
     .catch(err => {
