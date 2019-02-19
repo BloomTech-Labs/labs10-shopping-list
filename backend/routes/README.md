@@ -399,13 +399,14 @@ Update a particular group
 ### Remove Group
 Remove a particular group
 * **URL**<br>
-/api/group/:id
+/api/group/remove
 * **Method:**<br>
 `DELETE`
 * **URL Params**<br>
-`id=[integer]`
-* **Data Params**<br>
 None
+* **Data Params**<br>
+`userID=[integer]`
+`groupID=[integer]`
 * **Success Response:**<br>
     * **Code:** 200<br>
       **Content:** { message: "Group 13 successfully removed.", id: 13 }
@@ -421,7 +422,7 @@ None
 * **Sample Call:**
   ```javascript
     $.ajax({
-      url: "/api/group/12",
+      url: "/api/group/remove",
       dataType: "json",
       type : "DELETE",
       success : function(r) {
@@ -429,6 +430,11 @@ None
       }
     });
   ```
+  
+| Column                 | Description                 | Required |
+|------------------------|-----------------------------|----------|
+| userID                 | ID of user                  | Yes      |
+| groupID                | ID of group                 | Yes      |
 
 [TOP](#Table-of-Contents)
 

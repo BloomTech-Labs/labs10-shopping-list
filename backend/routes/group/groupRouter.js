@@ -162,20 +162,19 @@ groupRouter.put('/:id', (req, res) => {
 /**************************************************/
 
 groupRouter.delete('/remove', (req, res) => {
-    const {groupId, userId} = req.body;
+    const {groupID, userID} = req.body;
 
-    groupMembersDb.remove(userId, groupId).then(id => {
-        groupDb.remove(groupId).then(status => {
+    groupMembersDb.remove(userID, groupID).then(id => {
+        groupDb.remove(groupID).then(status => {
             if(status.length >= 1 || !status){
-                return res.status(200).json({message: `Group ${status[0]} successfully removed.`, id: Number(groupId)});
+                return res.status(200).json({message: `Group ${status[0]} successfully removed.`, id: Number(groupID)});
 
-            } else {
-                return res.status(404).json({error: `The requested group does not exist.`});
             }
+            return res.status(404).json({error: `The requested group does not exist.`});
         })
             .catch(err => {
                 const error = {
-                    message: `Error removing group with ID ${groupId}.`,
+                    message: `Error removing group with ID ${groupID}.`,
                     data: {
                         err: err
                     },
@@ -185,7 +184,7 @@ groupRouter.delete('/remove', (req, res) => {
 
     }).catch(err => {
         const error = {
-            message: `Error removing group member with ID ${id[0]}.`,
+            message: `Error removing group member.`,
             data: {
                 err: err
             },
