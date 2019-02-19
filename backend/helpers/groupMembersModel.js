@@ -27,7 +27,7 @@ function getByGroup(id) {
   return db
     .select("*")
     .from("groupMembers")
-    .where("groupId", id);
+    .where("groupID", id);
 }
 
 /**
@@ -39,7 +39,7 @@ function getByUser(id) {
   return db
     .select("*")
     .from("groupMembers")
-    .where("userId", id);
+    .where("userID", id);
 }
 
 function getById(groupID, userID) {
@@ -60,29 +60,25 @@ function add(groupMember) {
 
 /**
  * Update an existing group member in the database
- * @param userID - The user ID of the group member to update
- * @param groupID - The group ID of the group member to update
+ * @param id - The ID of the group member to update
  * @param changes - The actual changes of the group member itself
  * @returns {*} - Returns the group member ID
  */
-function update(userID, groupID, changes) {
+function update(id, changes) {
   return db("groupMembers")
       .returning("id")
-    .where('userID', userID)
-    .where('groupID', groupID)
+    .where({id})
     .update(changes);
 }
 
 /**
  * Removes a group member from the database
- * @param userID - The user ID of the group member to remove
- * @param groupID - The group ID of the group member to remove
+ * @param id - The ID of the group member to remove
  * @returns {*} - Returns the group ID
  */
-function remove(userID, groupID) {
+function remove(id) {
   return db("groupMembers")
       .returning("id")
-    .where('userID', userID)
-    .where('groupID', groupID)
+    .where({id})
     .del();
 }

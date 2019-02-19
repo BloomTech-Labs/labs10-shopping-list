@@ -30,20 +30,28 @@ const checkJwt = require('../../validators/checkJwt');
  * @TODO Add middleware to ensure user is logged in
  * **/
 groupMemberRouter.post('/', (req, res) => {
-    console.log(req.body);
-    let groupMem = req.body;
+    const groupMem = req.body;
+
+    if(!groupMem.groupID || typeof(groupMem.groupID) !== 'number') return res.status(404).json({message: `groupID does not exist or is invalid.`});
+    if(!groupMem.userID || typeof(groupMem.userID) !== 'number') return res.status(404).json({message: `userID does not exist or is invalid.`});
+
     groupMemDb.add(groupMem).then(id => {
-        return res.status(200).json({message: `Group member added to database with ID ${id[0]}`, id: id[0]});
+        return res.status(200).json({message: `Group member added.`, id: id[0]});
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error when adding group member.`});
+            const error = {
+                message: `Internal Server Error - Adding Group Member`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
 /**************************************************/
 
-/** GET GROUP MEMBER BY ID
+/** GET GROUP MEMBER BY GROUP ID
  * @TODO Add middleware to ensure user is logged in
  * **/
 
@@ -52,16 +60,82 @@ groupMemberRouter.get('/group/:id', (req, res) => {
     const id = req.params.id;
 
     groupMemDb.getByGroup(id).then(mem => {
-        console.log(mem);
-        if(!mem){
-            return res.status(404).json({error: `group with ID ${id} does not exist.`});
-        } else {
-            return res.status(200).json(group);
+        if (mem.length >= 1) {
+            return res.status(200).json(mem);
         }
+
+        return res.status(404).json({message: "The requested group members do not exist."});
+
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error retrieving group with ID ${id}.`});
+            const error = {
+                message: `Internal Server Error - Getting Group Member`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        })
+})
+
+/**************************************************/
+
+/** GET GROUP MEMBER BY USER ID
+ * @TODO Add middleware to ensure user is logged in
+ * **/
+
+/**************************************************/
+groupMemberRouter.get('/user/:id', (req, res) => {
+    const id = req.params.id;
+
+    groupMemDb.getByUser(id).then(mem => {
+        if (mem.length >= 1) {
+            return res.status(200).json({data: mem});
+        }
+
+        return res.status(404).json({message: "The requested group members do not exist."});
+
+    })
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error - Getting Group Member`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        })
+})
+
+/**************************************************/
+
+/** GET GROUP MEMBER BY USER && GROUP ID
+ * @TODO Add middleware to ensure user is logged in
+ * **/
+
+/**************************************************/
+groupMemberRouter.get('/getmember/', (req, res) => {
+    let groupMem = req.body;
+
+    if(!groupMem.groupID || typeof(groupMem.groupID) !== 'number') return res.status(404).json({message: `groupID does not exist or is invalid.`});
+    if(!groupMem.userID || typeof(groupMem.userID) !== 'number') return res.status(404).json({message: `userID does not exist or is invalid.`});
+
+    groupMemDb.getById(groupMem.groupID, groupMem.userID).then(mem => {
+        if (mem.length >= 1) {
+            return res.status(200).json({data: mem});
+        }
+
+        return res.status(404).json({message: "The requested group members do not exist."});
+
+    })
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error - Getting Group Member`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
@@ -74,16 +148,21 @@ groupMemberRouter.get('/group/:id', (req, res) => {
 
 groupMemberRouter.get('/', (req, res) => {
     groupMemDb.get().then(mems => {
-        console.log(mems);
-        if(!mems){
-            return res.status(404).json({error: `No group members found!`});
-        } else {
-            return res.status(200).json(mems);
+        if(mems){
+            return res.status(200).json({data: mems});
+            return res.status(404).json({error: `No groups exist.`});
         }
+
+        return res.status(404).json({error: `No groups exist.`});
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error collecting groups information.`});
+            const error = {
+                message: `Internal Server Error - Getting All Group Members`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
@@ -94,20 +173,23 @@ groupMemberRouter.get('/', (req, res) => {
  */
 
 /**************************************************/
-groupMemberRouter.put('/:id', (req, res) => {
+groupMemberRouter.put('/update/:id', (req, res) => {
     const id = req.params.id;
     const changes = req.body;
-    const userId = changes.userID;
-    groupMemDb.update(id, userId, changes).then(status => {
-        if(!status || status !== 1){
-            return res.status(404).json({error: `No group member found with ID ${id}.`});
-        } else {
-            return res.status(200).json({message: `Group member ${id} successfully updated.`});
+
+    groupMemDb.update(id, changes).then(status => {
+        if (status.length >= 1) {
+            return res.status(200).json({message: "Member successfully updated.", id: Number(id)})
         }
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error updating group member with ID ${id}.`});
+            const error = {
+                message: `Internal Server Error - Updating Group Member`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
@@ -119,22 +201,22 @@ groupMemberRouter.put('/:id', (req, res) => {
 
 /**************************************************/
 
-groupMemberRouter.delete('/:id', (req, res) => {
+groupMemberRouter.delete('/remove/:id', (req, res) => {
     const id = req.params.id;
-    const userId = req.body;
-    if (!userId) return res.status(404).json({error: `No userID sent`});
 
-    groupMemDb.remove(id, userId).then(status => {
-        console.log(status);
-        if(!status || status !== 1){
-            return res.status(404).json({error: `No group member found with ID ${id}.`});
-        } else {
-            return res.status(200).json({message: `Group member with ID ${id} deleted successfully.`});
+    groupMemDb.remove(id).then(status => {
+        if (status.length >= 1) {
+            return res.status(200).json({message: "Member successfully removed.", id: Number(id)})
         }
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error deleting group member with ID ${id}.`});
+            const error = {
+                message: `Internal Server Error - Removing Group Member`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 

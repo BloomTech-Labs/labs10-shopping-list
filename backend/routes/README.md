@@ -12,6 +12,14 @@
     * [Add Group](#Add-Group)
     * [Update Group](#Update-Group)
     * [Remove Group](#Remove-Group)
+* [Group Member Endpoints](#GroupMember-Endpoints)
+    * [Get All Members](#Get-All-Group-Member)
+    * [Get By Group ID](#Get-Group-Member-By-Group-ID)
+    * [Get By User ID](#Get-Group-Member-By-User-ID)
+    * [Get By User ID && Group ID](#Get-Group-Member-By-User-ID-&&-Group-ID)
+    * [Add Group Member](#Add-Group-Member)
+    * [Update Group Member](#Update-Group-Member)
+    * [Remove Group Member](#Remove-Group-Member)
 
 # API Endpoints
 ## Auth Endpoints
@@ -414,6 +422,304 @@ None
   ```javascript
     $.ajax({
       url: "/api/group/12",
+      dataType: "json",
+      type : "DELETE",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+## GroupMember Endpoints
+#### Un-Protected
+#### Get All Group Member
+Get all members within a particular group
+* **URL**<br>
+/api/groupMember/
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, userID: 1000, groupID: 504, moderator: true, weeklyNotification: true, monthlyNotification: true, createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested group members do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/groupMember/group/12",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get Group Member By Group ID
+Get all members within a particular group
+* **URL**<br>
+/api/groupMember/group/:id
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** [{ id: 8, userID: 1000, groupID: 504, moderator: true, weeklyNotification: true, monthlyNotification: true, createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested group members do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/groupMember/group/12",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get Group Member By User ID
+Get all members within a particular group
+* **URL**<br>
+/api/groupMember/user/:id
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** [{ id: 8, userID: 1000, groupID: 504, moderator: true, weeklyNotification: true, monthlyNotification: true, createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested group members do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/groupMember/user/12",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get Group Member By User ID && Group ID
+Get all members within a particular group
+* **URL**<br>
+/api/groupMember/getmember/
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+`userID=[integer]`<br>
+`groupID=[integer]`
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { data: [{id: 8, userID: 1000, groupID: 504, moderator: true, weeklyNotification: true, monthlyNotification: true, createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested group members do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/groupMember/getmember",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
+#### Data Params Table
+| Column                 | Description                 | Required |
+|------------------------|-----------------------------|----------|
+| userID                 | ID of user                  | Yes      |
+| groupID                | ID of group                 | Yes      |
+| moderator              | Is group moderator          | No       |
+| weeklyNotification     | Subscribed to notifs        | No       |
+| monthlyNotification    | Subscribed to notifs        | No       |
+| total                  | Total gross                 | No       |
+| net                    | Net gross                   | No       |
+| createdAt              | Date the member was created | No       |
+| updatedAt              | Date the member was updated | No       |
+
+[TOP](#Table-of-Contents)
+
+#### Add Group Member
+Adds new group.
+* **URL**<br>
+/api/groupMember/
+* **Method:**<br>
+`POST`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+`userID=[integer]`<br>
+`groupID=[integer]`<br>
+`moderator=[string]`<br>
+`weeklyNotification=[boolean]`<br>
+`monthlyNotification=[boolean]`<br>
+`total=[integer]` **MAY BE DEPRECIATED LATER ON**<br>
+`net=[integer]` **MAY BE DEPRECIATED LATER ON**
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Group member added.", id: 9 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/groupMember",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+| Column                 | Description                 | Required |
+|------------------------|-----------------------------|----------|
+| userID                 | ID of user                  | Yes      |
+| groupID                | ID of group                 | Yes      |
+| moderator              | Is group moderator          | No       |
+| weeklyNotification     | Subscribed to notifs        | No       |
+| monthlyNotification    | Subscribed to notifs        | No       |
+| total                  | Total gross                 | No       |
+| net                    | Net gross                   | No       |
+| createdAt              | Date the member was created | No       |
+| updatedAt              | Date the member was updated | No       |
+
+[TOP](#Table-of-Contents)
+
+### Update Group Member
+Update a particular group member
+* **URL**<br>
+/api/groupMember/update/:id
+* **Method:**<br>
+`PUT`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+`userID=[integer]`<br>
+`groupID=[integer]`<br>
+`moderator=[string]`<br>
+`weeklyNotification=[boolean]`<br>
+`monthlyNotification=[boolean]`<br>
+`total=[integer]` **MAY BE DEPRECIATED LATER ON**<br>
+`net=[integer]` **MAY BE DEPRECIATED LATER ON**
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Member successfully updated.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested group member does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/groupMember/update/12",
+      dataType: "json",
+      type : "PUT",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+* Note that you will need at least one setting to update -> userID, moderator, etc.
+
+| Column                 | Description                 | Required |
+|------------------------|-----------------------------|----------|
+| userID                 | ID of user                  | No       |
+| groupID                | ID of group                 | No       |
+| moderator              | Is group moderator          | No       |
+| weeklyNotification     | Subscribed to notifs        | No       |
+| monthlyNotification    | Subscribed to notifs        | No       |
+| total                  | Total gross                 | No       |
+| net                    | Net gross                   | No       |
+| createdAt              | Date the member was created | No       |
+| updatedAt              | Date the member was updated | No       |
+
+[TOP](#Table-of-Contents)
+
+### Remove Group Member
+Remove a particular group member
+* **URL**<br>
+/api/groupMember/remove/:id
+* **Method:**<br>
+`DELETE`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Member successfully removed.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested group member does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/groupMember/remove/12",
       dataType: "json",
       type : "DELETE",
       success : function(r) {
