@@ -2,6 +2,8 @@ import {
   TEST_START,
   TEST_SUCCESS,
   TEST_FAILURE,
+  CHECKING_EMAIL,
+  EMAIL_CHECKED,
 } from "../actions";
 
 const initialState = {

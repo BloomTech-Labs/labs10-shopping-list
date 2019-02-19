@@ -1,6 +1,9 @@
 import React, {Components} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import {checkEmail} from '../store/actions/rootActions';
+import {connect} from 'react-redux';
+
 
 class UserProfile extends React.Component{
     constructor(props){
@@ -13,13 +16,12 @@ class UserProfile extends React.Component{
     }
 
     async componentDidMount(){
-        const profile = (await axios.get('http://localhost:9000/api/user/2')).data;
+        let email = localStorage.getItem('email');
 
-        console.log('profile', profile[0]);
-
-        this.setState({
-            profile: profile[0],
-        })
+        if(email){
+            console.log('cdm email', email);
+            this.props.checkEmail(email);
+        }
 
     }
 
@@ -27,11 +29,19 @@ class UserProfile extends React.Component{
         console.log(this.state.profile);
         return (
             <div className = 'user-profile-container'>
-            
+            User profile page
             
             </div>
         )
     }
 }
 
-export default UserProfile;
+const mapStateToProps = state => {
+    return {
+        //state items
+    }
+}
+
+export default connect(mapStateToProps, {
+    checkEmail,
+})(UserProfile);

@@ -1,4 +1,8 @@
 import auth0 from 'auth0-js';
+import axios from 'axios';
+import {checkEmail} from '../store/actions/rootActions';
+import {connect} from 'react-redux';
+
 
 class Auth {
   constructor() {
@@ -9,7 +13,7 @@ class Auth {
       clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
       redirectUri: 'http://localhost:3000/callback',
       responseType: 'id_token',
-      scope: 'openid profile'
+      scope: 'openid email profile'
     });
 
     this.getProfile = this.getProfile.bind(this);
@@ -39,6 +43,7 @@ class Auth {
     return new Promise((resolve, reject) => {
       this.auth0.parseHash((err, authResult) => {
           console.log('auth result', authResult)
+          console.log('profile', authResult.idTokenPayload);
         if (err) return reject(err);
         if (!authResult || !authResult.idToken) {
           return reject(err);
@@ -48,6 +53,10 @@ class Auth {
         // set the time that the id token will expire at
         this.expiresAt = authResult.idTokenPayload.exp * 1000;
         localStorage.setItem('jwt', authResult.idToken);
+        localStorage.setItem('email', authResult.idTokenPayload.email);
+        localStorage.setItem('name', authResult.idTokenPayload.name);
+        localStorage.setItem('img_url', authResult.idTokenPayload.picture);
+        
 
         /**
          * @TODO Once the profile and jwt is generated, run a check against the database
@@ -55,7 +64,6 @@ class Auth {
          * If user email does not exist, store profile information, then return user ID to localstorage
          * 
          */
-
         resolve();
       });
     })
