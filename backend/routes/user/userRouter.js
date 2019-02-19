@@ -9,10 +9,10 @@ const checkJwt = require('../../validators/checkJwt');
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/user ENDPOINT **/
 /****************************************************************************************************/
 
-userRouter.get('/', checkJwt, (req, res) => {
-    console.log(req.body);
-    res.send('This is the /user root endpoint.'); // test the protected middleware by passing the JWT into Authorization header with 'Bearer <TOKEN>' value
-});
+// userRouter.get('/', checkJwt, (req, res) => {
+//     console.log(req.body);
+//     res.send('This is the /user root endpoint.'); // test the protected middleware by passing the JWT into Authorization header with 'Bearer <TOKEN>' value
+// });
 
 /**************************************************/
 
@@ -133,6 +133,48 @@ userRouter.delete('/:id', (req, res) => {
     .catch(err => {
         console.log(err);
         return res.status(500).json({error: `Error deleting user with ID ${id}.`});
+    })
+})
+
+
+/**************************************************/
+
+/** GET USER ID
+ * This will query the database for the user ID that matches the passed in email address
+ * if no user is found, a new entry will be created
+ * **/
+
+/**************************************************/
+
+userRouter.post('/getid', (req, res) => {
+    console.log('req body', req.body);
+    let email = req.body.email;
+    userDb.getIdByEmail(email).then(id => {
+        console.log('email id', id[0]);
+        if(!id || id.length === 0){
+            console.log('no user found');
+            // CREATE NEW USER ENTRY
+            let newUser = {
+                name: req.body.name,
+                email: req.body.email,
+                profilePicture: req.body.img_url,
+            }
+            userDb.add(newUser).then(id => {
+                console.log('newuserID', id[0]);
+                return res.status(201).json({message: `New user added to database with ID ${id}.`, id: id[0].id});
+            })
+            .catch(err => {
+                console.log(err);
+                return res.status(500).json({error: `Error adding new user DB entry.`})
+            })
+        } else {
+            console.log('user found', id[0]);
+            return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Error retrieving user ID.`})
     })
 })
 

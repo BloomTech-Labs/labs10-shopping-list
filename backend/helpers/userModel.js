@@ -7,7 +7,8 @@ module.exports = {
   remove,
   getById,
   get,
-  update
+  update,
+  getIdByEmail
 }
 
 /**
@@ -28,6 +29,18 @@ function getById(id) {
     .select("*")
     .from("users")
     .where({ id });
+}
+
+/**
+ * Returns the user ID associated with the given email
+ *  
+ */
+
+function getIdByEmail(email){
+  return db
+  .select("id")
+  .from("users")
+  .where({email});
 }
 
 /**
