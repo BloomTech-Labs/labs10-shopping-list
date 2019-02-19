@@ -8,6 +8,7 @@
     top: 0;
     display: flex;
     border: 2px black solid;
+    margin: 1px 1% 0 0;
 }
 
 .sign{
@@ -22,8 +23,13 @@
 
 .thing{
     background: #FFFFFF;
+    border-radius: 5px;
 }
 
-.landingPage h1{
+.landingPage .name{
     margin: 0 5px;
+}
+
+.name{
+    font-size: 100px;
 }

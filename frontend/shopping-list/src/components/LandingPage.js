@@ -11,7 +11,7 @@ class LandingPage extends React.Component {
         return (
             <div className='landingPage'>
                 <LogIn />
-                <h1 className='thing'>ShopTrak</h1>
+                <div className='name thing'>ShopTrak</div>
                 <p className='thing'>Welcome to our app. Where we fix all your problems with tracking your shopping list with the people you care about.</p>
             </div>
         )
