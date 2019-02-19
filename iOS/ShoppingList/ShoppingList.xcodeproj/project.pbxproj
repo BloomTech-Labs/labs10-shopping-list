@@ -12,6 +12,7 @@
 		112430B0221631350081784C /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AF221631350081784C /* ItemController.swift */; };
 		1423D70A921BE0FF6817A9D5 /* Pods_ShoppingList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */; };
 		443C1B4C22160D9E00220C28 /* Shopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C1B4B22160D9E00220C28 /* Shopping.swift */; };
+		443C1B4E221B628D00220C28 /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B4D221B628D00220C28 /* Auth0.plist */; };
 		96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96476B4A2215D41300E57EB9 /* ShoppingList.xcdatamodeld */; };
 		96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4D2215D41300E57EB9 /* LaunchScreen.storyboard */; };
 		96476B522215D41300E57EB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4F2215D41300E57EB9 /* Assets.xcassets */; };
@@ -60,6 +61,7 @@
 		112430AF221631350081784C /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
 		443C1B322214A45100220C28 /* ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		443C1B4B22160D9E00220C28 /* Shopping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shopping.swift; sourceTree = "<group>"; };
+		443C1B4D221B628D00220C28 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96476B482215D40700E57EB9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		96476B4B2215D41300E57EB9 /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				96476B482215D40700E57EB9 /* Info.plist */,
 				96476B4F2215D41300E57EB9 /* Assets.xcassets */,
 				96476B4D2215D41300E57EB9 /* LaunchScreen.storyboard */,
+				443C1B4D221B628D00220C28 /* Auth0.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				443C1B4E221B628D00220C28 /* Auth0.plist in Resources */,
 				96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */,
 				96DE3035221637FE00213C3E /* LoginViewController.storyboard in Resources */,
 				96DE3032221637FE00213C3E /* MainViewController.storyboard in Resources */,

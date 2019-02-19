@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Auth0
 
 let defaults = UserDefaults.standard
 
@@ -29,5 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+    //Auth0 requires this function in AppDelegate
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        return Auth0.resumeAuth(url, options: options)
+    }
+    
+    
 }
 

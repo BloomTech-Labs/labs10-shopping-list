@@ -18,6 +18,7 @@ protocol Shopping {
     func invite ( userId:Int, groupId: Int, completion: @escaping (GroupList? , Error?)-> Void )
     func addItem (groupId: Int, item: Items, completion: @escaping (GroupList? , Error?)-> Void )
     func markBought (groupId: Int, itemId: Int, completion: @escaping (GroupList? , Error?)-> Void )
+    //func billing(completion: @escaping( [Group]?, Error?)-> Void)
 }
 
 struct UserDetail {
