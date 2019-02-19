@@ -40,6 +40,8 @@ class GroupController {
             
             newGroup.groupID = Int32(groupID)
             CoreDataManager.shared.save()
+            
+            completion(newGroup)
         }
     }
     
