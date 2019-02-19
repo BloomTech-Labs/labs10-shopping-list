@@ -1,13 +1,18 @@
 require('dotenv').config();
+var localPg = require('pg');
+// localPg.defaults.ssl = true;
 
 /*
   * For use with a local postgresql server
 */
-const localPg = {
-  host: 'localhost',
-  database: 'shoppinglist',
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS
+localPg = {
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  user: process.env.PG_USER,
+  password: process.env.PG_PASS,
+  defaults: {
+    ssl: true
+  }
 }
 
 // Define the database connection to use
@@ -42,7 +47,8 @@ module.exports = {
     },
     seeds: {
       directory: './data/dev/seeds'
-    }
+    },
+    ssl: true,
   },
 
   production: {
