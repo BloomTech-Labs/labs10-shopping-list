@@ -15,6 +15,8 @@
 		96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96476B4A2215D41300E57EB9 /* ShoppingList.xcdatamodeld */; };
 		96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4D2215D41300E57EB9 /* LaunchScreen.storyboard */; };
 		96476B522215D41300E57EB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4F2215D41300E57EB9 /* Assets.xcassets */; };
+		96700E2E221C025E00F084B3 /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96700E2D221C025E00F084B3 /* SettingsViewController.storyboard */; };
+		96700E31221C035600F084B3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96700E30221C035600F084B3 /* SettingsViewController.swift */; };
 		969A83C82215C9840003BB37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83C52215C9840003BB37 /* AppDelegate.swift */; };
 		969A84012215C99A0003BB37 /* ChameleonShorthand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83CF2215C99A0003BB37 /* ChameleonShorthand.swift */; };
 		969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83D22215C99A0003BB37 /* UIColor+ChameleonPrivate.m */; };
@@ -65,6 +67,8 @@
 		96476B4B2215D41300E57EB9 /* ShoppingList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ShoppingList.xcdatamodel; sourceTree = "<group>"; };
 		96476B4E2215D41300E57EB9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		96476B4F2215D41300E57EB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		96700E2D221C025E00F084B3 /* SettingsViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
+		96700E30221C035600F084B3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		969A83C52215C9840003BB37 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		969A83CB2215C99A0003BB37 /* ShoppingList-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShoppingList-Bridging-Header.h"; sourceTree = "<group>"; };
 		969A83CC2215C99A0003BB37 /* Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon.h; sourceTree = "<group>"; };
@@ -203,6 +207,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		96700E2F221C034000F084B3 /* SettingsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				96700E2D221C025E00F084B3 /* SettingsViewController.storyboard */,
+				96700E30221C035600F084B3 /* SettingsViewController.swift */,
+			);
+			path = SettingsViewController;
+			sourceTree = "<group>";
+		};
 		969A83C02215C94F0003BB37 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,6 +342,7 @@
 			children = (
 				96DE302C221637FE00213C3E /* MainViewController */,
 				96DE302F221637FE00213C3E /* LoginViewController */,
+				96700E2F221C034000F084B3 /* SettingsViewController */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -414,6 +428,7 @@
 			files = (
 				96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */,
 				96DE3035221637FE00213C3E /* LoginViewController.storyboard in Resources */,
+				96700E2E221C025E00F084B3 /* SettingsViewController.storyboard in Resources */,
 				96DE3032221637FE00213C3E /* MainViewController.storyboard in Resources */,
 				96476B522215D41300E57EB9 /* Assets.xcassets in Resources */,
 			);
@@ -480,6 +495,7 @@
 				969A84122215C99A0003BB37 /* Nib+NSView.swift in Sources */,
 				969A84042215C99A0003BB37 /* UIColor+Chameleon.m in Sources */,
 				969A840C2215C99A0003BB37 /* UIAppearance+Swift.m in Sources */,
+				96700E31221C035600F084B3 /* SettingsViewController.swift in Sources */,
 				969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */,
 				112430B0221631350081784C /* ItemController.swift in Sources */,
 				969A84152215C99A0003BB37 /* Nib+UIView.swift in Sources */,
