@@ -20,4 +20,21 @@ struct User: Codable {
     var textNotification: Bool
     var updatedAt: Date
     
+    init(email: String, name: String) {
+        self.email = email
+        self.name = name
+        self.userID = 123
+        
+        self.createdAt = Date()
+        self.updatedAt = Date()
+        
+        self.emailNotification = true
+        self.textNotification = true
+        
+        self.role = "Free"
+        
+        self.subscriptionType = 0
+    }
+    
+    
 }
