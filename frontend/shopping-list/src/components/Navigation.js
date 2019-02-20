@@ -4,7 +4,7 @@ import auth0Client from './Auth';
 
 class Navigation extends React.Component{
     
-    signOut = () => {
+    signOut = () => { // logs out the current user and redirects to the homepage
         auth0Client.signOut();
         this.props.history.replace('/');
     };

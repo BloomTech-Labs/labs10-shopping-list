@@ -9,6 +9,7 @@ class UserProfile extends React.Component{
 
         this.state = {
             input: null,
+            userId: null,
         }
     }
 
@@ -16,7 +17,8 @@ class UserProfile extends React.Component{
         let email = localStorage.getItem('email');
 
         if(email){
-            this.props.checkEmail(email);
+            // if a user is logged in, retrieve their user ID from the database and store in local storage
+            this.props.checkEmail(email); 
         }
     }
 

@@ -39,7 +39,7 @@ class Auth {
   }
 
   signIn() {
-    console.log('callback URL:', callbackURL);
+    console.log('callback URL:', callbackURL); // sanity check for callback URL
     this.auth0.authorize();
   }
 
@@ -62,14 +62,7 @@ class Auth {
         localStorage.setItem('email', authResult.idTokenPayload.email);
         localStorage.setItem('name', authResult.idTokenPayload.name);
         localStorage.setItem('img_url', authResult.idTokenPayload.picture);
-        
-
-        /**
-         * @TODO Once the profile and jwt is generated, run a check against the database
-         * If user email exists, return the user ID to localstorage
-         * If user email does not exist, store profile information, then return user ID to localstorage
-         * 
-         */
+    
         resolve();
       });
     })

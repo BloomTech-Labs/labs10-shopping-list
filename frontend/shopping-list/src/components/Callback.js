@@ -8,6 +8,10 @@ class Callback extends Component {
     this.props.history.replace('/profile');
   }
 
+  /**
+   * @TODO Make this a nifty loading wheel or progress bar
+   */
+
   render() {
     return (
       <p>Loading profile...</p>

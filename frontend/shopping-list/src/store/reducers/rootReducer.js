@@ -19,6 +19,9 @@ export const rootReducer = (state = initialState, action) => {
     case TEST_FAILURE:
       return state;
 
+    case CHECKING_EMAIL:
+      return state;
+
     case EMAIL_CHECKED:
       console.log('emc payload', action.payload.id);
       localStorage.setItem('userId', action.payload.id);
