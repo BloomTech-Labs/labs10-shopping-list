@@ -40,6 +40,7 @@ class UserController {
             switch response.result {
             case .success(let value):
                 
+                // TODO: API needs to be updated to return the userID in the Content
                 guard let jsonDict = value as? [String: Any], let userID = jsonDict["userID"] as? Int else {
                     print("Could not get userID from API response")
                     completion(nil)
@@ -59,34 +60,50 @@ class UserController {
     
     
     
-    func updateGroup(group: Group, name: String?, userID: Int?, completion: @escaping (Group) -> Void) {
+    func updateUser(user: User, email: String?, emailNotification: Bool?, role: String?, textNotification: Bool?, profilePicture: String?, name: String?, completion: @escaping (User) -> Void) {
         
-        var myGroup = group
+        var myUser = user
+        
+        if let email = email {
+            myUser.email = email
+        }
+        
+        if let emailNotification = emailNotification {
+            myUser.emailNotification = emailNotification
+        }
+        
+        if let role = role {
+            myUser.role = role
+        }
+        
+        if let textNotification = textNotification {
+            myUser.textNotification = textNotification
+        }
+        
+        if let profilePicture = profilePicture {
+            myUser.profilePicture = profilePicture
+        }
         
         if let name = name {
-            myGroup.name = name
+            myUser.name = name
         }
         
-        if let userID = userID {
-            myGroup.userID = userID
-        }
+        myUser.updatedAt = Date()
         
-        myGroup.updatedAt = Date()
+        let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(myUser.userID!))
         
-        let url = baseURL.appendingPathComponent("group").appendingPathComponent(String(myGroup.groupID!))
+        guard let userJSON = userToJSON(user: myUser) else { return }
         
-        guard let groupJSON = groupToJSON(group: myGroup) else { return }
-        
-        Alamofire.request(url, method: .put, parameters: groupJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .put, parameters: userJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(_):
                 
-                completion(myGroup)
+                completion(myUser)
                 return
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(myGroup)
+                completion(myUser)
                 return
             }
         }
