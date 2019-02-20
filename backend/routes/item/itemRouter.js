@@ -9,12 +9,12 @@ const checkJwt = require('../../validators/checkJwt');
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/item ENDPOINT **/
 /****************************************************************************************************/
 
-/** ADD SUBSCRIPTION TO DATABASE
+/** ADD ITEM TO DATABASE
  * @param item = {name: "name of item", groupId: id of group it belongs to, "price": price of the item, "quantity": how much of the amount}, this is gathered from the @param req.body
  * @return id = Item ID primary key in items table (e.g. 1, 3, 22, etc.);
  * ID is generated upon item creation
  * @param item.name is the name of the item. Not nullable.
- * @param item.groupId is the cost of the item. Not nullable.
+ * @param item.groupId is the id of the group. Not nullable.
  * @param item.purchasedBy is the user who purchased the item. Nullable.
  * @param item.purchased is to show is this item purchased or not.
  * @param item.price is the price of the item. Not nullable.
@@ -24,25 +24,29 @@ const checkJwt = require('../../validators/checkJwt');
  *
  * ***********************************************/
 
-/** ADD SUBSCRIPTION
+/** ADD ITEM
  * @TODO Add middleware to ensure user is logged in
  * **/
 itemRouter.post('/', (req, res) => {
-    console.log(req.body);
-    let item = req.body;
+    const item = req.body;
+
     itemDb.add(item).then(id => {
-        console.log(id);
-        return res.status(200).json({message: `Item added to database with ID ${id[0]}`, id: id[0]});
+        return res.status(200).json({message: `Item successfully added`, id: id[0]});
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error when adding item.`});
+            const error = {
+                message: `Internal Server Error - Adding Item`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
 /**************************************************/
 
-/** GET SUBSCRIPTION BY ID
+/** GET ITEM BY ID
  * @TODO Add middleware to ensure user is logged in
  * **/
 
@@ -51,44 +55,52 @@ itemRouter.get('/:id', (req, res) => {
     const id = req.params.id;
 
     itemDb.getById(id).then(item => {
-        console.log(item);
-        if(!item){
-            return res.status(404).json({error: `Item with ID ${id} does not exist.`});
-        } else {
-            return res.status(200).json(item);
+        if (item.length >= 1) {
+            return res.status(200).json({data: item})
         }
+
+        return res.status(404).json({message: "The requested item does not exist."});
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error retrieving item with ID ${id}.`});
+            const error = {
+                message: `Internal Server Error - Retrieving Item`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
 /**************************************************/
 
-// GET ALL SUBSCRIPTIONS
+// GET ALL ITEMS
 /** @TODO This should be set to sysadmin privileges for subscription privacy **/
 
 /**************************************************/
 
 itemRouter.get('/', (req, res) => {
     itemDb.get().then(items => {
-        console.log(items);
-        if(!items){
-            return res.status(404).json({error: `No items found!`});
-        } else {
-            return res.status(200).json(items);
+        if(items.length >= 1) {
+            return res.status(200).json({data: items});
         }
+
+        return res.status(404).json({message: `The requested items do not exist.`})
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error collecting item information.`});
+            const error = {
+                message: `Internal Server Error - Getting Items`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
 /**************************************************/
 /**
- * UPDATE SUBSCRIPTION
+ * UPDATE ITEM
  * @TODO Add middleware to ensure users can only change their own group information
  */
 
@@ -97,21 +109,26 @@ itemRouter.put('/:id', (req, res) => {
     const id = req.params.id;
     const changes = req.body;
     itemDb.update(id, changes).then(status => {
-        if(!status || status !== 1){
-            return res.status(404).json({error: `No item found with ID ${id}.`});
-        } else {
-            return res.status(200).json({message: `Item ${id} successfully updated.`});
+        if (status.length >= 1) {
+            return res.status(200).json({message: "Item updated successfully", id: status[0]})
         }
+
+        return res.status(404).json({message: "The requested item does not exist."});
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error updating item with ID ${id}.`});
+            const error = {
+                message: `Internal Server Error - Updating Item`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
 /**************************************************/
 
-/** DELETE SUBSCRIPTION
+/** DELETE ITEM
  * @TODO Add middleware to prevent unauthorized deletions
  * **/
 
@@ -121,16 +138,20 @@ itemRouter.delete('/:id', (req, res) => {
     const id = req.params.id;
 
     itemDb.remove(id).then(status => {
-        console.log(status);
-        if(!status || status !== 1){
-            return res.status(404).json({error: `No item found with ID ${id}.`});
-        } else {
-            return res.status(200).json({message: `Item with ID ${id} deleted successfully.`});
+        if (status.length >= 1) {
+            return res.status(200).json({message: "Item removed successfully", id: status[0]})
         }
+
+        return res.status(404).json({message: "The requested item does not exist."});
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error deleting item with ID ${id}.`});
+            const error = {
+                message: `Internal Server Error - Removing Item`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 

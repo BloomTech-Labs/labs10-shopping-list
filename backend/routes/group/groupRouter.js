@@ -170,6 +170,7 @@ groupRouter.delete('/remove', (req, res) => {
                 return res.status(200).json({message: `Group ${status[0]} successfully removed.`, id: Number(groupID)});
 
             }
+
             return res.status(404).json({error: `The requested group does not exist.`});
         })
             .catch(err => {
