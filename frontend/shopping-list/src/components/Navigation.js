@@ -1,5 +1,6 @@
 import React from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
+// import {Link, withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
 
 class Navigation extends React.Component{
@@ -12,18 +13,19 @@ class Navigation extends React.Component{
 
     render(){
         return(
-            <div>
-                Navbar
+            <div className="Navbar">
                 {
                     !localStorage.getItem('email') && 
-                    <button onClick={auth0Client.signIn}>Sign In</button>
-                    }
+                    <div onClick={auth0Client.signIn}>Sign In</div>
+                }
 
                 {
                     localStorage.getItem('email') && 
-                    <div>
-                    <span>{localStorage.getItem('name')}</span>
-                    <button onClick = {this.signOut}>Sign out</button>
+                    <div className='signedInNavBar'>
+                        <div className='userGreeting'>
+                            Hello, {localStorage.getItem('name')}
+                        </div>
+                        <div onClick = {this.signOut}>Sign out</div>
                     </div>
                 }
             </div>
