@@ -9,7 +9,7 @@ class Home extends React.Component{
                 <Navigation />
                 <div className='componentName element'>Home</div>
                 <div className='appDescription'>
-
+                    Welcome to ShopTrak. We know tracking home supplies & groceries can be difficult. Let's make it easier on you and the ones you care about.
                 </div>
             </div>
         )
