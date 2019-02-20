@@ -1,33 +1,33 @@
 const express = require('express');
-const categoryRouter = express.Router();
-const categoryDb = require('../../helpers/categoryModel');
+const notificationRouter = express.Router();
+const notificationDb = require('../../helpers/notificationsModel');
 
 const checkJwt = require('../../validators/checkJwt');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
 
 /****************************************************************************************************/
-/** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/category ENDPOINT **/
+/** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/notifcation ENDPOINT **/
 /****************************************************************************************************/
 
 /** ADD GROUP TO DATABASE
- * @param category = {category: "name of the category"}, this is gathered from the @param req.body
- * @return id = category ID primary key in categories table (e.g. 1, 3, 22, etc.);
- * ID is generated upon category creation
- * @param category.category is the name of the category. Not nullable.
+ * @param notification = {userID: id of the user's notification content, content: "Content of the notification"}, this is gathered from the @param req.body
+ * @return userID = user ID that the notification belongs to. Not nullable.
+ * ID is generated upon notification creation
+ * @param notification.content is the content of the notification. Not nullable.
  *
  * ***********************************************/
 
-/** ADD CATEGORY
+/** ADD NOTIFICATION
  * @TODO Add middleware to ensure user is logged in
  * **/
-categoryRouter.post('/', (req, res) => {
-    let category = req.body;
-    categoryDb.add(category).then(id => {
-        return res.status(200).json({message: "Category successfully added.", id: id[0]})
+notificationRouter.post('/', (req, res) => {
+    let notif = req.body;
+    notificationDb.add(notif).then(id => {
+        return res.status(200).json({message: "Notification successfully added.", id: id[0]})
 
     }).catch(err => {
         const error = {
-            message: `Internal Server Error - Adding Category`,
+            message: `Internal Server Error - Adding Notification`,
             data: {
                 err: err
             },
@@ -38,19 +38,19 @@ categoryRouter.post('/', (req, res) => {
 
 /**************************************************/
 
-/** GET CATEGORY BY ID
+/** GET NOTIFICATION BY ID
  * @TODO Add middleware to ensure user is logged in
  * **/
 
 /**************************************************/
-categoryRouter.get('/:id', (req, res) => {
+notificationRouter.get('/:id', (req, res) => {
     const id = req.params.id;
 
-    categoryDb.getById(id).then(cat => {
-        if (cat.length >= 1) {
-            return res.status(200).json({data: cat[0]});
+    notificationDb.getById(id).then(notif => {
+        if (notif.length >= 1) {
+            return res.status(200).json({data: notif[0]});
         }
-        return res.status(404).json({error: `The requested category does not exist.`});
+        return res.status(404).json({error: `The requested notification does not exist.`});
     })
         .catch(err => {
             const error = {
@@ -65,19 +65,19 @@ categoryRouter.get('/:id', (req, res) => {
 
 /**************************************************/
 
-/** GET CATEGORY BY CATEGORY
+/** GET NOTIFICATION BY USER ID
  * @TODO Add middleware to ensure user is logged in
  * **/
 
 /**************************************************/
-categoryRouter.get('/:category', (req, res) => {
-    const name = req.params.category;
+notificationRouter.get('/user/:id', (req, res) => {
+    const id = req.params.id;
 
-    categoryDb.getByCategory(name).then(cat => {
-        if (cat.length >= 1) {
-            return res.status(200).json({data: cat[0]});
+    notificationDb.getByUser(id).then(notif => {
+        if (notif.length >= 1) {
+            return res.status(200).json({data: notif[0]});
         }
-        return res.status(404).json({error: `The requested category does not exist.`});
+        return res.status(404).json({error: `The requested notification does not exist.`});
     })
         .catch(err => {
             const error = {
@@ -92,22 +92,22 @@ categoryRouter.get('/:category', (req, res) => {
 
 /**************************************************/
 
-// GET ALL CATEGORIES
+// GET ALL NOTIFICATIONS
 /** @TODO This should be set to sysadmin privileges for group privacy **/
 
 /**************************************************/
 
-categoryRouter.get('/', (req, res) => {
-    categoryDb.get().then(cats => {
-        if(cats.length >= 1){
-            return res.status(200).json({data: cats });
+notificationRouter.get('/', (req, res) => {
+    notificationDb.get().then(notifs => {
+        if(notifs.length >= 1){
+            return res.status(200).json({data: notifs });
         }
 
-        return res.status(404).json({message: "The requested categories do not exist."});
+        return res.status(404).json({message: "The requested notifications do not exist."});
     })
         .catch(err => {
             const error = {
-                message: `Error collecting category information.`,
+                message: `Internal Server Error - Getting All Notifications`,
                 data: {
                     err: err
                 },
@@ -118,25 +118,24 @@ categoryRouter.get('/', (req, res) => {
 
 /**************************************************/
 /**
- * UPDATE CATEGORY
+ * UPDATE NOTIFICATION
  * @TODO Add middleware to ensure users can only change their own group information
  */
 
 /**************************************************/
-categoryRouter.put('/:id', (req, res) => {
+notificationRouter.put('/:id', (req, res) => {
     const id = req.params.id;
     const changes = req.body;
-    categoryDb.update(id, changes).then(status => {
+    notificationDb.update(id, changes).then(status => {
         if(status.length >= 1 || !status){
-            return res.status(200).json({message: `Category successfully updated.`, id: Number(id)});
-
-        } else {
-            return res.status(404).json({error: `The requested category does not exist.`});
+            return res.status(200).json({message: `Notification successfully updated.`, id: Number(id)});
         }
+
+        return res.status(404).json({error: `The requested notification does not exist.`});
     })
         .catch(err => {
             const error = {
-                message: `Error updating category.`,
+                message: `Internal Server Error - Updating Notification`,
                 data: {
                     err: err
                 },
@@ -147,21 +146,21 @@ categoryRouter.put('/:id', (req, res) => {
 
 /**************************************************/
 
-/** DELETE CATEGORY
+/** DELETE NOTIFICATION
  * @TODO Add middleware to prevent unauthorized deletions
  * **/
 
 /**************************************************/
 
-categoryRouter.delete('/:id', (req, res) => {
+notificationRouter.delete('/:id', (req, res) => {
     const id = req.params.id;
 
-    categoryDb.remove(id).then(cid => {
-        res.status(200).json({message: "Category successfully deleted.", id: Number(cid)})
+    notificationDb.remove(id).then(cid => {
+        res.status(200).json({message: "Notification successfully deleted.", id: Number(cid)})
 
     }).catch(err => {
         const error = {
-            message: `Error removing category.`,
+            message: `Internal Server Error. - Removing Notification`,
             data: {
                 err: err
             },
@@ -172,4 +171,4 @@ categoryRouter.delete('/:id', (req, res) => {
 
 })
 
-module.exports = categoryRouter;
+module.exports = notificationRouter;

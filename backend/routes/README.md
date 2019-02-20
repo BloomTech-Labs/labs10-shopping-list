@@ -30,6 +30,11 @@
     * [Get Item By ID](#Get-Item-By-ID)
     * [Update Item](#Update-Item)
     * [Remove Item](#Remove-Item)
+* [Notification Endpoints](#Notification-Endpoints)
+    * [Get All Notifications](#Get-All-Notifications)
+    * [Get Notification By ID](#Get-Notification-By-ID)
+    * [Update Notification](#Update-Notification)
+    * [Remove Notification](#Remove-Notification)
 
 # API Endpoints
 ## Auth Endpoints
@@ -783,7 +788,7 @@ None
 [TOP](#Table-of-Contents)
 
 #### Get Subscription By ID
-Get all members within a particular group
+Get all members within a particular subscription by ID
 * **URL**<br>
 /api/subscription/:id
 * **Method:**<br>
@@ -817,7 +822,7 @@ None
 [TOP](#Table-of-Contents)
 
 #### Add Subscription
-Adds new group.
+Adds new subscription.
 * **URL**<br>
 /api/subscription/
 * **Method:**<br>
@@ -858,7 +863,7 @@ None
 [TOP](#Table-of-Contents)
 
 ### Update Subscription
-Update a particular group member
+Update a particular subscription
 * **URL**<br>
 /api/subscription/:id
 * **Method:**<br>
@@ -902,7 +907,7 @@ None
 [TOP](#Table-of-Contents)
 
 ### Remove Subscription
-Remove a particular group member
+Remove a particular subscription
 * **URL**<br>
 /api/subscription/:id
 * **Method:**<br>
@@ -1118,7 +1123,7 @@ None
 [TOP](#Table-of-Contents)
 
 ### Remove Item
-Remove a particular group member
+Remove a particular item
 * **URL**<br>
 /api/item/:id
 * **Method:**<br>
@@ -1156,7 +1161,7 @@ None
 ## Category Endpoints
 #### Un-Protected
 #### Get All Categories
-Get all items
+Get all categories
 * **URL**<br>
 /api/category/
 * **Method:**<br>
@@ -1190,7 +1195,7 @@ None
 [TOP](#Table-of-Contents)
 
 #### Get Category By ID
-Get a particular item
+Get a particular category by ID
 * **URL**<br>
 /api/category/:id
 * **Method:**<br>
@@ -1224,7 +1229,7 @@ None
 [TOP](#Table-of-Contents)
 
 #### Get Category By Category
-Get a particular item
+Get a particular category by category name
 * **URL**<br>
 /api/category/:name
 * **Method:**<br>
@@ -1258,7 +1263,7 @@ None
 [TOP](#Table-of-Contents)
 
 #### Add Category
-Adds new item.
+Adds new category.
 * **URL**<br>
 /api/category/
 * **Method:**<br>
@@ -1297,7 +1302,7 @@ None
 [TOP](#Table-of-Contents)
 
 ### Update Category
-Update a particular item
+Update a particular category
 * **URL**<br>
 /api/category/:id
 * **Method:**<br>
@@ -1365,6 +1370,231 @@ None
   ```javascript
     $.ajax({
       url: "/api/category/12",
+      dataType: "json",
+      type : "DELETE",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+## Notification Endpoints
+#### Un-Protected
+#### Get All Notifications
+Get all notifications
+* **URL**<br>
+/api/notification/
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, userID: 2, content: "Monthly report..." createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested notifications do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/notification",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get Notification By ID
+Get a particular notification by ID
+* **URL**<br>
+/api/notification/:id
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, userID: 2, content: "Monthly report..." createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested notification do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/notification/8",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
+[TOP](#Table-of-Contents)
+
+#### Get Notification By User
+Get a particular notification by user ID
+* **URL**<br>
+/api/notification/user/:id
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, userID: 2, content: "Monthly report..." createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested notification do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/notification/user/2",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
+[TOP](#Table-of-Contents)
+
+#### Add Notification
+Adds new notification.
+* **URL**<br>
+/api/notification/
+* **Method:**<br>
+`POST`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+`userID=[integer]`<br>
+`content=[string]`
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Notification successfully added.", id: 9 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/notification",
+      dataType: "json",
+      type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+| Column                 | Description                        | Required |
+|------------------------|------------------------------------|----------|
+| userID                 | ID of the user                     | Yes      |
+| content                | Content of the notification        | Yes      |
+
+[TOP](#Table-of-Contents)
+
+### Update Notification
+Update a particular notification
+* **URL**<br>
+/api/notification/:id
+* **Method:**<br>
+`PUT`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Notification successfully updated.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested notification does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/notification/12",
+      dataType: "json",
+      type : "PUT",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+* Note that you will need at least one setting to update -> userID, content, etc.
+
+| Column                 | Description                        | Required |
+|------------------------|------------------------------------|----------|
+| userID                 | ID of the user                     | Yes      |
+| content                | Content of the notification        | Yes      |
+
+[TOP](#Table-of-Contents)
+
+### Remove Notification
+Remove a particular notification
+* **URL**<br>
+/api/notification/:id
+* **Method:**<br>
+`DELETE`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Notification successfully removed.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested notification does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/notification/12",
       dataType: "json",
       type : "DELETE",
       success : function(r) {
