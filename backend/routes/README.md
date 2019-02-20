@@ -1013,13 +1013,13 @@ Adds new item.
 None
 * **Data Params**<br>
 `name=[string]`<br>
-`purchasedBy=[integer]`
-`groupId=[integer]`
-`purchased=[boolean]`
-`price=[float]`
-`quantity=[integer]`
-`measurement=[string]`
-`purchasedOn=[date]`
+`purchasedBy=[integer]`<br>
+`groupId=[integer]`<br>
+`purchased=[boolean]`<br>
+`price=[float]`<br>
+`quantity=[integer]`<br>
+`measurement=[string]`<br>
+`purchasedOn=[date]`<br>
 `category=[string]`
 * **Success Response:**<br>
     * **Code:** 200<br>
