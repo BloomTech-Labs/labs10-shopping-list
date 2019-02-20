@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
+import {Spinner} from 'reactstrap';
 
 class Callback extends Component {
   async componentDidMount() {
@@ -14,7 +15,11 @@ class Callback extends Component {
 
   render() {
     return (
-      <p>Loading profile...</p>
+        <div>
+        <h1>Loading profile...</h1>
+        <Spinner style = {{width: '3rem', height: '3rem'}} type = "grow" />
+        </div>
+      
     );
   }
 }

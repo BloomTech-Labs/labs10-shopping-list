@@ -35,6 +35,7 @@ export const rootReducer = (state = initialState, action) => {
       }
       
     case ADDING_USER_TO_STATE:
+    console.log('auts payload', action.payload);
       return {
         ...state,
         name: action.payload.name,
