@@ -1,13 +1,20 @@
 import auth0 from 'auth0-js';
 
+let callbackURL;
+
+if(process.env.NODE_ENV === 'development'){
+    callbackURL = `http://localhost:3000/callback`
+} else if (process.NODE_ENV === 'production' || process.NODE_ENV !== 'development'){
+    callbackURL = `https://labs10-shopping-list.netlify.com/callback`
+}
+
 class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
-      // the following three lines MUST be updated
       domain: process.env.REACT_APP_AUTH0_DOMAIN,
-    //   audience: 'https://<YOUR_AUTH0_DOMAIN>/userinfo',
+      audience: 'https://shoptrak.auth0.com/api/v2/',
       clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
-      redirectUri: 'http://localhost:3000/callback',
+      redirectUri: `${callbackURL}`,
       responseType: 'id_token',
       scope: 'openid email profile'
     });
@@ -32,6 +39,7 @@ class Auth {
   }
 
   signIn() {
+    console.log('callback URL:', callbackURL); // sanity check for callback URL
     this.auth0.authorize();
   }
 
@@ -54,14 +62,7 @@ class Auth {
         localStorage.setItem('email', authResult.idTokenPayload.email);
         localStorage.setItem('name', authResult.idTokenPayload.name);
         localStorage.setItem('img_url', authResult.idTokenPayload.picture);
-        
-
-        /**
-         * @TODO Once the profile and jwt is generated, run a check against the database
-         * If user email exists, return the user ID to localstorage
-         * If user email does not exist, store profile information, then return user ID to localstorage
-         * 
-         */
+    
         resolve();
       });
     })

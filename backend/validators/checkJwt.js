@@ -10,16 +10,16 @@ if(process.env.NODE_ENV !== 'production'){
     dotenv.config();
 }
 
-if(process.env.NODE_ENV === 'production'){
-    let sess = {
-        secret: 'THIS IS TOP FRICCIN SECRET MOM',
-        cookie: {secure: false},
-        resave: false,
-        saveUninitialized: true
-    };
+// if(process.env.NODE_ENV === 'production'){
+//     let sess = {
+//         secret: 'THIS IS TOP FRICCIN SECRET MOM',
+//         cookie: {secure: false},
+//         resave: false,
+//         saveUninitialized: true
+//     };
 
-    sess.cookie.secure = true; // serves secure cookies in https production
-}
+//     sess.cookie.secure = true; // serves secure cookies in https production
+// }
 
 console.log('checkJWT auth0 domain: ', process.env.AUTH0_DOMAIN);
 
@@ -31,58 +31,9 @@ const checkJwt = jwt({
         jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
     }),
     
-    // audience: `https://shoptrak.auth0.com/api/v2/`,
-    // issuer: `https://${process.env.AUTH0_DOMAIN}`,
+    audience: `${process.env.AUTH0_CLIENT_ID}`,
+    issuer: `https://${process.env.AUTH0_DOMAIN}/`,
     algorithms: ['RS256']
 });
 
 module.exports = checkJwt;
-
-
-
-
-
-
-
-
-
-
-
-// module.exports = function(){
-//     return function secured (req, res, next){
-//         console.log(req);
-//         if(req.isAuthenticated()){
-//             return next();
-//         }
-
-//         res.redirect('http://localhost:9000/api/auth/login');
-//     }
-// }
-
-
-// module.exports = function(){
-//     return 
-// }
-
-// function secured (req, res, next){
-//     console.log(req.session);
-//     console.log(req.user);
-//     if(req.user){
-        
-//         return next();
-//     }
-
-//     console.log(req.user);
-
-//     req.session.returnTo = req.originalUrl;
-//     res.redirect('http://localhost:9000/api/auth/login');
-// }
-
-// function secured (req, res, next){
-//     console.log('req.user: ', req.user);
-//     if(req.isAuthenticated()){
-//         return next();
-//     }
-
-//     res.redirect('http://localhost:9000/api/auth/login');
-// }
