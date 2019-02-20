@@ -7,5 +7,7 @@ target 'ShoppingList' do
 
   # Pods for ShoppingList
 pod 'Popover'
+
+pod 'Alamofire'
   
 end

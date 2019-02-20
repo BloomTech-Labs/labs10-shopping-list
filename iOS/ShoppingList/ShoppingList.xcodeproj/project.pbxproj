@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		112430AB221611B00081784C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AA221611B00081784C /* CoreDataManager.swift */; };
 		112430AE2216267E0081784C /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AD2216267E0081784C /* GroupController.swift */; };
 		112430B0221631350081784C /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AF221631350081784C /* ItemController.swift */; };
+		118646D4221CA8CD00D0F04B /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646D3221CA8CD00D0F04B /* Group.swift */; };
+		118646D6221CA93900D0F04B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646D5221CA93900D0F04B /* Item.swift */; };
+		118646D8221CA9D900D0F04B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646D7221CA9D900D0F04B /* User.swift */; };
+		118646DA221CAA1600D0F04B /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646D9221CAA1600D0F04B /* Trip.swift */; };
+		118646DC221CAA5600D0F04B /* GroupMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646DB221CAA5600D0F04B /* GroupMember.swift */; };
+		118646DE221CAAA100D0F04B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646DD221CAAA100D0F04B /* Category.swift */; };
 		1423D70A921BE0FF6817A9D5 /* Pods_ShoppingList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */; };
 		443C1B4C22160D9E00220C28 /* Shopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C1B4B22160D9E00220C28 /* Shopping.swift */; };
 		960FBF63221C26220076C662 /* ManageGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */; };
@@ -62,9 +67,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		112430AA221611B00081784C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		112430AD2216267E0081784C /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
 		112430AF221631350081784C /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
+		118646D3221CA8CD00D0F04B /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		118646D5221CA93900D0F04B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		118646D7221CA9D900D0F04B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = "/Users/nikita/development/labs10-shopping-list/iOS/ShoppingList/ShoppingList/Model/User.swift"; sourceTree = "<absolute>"; };
+		118646D9221CAA1600D0F04B /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Trip.swift; path = "/Users/nikita/development/labs10-shopping-list/iOS/ShoppingList/ShoppingList/Model/Trip.swift"; sourceTree = "<absolute>"; };
+		118646DB221CAA5600D0F04B /* GroupMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMember.swift; sourceTree = "<group>"; };
+		118646DD221CAAA100D0F04B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		443C1B322214A45100220C28 /* ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		443C1B4B22160D9E00220C28 /* Shopping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shopping.swift; sourceTree = "<group>"; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -155,7 +165,6 @@
 			children = (
 				112430AD2216267E0081784C /* GroupController.swift */,
 				112430AF221631350081784C /* ItemController.swift */,
-				112430AA221611B00081784C /* CoreDataManager.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -199,6 +208,12 @@
 			isa = PBXGroup;
 			children = (
 				443C1B4B22160D9E00220C28 /* Shopping.swift */,
+				118646DD221CAAA100D0F04B /* Category.swift */,
+				118646D3221CA8CD00D0F04B /* Group.swift */,
+				118646D9221CAA1600D0F04B /* Trip.swift */,
+				118646D5221CA93900D0F04B /* Item.swift */,
+				118646D7221CA9D900D0F04B /* User.swift */,
+				118646DB221CAA5600D0F04B /* GroupMember.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -498,18 +513,20 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Popover/Popover.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Popover.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -521,14 +538,17 @@
 			files = (
 				969A84072215C99A0003BB37 /* Chameleon_.m in Sources */,
 				96DE302A221637EB00213C3E /* Constants.swift in Sources */,
+				118646D8221CA9D900D0F04B /* User.swift in Sources */,
 				960FBF63221C26220076C662 /* ManageGroupsTableViewController.swift in Sources */,
 				969A84112215C99A0003BB37 /* Reusable+NSCollectionView.swift in Sources */,
 				969A84092215C99A0003BB37 /* UINavigationController+Chameleon.m in Sources */,
 				969A84122215C99A0003BB37 /* Nib+NSView.swift in Sources */,
+				118646D6221CA93900D0F04B /* Item.swift in Sources */,
 				969A84042215C99A0003BB37 /* UIColor+Chameleon.m in Sources */,
 				969A840C2215C99A0003BB37 /* UIAppearance+Swift.m in Sources */,
 				96700E31221C035600F084B3 /* SettingsTableViewController.swift in Sources */,
 				969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */,
+				118646DC221CAA5600D0F04B /* GroupMember.swift in Sources */,
 				112430B0221631350081784C /* ItemController.swift in Sources */,
 				969A84152215C99A0003BB37 /* Nib+UIView.swift in Sources */,
 				969A84012215C99A0003BB37 /* ChameleonShorthand.swift in Sources */,
@@ -537,11 +557,11 @@
 				96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */,
 				969A840E2215C99A0003BB37 /* Reusable+NSTableView.swift in Sources */,
 				969A84102215C99A0003BB37 /* Storyboard+NSViewController.swift in Sources */,
+				118646D4221CA8CD00D0F04B /* Group.swift in Sources */,
 				443C1B4C22160D9E00220C28 /* Shopping.swift in Sources */,
 				969A84032215C99A0003BB37 /* ChameleonConstants.m in Sources */,
 				969A841E2215C99A0003BB37 /* Identifier.swift in Sources */,
 				969A84192215C99A0003BB37 /* Reusable+UITableView.swift in Sources */,
-				112430AB221611B00081784C /* CoreDataManager.swift in Sources */,
 				969A84142215C99A0003BB37 /* Reusable.swift in Sources */,
 				969A84052215C99A0003BB37 /* UIButton+Chameleon.m in Sources */,
 				960FBF6D221C427A0076C662 /* MessagePopoverView.swift in Sources */,
@@ -553,6 +573,8 @@
 				96DE3034221637FE00213C3E /* LoginViewController.swift in Sources */,
 				969A84082215C99A0003BB37 /* NSArray+Chameleon.m in Sources */,
 				969A840A2215C99A0003BB37 /* UILabel+Chameleon.m in Sources */,
+				118646DA221CAA1600D0F04B /* Trip.swift in Sources */,
+				118646DE221CAAA100D0F04B /* Category.swift in Sources */,
 				969A84162215C99A0003BB37 /* Reusable+UICollectionView.swift in Sources */,
 				969A841A2215C99A0003BB37 /* Storyboard.swift in Sources */,
 				112430AE2216267E0081784C /* GroupController.swift in Sources */,
