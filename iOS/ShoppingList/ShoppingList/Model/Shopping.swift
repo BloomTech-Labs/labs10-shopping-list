@@ -13,27 +13,27 @@ protocol Shopping {
     func createGroup (name: String, completion: @escaping (Group? , Error?)-> Void)
     func list(id: Int, completion: @escaping (GroupList? , Error?)-> Void )
     func history(id: Int, completion: @escaping (GroupHistory? , Error?)-> Void )
-    func createPurchase (items:[Items], amount: Double, completion: @escaping (GroupList? , Error?)-> Void )
+    func createPurchase (items:[Item], amount: Double, completion: @escaping (GroupList? , Error?)-> Void )
     func invite ( userId:Int, groupId: Int, completion: @escaping (GroupList? , Error?)-> Void )
-    func addItem (groupId: Int, item: Items, completion: @escaping (GroupList? , Error?)-> Void )
+    func addItem (groupId: Int, item: Item, completion: @escaping (GroupList? , Error?)-> Void )
     func markBought (groupId: Int, itemId: Int, completion: @escaping (GroupList? , Error?)-> Void )
 }
 
 struct UserDetail {
-    let user: Users
+    let user: User
     let contribution: Int
 }
 
 struct GroupList {
     let group: Group
-    let items: [Items]
+    let items: [Item]
     let users: [UserDetail]
 
 }
 
 struct Purchase {
-    let user: Users
-    let items: [Items]
+    let user: User
+    let items: [Item]
     let date: Date
     let amount: Double
 }
