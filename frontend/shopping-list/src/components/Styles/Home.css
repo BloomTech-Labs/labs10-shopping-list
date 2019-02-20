@@ -33,3 +33,7 @@
     align-items: center;
     margin: 0 5px;
 }
+
+.button:hover{
+    cursor: pointer;
+}

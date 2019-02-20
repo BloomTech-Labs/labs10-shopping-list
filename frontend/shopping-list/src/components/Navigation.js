@@ -16,7 +16,7 @@ class Navigation extends React.Component{
             <div className="Navbar">
                 {
                     !localStorage.getItem('email') && 
-                    <div onClick={auth0Client.signIn}>Sign In</div>
+                    <div className='button' onClick={auth0Client.signIn}>Sign In</div>
                 }
 
                 {
@@ -25,7 +25,7 @@ class Navigation extends React.Component{
                         <div className='userGreeting'>
                             Hello, {localStorage.getItem('name')}
                         </div>
-                        <div onClick = {this.signOut}>Sign out</div>
+                        <div className='button' onClick = {this.signOut}>Sign out</div>
                     </div>
                 }
             </div>
