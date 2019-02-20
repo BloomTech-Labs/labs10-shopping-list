@@ -12,7 +12,7 @@ import SwiftKeychainWrapper
 
 class GroupController {
     
-     let accessToken: String? = KeychainWrapper.standard.string(forKey: "accessToken")
+    
     
     private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
     
@@ -37,8 +37,13 @@ class GroupController {
         
         guard let groupJSON = groupToJSON(group: newGroup) else { return }
         
+        guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
         
-        Alamofire.request(url, method: .post, parameters: groupJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+
+        
+        
+        Alamofire.request(url, method: .post, parameters: groupJSON, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(let value):
