@@ -31,7 +31,5 @@ struct Group: Codable {
         
         self.createdAt = Date()
         self.updatedAt = Date()
-
-        
     }
 }
