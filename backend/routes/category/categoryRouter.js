@@ -65,6 +65,33 @@ categoryRouter.get('/:id', (req, res) => {
 
 /**************************************************/
 
+/** GET CATEGORY BY CATEGORY
+ * @TODO Add middleware to ensure user is logged in
+ * **/
+
+/**************************************************/
+categoryRouter.get('/:category', (req, res) => {
+    const name = req.params.category;
+
+    categoryDb.getByCategory(name).then(cat => {
+        if (cat.length >= 1) {
+            return res.status(200).json({data: cat[0]});
+        }
+        return res.status(404).json({error: `The requested category does not exist.`});
+    })
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        })
+})
+
+/**************************************************/
+
 // GET ALL CATEGORIES
 /** @TODO This should be set to sysadmin privileges for group privacy **/
 

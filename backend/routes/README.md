@@ -813,6 +813,8 @@ None
       }
     });
   ```
+  
+[TOP](#Table-of-Contents)
 
 #### Add Subscription
 Adds new group.
@@ -1003,6 +1005,8 @@ None
     });
   ```
 
+[TOP](#Table-of-Contents)
+
 #### Add Item
 Adds new item.
 * **URL**<br>
@@ -1139,6 +1143,228 @@ None
   ```javascript
     $.ajax({
       url: "/api/item/12",
+      dataType: "json",
+      type : "DELETE",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+## Category Endpoints
+#### Un-Protected
+#### Get All Categories
+Get all items
+* **URL**<br>
+/api/category/
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, category: "Produce", createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested categories do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get Category By ID
+Get a particular item
+* **URL**<br>
+/api/category/:id
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, category: "Produce", createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested category do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category/8",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
+[TOP](#Table-of-Contents)
+
+#### Get Category By Category
+Get a particular item
+* **URL**<br>
+/api/category/:name
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`name=[string]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, category: "Produce", createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested category do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category/Produce",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
+[TOP](#Table-of-Contents)
+
+#### Add Category
+Adds new item.
+* **URL**<br>
+/api/category/
+* **Method:**<br>
+`POST`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+`name=[string]`<br>
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Category successfully added.", id: 9 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category",
+      dataType: "json",
+      type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+| Column                 | Description                        | Required |
+|------------------------|------------------------------------|----------|
+| category               | Name of category                   | Yes      |
+
+[TOP](#Table-of-Contents)
+
+### Update Category
+Update a particular item
+* **URL**<br>
+/api/category/:id
+* **Method:**<br>
+`PUT`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Category successfully updated.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested category does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category/12",
+      dataType: "json",
+      type : "PUT",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+* Note that you will need at least one setting to update -> category, etc.
+
+| Column                 | Description                        | Required |
+|------------------------|------------------------------------|----------|
+| category               | Name of category                   | Yes      |
+
+[TOP](#Table-of-Contents)
+
+### Remove Category
+Remove a particular category
+* **URL**<br>
+/api/category/:id
+* **Method:**<br>
+`DELETE`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Category successfully removed.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested category does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category/12",
       dataType: "json",
       type : "DELETE",
       success : function(r) {
