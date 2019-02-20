@@ -39,18 +39,21 @@ function getById(id) {
 
 function add(item) {
   return db("items")
+      .returning("id")
     .insert(item)
     .into("items");
 }
 
 function update(id, changes) {
   return db("items")
+      .returning("id")
     .where({ id })
     .update(changes);
 }
 
 function remove(id) {
   return db("items")
+      .returning("id")
     .where({ id })
     .del();
 }

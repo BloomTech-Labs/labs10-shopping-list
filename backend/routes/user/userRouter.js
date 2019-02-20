@@ -9,10 +9,10 @@ const checkJwt = require('../../validators/checkJwt');
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/user ENDPOINT **/
 /****************************************************************************************************/
 
-userRouter.get('/', checkJwt, (req, res) => {
-    console.log(req.body);
-    res.send('This is the /user root endpoint.'); // test the protected middleware by passing the JWT into Authorization header with 'Bearer <TOKEN>' value
-});
+// userRouter.get('/', checkJwt, (req, res) => {
+//     console.log(req.body);
+//     res.send('This is the /user root endpoint.'); // test the protected middleware by passing the JWT into Authorization header with 'Bearer <TOKEN>' value
+// });
 
 /**************************************************/
 
@@ -37,8 +37,13 @@ userRouter.post('/', (req, res) => {
         return res.status(200).json({message: `User adder to database with ID ${id[0]}`, id: id[0]});
     })
     .catch(err => {
-        console.log(err);
-        return res.status(500).json({error: `Error when adding user.`});
+        const error = {
+            message: `The requested user already exists.`,
+            data: {
+                err: err
+            },
+        }
+        return res.status(500).json(error);
     })
 })
 
@@ -54,15 +59,20 @@ userRouter.get('/:id', (req, res) => {
 
     userDb.getById(id).then(user => {
         console.log(user);
-        if(!user){
-            return res.status(404).json({error: `User with ID ${id} does not exist.`});
-        } else {
-            return res.status(200).json(user);
+        if (user.length >= 1) {
+            return res.status(200).json(user[0]);
         }
+
+        return res.status(404).json({message: "The requested user does not exist."})
     })
     .catch(err => {
-        console.log(err);
-        return res.status(500).json({error: `Error retrieving user with ID ${id}.`});
+        const error = {
+            message: `Internal Server Error`,
+            data: {
+                err: err
+            },
+        }
+        return res.status(500).json(error);
     })
 })
 
@@ -73,20 +83,33 @@ userRouter.get('/:id', (req, res) => {
 
 /**************************************************/
 
-userRouter.get('/', (req, res) => {
-    userDb.get().then(users => {
-        console.log(users);
-        if(!users){
-            return res.status(404).json({error: `No users found!`});
-        } else {
-            return res.status(200).json(users);
+// GET USER BY EMAIL
+/** @TODO This should be set to sysadmin privileges for user privacy **/
+
+/**************************************************/
+
+userRouter.get('/email/:email', (req, res) => {
+    const email = req.params.email;
+
+    userDb.getByEmail(email).then(user => {
+        if (user.length >= 1) {
+            return res.status(200).json(user[0]);
         }
+
+        return res.status(404).json({message: "The requested user does not exist."})
     })
-    .catch(err => {
-        console.log(err);
-        return res.status(500).json({error: `Error collecting users information.`});
-    })
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        })
 })
+
+userRouter.get('/')
 
 /**************************************************/
 /**
@@ -96,18 +119,24 @@ userRouter.get('/', (req, res) => {
 
 /**************************************************/
 userRouter.put('/:id', (req, res) => {
-    const id = req.params.id;
+    const id = Number(req.params.id);
     const changes = req.body;
     userDb.update(id, changes).then(status => {
-        if(!status || status !== 1){
-            return res.status(404).json({error: `No user found with ID ${id}.`});
-        } else {
+        if(status.length >= 1 || !status){
             return res.status(200).json({message: `User ${id} successfully updated.`});
+
+        } else {
+            return res.status(404).json({error: `The requested user does not exist.`});
         }
     })
     .catch(err => {
-        console.log(err);
-        return res.status(500).json({error: `Error updating user with ID ${id}.`});
+        const error = {
+            message: `Error updating user with ID ${id}.`,
+            data: {
+                err: err
+            },
+        }
+        return res.status(500).json(error);
     })
 })
 
@@ -123,16 +152,63 @@ userRouter.delete('/:id', (req, res) => {
     const id = req.params.id;
 
     userDb.remove(id).then(status => {
-        console.log(status);
-        if(!status || status !== 1){
-            return res.status(404).json({error: `No user found with ID ${id}.`});
+        if(status.length >= 1 || !status){
+            return res.status(200).json({message: `User ${id} successfully deleted.`});
+
         } else {
-            return res.status(200).json({message: `User with ID ${id} deleted successfully.`});
+            return res.status(404).json({error: `The requested user does not exist.`});
+        }
+    })
+    .catch(err => {
+        const error = {
+            message: `Error deleting user with ID ${id}.`,
+            data: {
+                err: err
+            },
+        }
+        return res.status(500).json(error);
+    })
+})
+
+
+/**************************************************/
+
+/** GET USER ID
+ * This will query the database for the user ID that matches the passed in email address
+ * if no user is found, a new entry will be created
+ * **/
+
+/**************************************************/
+
+userRouter.post('/getid', (req, res) => {
+    console.log('req body', req.body);
+    let email = req.body.email;
+    userDb.getIdByEmail(email).then(id => {
+        console.log('email id', id[0]);
+        if(!id || id.length === 0){
+            console.log('no user found');
+            // CREATE NEW USER ENTRY
+            let newUser = {
+                name: req.body.name,
+                email: req.body.email,
+                profilePicture: req.body.img_url,
+            }
+            userDb.add(newUser).then(id => {
+                console.log('newuserID', id[0]);
+                return res.status(201).json({message: `New user added to database with ID ${id}.`, id: id[0].id});
+            })
+            .catch(err => {
+                console.log(err);
+                return res.status(500).json({error: `Error adding new user DB entry.`})
+            })
+        } else {
+            console.log('user found', id[0]);
+            return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
         }
     })
     .catch(err => {
         console.log(err);
-        return res.status(500).json({error: `Error deleting user with ID ${id}.`});
+        return res.status(500).json({error: `Error retrieving user ID.`})
     })
 })
 

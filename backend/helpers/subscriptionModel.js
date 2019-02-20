@@ -35,6 +35,7 @@ function getById(id) {
  */
 function add(sub) {
     return db("subscriptions")
+        .returning(["id", "name", "amount"])
         .insert(sub)
         .into("subscriptions");
 }
@@ -47,6 +48,7 @@ function add(sub) {
  */
 function update(id, changes) {
     return db("subscriptions")
+        .returning("id")
         .where({id})
         .update(changes);
 }
@@ -58,6 +60,7 @@ function update(id, changes) {
  */
 function remove(id) {
     return db("subscriptions")
+        .returning("id")
         .where({id})
         .del();
 }

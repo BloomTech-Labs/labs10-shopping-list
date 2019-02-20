@@ -61,6 +61,7 @@ function add(group) {
  */
 function update(id, changes) {
   return db("groups")
+      .returning("id")
     .where({ id })
     .update(changes);
 }
@@ -72,6 +73,7 @@ function update(id, changes) {
  */
 function remove(id) {
   return db("groups")
+      .returning("id")
     .where({ id })
     .del();
 }
