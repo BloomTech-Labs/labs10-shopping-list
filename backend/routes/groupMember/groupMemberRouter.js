@@ -220,4 +220,31 @@ groupMemberRouter.delete('/remove/:id', (req, res) => {
         })
 })
 
+/**************************************************/
+
+/** GET GROUP MEMBER IDs BY USER ID
+ * @TODO Add middleware to prevent unauthorized deletions
+ * **/
+
+/**************************************************/
+
+groupMemberRouter.get('/groups/user/:id', (req, res) => {
+    const id = req.params.id;
+
+    groupMemDb.returnUserGroups(id).then(status => {
+        if (status.length >= 1) {
+            return res.status(200).json({message: "Member group ID's successfully acquired.", id: Number(id)})
+        }
+    })
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error - Getting Group Member Group ID's`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        })
+})
+
 module.exports = groupMemberRouter;

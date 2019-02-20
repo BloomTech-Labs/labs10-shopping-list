@@ -198,7 +198,7 @@ Updates a single user to the database
 * **URL**<br>
 /api/user/:id
 * **Method:**<br>
-`POST`
+`PUT`
 * **URL Params**<br>
 `id=[integer]`
 * **Data Params**<br>
