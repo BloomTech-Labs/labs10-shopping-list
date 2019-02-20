@@ -2,7 +2,6 @@ import React from 'react';
 import {checkEmail, addUserToState} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import {Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button} from 'reactstrap';
-import { timingSafeEqual } from 'crypto';
 
 class UserProfile extends React.Component{
     constructor(props){
@@ -15,17 +14,19 @@ class UserProfile extends React.Component{
     }
 
     async componentDidMount(){
+        console.log('cdm');
         let email = localStorage.getItem('email');
 
         if(email && !this.props.userId){
             // if a user is logged in and no userID is found, retrieve their user ID from the database via their email and store in local storage
-            await this.props.checkEmail(email, this.props.addUserToState);
+            this.props.checkEmail(email, this.props.addUserToState);
             // the second parameter is a callback that will execute once the email check is complete
             // in this case it is populating state with the complete user profile: email, userId, profilePicture, and name
         }
     }
 
     render(){
+        console.log('render');
         return (
             <div className = 'user-profile-container'>
             User profile page
