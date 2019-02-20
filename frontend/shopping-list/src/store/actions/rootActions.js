@@ -39,7 +39,7 @@ export const checkEmail = (email, callback) => {
   }
 
   let token = localStorage.getItem('jwt');
-  console.log('token', token);
+  // console.log('token', token);
   let options = {
     headers: {
       Authorization: `Bearer ${token}`,

@@ -4,7 +4,7 @@ let callbackURL;
 
 if(process.env.NODE_ENV === 'development'){
     callbackURL = `http://localhost:3000/callback`
-} else if (process.NODE_ENV === 'production'){
+} else if (process.NODE_ENV === 'production' || process.NODE_ENV !== 'development'){
     callbackURL = `https://labs10-shopping-list.netlify.com/callback`
 }
 
