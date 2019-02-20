@@ -5,9 +5,13 @@ import {
   CHECKING_EMAIL,
   EMAIL_CHECKED,
 } from "../actions";
+import { ADDING_USER_TO_STATE } from "../actions/rootActions";
 
 const initialState = {
   userId: null,
+  name: null,
+  email: null,
+  profilePicture: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -29,7 +33,14 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         userId: action.payload.id
       }
-
+      
+    case ADDING_USER_TO_STATE:
+      return {
+        ...state,
+        name: action.payload.name,
+        email: action.payload.email,
+        profilePicture: action.payload.profilePicture,
+      }
 
     default:
       return state;

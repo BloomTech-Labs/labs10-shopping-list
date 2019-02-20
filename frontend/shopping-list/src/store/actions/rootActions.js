@@ -8,6 +8,8 @@ export const TEST_FAILURE = "TEST_FAILURE";
 export const CHECKING_EMAIL = 'CHECKING_EMAIL';
 export const EMAIL_CHECKED = 'EMAIL_CHECKED';
 export const ERROR = 'ERROR';
+export const ADDING_USER_TO_STATE = 'ADDING_USER_TO_STATE';
+
 
 /**
  * Test function
@@ -26,7 +28,8 @@ export const testFunction = () => dispatch => {
 // takes in the user email from auth0 profile
 // sends email to server to obtain user ID
 // if no ID found, creates a new user record and returns the ID
-export const checkEmail = (email) => {
+// once complete, calls the callback function, which in this case is addUserToState in order to populate state completely
+export const checkEmail = (email, callback) => {
   console.log('checkemail function', email);
 
   let user = {
@@ -35,7 +38,15 @@ export const checkEmail = (email) => {
     img_url: localStorage.getItem('img_url'),
   }
 
-  const fetchUserId = axios.post(`http://localhost:9000/api/user/getid`, user);
+  let token = localStorage.getItem('jwt');
+  console.log('token', token);
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  }
+
+  const fetchUserId = axios.post(`http://localhost:9000/api/user/getid`, user, options);
 
   return dispatch => {
     dispatch({type: CHECKING_EMAIL});
@@ -43,9 +54,31 @@ export const checkEmail = (email) => {
     fetchUserId.then(res => {
       console.log('check email', res.data);
       dispatch({type: EMAIL_CHECKED, payload: res.data});
+
+      callback();
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})
     })
   }
+}
+
+export const addUserToState = () => {
+
+  let userState = {
+    email: localStorage.getItem('email'),
+    name: localStorage.getItem('name'),
+    profilePicture: localStorage.getItem('img_url'),
+  }
+
+  if(userState.email && userState.name && userState.profilePicture){
+    return dispatch => {
+      dispatch({type: ADDING_USER_TO_STATE, payload: userState});
+
+    }
+  } else {
+    return dispatch => {
+      dispatch({type: ERROR})
+  }
+}
 }

@@ -1,5 +1,5 @@
-import React, {Components} from 'react';
-import {checkEmail} from '../store/actions/rootActions';
+import React from 'react';
+import {checkEmail, addUserToState} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 
 
@@ -18,7 +18,9 @@ class UserProfile extends React.Component{
 
         if(email){
             // if a user is logged in, retrieve their user ID from the database and store in local storage
-            this.props.checkEmail(email); 
+            this.props.checkEmail(email, this.props.addUserToState);
+            // the second parameter is a callback that will execute once the email check is complete
+            // in this case it is populating state with the complete user profile: email, userId, profilePicture, and name
         }
     }
 
@@ -34,10 +36,11 @@ class UserProfile extends React.Component{
 const mapStateToProps = state => {
     return {
         //state items
-        userId: state.userId
+        userId: state.userId 
     }
 }
 
 export default connect(mapStateToProps, {
     checkEmail,
+    addUserToState,
 })(UserProfile);
