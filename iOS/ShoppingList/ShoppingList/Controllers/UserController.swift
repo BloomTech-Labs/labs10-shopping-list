@@ -27,27 +27,27 @@ class UserController {
         }
     }
     
-    func newUser(withName name: String, email: String, completion: @escaping (Group?) -> Void) {
+    func newUser(withName name: String, email: String, profilePicture: String, completion: @escaping (User?) -> Void) {
         
-        var newGroup = Group(name: name, userID: userID)
-        let url = baseURL.appendingPathComponent("group")
+        var newUser = User(email: email, name: name, profilePicture: profilePicture)
+        let url = baseURL.appendingPathComponent("user")
         
-        guard let groupJSON = groupToJSON(group: newGroup) else { return }
+        guard let userJSON = userToJSON(user: newUser) else { return }
         
         
-        Alamofire.request(url, method: .post, parameters: groupJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .post, parameters: userJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(let value):
                 
-                guard let jsonDict = value as? [String: Any], let groupID = jsonDict["groupID"] as? Int else {
-                    print("Could not get groupID from API response")
+                guard let jsonDict = value as? [String: Any], let userID = jsonDict["userID"] as? Int else {
+                    print("Could not get userID from API response")
                     completion(nil)
                     return
                 }
                 
-                newGroup.groupID = groupID
-                completion(newGroup)
+                newUser.userID = userID
+                completion(newUser)
                 
             case .failure(let error):
                 print(error.localizedDescription)
