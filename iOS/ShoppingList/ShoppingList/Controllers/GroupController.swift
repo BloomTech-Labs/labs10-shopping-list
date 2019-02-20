@@ -8,8 +8,11 @@
 
 import Foundation
 import Alamofire
+import SwiftKeychainWrapper
 
 class GroupController {
+    
+     let accessToken: String? = KeychainWrapper.standard.string(forKey: "accessToken")
     
     private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Auth0
 
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
     
