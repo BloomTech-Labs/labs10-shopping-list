@@ -20,6 +20,11 @@
     * [Add Group Member](#Add-Group-Member)
     * [Update Group Member](#Update-Group-Member)
     * [Remove Group Member](#Remove-Group-Member)
+* [Subscription Endpoints](#Subscription-Endpoints)
+    * [Get All Subscriptions](#Get-All-Subscriptions)
+    * [Get Subscription By ID](#Get-Subscription-By-ID)
+    * [Update Subscription](#Update-Subscription)
+    * [Remove Subscription](#Remove-Subscription)
 
 # API Endpoints
 ## Auth Endpoints
@@ -726,6 +731,195 @@ None
   ```javascript
     $.ajax({
       url: "/api/groupMember/remove/12",
+      dataType: "json",
+      type : "DELETE",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+## Subscription Endpoints
+#### Un-Protected
+#### Get All Subscriptions
+Get all subscriptions
+* **URL**<br>
+/api/subscription/
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, name: "free", amount: 0, createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested subscriptions do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/subscription",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get Subscription By ID
+Get all members within a particular group
+* **URL**<br>
+/api/subscription/:id
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, name: "free", amount: 0, createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested subscription do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/subscription/8",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Add Subscription
+Adds new group.
+* **URL**<br>
+/api/subscription/
+* **Method:**<br>
+`POST`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+`name=[string]`<br>
+`amount=[integer]` **NOT A FLOAT**
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Subscription successfully added.", id: 9 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/subscription",
+      dataType: "json",
+      type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+| Column                 | Description                 | Required |
+|------------------------|-----------------------------|----------|
+| name                   | Name of subscription        | Yes      |
+| amount                 | Amount the sub costs        | Yes      |
+
+[TOP](#Table-of-Contents)
+
+### Update Subscription
+Update a particular group member
+* **URL**<br>
+/api/subscription/:id
+* **Method:**<br>
+`PUT`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Subscription successfully updated.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested subscription does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/subscription/12",
+      dataType: "json",
+      type : "PUT",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+* Note that you will need at least one setting to update -> userID, moderator, etc.
+
+| Column                 | Description                 | Required |
+|------------------------|-----------------------------|----------|
+| name                   | Name of subscription        | No       |
+| amount                 | Amount the sub costs        | No       |
+
+[TOP](#Table-of-Contents)
+
+### Remove Subscription
+Remove a particular group member
+* **URL**<br>
+/api/subscription/:id
+* **Method:**<br>
+`DELETE`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Subscription successfully removed.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested subscription does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/subscription/12",
       dataType: "json",
       type : "DELETE",
       success : function(r) {
