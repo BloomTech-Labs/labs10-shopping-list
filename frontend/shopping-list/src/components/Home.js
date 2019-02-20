@@ -8,6 +8,9 @@ class Home extends React.Component{
             <div>
                 <Navigation />
                 <div className='componentName element'>Home</div>
+                <div className='appDescription'>
+
+                </div>
             </div>
         )
     }
