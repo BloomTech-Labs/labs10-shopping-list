@@ -25,6 +25,11 @@
     * [Get Subscription By ID](#Get-Subscription-By-ID)
     * [Update Subscription](#Update-Subscription)
     * [Remove Subscription](#Remove-Subscription)
+* [Item Endpoints](#Item-Endpoints)
+    * [Get All Items](#Get-All-Items)
+    * [Get Item By ID](#Get-Item-By-ID)
+    * [Update Item](#Update-Item)
+    * [Remove Item](#Remove-Item)
 
 # API Endpoints
 ## Auth Endpoints
