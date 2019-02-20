@@ -37,3 +37,7 @@
 .button:hover{
     cursor: pointer;
 }
+
+.button{
+    color: #362023
+}
