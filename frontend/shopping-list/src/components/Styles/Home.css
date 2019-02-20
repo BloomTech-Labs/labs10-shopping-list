@@ -10,9 +10,17 @@
     border-radius: 3px;
 }
 
-.componentName{
+.homeElem{
     margin: 1% 1%;
-    padding: 5% 0;
+}
+
+.componentName{
+    padding: 2% 0;
+    font-size: 69px;
+}
+
+.appDescription{
+    padding: 1% 0;
 }
 
 .userGreeting{
