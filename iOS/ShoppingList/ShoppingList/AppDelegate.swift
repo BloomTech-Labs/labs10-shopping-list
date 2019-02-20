@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Auth0
 
 let defaults = UserDefaults.standard
 
@@ -19,15 +20,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
+       
         
         let isLoggedIn = defaults.bool(forKey: Keys.isUserLoggedInKey)
         let loginVC = LoginViewController.instantiate()
         let mainVC = MainViewController.instantiate()
+        
+         
+        
         
         window?.rootViewController = isLoggedIn ? mainVC : loginVC
         
         return true
     }
 
+    //Auth0 requires this function in AppDelegate
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        return Auth0.resumeAuth(url, options: options)
+    }
+    
+    
 }
 

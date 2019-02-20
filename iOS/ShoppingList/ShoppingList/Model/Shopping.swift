@@ -5,49 +5,41 @@
 //  Created by Shopping List on 2/14/19.
 //  Copyright © 2019 Lambda School Labs. All rights reserved.
 //
-
 import Foundation
 
+protocol Shopping {
 
-struct ShoppingUser: Codable {
-    let id: Int
-    let name: String
-    let email: String
-    let password: String
-    let profilePicture: URL
-    let emailNotification: Bool
-    let textNotification: Bool
-    let role: String
-    let createdAt: Date
-    let updatedAt: Date
+    func groups (completion: @escaping( [Group]?, Error?)-> Void)
+    func createGroup (name: String, completion: @escaping (Group? , Error?)-> Void)
+    func list(id: Int, completion: @escaping (GroupList? , Error?)-> Void )
+    func history(id: Int, completion: @escaping (GroupHistory? , Error?)-> Void )
+    func createPurchase (items:[Item], amount: Double, completion: @escaping (GroupList? , Error?)-> Void )
+    func invite ( userId:Int, groupId: Int, completion: @escaping (GroupList? , Error?)-> Void )
+    func addItem (groupId: Int, item: Item, completion: @escaping (GroupList? , Error?)-> Void )
+    func markBought (groupId: Int, itemId: Int, completion: @escaping (GroupList? , Error?)-> Void )
 }
 
-
-struct ShopGroups: Codable {
-    let id: Int
-    let userID: ShoppingUser
-    let name: String
-    let token: String
-    let createdAt: Date
-    let updatedAt: Date
+struct UserDetail {
+    let user: User
+    let contribution: Int
 }
 
-struct ShopItems: Codable {
-    let id: Int
-    let name: String
-    let purchased: Bool
-    let group: [ShopGroups]
-    let price: Double
-    let quantity: Int
-    let measurement: Int
-    let purchasedOn: Date
-    let category: CategoryItem
-    let createdAt: Date
-    let updateAt: Date
-    }
+struct GroupList {
+    let group: Group
+    let items: [Item]
+    let users: [UserDetail]
 
-struct CategoryItem: Codable {
-    let id: Int
-    let name: String
-    
+}
+
+struct Purchase {
+    let user: User
+    let items: [Item]
+    let date: Date
+    let amount: Double
+}
+
+struct GroupHistory {
+    let group: Group
+    let purchases: [Purchase]
+    let users: [UserDetail]
 }
