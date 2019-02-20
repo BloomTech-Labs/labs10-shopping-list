@@ -29,6 +29,8 @@ const checkJwt = require('../../validators/checkJwt');
  * 
  * ***********************************************/
 
+userRouter.use(checkJwt);
+
 userRouter.post('/', (req, res) => {
     console.log(req.body);
     let user = req.body;
@@ -54,7 +56,7 @@ userRouter.post('/', (req, res) => {
  * **/
 
 /**************************************************/
-userRouter.get('/:id', checkJwt, (req, res) => {
+userRouter.get('/:id', (req, res) => {
     const id = req.params.id;
 
     userDb.getById(id).then(user => {
