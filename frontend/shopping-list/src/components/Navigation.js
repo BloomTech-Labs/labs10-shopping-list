@@ -12,11 +12,10 @@ class Navigation extends React.Component{
 
     render(){
         return(
-            <div>
-                Navbar
+            <div className="Navbar">
                 {
                     !localStorage.getItem('email') && 
-                    <button onClick={auth0Client.signIn}>Sign In</button>
+                    <div onClick={auth0Client.signIn}>Sign In</div>
                     }
 
                 {
