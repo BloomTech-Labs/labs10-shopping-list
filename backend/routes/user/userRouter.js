@@ -54,7 +54,7 @@ userRouter.post('/', (req, res) => {
  * **/
 
 /**************************************************/
-userRouter.get('/:id', (req, res) => {
+userRouter.get('/:id', checkJwt, (req, res) => {
     const id = req.params.id;
 
     userDb.getById(id).then(user => {

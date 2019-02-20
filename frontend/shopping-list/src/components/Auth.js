@@ -1,13 +1,20 @@
 import auth0 from 'auth0-js';
 
+let callbackURL;
+
+if(process.env.NODE_ENV === 'development'){
+    callbackURL = `http://localhost:3000/callback`
+} else if (process.NODE_ENV === 'production'){
+    callbackURL = `https://labs10-shopping-list.netlify.com/callback`
+}
+
 class Auth {
   constructor() {
     this.auth0 = new auth0.WebAuth({
-      // the following three lines MUST be updated
       domain: process.env.REACT_APP_AUTH0_DOMAIN,
-    //   audience: 'https://<YOUR_AUTH0_DOMAIN>/userinfo',
+      audience: 'https://shoptrak.auth0.com/api/v2/',
       clientID: process.env.REACT_APP_AUTH0_CLIENT_ID,
-      redirectUri: 'http://localhost:3000/callback',
+      redirectUri: `${callbackURL}`,
       responseType: 'id_token',
       scope: 'openid email profile'
     });
@@ -32,6 +39,7 @@ class Auth {
   }
 
   signIn() {
+    console.log('callback URL:', callbackURL);
     this.auth0.authorize();
   }
 
