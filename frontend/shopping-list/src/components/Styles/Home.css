@@ -14,3 +14,14 @@
     margin: 20% 5%;
     padding: 5% 0;
 }
+
+.userGreeting{
+    font-weight: bold;
+}
+
+.signedInNavBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 5px;
+}

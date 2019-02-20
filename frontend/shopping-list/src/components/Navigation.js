@@ -17,13 +17,15 @@ class Navigation extends React.Component{
                 {
                     !localStorage.getItem('email') && 
                     <div onClick={auth0Client.signIn}>Sign In</div>
-                    }
+                }
 
                 {
                     localStorage.getItem('email') && 
-                    <div>
-                    <span>{localStorage.getItem('name')}</span>
-                    <button onClick = {this.signOut}>Sign out</button>
+                    <div className='signedInNavBar'>
+                        <div className='userGreeting'>
+                            Hello, {localStorage.getItem('name')}
+                        </div>
+                        <div onClick = {this.signOut}>Sign out</div>
                     </div>
                 }
             </div>
