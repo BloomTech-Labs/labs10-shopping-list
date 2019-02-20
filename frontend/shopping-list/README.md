@@ -1,5 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Paths
+    /           - Home view
+    /profile    - Shows user's profile (nothing there so far)
+
 ## Available Scripts
 
 In the project directory, you can run:
