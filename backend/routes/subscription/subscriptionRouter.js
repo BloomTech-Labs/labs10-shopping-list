@@ -22,15 +22,18 @@ const checkJwt = require('../../validators/checkJwt');
  * @TODO Add middleware to ensure user is logged in
  * **/
 subscriptionRouter.post('/', (req, res) => {
-    console.log(req.body);
     let sub = req.body;
-    subDb.add(sub).then(id => {
-        console.log(id);
-        return res.status(200).json({message: `Subscription added to database with ID ${id[0]}`, id: id[0]});
+    subDb.add(sub).then(response => {
+        return res.status(200).json({message: `Subscription added to database.`, id: response[0].id});
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error when adding subscription.`});
+            const error = {
+                message: `Internal Server Error - Adding Subscription`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
@@ -53,8 +56,13 @@ subscriptionRouter.get('/:id', (req, res) => {
         }
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error retrieving subscription with ID ${id}.`});
+            const error = {
+                message: `Internal Server Error - Retrieving Subscription`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
@@ -67,7 +75,6 @@ subscriptionRouter.get('/:id', (req, res) => {
 
 subscriptionRouter.get('/', (req, res) => {
     subDb.get().then(subs => {
-        console.log(subs);
         if(!subs){
             return res.status(404).json({error: `No subscriptions found!`});
         } else {
@@ -75,8 +82,13 @@ subscriptionRouter.get('/', (req, res) => {
         }
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error collecting subscription information.`});
+            const error = {
+                message: `Internal Server Error - Retrieving Subscriptions`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
@@ -91,15 +103,21 @@ subscriptionRouter.put('/:id', (req, res) => {
     const id = req.params.id;
     const changes = req.body;
     subDb.update(id, changes).then(status => {
-        if(!status || status !== 1){
-            return res.status(404).json({error: `No subscription found with ID ${id}.`});
-        } else {
-            return res.status(200).json({message: `Subscription ${id} successfully updated.`});
+        if (status.length >= 1) {
+            return res.status(200).json({message: `Subscription successfully updated.`, id: status[0]})
         }
+
+        return res.status(404).json({error: `The requested subscription does not exist.`});
+
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error updating subscription with ID ${id}.`});
+            const error = {
+                message: `Internal Server Error - Updating Subscription`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 
@@ -115,16 +133,20 @@ subscriptionRouter.delete('/:id', (req, res) => {
     const id = req.params.id;
 
     subDb.remove(id).then(status => {
-        console.log(status);
-        if(!status || status !== 1){
-            return res.status(404).json({error: `No subscription found with ID ${id}.`});
-        } else {
-            return res.status(200).json({message: `Subscription with ID ${id} deleted successfully.`});
+        if (status.length >= 1) {
+            return res.status(200).json({message: `Subscription successfully removed.`, id: status[0]})
         }
+
+        return res.status(404).json({error: `The requested subscription does not exist.`});
     })
         .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: `Error deleting subscription with ID ${id}.`});
+            const error = {
+                message: `Internal Server Error - Removing Subscription`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
         })
 })
 

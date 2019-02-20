@@ -6,6 +6,7 @@ module.exports = {
   get,
   getByGroup,
   getByUser,
+  getById,
   add,
   update,
   remove
@@ -26,7 +27,7 @@ function getByGroup(id) {
   return db
     .select("*")
     .from("groupMembers")
-    .where("groupId", id);
+    .where("groupID", id);
 }
 
 /**
@@ -38,7 +39,11 @@ function getByUser(id) {
   return db
     .select("*")
     .from("groupMembers")
-    .where("userId", id);
+    .where("userID", id);
+}
+
+function getById(groupID, userID) {
+  return db.select("*").from("groupMembers").where({groupID}).where({userID});
 }
 
 /**
@@ -48,33 +53,32 @@ function getByUser(id) {
  */
 function add(groupMember) {
   return db("groupMembers")
+      .returning("id")
     .insert(groupMember)
     .into("groupMembers");
 }
 
 /**
  * Update an existing group member in the database
- * @param userID - The user ID of the group member to update
- * @param groupID - The group ID of the group member to update
+ * @param id - The ID of the group member to update
  * @param changes - The actual changes of the group member itself
  * @returns {*} - Returns the group member ID
  */
-function update(userID, groupID, changes) {
+function update(id, changes) {
   return db("groupMembers")
-    .where('userID', userID)
-    .where('groupID', groupID)
+      .returning("id")
+    .where({id})
     .update(changes);
 }
 
 /**
  * Removes a group member from the database
- * @param userID - The user ID of the group member to remove
- * @param groupID - The group ID of the group member to remove
+ * @param id - The ID of the group member to remove
  * @returns {*} - Returns the group ID
  */
-function remove(userID, groupID) {
+function remove(id) {
   return db("groupMembers")
-    .where('userID', userID)
-    .where('groupID', groupID)
+      .returning("id")
+    .where({id})
     .del();
 }
