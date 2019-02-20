@@ -25,6 +25,11 @@
     * [Get Subscription By ID](#Get-Subscription-By-ID)
     * [Update Subscription](#Update-Subscription)
     * [Remove Subscription](#Remove-Subscription)
+* [Item Endpoints](#Item-Endpoints)
+    * [Get All Items](#Get-All-Items)
+    * [Get Item By ID](#Get-Item-By-ID)
+    * [Update Item](#Update-Item)
+    * [Remove Item](#Remove-Item)
 
 # API Endpoints
 ## Auth Endpoints
@@ -808,6 +813,8 @@ None
       }
     });
   ```
+  
+[TOP](#Table-of-Contents)
 
 #### Add Subscription
 Adds new group.
@@ -920,6 +927,444 @@ None
   ```javascript
     $.ajax({
       url: "/api/subscription/12",
+      dataType: "json",
+      type : "DELETE",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+## Item Endpoints
+#### Un-Protected
+#### Get All Items
+Get all items
+* **URL**<br>
+/api/item/
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, name: "free", amount: 0, createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested subscriptions do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/subscription",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get Item By ID
+Get a particular item
+* **URL**<br>
+/api/item/:id
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, name: "Lemons", purchasedBy: 2, groupId: 12, purchased: false, price: 0.69, quantity: 1, measurement: "lbs, purchasedOn: null, category: null, createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested subscription do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/subscription/8",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Add Item
+Adds new item.
+* **URL**<br>
+/api/item/
+* **Method:**<br>
+`POST`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+`name=[string]`<br>
+`purchasedBy=[integer]`<br>
+`groupId=[integer]`<br>
+`purchased=[boolean]`<br>
+`price=[float]`<br>
+`quantity=[integer]`<br>
+`measurement=[string]`<br>
+`purchasedOn=[date]`<br>
+`category=[string]`
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Item successfully added.", id: 9 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/item",
+      dataType: "json",
+      type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+| Column                 | Description                        | Required |
+|------------------------|------------------------------------|----------|
+| name                   | Name of item                       | Yes      |
+| purchasedBy            | Who purchased the item             | No       |
+| groupId                | Id of the group that it belongs to | Yes      |
+| purchased              | Is it purchased?                   | No       |
+| price                  | Price of the item                  | Yes      |
+| quantity               | Amount of items                    | Yes      |
+| measurement            | Measurement of item                | No       |
+| purchasedOn            | When was it bought?                | No       |
+| category               | Type of item                       | No       |
+| createdAt              | Date the member was created        | No       |
+| updatedAt              | Date the member was updated        | No       |
+
+[TOP](#Table-of-Contents)
+
+### Update Item
+Update a particular item
+* **URL**<br>
+/api/item/:id
+* **Method:**<br>
+`PUT`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Item successfully updated.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested item does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/item/12",
+      dataType: "json",
+      type : "PUT",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+* Note that you will need at least one setting to update -> name, price, etc.
+
+| Column                 | Description                        | Required |
+|------------------------|------------------------------------|----------|
+| name                   | Name of item                       | No       |
+| purchasedBy            | Who purchased the item             | No       |
+| groupId                | Id of the group that it belongs to | No       |
+| purchased              | Is it purchased?                   | No       |
+| price                  | Price of the item                  | No       |
+| quantity               | Amount of items                    | No       |
+| measurement            | Measurement of item                | No       |
+| purchasedOn            | When was it bought?                | No       |
+| category               | Type of item                       | No       |
+| createdAt              | Date the member was created        | No       |
+| updatedAt              | Date the member was updated        | No       |
+
+[TOP](#Table-of-Contents)
+
+### Remove Item
+Remove a particular group member
+* **URL**<br>
+/api/item/:id
+* **Method:**<br>
+`DELETE`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Item successfully removed.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested item does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/item/12",
+      dataType: "json",
+      type : "DELETE",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+## Category Endpoints
+#### Un-Protected
+#### Get All Categories
+Get all items
+* **URL**<br>
+/api/category/
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, category: "Produce", createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested categories do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get Category By ID
+Get a particular item
+* **URL**<br>
+/api/category/:id
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, category: "Produce", createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested category do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category/8",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
+[TOP](#Table-of-Contents)
+
+#### Get Category By Category
+Get a particular item
+* **URL**<br>
+/api/category/:name
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`name=[string]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {data: [{ id: 8, category: "Produce", createdAt: "2019-02-19T15:52:56:.191Z", updatedAt: "2019-02-19T15:55:56:.191Z"}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested category do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category/Produce",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
+[TOP](#Table-of-Contents)
+
+#### Add Category
+Adds new item.
+* **URL**<br>
+/api/category/
+* **Method:**<br>
+`POST`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+`name=[string]`<br>
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Category successfully added.", id: 9 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category",
+      dataType: "json",
+      type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+| Column                 | Description                        | Required |
+|------------------------|------------------------------------|----------|
+| category               | Name of category                   | Yes      |
+
+[TOP](#Table-of-Contents)
+
+### Update Category
+Update a particular item
+* **URL**<br>
+/api/category/:id
+* **Method:**<br>
+`PUT`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Category successfully updated.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested category does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category/12",
+      dataType: "json",
+      type : "PUT",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+* Note that you will need at least one setting to update -> category, etc.
+
+| Column                 | Description                        | Required |
+|------------------------|------------------------------------|----------|
+| category               | Name of category                   | Yes      |
+
+[TOP](#Table-of-Contents)
+
+### Remove Category
+Remove a particular category
+* **URL**<br>
+/api/category/:id
+* **Method:**<br>
+`DELETE`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Category successfully removed.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested category does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/category/12",
       dataType: "json",
       type : "DELETE",
       success : function(r) {
