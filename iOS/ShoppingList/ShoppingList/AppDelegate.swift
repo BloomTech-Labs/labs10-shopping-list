@@ -9,6 +9,7 @@
 import UIKit
 import Auth0
 import SwiftKeychainWrapper
+import SimpleKeychain
 
 let defaults = UserDefaults.standard
 
@@ -21,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
-      let accessToken: String? = KeychainWrapper.standard.string(forKey: "accessToken")
+     let accessToken = A0SimpleKeychain(service: "Auth0").string(forKey: "id_token")
       
         
        
