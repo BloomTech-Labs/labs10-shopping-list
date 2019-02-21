@@ -9,11 +9,13 @@
 import UIKit
 import Auth0
 import SwiftKeychainWrapper
+import SimpleKeychain
+import Kingfisher
 
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
     
     static let storyboardName: StoryboardName = "SettingsTableViewController"
-    
+    var profile: UserInfo!
     
     // MARK: - Lifecycle methods
     
@@ -22,6 +24,10 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         navigationController?.navigationBar.layer.shadowRadius = 8
         navigationController?.navigationBar.layer.shadowOpacity = 0.4
         navigationController?.view.backgroundColor = .white
+        guard let profile = SessionManager.shared.profile else  {return}
+        profilePictureImageView.kf.setImage(with: profile.profile)
+        print(profile.profile)
+       profileNameLabel.text = profileName
         
         profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.height / 2
         profilePictureImageView.layer.borderColor = UIColor.lightGray.cgColor
@@ -33,6 +39,7 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     
     @IBOutlet weak var profilePictureImageView: UIImageView!
     @IBOutlet weak var profileNameLabel: UILabel!
+    
     
     
     // MARK: - IBActions
@@ -82,7 +89,7 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     
     @IBAction func logoutPressed(_ sender: Any) {
        
-        KeychainWrapper.standard.removeObject(forKey: "accessToken")
+        _ = SessionManager.shared.logout()
         
         // Yvette, put this code wherever you complete your token deletion to reset to the login screen
         // 👇🏼👇🏼👇🏼

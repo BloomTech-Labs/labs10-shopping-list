@@ -11,5 +11,7 @@ pod 'Popover'
 pod 'Auth0'
 pod 'SwiftKeychainWrapper'
 pod 'Alamofire'
+pod 'SimpleKeychain'
+pod 'Kingfisher'
 
 end

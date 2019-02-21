@@ -9,9 +9,12 @@
 import UIKit
 import Auth0
 import SwiftKeychainWrapper
+import SimpleKeychain
 
 
 class LoginViewController: UIViewController, StoryboardInstantiatable {
+    
+    
     
     static func accessToken() -> String? {
         if let tk = KeychainWrapper.standard.string(forKey: "accessToken") {
@@ -30,46 +33,54 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
     }
     
     @IBAction func loginButtonPressed(_ sender: Any) {
-        Auth0
-            .webAuth()
-            //.audience("https://shoptrak-backend.herokuapp.com/api/auth/login")
-            .start { result in
-                switch result {
-                case .success(let credentials):
-
-                    //                    guard let accessToken = credentials.accessToken else {return}
-                    //                    self.showSuccessAlert(accessToken)
-                    //  print("credentials: \(String(describing: credentials.idToken))")
-                    
-                    let accessToken = credentials.accessToken
-                    let saveAccessToken: Bool = KeychainWrapper.standard.set(accessToken!, forKey: "accessToken")
-                    print("The access token save result: \(saveAccessToken)")
-                    print("The access token save result: \(String(describing: accessToken))")
-                    
-
-                    UI {
-                        defaults.set(true, forKey: Keys.isUserLoggedInKey)
-                        UIApplication.shared.keyWindow?.rootViewController = MainViewController.instantiate()
-                    }
-                    
-             
-
-                case .failure(let error):
-                    print("auth0 failed: \(error)")
-                    
-                }
+        checkAccessToken()
 
         }
         
     
 
+   
+    
+
+    func showLogin() {
+        // guard let clientInfo = plistValues(bundle: Bundle.main) else { return }
+        
+        // let APIIdentifier =  // Replace with the API Identifier value you created
+        Auth0
+            .webAuth()
+            .audience("https://shoptrak.auth0.com/api/v2/")
+            .scope("openid profile")
+            .start {
+                switch $0 {
+                case .failure(let error):
+                    // Handle the error
+                    print("Error: \(error)")
+                case .success(let credentials):
+                    guard let accessToken = credentials.accessToken, let idToken = credentials.idToken else { return }
+                    SessionManager.shared.storeTokens(accessToken, idToken: idToken)
+                    SessionManager.shared.retrieveProfile { error in
+                        guard error == nil else {
+                            return self.showLogin()
+                        }
+                       
+                    }
+                }
+        }
+    
     }
-    
-//    fileprivate func showSuccessAlert(_ accessToken: String) {
-//        let alert = UIAlertController(title: "Success", message: "accessToken: \(accessToken)", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//        self.present(alert, animated: true, completion: nil)
-//    }
-//
-    
+        
+ func checkAccessToken() {
+       
+        SessionManager.shared.logout()
+        SessionManager.shared.retrieveProfile { error in
+                guard error == nil else {
+                    return self.showLogin()
+                }
+                UI {
+                    defaults.set(true, forKey: Keys.isUserLoggedInKey)
+                    UIApplication.shared.keyWindow?.rootViewController = MainViewController.instantiate()
+        }
+    }
+       }
 }
+

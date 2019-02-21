@@ -14,9 +14,24 @@ class AccountInformationViewController: UIViewController {
     
     var profile: UserInfo!
     
+    
     // MARK: - IBActions
     
     @IBAction func doneButtonPressed(_ sender: Any) {
+        
+
+//        Auth0
+//            .authentication()
+//            .userInfo(token:LoginViewController.accessToken()!)
+//            .start { result in
+//                switch result {
+//                case .success(let profile):
+//                    print(profile)
+//                case .failure(let error):
+//                    print("Error: \(error). Invalid accessToken. Checking refresh token.")
+//                }
+//        }
+
     
         Auth0
             .authentication()
@@ -24,7 +39,7 @@ class AccountInformationViewController: UIViewController {
             .start { result in
                 switch result {
                 case .success(let profile):
-                    print("User Profile: \(String(describing: profile.birthdate ))")
+                    print("User Profile: \(String(describing: profile.name ))")
                     print("User Profile: \(String(describing: profile.customClaims ))")
                     print("User Profile: \(String(describing: profile.email ))")
                     print("User Profile: \(String(describing: profile.emailVerified ))")
@@ -48,8 +63,8 @@ class AccountInformationViewController: UIViewController {
                     print("Failed with \(error)")
                 }
         }
-        
-        
+
+
         
         
         dismiss(animated: true, completion: nil)
