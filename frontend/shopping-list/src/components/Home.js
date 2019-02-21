@@ -1,7 +1,7 @@
 import React from 'react';
 import Navigation from './Navigation';
-import './styles/Home.css';
 import tomatoShare from '../images/tomato-share.jpg';
+import './styles/Home.css';
 
 class Home extends React.Component{
     render(){
