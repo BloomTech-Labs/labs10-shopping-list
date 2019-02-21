@@ -47,7 +47,7 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
                     print("The access token save result: \(String(describing: accessToken))")
                     
 
-                    DispatchQueue.main.async {
+                    UI {
                         defaults.set(true, forKey: Keys.isUserLoggedInKey)
                         UIApplication.shared.keyWindow?.rootViewController = MainViewController.instantiate()
                     }

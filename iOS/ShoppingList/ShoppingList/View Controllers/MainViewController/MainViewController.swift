@@ -25,10 +25,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
     
     @IBAction func addNewItemButtonPressed(_ sender: Any) {
         
-     KeychainWrapper.standard.removeObject(forKey: "accessToken")
-        let storyboard = UIStoryboard(name: "LoginViewController", bundle: nil)
-        let loginVC = storyboard.instantiateInitialViewController() ?? LoginViewController.instantiate()
-        present(loginVC, animated: true, completion: nil)
+     
         
     }
     

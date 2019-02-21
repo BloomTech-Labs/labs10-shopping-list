@@ -8,6 +8,7 @@
 
 import UIKit
 import Auth0
+import SwiftKeychainWrapper
 
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
     
@@ -59,6 +60,8 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     
     
     @IBAction func logoutPressed(_ sender: Any) {
+       
+        KeychainWrapper.standard.removeObject(forKey: "accessToken")
         
         // Yvette, put this code wherever you complete your token deletion to reset to the login screen
         // 👇🏼👇🏼👇🏼
