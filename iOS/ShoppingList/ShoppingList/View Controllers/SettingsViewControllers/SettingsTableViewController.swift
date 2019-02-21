@@ -25,8 +25,8 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         navigationController?.navigationBar.layer.shadowOpacity = 0.4
         navigationController?.view.backgroundColor = .white
         guard let profile = SessionManager.shared.profile else  {return}
-        profilePictureImageView.kf.setImage(with: profile.profile)
-        print(profile.profile)
+        profilePictureImageView.kf.setImage(with: profile.picture)
+        print(profile.picture)
        profileNameLabel.text = profileName
         
         profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.height / 2

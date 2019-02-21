@@ -32,7 +32,9 @@ class AccountInformationViewController: UIViewController {
 //                }
 //        }
 
-    
+   // guard let profile = SessionManager.shared.profile else  {return}
+     guard let profile = SessionManager.shared.profile else  {return}
+        
         Auth0
             .authentication()
             .userInfo(withAccessToken: LoginViewController.accessToken()!)
