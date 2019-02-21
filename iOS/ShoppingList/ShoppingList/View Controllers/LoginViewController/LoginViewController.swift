@@ -40,23 +40,36 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
                     //                    guard let accessToken = credentials.accessToken else {return}
                     //                    self.showSuccessAlert(accessToken)
                     //  print("credentials: \(String(describing: credentials.idToken))")
+                    
                     let accessToken = credentials.accessToken
                     let saveAccessToken: Bool = KeychainWrapper.standard.set(accessToken!, forKey: "accessToken")
                     print("The access token save result: \(saveAccessToken)")
                     print("The access token save result: \(String(describing: accessToken))")
                     
 
+                    UI {
+                        defaults.set(true, forKey: Keys.isUserLoggedInKey)
+                        UIApplication.shared.keyWindow?.rootViewController = MainViewController.instantiate()
+                    }
+                    
+             
+
                 case .failure(let error):
                     print("auth0 failed: \(error)")
+                    
                 }
-            }
+
+        }
+        
+    
+
     }
     
-    fileprivate func showSuccessAlert(_ accessToken: String) {
-        let alert = UIAlertController(title: "Success", message: "accessToken: \(accessToken)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
+//    fileprivate func showSuccessAlert(_ accessToken: String) {
+//        let alert = UIAlertController(title: "Success", message: "accessToken: \(accessToken)", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//        self.present(alert, animated: true, completion: nil)
+//    }
+//
     
 }
