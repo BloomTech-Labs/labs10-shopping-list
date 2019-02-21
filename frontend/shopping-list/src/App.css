@@ -61,8 +61,6 @@ table {
   width: 100%;
   max-width: 880px;
   margin: 0 auto;
-  height: 100vh;
-  padding-top: 5vh;
 }
 
 /* REACT DEFAULT CSS */

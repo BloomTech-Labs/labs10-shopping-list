@@ -1,32 +1,30 @@
 .navigation-container {
     width: 100%;
+    background: #00cc00;
+    padding: 10px 20px;
+}
+
+.nav-links{
+    width: 100%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    cursor: pointer;
 }
 
-.nav-logo{
-    width: 25%;
+.nav-links a{
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
 }
 
-.nav-links{
-    width: 50%;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-}
-
-.nav-login{
-    width: 25%;
-    text-align: right;
-}
-
-.nav-logout-btn{
-    font-size: 0.5rem;
-    background: white;
-    padding: 5px;
-    color: #3d3d3d;
+.nav-user-btn img{
+    max-height: 30px;
+    border-radius: 50px;
     margin: 0px 10px;
 }
 

@@ -11,7 +11,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <Navigation />
         <Route exact path='/' component={Home} />
         <Route path = '/profile' component={UserProfile} />
         <Route path = '/callback' component = {Callback} />

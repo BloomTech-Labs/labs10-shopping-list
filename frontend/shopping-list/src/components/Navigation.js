@@ -25,35 +25,32 @@ class Navigation extends React.Component{
     render(){
         return(
             <div className = "navigation-container">
-            
-            <div className = 'nav-logo'>
-            LOGO
-            </div>
 
             <div className = 'nav-links'>
-            <Link to = '/'>HOME</Link>
-            <Link to = '/profile'>PROFILE</Link>
             <Link to = '/'>ABOUT</Link>
             <Link to = '/'>FEATURES</Link>
-            </div>
-
+            <Link to = '/'>PLANS</Link>
 
             <div className = 'nav-login'>
                 {/* Conditionally renders a sign-in or sign-out button if user is logged in/out*/}
                 {
                     !localStorage.getItem('email') && 
-                    <div onClick={auth0Client.signIn}>Sign In</div>
+                    <span className = 'nav-login-btn' onClick={auth0Client.signIn}>LOGIN</span>
                 }
 
                 {
                     localStorage.getItem('email') && 
                     <div className='nav-user-greeting'>
-                        <span>Hello, {this.props.name}</span>
-                        <span className = 'nav-logout-btn' onClick = {this.signOut}>Sign out</span>
+                        <span>MY ACCOUNT</span>
+                        <span className = 'nav-user-btn' onClick = {this.signOut}><img src = {this.props.profilePicture} alt = 'user profile picture'></img></span>
+                        
                     </div>
                 }
 
                 </div>
+                </div>
+
+                
             </div>
         )
     }
