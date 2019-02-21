@@ -6,6 +6,9 @@ import {
   EMAIL_CHECKED,
   ADDING_GROUPS_TO_STATE,
   ADDING_GROUPS_TO_STATE_FAILED,
+  GETTING_ITEMS,
+  GETTING_ITEMS_SUCCESS,
+  GETTING_ITEMS_FAILED
 } from "../actions";
 import { ADDING_USER_TO_STATE } from "../actions/rootActions";
 
@@ -52,6 +55,15 @@ export const rootReducer = (state = initialState, action) => {
       }
     case ADDING_GROUPS_TO_STATE_FAILED:
       return state;
+
+    case GETTING_ITEMS:
+      return state;
+
+    case GETTING_ITEMS_SUCCESS:
+      return { ...state, items: action.payload}
+
+    case GETTING_ITEMS_FAILED:
+      return { ...state, items: [{groupId: 0}] };
 
     default:
       return state;
