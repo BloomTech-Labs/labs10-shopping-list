@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import Navigation from './Navigation';
 import './Styles/Billing.css';
 
+import BillingForm from './BillingForm';
+
+
 class BillingPage extends Component {
     constructor() {
         super();
@@ -30,16 +33,18 @@ class BillingPage extends Component {
                 </div>
               </form>
               <form>
-                <div className="checkbox">
-                  <input type="checkbox" />
-                  <p>1 Year Subscription - $9.99</p>
-                </div>
-                <div className="checkbox">
-                  <input type="checkbox" />
-                  <p>1 Year Premium Subscription - $29.99</p>
-                </div>
+                <input 
+                  type="radio" 
+                  name="subscription" 
+                />1 Year Subscription - $9.99 <br/>
+                <input 
+                  type="radio" 
+                  name="subscription" 
+                />1 Year Premium Subscription - $29.99
               </form>
-              <button>Buy Now</button>
+              <BillingForm>
+                <button>Buy Now</button>
+              </BillingForm>
             </div>
           </div>
         </div>
