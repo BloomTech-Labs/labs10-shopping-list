@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {checkEmail, gettingGroups, addGroup, getItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
-import "./styles/Group.css";
+import "./Styles/Group.css";
 import {
     MDBListGroup,
     MDBListGroupItem,
