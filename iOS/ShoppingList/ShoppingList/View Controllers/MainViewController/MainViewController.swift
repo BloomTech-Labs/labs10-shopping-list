@@ -23,7 +23,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        // Gets the list of groups and sets up the group button title
         let groupCon = GroupController()
         groupCon.getGroupWith(userID: 501) { (groups) in
             
@@ -33,6 +33,14 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
                 self.updateViews()
             }
         }
+        
+        // Testing creating new groups
+//        groupCon.newGroup(withName: "Testing1", byUserID: 502) { (group) in
+//
+//            if let group = group {
+//                print(group)
+//            }
+//        }
     }
     
     
