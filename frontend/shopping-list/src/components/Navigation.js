@@ -11,6 +11,9 @@ class Navigation extends React.Component{
         this.props.history.replace('/');
     };
 
+    goToProfile = () => {
+
+    }
 
     render(){
         return(
@@ -27,7 +30,7 @@ class Navigation extends React.Component{
                             Hello, {localStorage.getItem('name')}
                         </div>
                         <div className='buttons'>
-                            <div className='button'>
+                            <div className='button' onClick={this.goToProfile}>
                                 Profile
                             </div>
                             <div className='button' onClick = {this.signOut}>Sign out</div>
