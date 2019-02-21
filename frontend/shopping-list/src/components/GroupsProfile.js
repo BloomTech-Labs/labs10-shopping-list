@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import {checkEmail, gettingGroups, addGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
-    MDBListGroup, MDBListGroupItem, MDBCardHeader, MDBCardFooter, MDBModal, MDBModalBody,
-    MDBModalHeader, MDBModalFooter, MDBRow, MDBInput } from "mdbreact";
+import "./Styles/Group.css";
+import { MDBListGroup, MDBListGroupItem, MDBContainer, MDBBtn, MDBIcon, MDBBadge, MDBInput } from "mdbreact";
 
-class GroupsProfile extends Component{
+class GroupsPage extends Component{
     state = {
         modal14: false,
-        groupName: "",
+        group: null,
     }
 
     componentDidMount(){
@@ -24,7 +23,9 @@ class GroupsProfile extends Component{
         }
 
         this.props.gettingGroups();
-        this.setState({ groups: this.props.groups})
+        const group = this.props.groups.filter(g => g.id === Number(this.props.match.params.id));
+        console.log("GROUP => ", group);
+        this.setState({ group: group[0] })
     }
 
     toggle = nr => () => {
@@ -40,57 +41,87 @@ class GroupsProfile extends Component{
         },)
     }
 
-    handleAddGroup = () => {
-        this.props.addGroup(this.state.groupName);
-        this.toggle(14);
-    }
-
     render(){
         return (
             <div>
                 <Navigation />
-                <MDBContainer>
-                    <MDBRow center>
-                    <MDBCard className="text-center" style={{ width: "20rem", marginTop: "1rem" }}>
-                        <MDBCardBody>
-                            <MDBCardTitle>Create New Group</MDBCardTitle>
-                            <MDBCardText>
-                                Create a new group and start inviting to help with the shopping!
-                            </MDBCardText>
-                            <MDBBtn color="primary" onClick={this.toggle(14)}>Create</MDBBtn>
-                        </MDBCardBody>
-                    </MDBCard>
-                        {this.props.groups !== null ? (
-                            this.props.groups.map((g, i) => (
-                                <MDBCard key={{i}} border="primary" className="m-3" style={{ maxWidth: "18rem", cursor: "pointer" }}>
-                                    <MDBCardHeader>{g.name}</MDBCardHeader>
-                                    <MDBCardBody className="text-primary">
-                                        <MDBCardTitle tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
-                                        <MDBCardText>
-                                            Group members go here
-                                        </MDBCardText>
-                                    </MDBCardBody>
-                                </MDBCard>
-                            ))
-                        ) : null}
+                <div className={"group-profile-container"}>
+                    {/*<h1>{this.state.group !== null ? this.state.group.name : ""}</h1>*/}
+                        <div className={"group-profile-header"}>
+                            <MDBBtn color="primary" >List</MDBBtn>
+                            <MDBBtn color="primary" >History</MDBBtn>
+                            <MDBBtn color="primary" >Invite</MDBBtn>
+                            <MDBBtn color="primary" >Total</MDBBtn>
+                    </div>
+                    <div className={"group-profile-header-title"}><h3>NAME</h3></div>
+                    <div className={"group-profile-columns"}>
 
+                    <div className={"group-profile-list"}>
+                        <MDBContainer>
+                            <MDBContainer>
+                                <MDBListGroup style={{ width: "22rem" }}>
+                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center">Eggs<MDBBadge
+                                        color="primary"><MDBIcon icon="check" /></MDBBadge>
+                                    </MDBListGroupItem>
+                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center">Milk<MDBBadge
+                                        color="primary"><MDBIcon icon="check" /></MDBBadge>
+                                    </MDBListGroupItem>
+                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center">Lemons<MDBBadge
+                                        color="primary"><MDBIcon icon="check" /></MDBBadge>
+                                    </MDBListGroupItem>
+                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center">Lemons<MDBBadge
+                                        color="primary"><MDBIcon icon="check" /></MDBBadge>
+                                    </MDBListGroupItem>
+                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center">Lemons<MDBBadge
+                                        color="primary"><MDBIcon icon="check" /></MDBBadge>
+                                    </MDBListGroupItem>
+                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center">Lemons<MDBBadge
+                                        color="primary"><MDBIcon icon="check" /></MDBBadge>
+                                    </MDBListGroupItem>
+                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center">Lemons<MDBBadge
+                                        color="primary"><MDBIcon icon="check" /></MDBBadge>
+                                    </MDBListGroupItem>
+                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center">Lemons<MDBBadge
+                                        color="primary"><MDBIcon icon="check" /></MDBBadge>
+                                    </MDBListGroupItem>
+                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center">Lemons<MDBBadge
+                                        color="primary"><MDBIcon icon="check" /></MDBBadge>
+                                    </MDBListGroupItem>
+                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center">Lemons<MDBBadge
+                                        color="primary"><MDBIcon icon="check" /></MDBBadge>
+                                    </MDBListGroupItem>
+                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center">Lemons<MDBBadge
+                                        color="primary"><MDBIcon icon="check" /></MDBBadge>
+                                    </MDBListGroupItem>
+                                </MDBListGroup>
+                            </MDBContainer>
+                        </MDBContainer>
+                    </div>
 
-                    </MDBRow>
-                </MDBContainer>
+                    <div className={"group-profile-right-col"}>
+                        <div className={"group-profile-gross"}>
+                            <p>MEM 1</p>
+                            <p>MEM 2</p>
+                        </div>
+                        <div className={"group-profile-bought"}>
+                            <h1>I BOUGHT</h1>
+                            <div className={"group-profile-bought-list"}>
+                                <MDBListGroupItem className="d-flex justify-content-between align-items-center">Lemons
+                                </MDBListGroupItem>
+                                <MDBListGroupItem className="d-flex justify-content-between align-items-center">Milk
+                                </MDBListGroupItem>
+                            </div>
+                            <div className={"group-profile-bought-input"}>
+                                <MDBInput label="I Paid" />
+                            </div>
+                            <div className={"group-profile-bought-button"}>
+                                <MDBBtn color="primary" >Submit</MDBBtn>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
 
-
-                <MDBContainer>
-                    <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
-                        <MDBModalHeader toggle={this.toggle(14)}>Create A New Group</MDBModalHeader>
-                        <MDBModalBody>
-                            <MDBInput label="Group Name" name={"groupName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
-                        </MDBModalBody>
-                        <MDBModalFooter>
-                            <MDBBtn color="secondary" onClick={this.toggle(14)}>Close</MDBBtn>
-                            <MDBBtn color="primary" onClick={this.handleAddGroup}>Create</MDBBtn>
-                        </MDBModalFooter>
-                    </MDBModal>
-                </MDBContainer>
+                </div>
             </div>
         )
     }
@@ -100,14 +131,10 @@ const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
         //state items
-        userId: state.userId,
-        name: state.name,
-        email: state.email,
-        profilePicture: state.profilePicture,
         groups: state.groups,
     }
 }
 
 export default connect(mapStateToProps, {
     checkEmail, gettingGroups, addGroup
-})(GroupsProfile);
+})(GroupsPage);
