@@ -9,7 +9,7 @@ import GroupsProfile from "./components/GroupsProfile";
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div>
         <Route exact path='/' component={Home} />
         <Route 
           path = '/profile' 
