@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Navigation from './Navigation';
+import './Styles/Billing.css';
 
 class BillingPage extends Component {
     constructor() {
