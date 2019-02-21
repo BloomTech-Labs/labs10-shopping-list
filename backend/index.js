@@ -12,27 +12,3 @@ if(process.env.NODE_ENV !== 'production'){
 const port = process.env.PORT || 9000;
 
 server.listen(port, () => console.log(`\n Server running on port ${port}. \n`));
-
-// ** start of endpoints code **
-
-process.setMaxListeners(0);
-
-// loops through all routes; coverages all server endpoints
-
-// console.log('***');
-// console.log(__dirname + '/routes');
-// const controllers = requireAll(__dirname + '/routes');
-// _.each(controllers, (endpoints, controller) => {
-//   _.each(endpoints, (definition, endpoint) => {
-//     const args = [definition.handler];
-//     console.log(`${endpoint}: ${definition.url}`);
-//     console.log('endpoints', endpoints);
-//   _.each(endpoints, (definition, endpoint) => {
-//     console.log('definition', definition);
-//     const args = [definition.handler];
-//     console.log(`${endpoint}: ${definition.url}`);
-//     console.log('args', args);
-//     args.unshift(`${definition.url}`);
-//     server[definition.type.toLowerCase()].call(server, ...args);
-//   });
-// });

@@ -34,23 +34,6 @@ module.exports = {
     }
   },
 
-  staging: {
-    client: 'pg',
-    connection: dbConnection,
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations',
-      directory: './data/dev/migrations',
-    },
-    seeds: {
-      directory: './data/dev/seeds'
-    },
-    ssl: true,
-  },
-
   production: {
     client: 'pg',
     connection: dbConnection,
