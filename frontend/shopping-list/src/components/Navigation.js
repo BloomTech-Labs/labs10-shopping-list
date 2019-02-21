@@ -12,6 +12,7 @@ class Navigation extends Component{
         activeTabClassname: "home"
     };
 
+    // Toggles dropdown menus for MDB
     toggleCollapse = collapseID => () =>
         this.setState(prevState => ({
             collapseID: prevState.collapseID !== collapseID ? collapseID : ""
@@ -22,25 +23,22 @@ class Navigation extends Component{
         this.props.history.replace('/');
     };
 
-    goToProfile = () => {
-        this.props.history.replace('/profile');
-    }
-    
-    goToHome = () => {
-        this.props.history.replace('/');
-    }
-
     render(){
+        // Gather user id to determine if user is logged in or not
         const id = localStorage.getItem("userId");
         let isLogged = false;
         if (id !== null) isLogged = true;
+
+        // Gather the url pathname to set active class to proper link
         const pathname = this.props.location.pathname;
         return(
             <MDBNavbar color="default-color" dark expand="md">
                 <MDBNavbarBrand>
                     <strong className="white-text">ShopTrak</strong>
                 </MDBNavbarBrand>
+
                 <MDBNavbarToggler onClick={this.toggleCollapse} />
+
                 <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
                     <MDBNavbarNav left>
                         <MDBNavItem active={pathname === "/" ? "active" : null} >
@@ -53,6 +51,7 @@ class Navigation extends Component{
                         ) : null}
 
                     </MDBNavbarNav>
+
                     <MDBNavbarNav right>
                         <MDBNavItem>
                             {isLogged ? (
@@ -76,6 +75,7 @@ class Navigation extends Component{
 
                         </MDBNavItem>
                     </MDBNavbarNav>
+
                 </MDBCollapse>
             </MDBNavbar>
 
