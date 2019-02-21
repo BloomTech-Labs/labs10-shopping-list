@@ -2,6 +2,7 @@ const express = require('express');
 const groupRouter = express.Router();
 const groupDb = require('../../helpers/groupModel');
 const groupMembersDb = require('../../helpers/groupMembersModel');
+const groupMemDb = require('../../helpers/groupMembersModel');
 
 const checkJwt = require('../../validators/checkJwt');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
@@ -106,25 +107,45 @@ groupRouter.get('/:id', (req, res) => {
  * **/
 
 /**************************************************/
-groupRouter.get('/user/:id', (req, res) => {
-    const id = req.params.id;
 
-    groupDb.getByUser(id).then(group => {
-        if (group.length >= 1) {
-            return res.status(200).json(group);
+function fetch_group_mem(id) {
+    return groupMemDb.getByGroup(id).then((value) => {
+        return value;
+    })
+}
+
+groupRouter.get('/user/:id', async (req, res) => {
+    const id = req.params.id;
+    const groups = [];
+
+    try {
+        const grp = await groupDb.getByUser(id);
+
+        // console.log("GRP => ", grp);
+        for (let i = 0; i < grp.length; i++) {
+            const member = await groupMemDb.getByGroup(grp[i].id);
+            // console.log("MEMBER => ", member);
+
+            const data = {
+                id: grp[i].id,
+                userID: grp[i].userID,
+                name: grp[i].name,
+                token: grp[i].token,
+                createdAt: grp[i].createdAt,
+                updatedAt: grp[i].updatedAt,
+                memberAmount: member.length,
+            };
+
+            groups.push(data);
         }
 
-        return res.status(404).json({error: `The requested group does not exist.`});
-    })
-        .catch(err => {
-            const error = {
-                message: `Internal Server Error`,
-                data: {
-                    err: err
-                },
-            }
-            return res.status(500).json(error);
-        })
+        return res.status(200).json({data: groups });
+
+    } catch (e) {
+        return res.status(500).json({message: "Internal Server Error", err: e})
+    }
+
+
 })
 
 /**************************************************/
