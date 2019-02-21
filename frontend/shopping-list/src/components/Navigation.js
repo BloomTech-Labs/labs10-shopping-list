@@ -9,7 +9,6 @@ import './styles/Navigation.css';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
     MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, MDBFormInline, MDBBtn } from "mdbreact";
 
-
 class Navigation extends React.Component{
     state = {
         collapseID: "",
@@ -34,14 +33,6 @@ class Navigation extends React.Component{
         this.props.history.replace('/');
     };
 
-    goToProfile = () => {
-        this.props.history.replace('/profile');
-    }
-    
-    goToHome = () => {
-        this.props.history.replace('/');
-    }
-
     render(){
         // Gather user id to determine if user is logged in or not
         const id = localStorage.getItem("userId");
@@ -51,10 +42,10 @@ class Navigation extends React.Component{
         // Gather the url pathname to set active class to proper link
         const pathname = this.props.location.pathname;
         return(
-
             <div className = 'navigation-container'>
             
             <MDBNavbar color="#00cc00" dark expand="md">
+
                 <MDBNavbarBrand>
                     <strong className="white-text">ShopTrak</strong>
                 </MDBNavbarBrand>
@@ -99,9 +90,7 @@ class Navigation extends React.Component{
                     </MDBNavbarNav>
 
                 </MDBCollapse>
-            </MDBNavbar>
-            
-            
+            </MDBNavbar>      
             </div>
 
 
@@ -140,6 +129,7 @@ class Navigation extends React.Component{
 
                 
             // </div>
+
         )
     }
 }
