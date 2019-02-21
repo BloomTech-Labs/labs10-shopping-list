@@ -119,9 +119,7 @@ export const addGroup = (group) => dispatch => {
 export const gettingGroups = () => async dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
-  // const endpoint = `http://localhost:8000//api/group/user/${userID}`;
-  // const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/17`;
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/groupMember/user/${userID}`;
+  const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/user/${userID}`;
 
   const options = {
     headers: {
@@ -129,34 +127,12 @@ export const gettingGroups = () => async dispatch => {
     }
   };
 
-  let groups = [];
-
-  const gMems = await axios.get(endpoint, options);
-
-  for (let i = 0; i < gMems.length; i++) {
-    const endpoint2 = `https://shoptrak-backend.herokuapp.com/api/group/${gMems.groupID}`;
-    const grp = await axios.get(endpoint2, options);
-    groups.push(grp);
-    console.log("grp => ", grp);
-  }
-  console.log("groups => ", groups);
-
-  // axios.get(endpoint, options)
-  //     .then(response => {
-  //       console.log("GETTING GROUPS => ", response);
-  //
-  //       response.data.data.forEach(grp => {
-  //         const gr = axios.get(`https://shoptrak-backend.herokuapp.com/api/group/${grp.groupID}`, options);
-  //         console.log("RES => ", gr);
-  //       })
-  //
-  //       // const groups = [];
-  //       // groups.push(response.data);
-  //       // console.log("DATA", response.data);
-  //       // dispatch({ type: ADDING_GROUPS_TO_STATE, payload: groups });
-  //     })
-  //     .catch(err => {
-  //       console.log("GETTING GROUPS ERR => ", err);
-  //       dispatch({ type: ADDING_GROUPS_TO_STATE_FAILED, payload: err });
-  //     });
+  axios.get(endpoint, options)
+      .then(response => {
+        dispatch({ type: ADDING_GROUPS_TO_STATE, payload: response.data.data });
+      })
+      .catch(err => {
+        console.log("GETTING GROUPS ERR => ", err);
+        dispatch({ type: ADDING_GROUPS_TO_STATE_FAILED, payload: err });
+      });
 }

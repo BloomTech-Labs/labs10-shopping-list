@@ -62,14 +62,12 @@ class GroupsProfile extends Component{
                     </MDBCard>
                         {this.props.groups !== null ? (
                             this.props.groups.map((g, i) => (
-                                <MDBCard border="primary" className="m-3" style={{ maxWidth: "18rem" }}>
+                                <MDBCard key={{i}} border="primary" className="m-3" style={{ maxWidth: "18rem", cursor: "pointer" }}>
                                     <MDBCardHeader>{g.name}</MDBCardHeader>
                                     <MDBCardBody className="text-primary">
-                                        {/*<MDBCardTitle tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>*/}
-                                        <MDBCardTitle tag="h5">Title</MDBCardTitle>
+                                        <MDBCardTitle tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
                                         <MDBCardText>
-                                            Some quick example text to build on the card title and make up the
-                                            bulk of the card's content.
+                                            Group members go here
                                         </MDBCardText>
                                     </MDBCardBody>
                                 </MDBCard>
