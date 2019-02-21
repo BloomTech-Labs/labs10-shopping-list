@@ -8,6 +8,8 @@
 
 import Foundation
 import Alamofire
+import SwiftKeychainWrapper
+
 
 class UserController {
     
@@ -34,8 +36,12 @@ class UserController {
         
         guard let userJSON = userToJSON(user: newUser) else { return }
         
+        guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
         
-        Alamofire.request(url, method: .post, parameters: userJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+        
+        
+        Alamofire.request(url, method: .post, parameters: userJSON, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(let value):
@@ -109,6 +115,42 @@ class UserController {
         }
     }
     
+    func getUser(forID id: Int, completion: @escaping (User?) -> Void) {
+        
+        let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(id))
+        
+        guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
+        
+        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+        
+        Alamofire.request(url, method: .get, headers: headers).validate().responseJSON { (response) in
+            
+            switch response.result {
+            case .success(let value):
+                
+                let decoder = JSONDecoder()
+                guard let data = response.data else { completion(nil); return }
+                
+                do {
+                    let user = try decoder.decode(User.self, from: data)
+                    completion(user)
+                    
+                } catch {
+                    print("Could not turn json into user")
+                    completion(nil)
+                    return
+                }
+                
+                
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
+                return
+            }
+        }
+        
+    }
     
     
     // MARK: Temporary Functions

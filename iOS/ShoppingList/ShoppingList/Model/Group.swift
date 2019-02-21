@@ -8,6 +8,10 @@
 
 import Foundation
 
+struct GroupsList: Codable {
+    let data: [Group]
+}
+
 
 struct Group: Codable {
     
@@ -16,11 +20,25 @@ struct Group: Codable {
     var token: String?
     var userID: Int
     
-    var createdAt: Date
-    var updatedAt: Date
+    var createdAt: String
+    var updatedAt: String
+    
+    var memberAmount: Int
     
     var members: [GroupMember]?
     var trips: [Trip]?
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case groupID = "id"
+        case token
+        case userID
+        
+        case createdAt
+        case updatedAt
+        
+        case memberAmount
+    }
     
     
     init(name: String, userID: Int) {
@@ -29,7 +47,10 @@ struct Group: Codable {
 
         self.userID = userID
         
-        self.createdAt = Date()
-        self.updatedAt = Date()
+        self.createdAt = Date().dateToString()
+        self.updatedAt = Date().dateToString()
+        
+        self.memberAmount = 1
     }
 }
+

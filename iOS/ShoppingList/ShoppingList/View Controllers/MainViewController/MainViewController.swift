@@ -18,6 +18,15 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let groupCon = GroupController()
+        groupCon.getGroupWith(userID: 501) { (groups) in
+            
+            if let groups = groups {
+                print(groups)
+            }
+        }
     }
     
     
