@@ -28,7 +28,6 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         profilePictureImageView.clipsToBounds = true
     }
     
-    
     // MARK: - IBOutlets
     
     @IBOutlet weak var profilePictureImageView: UIImageView!
@@ -56,6 +55,17 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     @IBAction func openOnlineHelp(_ sender: Any) {
         let url = URL(string: "https://labs10-shopping-list.netlify.com")!
         UIApplication.shared.open(url)
+    }
+    
+    
+    @IBAction func logoutPressed(_ sender: Any) {
+        
+        // Yvette, put this code wherever you complete your token deletion to reset to the login screen
+        // 👇🏼👇🏼👇🏼
+        UI {
+            defaults.set(false, forKey: Keys.isUserLoggedInKey)
+            UIApplication.shared.keyWindow?.rootViewController = LoginViewController.instantiate()
+        }
     }
     
 }
