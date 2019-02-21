@@ -12,12 +12,27 @@ import SwiftKeychainWrapper
 
 class MainViewController: UIViewController, StoryboardInstantiatable {
 
+    @IBOutlet weak var groupName: UIButton!
     static let storyboardName: StoryboardName = "MainViewController"
+    
+    var user: User?
+    var selectedGroup: Group?
     
     // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let groupCon = GroupController()
+        groupCon.getGroupWith(userID: 501) { (groups) in
+            
+            if let groups = groups {
+                self.user?.groups = groups
+                self.selectedGroup = groups[0]
+                self.updateViews()
+            }
+        }
     }
     
     
@@ -38,6 +53,15 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
         print(LoginViewController.accessToken()!)
     }
     
+    
+    
+    func updateViews() {
+        
+        if let name = selectedGroup {
+            groupName.setTitle(name.name, for: .normal)
+        }
+        
+    }
 
 }
 
