@@ -27,7 +27,6 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         profilePictureImageView.clipsToBounds = true
     }
     
-    
     // MARK: - IBOutlets
     
     @IBOutlet weak var profilePictureImageView: UIImageView!
@@ -55,6 +54,11 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     @IBAction func openOnlineHelp(_ sender: Any) {
         let url = URL(string: "https://labs10-shopping-list.netlify.com")!
         UIApplication.shared.open(url)
+    }
+    
+    
+    @IBAction func logoutPressed(_ sender: Any) {
+        
     }
     
 }
