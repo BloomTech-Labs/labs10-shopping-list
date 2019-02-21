@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Auth0
+import SwiftKeychainWrapper
 
 class MainViewController: UIViewController, StoryboardInstantiatable {
 
@@ -18,12 +20,22 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
         super.viewDidLoad()
     }
     
+    
     // MARK: - IBActions
+    
+    @IBAction func addNewItemButtonPressed(_ sender: Any) {
+        
+     
+        
+    }
+    
+
     
     @IBAction func settingsButtonPressed(_ sender: Any) {
         let storyboard = UIStoryboard(name: "SettingsTableViewController", bundle: nil)
         let settingsVC = storyboard.instantiateInitialViewController() ?? SettingsTableViewController.instantiate()
         present(settingsVC, animated: true, completion: nil)
+        print(LoginViewController.accessToken()!)
     }
     
 

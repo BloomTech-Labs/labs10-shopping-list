@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="yPz-pd-gnL">
-                                <rect key="frame" x="16" y="517" width="343" height="120"/>
+                                <rect key="frame" x="16" y="581" width="343" height="56"/>
                                 <subviews>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yzy-wJ-qCE">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="56"/>
@@ -39,24 +39,6 @@
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="loginButtonPressed:" destination="ymu-Af-L92" eventType="touchUpInside" id="cHc-Gj-hcA"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ctD-hc-yds">
-                                        <rect key="frame" x="0.0" y="64" width="343" height="56"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="56" id="HvZ-K2-ani"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                        <state key="normal" title="Create an account">
-                                            <color key="titleColor" name="Theme"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="8"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="CreateAccountPressed:" destination="ymu-Af-L92" eventType="touchUpInside" id="df1-VL-M9Q"/>
                                         </connections>
                                     </button>
                                 </subviews>
