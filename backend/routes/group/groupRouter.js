@@ -111,7 +111,7 @@ groupRouter.get('/user/:id', (req, res) => {
 
     groupDb.getByUser(id).then(group => {
         if (group.length >= 1) {
-            return res.status(200).json(group[0]);
+            return res.status(200).json(group);
         }
 
         return res.status(404).json({error: `The requested group does not exist.`});

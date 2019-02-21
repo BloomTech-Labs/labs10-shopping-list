@@ -88,8 +88,8 @@ export const addUserToState = () => {
 export const gettingGroups = () => dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
-  // const endpoint = `http://localhost:8000//api/group/user/${userID}`;
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/groupMember/user/${userID}`;
+  const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/user/${userID}`;
+  // const endpoint = `https://shoptrak-backend.herokuapp.com/api/groupMember/user/${userID}`;
   const options = {
     headers: {
       Authorization: token
