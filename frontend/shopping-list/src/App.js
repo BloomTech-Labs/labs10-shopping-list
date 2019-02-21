@@ -4,7 +4,9 @@ import {Route} from 'react-router-dom';
 import Home from './components/Home';
 import UserProfile from './components/UserProfile';
 import Callback from './components/Callback';
+import Navigation from './components/Navigation';
 import GroupsProfile from "./components/GroupsProfile";
+
 
 class App extends Component {
   render() {

@@ -13,6 +13,13 @@ export const ADDING_GROUPS_TO_STATE = 'ADDING_GROUPS_TO_STATE';
 export const ADDING_GROUPS_TO_STATE_FAILED = 'ADDING_GROUPS_TO_STATE_FAILED';
 
 
+let backendURL;
+if(process.env.NODE_ENV === 'development'){
+  backendURL = `http://localhost:9000`
+} else {
+  backendURL = `https://shoptrak-backend.herokuapp.com`
+}
+
 /**
  * Test function
  * @param  {} dispatch
@@ -48,7 +55,7 @@ export const checkEmail = (email, callback) => {
     }
   }
 
-  const fetchUserId = axios.post(`http://localhost:9000/api/user/getid`, user, options);
+  const fetchUserId = axios.post(`${backendURL}/api/user/getid`, user, options);
 
   return dispatch => {
     dispatch({type: CHECKING_EMAIL});

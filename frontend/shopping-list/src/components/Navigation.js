@@ -1,23 +1,33 @@
-import React, { Component } from 'react';
-import {withRouter} from 'react-router-dom';
+import React from 'react';
+import {Link, withRouter} from 'react-router-dom';
 // import {Link, withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
-import './Styles/Navigation.css';
+
+import {connect} from 'react-redux';
+import {checkEmail, addUserToState} from '../store/actions/rootActions';
+import './styles/Navigation.css';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
     MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, MDBFormInline, MDBBtn } from "mdbreact";
 
-class Navigation extends Component{
+class Navigation extends React.Component{
     state = {
         collapseID: "",
         activeTabClassname: "home"
-    };
-
-    // Toggles dropdown menus for MDB
+    }
+    
+    componentDidMount(){
+        // populate state with user information
+        if(!this.props.userId && localStorage.getItem('email')){
+            this.props.checkEmail(localStorage.getItem('email'), this.props.addUserToState)
+        }
+    }
+    
+// Toggles dropdown menus for MDB
     toggleCollapse = collapseID => () =>
         this.setState(prevState => ({
             collapseID: prevState.collapseID !== collapseID ? collapseID : ""
         }));
-    
+
     signOut = () => { // logs out the current user and redirects to the homepage
         auth0Client.signOut();
         this.props.history.replace('/');
@@ -32,7 +42,10 @@ class Navigation extends Component{
         // Gather the url pathname to set active class to proper link
         const pathname = this.props.location.pathname;
         return(
-            <MDBNavbar color="default-color" dark expand="md">
+            <div className = 'navigation-container'>
+            
+            <MDBNavbar color="#00cc00" dark expand="md">
+
                 <MDBNavbarBrand>
                     <strong className="white-text">ShopTrak</strong>
                 </MDBNavbarBrand>
@@ -77,10 +90,63 @@ class Navigation extends Component{
                     </MDBNavbarNav>
 
                 </MDBCollapse>
-            </MDBNavbar>
+            </MDBNavbar>      
+            </div>
+
+
+
+
+
+
+
+
+
+            // <div className = "navigation-container">
+
+            // <div className = 'nav-links'>
+            // <Link to = '/'>ABOUT</Link>
+            // <Link to = '/'>FEATURES</Link>
+            // <Link to = '/'>PLANS</Link>
+
+            // <div className = 'nav-login'>
+            //     {/* Conditionally renders a sign-in or sign-out button if user is logged in/out*/}
+            //     {
+            //         !localStorage.getItem('email') && 
+            //         <span className = 'nav-login-btn' onClick={auth0Client.signIn}>LOGIN</span>
+            //     }
+
+            //     {
+            //         localStorage.getItem('email') && 
+            //         <div className='nav-user-greeting'>
+            //             <span>MY ACCOUNT</span>
+            //             <span className = 'nav-user-btn' onClick = {this.signOut}><img src = {this.props.profilePicture} alt = 'user profile picture'></img></span>
+                        
+            //         </div>
+            //     }
+
+            //     </div>
+            //     </div>
+
+                
+            // </div>
 
         )
     }
 }
 
-export default withRouter(Navigation);
+const mapStateToProps = state => {
+    state = state.rootReducer; // pull values from state root reducer
+    return {
+        //state items
+        userId: state.userId,
+        name: state.name,
+        email: state.email,
+        profilePicture: state.profilePicture,
+    }
+}
+
+export default withRouter(connect(mapStateToProps, {
+    // actions
+    checkEmail,
+    addUserToState,
+})(Navigation));

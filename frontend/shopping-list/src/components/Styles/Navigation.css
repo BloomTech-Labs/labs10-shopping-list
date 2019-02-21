@@ -1,3 +1,37 @@
+.navigation-container {
+    width: 100%;
+    background: #00cc00;
+    padding: 10px 20px;
+}
+
+.nav-links{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.nav-links a{
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+}
+
+.nav-user-btn img{
+    max-height: 30px;
+    border-radius: 50px;
+    margin: 0px 10px;
+}
+
+.nav-user-greeting{
+    color: white;
+}
+
 .buttons{
     display: flex;
     justify-content: flex-end;
@@ -6,3 +40,4 @@
 .button{
     margin-left: 10px;
 }
+
