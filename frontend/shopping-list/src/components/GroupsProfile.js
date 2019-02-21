@@ -1,67 +1,128 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups } from '../store/actions/rootActions';
+import {checkEmail, gettingGroups, addGroup, getItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer, MDBListGroup, MDBListGroupItem, MDBCardHeader, MDBCardFooter,
-    MDBRow } from "mdbreact";
+import "./styles/Group.css";
+import {
+    MDBListGroup,
+    MDBListGroupItem,
+    MDBContainer,
+    MDBBtn,
+    MDBIcon,
+    MDBBadge,
+    MDBInput,
+    MDBNavLink,
+    MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText
+} from "mdbreact";
 
-class GroupsProfile extends Component{
-    constructor(props){
-        super(props);
-
-        this.state = {
-            input: null,
-            userId: null,
-            groups: null,
-        }
+class GroupsPage extends Component{
+    state = {
+        modal14: false,
+        group: null,
+        items: [
+            {
+                name: "milk",
+                purchased: true,
+            },
+            {
+                name: "eggs",
+                purchased: false,
+            }
+        ]
     }
 
-    async componentDidMount(){
-        console.log('cdm');
-        let email = localStorage.getItem('email');
+    componentDidMount(){
+        this.props.getItems(Number(this.props.match.params.id));
 
-        if(email && !this.props.userId){
-            // if a user is logged in and no userID is found, retrieve their user ID from the database via their email and store in local storage
-            this.props.checkEmail(email, this.props.addUserToState);
-            // the second parameter is a callback that will execute once the email check is complete
-            // in this case it is populating state with the complete user profile: email, userId, profilePicture, and name
-        }
+        const group = this.props.groups.filter(g => g.id === Number(this.props.match.params.id));
+        const items = this.props.items;
+        console.log("ITEMS => ", items);
 
-        this.props.gettingGroups();
-        this.setState({ groups: this.props.groups})
+        this.setState({ group: group[0], items: this.props.items })
+    }
+
+    toggle = nr => () => {
+        let modalNumber = 'modal' + nr
+        this.setState({
+            [modalNumber]: !this.state[modalNumber]
+        });
+    }
+
+    handleInput = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        },)
+    }
+
+    check = e => {
+        const items = this.state.items.map((item, i) => {
+            if (i === e) item.purchased = !item.purchased;
+            return item;
+        })
+
+        this.setState({ items })
     }
 
     render(){
-        console.log('render');
+        const purchased = this.props.items.filter(itm => itm.purchased === true);
         return (
             <div>
                 <Navigation />
-                <MDBContainer>
-                    <MDBRow center>
-                    <MDBCard className="text-center" style={{ width: "20rem", marginTop: "1rem" }}>
-                        <MDBCardBody>
-                            <MDBCardTitle>Create New Group</MDBCardTitle>
-                            <MDBCardText>
-                                Create a new group and start inviting to help with the shopping!
-                            </MDBCardText>
-                            <MDBBtn color="primary">Create</MDBBtn>
-                        </MDBCardBody>
-                    </MDBCard>
+                <div className={"group-profile-container"}>
+                    {/*<h1>{this.state.group !== null ? this.state.group.name : ""}</h1>*/}
+                    <div className={"group-profile-header"}>
+                        <MDBBtn color="primary" >List</MDBBtn>
+                        <MDBBtn color="primary" >History</MDBBtn>
+                        <MDBBtn color="primary" >Invite</MDBBtn>
+                        <MDBBtn color="primary" >Total</MDBBtn>
+                    </div>
+                    <div className={"group-profile-header-title"}><h3>{this.state.group !== null ? this.state.group.name : ""}</h3></div>
+                    <div className={"group-profile-columns"}>
 
+                        <div className={"group-profile-list"}>
+                            <div className={"group-profile-list-container"}>
+                                <MDBContainer>
+                                    <MDBContainer>
+                                        <MDBListGroup style={{ width: "22rem" }}>
+                                            {this.props.items.map((item, i) => (
+                                                <MDBListGroupItem onClick={() => this.check(i)} className="d-flex justify-content-between align-items-center">{item.name}<MDBBadge
+                                                    color="primary">{item.purchased ? <MDBIcon icon="check" /> : null}</MDBBadge>
+                                                </MDBListGroupItem>
+                                            ))}
+                                        </MDBListGroup>
+                                    </MDBContainer>
+                                </MDBContainer>
+                            </div>
+                            <div className={"group-profile-list-button"}>
+                                <MDBBtn color="primary" >ADD</MDBBtn>
+                            </div>
+                        </div>
 
-                        <MDBCard border="primary" className="m-3" style={{ maxWidth: "18rem" }}>
-                            <MDBCardHeader>Header</MDBCardHeader>
-                            <MDBCardBody className="text-primary">
-                                <MDBCardTitle tag="h5">Primary card title</MDBCardTitle>
-                                <MDBCardText>
-                                    Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.
-                                </MDBCardText>
-                            </MDBCardBody>
-                        </MDBCard>
-                    </MDBRow>
+                        <div className={"group-profile-right-col"}>
+                            <div className={"group-profile-gross"}>
+                                <p>MEM 1</p>
+                                <p>MEM 2</p>
+                            </div>
+                            <div className={"group-profile-bought"}>
+                                <h1>I BOUGHT</h1>
+                                <div className={"group-profile-bought-list"}>
+                                    {
+                                        purchased.map(itm => (
+                                            <p>{itm.name}, </p>
+                                        ))
+                                    }
+                                </div>
+                                <div className={"group-profile-bought-input"}>
+                                    <h1>$</h1><MDBInput label="I Paid" />
+                                </div>
+                                <div className={"group-profile-bought-button"}>
+                                    <MDBBtn color="primary" >Submit</MDBBtn>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                </MDBContainer>
+                </div>
             </div>
         )
     }
@@ -71,14 +132,11 @@ const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
         //state items
-        userId: state.userId,
-        name: state.name,
-        email: state.email,
-        profilePicture: state.profilePicture,
         groups: state.groups,
+        items: state.items,
     }
 }
 
 export default connect(mapStateToProps, {
-    checkEmail, gettingGroups,
-})(GroupsProfile);
+    checkEmail, gettingGroups, addGroup, getItems
+})(GroupsPage);
