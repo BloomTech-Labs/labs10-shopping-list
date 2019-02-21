@@ -4,6 +4,8 @@ import {
   TEST_FAILURE,
   CHECKING_EMAIL,
   EMAIL_CHECKED,
+  ADDING_GROUPS_TO_STATE,
+  ADDING_GROUPS_TO_STATE_FAILED,
 } from "../actions";
 import { ADDING_USER_TO_STATE } from "../actions/rootActions";
 
@@ -12,6 +14,7 @@ const initialState = {
   name: null,
   email: null,
   profilePicture: null,
+  groups: []
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -42,6 +45,13 @@ export const rootReducer = (state = initialState, action) => {
         email: action.payload.email,
         profilePicture: action.payload.profilePicture,
       }
+    case ADDING_GROUPS_TO_STATE:
+      return {
+        ...state,
+        groups: action.payload
+      }
+    case ADDING_GROUPS_TO_STATE_FAILED:
+      return state;
 
     default:
       return state;

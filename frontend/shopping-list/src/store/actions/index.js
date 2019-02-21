@@ -5,5 +5,8 @@ export {
   testFunction,
   CHECKING_EMAIL,
   EMAIL_CHECKED,
-  ERROR
+  ADDING_GROUPS_TO_STATE,
+  ADDING_GROUPS_TO_STATE_FAILED,
+  ERROR,
+    gettingGroups,
 } from "./rootActions";

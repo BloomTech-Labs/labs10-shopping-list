@@ -101,6 +101,34 @@ groupRouter.get('/:id', (req, res) => {
 
 /**************************************************/
 
+/** GET GROUP BY USER ID
+ * @TODO Add middleware to ensure user is logged in
+ * **/
+
+/**************************************************/
+groupRouter.get('/user/:id', (req, res) => {
+    const id = req.params.id;
+
+    groupDb.getByUser(id).then(group => {
+        if (group.length >= 1) {
+            return res.status(200).json(group[0]);
+        }
+
+        return res.status(404).json({error: `The requested group does not exist.`});
+    })
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        })
+})
+
+/**************************************************/
+
 // GET ALL GROUPS
 /** @TODO This should be set to sysadmin privileges for group privacy **/
 
