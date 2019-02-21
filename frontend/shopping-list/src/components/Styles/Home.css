@@ -11,16 +11,20 @@
 }
 
 .homeElem{
-    margin: 1% 1%;
+    margin-left: 1%;
+    margin-right: 1%;
 }
 
 .componentName{
     padding: 2% 0;
     font-size: 69px;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
 .appDescription{
     padding: 1% 0;
+    margin-top: 10%;
 }
 
 .userGreeting{
@@ -32,4 +36,12 @@
     justify-content: space-between;
     align-items: center;
     margin: 0 5px;
+}
+
+.button:hover{
+    cursor: pointer;
+}
+
+.button{
+    color: #362023
 }

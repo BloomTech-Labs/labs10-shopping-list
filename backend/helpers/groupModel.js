@@ -31,14 +31,14 @@ function getById(id) {
 
 /**
  * Return all the groups owned by given user ID
- * @param id - The ID of the user
+ * @param userID - The ID of the user
  * @returns {*} - Returns every group owned by given user ID
  */
-function getByUser(id) {
+function getByUser(userID) {
   return db
     .select("*")
     .from("groups")
-    .where("userId", id);
+    .where({userID});
 }
 
 /**

@@ -2,6 +2,7 @@ import React from 'react';
 import {checkEmail, addUserToState} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import {Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button} from 'reactstrap';
+import Navigation from './Navigation.js';
 
 class UserProfile extends React.Component{
     constructor(props){
@@ -29,6 +30,7 @@ class UserProfile extends React.Component{
         console.log('render');
         return (
             <div className = 'user-profile-container'>
+            <Navigation />
             User profile page
 
             <div className = 'user-profile-left'>
