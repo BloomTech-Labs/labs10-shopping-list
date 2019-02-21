@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
 import {Spinner} from 'reactstrap';
+import {connect} from 'react-redux';
 
 class Callback extends Component {
   async componentDidMount() {
