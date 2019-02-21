@@ -54,13 +54,14 @@ table {
 /** END CSS RESET **/
 
 #root {
-  background: white;
+  background: #00cc00;
 }
 
 .App{
   width: 100%;
   max-width: 880px;
-  margin: 0 auto;
+  margin: 0px auto;
+  padding: 40px 0px;
 }
 
 /* REACT DEFAULT CSS */
