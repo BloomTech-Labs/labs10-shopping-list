@@ -12,7 +12,7 @@ class Navigation extends React.Component{
     };
 
     goToProfile = () => {
-
+        this.props.history.replace('/profile');
     }
 
     render(){
