@@ -5,10 +5,16 @@ import auth0Client from './Auth';
 import {connect} from 'react-redux';
 import {checkEmail, addUserToState} from '../store/actions/rootActions';
 import './styles/Navigation.css';
+import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
+    MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, MDBFormInline, MDBBtn } from "mdbreact";
 
 
 class Navigation extends React.Component{
-
+    state = {
+        collapseID: "",
+        activeTabClassname: "home"
+    }
+    
     componentDidMount(){
         // populate state with user information
         if(!this.props.userId && localStorage.getItem('email')){
@@ -16,42 +22,123 @@ class Navigation extends React.Component{
         }
     }
     
+// Toggles dropdown menus for MDB
+    toggleCollapse = collapseID => () =>
+        this.setState(prevState => ({
+            collapseID: prevState.collapseID !== collapseID ? collapseID : ""
+        }));
+
     signOut = () => { // logs out the current user and redirects to the homepage
         auth0Client.signOut();
         this.props.history.replace('/');
     };
 
+    goToProfile = () => {
+        this.props.history.replace('/profile');
+    }
+    
+    goToHome = () => {
+        this.props.history.replace('/');
+    }
 
     render(){
+        // Gather user id to determine if user is logged in or not
+        const id = localStorage.getItem("userId");
+        let isLogged = false;
+        if (id !== null) isLogged = true;
+
+        // Gather the url pathname to set active class to proper link
+        const pathname = this.props.location.pathname;
         return(
-            <div className = "navigation-container">
 
-            <div className = 'nav-links'>
-            <Link to = '/'>ABOUT</Link>
-            <Link to = '/'>FEATURES</Link>
-            <Link to = '/'>PLANS</Link>
+            <div className = 'navigation-container'>
+            
+            <MDBNavbar color="#00cc00" dark expand="md">
+                <MDBNavbarBrand>
+                    <strong className="white-text">ShopTrak</strong>
+                </MDBNavbarBrand>
 
-            <div className = 'nav-login'>
-                {/* Conditionally renders a sign-in or sign-out button if user is logged in/out*/}
-                {
-                    !localStorage.getItem('email') && 
-                    <span className = 'nav-login-btn' onClick={auth0Client.signIn}>LOGIN</span>
-                }
+                <MDBNavbarToggler onClick={this.toggleCollapse} />
 
-                {
-                    localStorage.getItem('email') && 
-                    <div className='nav-user-greeting'>
-                        <span>MY ACCOUNT</span>
-                        <span className = 'nav-user-btn' onClick = {this.signOut}><img src = {this.props.profilePicture} alt = 'user profile picture'></img></span>
+                <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
+                    <MDBNavbarNav left>
+                        <MDBNavItem active={pathname === "/" ? "active" : null} >
+                            <MDBNavLink to="/">Home</MDBNavLink>
+                        </MDBNavItem>
+                        {isLogged ? (
+                            <MDBNavItem active={pathname === "/groups" ? "active" : null} >
+                                <MDBNavLink to="/groups">Groups</MDBNavLink>
+                            </MDBNavItem>
+                        ) : null}
+
+                    </MDBNavbarNav>
+
+                    <MDBNavbarNav right>
+                        <MDBNavItem>
+                            {isLogged ? (
+                                <MDBDropdown>
+                                    <MDBDropdownToggle className="dopdown-toggle" nav>
+                                        <img src={localStorage.getItem("img_url")} className="rounded-circle z-depth-0"
+                                             style={{ height: "35px", padding: 0 }} alt="" />
+                                    </MDBDropdownToggle>
+                                    <MDBDropdownMenu className="dropdown-default" right>
+                                        <MDBDropdownItem href="/profile">My account</MDBDropdownItem>
+                                        <MDBDropdownItem href="#!" onClick={this.signOut}>Log out</MDBDropdownItem>
+                                    </MDBDropdownMenu>
+                                </MDBDropdown>
+                            ) : (
+                                <MDBNavItem>
+                                    <MDBBtn color="success" onClick={auth0Client.signIn}>
+                                        Login
+                                    </MDBBtn>
+                                </MDBNavItem>
+                            ) }
+
+                        </MDBNavItem>
+                    </MDBNavbarNav>
+
+                </MDBCollapse>
+            </MDBNavbar>
+            
+            
+            </div>
+
+
+
+
+
+
+
+
+
+            // <div className = "navigation-container">
+
+            // <div className = 'nav-links'>
+            // <Link to = '/'>ABOUT</Link>
+            // <Link to = '/'>FEATURES</Link>
+            // <Link to = '/'>PLANS</Link>
+
+            // <div className = 'nav-login'>
+            //     {/* Conditionally renders a sign-in or sign-out button if user is logged in/out*/}
+            //     {
+            //         !localStorage.getItem('email') && 
+            //         <span className = 'nav-login-btn' onClick={auth0Client.signIn}>LOGIN</span>
+            //     }
+
+            //     {
+            //         localStorage.getItem('email') && 
+            //         <div className='nav-user-greeting'>
+            //             <span>MY ACCOUNT</span>
+            //             <span className = 'nav-user-btn' onClick = {this.signOut}><img src = {this.props.profilePicture} alt = 'user profile picture'></img></span>
                         
-                    </div>
-                }
+            //         </div>
+            //     }
 
-                </div>
-                </div>
+            //     </div>
+            //     </div>
 
                 
-            </div>
+            // </div>
         )
     }
 }
