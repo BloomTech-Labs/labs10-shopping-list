@@ -11,6 +11,13 @@ export const ERROR = 'ERROR';
 export const ADDING_USER_TO_STATE = 'ADDING_USER_TO_STATE';
 
 
+let backendURL;
+if(process.env.NODE_ENV === 'development'){
+  backendURL = `http://localhost:9000`
+} else {
+  backendURL = `https://shoptrak-backend.herokuapp.com`
+}
+
 /**
  * Test function
  * @param  {} dispatch
@@ -46,7 +53,7 @@ export const checkEmail = (email, callback) => {
     }
   }
 
-  const fetchUserId = axios.post(`http://localhost:9000/api/user/getid`, user, options);
+  const fetchUserId = axios.post(`${backendURL}/api/user/getid`, user, options);
 
   return dispatch => {
     dispatch({type: CHECKING_EMAIL});
