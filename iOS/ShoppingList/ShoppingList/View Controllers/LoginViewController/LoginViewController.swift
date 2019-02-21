@@ -51,7 +51,7 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
                     //                    guard let accessToken = credentials.accessToken else {return}
                     //                    self.showSuccessAlert(accessToken)
                     //  print("credentials: \(String(describing: credentials.idToken))")
-                    let accessToken = credentials.idToken
+                    let accessToken = credentials.accessToken
                     let saveAccessToken: Bool = KeychainWrapper.standard.set(accessToken!, forKey: "accessToken")
                     print("The access token save result: \(saveAccessToken)")
                     print("The access token save result: \(String(describing: accessToken))")

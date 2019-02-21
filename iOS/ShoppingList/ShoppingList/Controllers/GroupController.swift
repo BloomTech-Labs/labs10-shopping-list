@@ -30,7 +30,7 @@ class GroupController {
         }
     }
     
-    func newGroup(withName name: String, byUserID userID: Int, completion: @escaping (Group?) -> Void) {
+     func newGroup(withName name: String, byUserID userID: Int, completion: @escaping (Group?) -> Void) {
         
         var newGroup = Group(name: name, userID: userID)
         let url = baseURL.appendingPathComponent("group")
@@ -47,7 +47,7 @@ class GroupController {
             
             switch response.result {
             case .success(let value):
-                
+               NSLog("\(value)")
                 guard let jsonDict = value as? [String: Any], let groupID = jsonDict["groupID"] as? Int else {
                     print("Could not get groupID from API response")
                     completion(nil)
