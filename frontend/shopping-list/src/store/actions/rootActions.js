@@ -88,21 +88,40 @@ export const addUserToState = () => {
 export const gettingGroups = () => dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/user/${userID}`;
-  // const endpoint = `https://shoptrak-backend.herokuapp.com/api/groupMember/user/${userID}`;
-  const options = {
-    headers: {
-      Authorization: token
+  const data = [
+    {
+      id: 0,
+      userID: 1005,
+      name: "Lament House",
+      token: null,
+      createdAt: "date",
+      updatedAt: "date"
+    },
+    {
+      id: 1,
+      userID: 1005,
+      name: "Lament House 2",
+      token: null,
+      createdAt: "date",
+      updatedAt: "date"
     }
-  };
-
-  axios.get(endpoint, options)
-      .then(response => {
-        console.log("GETTING GROUPS => ", response);
-        dispatch({ type: ADDING_GROUPS_TO_STATE, payload: response.data.data });
-      })
-      .catch(err => {
-        console.log("GETTING GROUPS ERR => ", err);
-        dispatch({ type: ADDING_GROUPS_TO_STATE_FAILED, payload: err });
-      });
+  ]
+  dispatch({ type: ADDING_GROUPS_TO_STATE, payload: data });
+  // const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/user/${userID}`;
+  // const endpoint = `https://shoptrak-backend.herokuapp.com/api/groupMember/user/${userID}`;
+  // const options = {
+  //   headers: {
+  //     Authorization: token
+  //   }
+  // };
+  //
+  // axios.get(endpoint, options)
+  //     .then(response => {
+  //       console.log("GETTING GROUPS => ", response);
+  //       dispatch({ type: ADDING_GROUPS_TO_STATE, payload: response.data.data });
+  //     })
+  //     .catch(err => {
+  //       console.log("GETTING GROUPS ERR => ", err);
+  //       dispatch({ type: ADDING_GROUPS_TO_STATE_FAILED, payload: err });
+  //     });
 }

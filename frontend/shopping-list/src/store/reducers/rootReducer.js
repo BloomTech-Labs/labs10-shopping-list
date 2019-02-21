@@ -14,7 +14,7 @@ const initialState = {
   name: null,
   email: null,
   profilePicture: null,
-  groups: []
+  groups: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
