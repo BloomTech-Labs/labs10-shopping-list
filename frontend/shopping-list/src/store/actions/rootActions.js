@@ -9,6 +9,8 @@ export const CHECKING_EMAIL = 'CHECKING_EMAIL';
 export const EMAIL_CHECKED = 'EMAIL_CHECKED';
 export const ERROR = 'ERROR';
 export const ADDING_USER_TO_STATE = 'ADDING_USER_TO_STATE';
+export const ADDING_GROUPS_TO_STATE = 'ADDING_GROUPS_TO_STATE';
+export const ADDING_GROUPS_TO_STATE_FAILED = 'ADDING_GROUPS_TO_STATE_FAILED';
 
 
 /**
@@ -79,6 +81,28 @@ export const addUserToState = () => {
   } else {
     return dispatch => {
       dispatch({type: ERROR})
+    }
   }
 }
+
+export const gettingGroups = () => dispatch => {
+  const userID = localStorage.getItem('userId');
+  const token = localStorage.getItem('jwt');
+  const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/user/${userID}`;
+  // const endpoint = `https://shoptrak-backend.herokuapp.com/api/groupMember/user/${userID}`;
+  const options = {
+    headers: {
+      Authorization: token
+    }
+  };
+
+  axios.get(endpoint, options)
+      .then(response => {
+        console.log("GETTING GROUPS => ", response);
+        dispatch({ type: ADDING_GROUPS_TO_STATE, payload: response.data.data });
+      })
+      .catch(err => {
+        console.log("GETTING GROUPS ERR => ", err);
+        dispatch({ type: ADDING_GROUPS_TO_STATE_FAILED, payload: err });
+      });
 }
