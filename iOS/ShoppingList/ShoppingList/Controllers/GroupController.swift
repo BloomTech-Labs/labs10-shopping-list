@@ -32,27 +32,34 @@ class GroupController {
     
     func newGroup(withName name: String, byUserID userID: Int, completion: @escaping (Group?) -> Void) {
         
-        var newGroup = Group(name: name, userID: userID)
-        let url = baseURL.appendingPathComponent("group")
         
-        guard let groupJSON = groupToJSON(group: newGroup) else { return }
+        let url = baseURL.appendingPathComponent("group")
         
         guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
         
         let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
+        // TODO: Generate unique token
+        let token = "12345"
         
+        let parameters: Parameters = ["userID": userID, "name": name, "token": token]
         
-        Alamofire.request(url, method: .post, parameters: groupJSON, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(let value):
-                NSLog("\(value)")
-                guard let jsonDict = value as? [String: Any], let groupID = jsonDict["groupID"] as? Int else {
+                
+                guard let jsonDict = value as? [String: Any],
+                let group = jsonDict["group"] as? [String: Any],
+                let groupID = group["id"] as? Int
+                
+                else {
                     print("Could not get groupID from API response")
                     completion(nil)
                     return
                 }
+                
+                var newGroup = Group(name: name, userID: userID, token: token)
                 
                 newGroup.groupID = groupID
                 completion(newGroup)
@@ -86,7 +93,7 @@ class GroupController {
         guard let groupJSON = groupToJSON(group: myGroup) else { return }
         
         Alamofire.request(url, method: .put, parameters: groupJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
-            
+
             switch response.result {
             case .success(_):
                 
@@ -110,10 +117,6 @@ class GroupController {
             switch response.result {
             case .success(let value):
                 
-                
-                let string = String(data: value, encoding: .utf8)
-                print("Data String: \(string!)")
-                
                 do {
                     
                     let decoder = JSONDecoder()
@@ -134,18 +137,6 @@ class GroupController {
             }
         }
     }
-    
-    
-    // MARK: Temporary Functions
-    // TODO: Remove this once we have way to get the real token
-    func getToken() -> String {
-        return "lalala"
-    }
-    
-    func getUserID() -> Int32 {
-        return Int32(123)
-    }
-    
     
     
     

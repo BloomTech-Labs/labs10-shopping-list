@@ -41,7 +41,7 @@ struct Group: Codable {
     }
     
     
-    init(name: String, userID: Int) {
+    init(name: String, userID: Int, token: String) {
         
         self.name = name
 
@@ -51,6 +51,7 @@ struct Group: Codable {
         self.updatedAt = Date().dateToString()
         
         self.memberAmount = 1
+        self.token = token
     }
 }
 
