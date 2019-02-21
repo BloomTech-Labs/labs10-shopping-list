@@ -17,7 +17,8 @@ const initialState = {
   name: null,
   email: null,
   profilePicture: null,
-  groups: []
+  groups: [{name: "Lament House", memberAmount: 1}],
+  items: [{groupId: 0, name: "Milk"}]
 };
 
 export const rootReducer = (state = initialState, action) => {
