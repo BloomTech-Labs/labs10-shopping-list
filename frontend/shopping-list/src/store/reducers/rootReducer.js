@@ -6,6 +6,8 @@ import {
   EMAIL_CHECKED,
   ADDING_GROUPS_TO_STATE,
   ADDING_GROUPS_TO_STATE_FAILED,
+  ADDING_GROUPS_TO_SERVER,
+  ADDING_GROUPS_TO_SERVER_FAILED,
 } from "../actions";
 import { ADDING_USER_TO_STATE } from "../actions/rootActions";
 
@@ -14,7 +16,7 @@ const initialState = {
   name: null,
   email: null,
   profilePicture: null,
-  groups: []
+  groups: [{name: "Lament House", memberAmount: 1}],
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -51,6 +53,12 @@ export const rootReducer = (state = initialState, action) => {
         groups: action.payload
       }
     case ADDING_GROUPS_TO_STATE_FAILED:
+      return state;
+
+    case ADDING_GROUPS_TO_SERVER:
+      return state;
+
+    case ADDING_GROUPS_TO_SERVER_FAILED:
       return state;
 
     default:

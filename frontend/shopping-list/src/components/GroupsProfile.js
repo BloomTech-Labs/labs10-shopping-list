@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups } from '../store/actions/rootActions';
+import {checkEmail, gettingGroups, addGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer, MDBListGroup, MDBListGroupItem, MDBCardHeader, MDBCardFooter,
-    MDBRow } from "mdbreact";
+import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
+    MDBListGroup, MDBListGroupItem, MDBCardHeader, MDBCardFooter, MDBModal, MDBModalBody,
+    MDBModalHeader, MDBModalFooter, MDBRow, MDBInput } from "mdbreact";
 
 class GroupsProfile extends Component{
-    constructor(props){
-        super(props);
-
-        this.state = {
-            input: null,
-            userId: null,
-            groups: null,
-        }
+    state = {
+        modal14: false,
+        groupName: "",
     }
 
-    async componentDidMount(){
+    componentDidMount(){
         console.log('cdm');
         let email = localStorage.getItem('email');
 
@@ -31,8 +27,25 @@ class GroupsProfile extends Component{
         this.setState({ groups: this.props.groups})
     }
 
+    toggle = nr => () => {
+        let modalNumber = 'modal' + nr
+        this.setState({
+            [modalNumber]: !this.state[modalNumber]
+        });
+    }
+
+    handleInput = e => {
+        this.setState({
+            [e.target.name]: e.target.value
+        },)
+    }
+
+    handleAddGroup = () => {
+        this.props.addGroup(this.state.groupName);
+        this.toggle(14);
+    }
+
     render(){
-        console.log('render');
         return (
             <div>
                 <Navigation />
@@ -44,23 +57,41 @@ class GroupsProfile extends Component{
                             <MDBCardText>
                                 Create a new group and start inviting to help with the shopping!
                             </MDBCardText>
-                            <MDBBtn color="primary">Create</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.toggle(14)}>Create</MDBBtn>
                         </MDBCardBody>
                     </MDBCard>
+                        {this.props.groups !== null ? (
+                            this.props.groups.map((g, i) => (
+                                <MDBCard border="primary" className="m-3" style={{ maxWidth: "18rem" }}>
+                                    <MDBCardHeader>{g.name}</MDBCardHeader>
+                                    <MDBCardBody className="text-primary">
+                                        {/*<MDBCardTitle tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>*/}
+                                        <MDBCardTitle tag="h5">Title</MDBCardTitle>
+                                        <MDBCardText>
+                                            Some quick example text to build on the card title and make up the
+                                            bulk of the card's content.
+                                        </MDBCardText>
+                                    </MDBCardBody>
+                                </MDBCard>
+                            ))
+                        ) : null}
 
 
-                        <MDBCard border="primary" className="m-3" style={{ maxWidth: "18rem" }}>
-                            <MDBCardHeader>Header</MDBCardHeader>
-                            <MDBCardBody className="text-primary">
-                                <MDBCardTitle tag="h5">Primary card title</MDBCardTitle>
-                                <MDBCardText>
-                                    Some quick example text to build on the card title and make up the
-                                    bulk of the card's content.
-                                </MDBCardText>
-                            </MDBCardBody>
-                        </MDBCard>
                     </MDBRow>
+                </MDBContainer>
 
+
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
+                        <MDBModalHeader toggle={this.toggle(14)}>Create A New Group</MDBModalHeader>
+                        <MDBModalBody>
+                            <MDBInput label="Group Name" name={"groupName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
+                        </MDBModalBody>
+                        <MDBModalFooter>
+                            <MDBBtn color="secondary" onClick={this.toggle(14)}>Close</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.handleAddGroup}>Create</MDBBtn>
+                        </MDBModalFooter>
+                    </MDBModal>
                 </MDBContainer>
             </div>
         )
@@ -80,5 +111,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    checkEmail, gettingGroups,
+    checkEmail, gettingGroups, addGroup
 })(GroupsProfile);

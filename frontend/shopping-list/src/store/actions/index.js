@@ -1,3 +1,5 @@
+import {ADDING_GROUPS_TO_SERVER} from "./rootActions";
+
 export {
   TEST_START,
   TEST_SUCCESS,
@@ -7,6 +9,9 @@ export {
   EMAIL_CHECKED,
   ADDING_GROUPS_TO_STATE,
   ADDING_GROUPS_TO_STATE_FAILED,
+  ADDING_GROUPS_TO_SERVER,
+  ADDING_GROUPS_TO_SERVER_FAILED,
   ERROR,
-    gettingGroups,
+  addGroup,
+  gettingGroups,
 } from "./rootActions";
