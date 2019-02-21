@@ -2,12 +2,19 @@ import {
   TEST_START,
   TEST_SUCCESS,
   TEST_FAILURE,
-  // CHECKING_EMAIL,
+  CHECKING_EMAIL,
   EMAIL_CHECKED,
+  ADDING_GROUPS_TO_STATE,
+  ADDING_GROUPS_TO_STATE_FAILED,
 } from "../actions";
+import { ADDING_USER_TO_STATE } from "../actions/rootActions";
 
 const initialState = {
   userId: null,
+  name: null,
+  email: null,
+  profilePicture: null,
+  groups: []
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -19,6 +26,9 @@ export const rootReducer = (state = initialState, action) => {
     case TEST_FAILURE:
       return state;
 
+    case CHECKING_EMAIL:
+      return state;
+
     case EMAIL_CHECKED:
       console.log('emc payload', action.payload.id);
       localStorage.setItem('userId', action.payload.id);
@@ -26,7 +36,22 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         userId: action.payload.id
       }
-
+      
+    case ADDING_USER_TO_STATE:
+    console.log('auts payload', action.payload);
+      return {
+        ...state,
+        name: action.payload.name,
+        email: action.payload.email,
+        profilePicture: action.payload.profilePicture,
+      }
+    case ADDING_GROUPS_TO_STATE:
+      return {
+        ...state,
+        groups: action.payload
+      }
+    case ADDING_GROUPS_TO_STATE_FAILED:
+      return state;
 
     default:
       return state;

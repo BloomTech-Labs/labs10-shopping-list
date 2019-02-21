@@ -29,6 +29,8 @@ const checkJwt = require('../../validators/checkJwt');
  * 
  * ***********************************************/
 
+userRouter.use(checkJwt);
+
 userRouter.post('/', (req, res) => {
     console.log(req.body);
     let user = req.body;
