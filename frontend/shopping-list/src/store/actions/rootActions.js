@@ -12,7 +12,10 @@ export const ADDING_USER_TO_STATE = 'ADDING_USER_TO_STATE';
 export const ADDING_GROUPS_TO_STATE = 'ADDING_GROUPS_TO_STATE';
 export const ADDING_GROUPS_TO_STATE_FAILED = 'ADDING_GROUPS_TO_STATE_FAILED';
 export const ADDING_GROUPS_TO_SERVER = 'ADDING_GROUPS_TO_SERVER';
-export const ADDING_GROUPS_TO_SERVER_FAILED = 'ADDING_GROUPS_TO_SERVER_FAILED'
+export const ADDING_GROUPS_TO_SERVER_FAILED = 'ADDING_GROUPS_TO_SERVER_FAILED';
+export const GETTING_ITEMS = 'GETTING_ITEMS';
+export const GETTING_ITEMS_SUCCESS = 'GETTING_ITEMS_SUCCESS';
+export const GETTING_ITEMS_FAILED = 'GETTING_ITEMS_FAILED';
 
 
 /**
@@ -135,4 +138,27 @@ export const gettingGroups = () => async dispatch => {
         console.log("GETTING GROUPS ERR => ", err);
         dispatch({ type: ADDING_GROUPS_TO_STATE_FAILED, payload: err });
       });
+};
+
+export const getItems = (id) => dispatch => {
+  dispatch({ type: GETTING_ITEMS });
+  const token = localStorage.getItem('jwt');
+  const endpoint = `http://localhost:9000/api/item/group/${id}`;
+
+  const options = {
+    headers: {
+      Authorization: token
+    }
+  };
+
+  axios.get(endpoint, options)
+      .then(response => {
+        dispatch({ type: GETTING_ITEMS_SUCCESS, payload: response.data.data });
+      })
+      .catch(err => {
+        console.log("GETTING GROUPS ERR => ", err);
+        dispatch({ type: GETTING_ITEMS_FAILED, payload: err });
+      });
+
+  // dispatch({ type: GETTING_ITEMS payload: items});
 }

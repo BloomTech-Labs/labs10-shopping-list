@@ -11,7 +11,11 @@ export {
   ADDING_GROUPS_TO_STATE_FAILED,
   ADDING_GROUPS_TO_SERVER,
   ADDING_GROUPS_TO_SERVER_FAILED,
+  GETTING_ITEMS,
+  GETTING_ITEMS_SUCCESS,
+  GETTING_ITEMS_FAILED,
   ERROR,
+    getItems,
   addGroup,
   gettingGroups,
 } from "./rootActions";

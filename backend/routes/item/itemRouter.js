@@ -72,6 +72,32 @@ itemRouter.get('/:id', (req, res) => {
         })
 })
 
+/** GET ITEM BY GROUP ID
+ * @TODO Add middleware to ensure user is logged in
+ * **/
+
+/**************************************************/
+itemRouter.get('/group/:id', (req, res) => {
+    const id = req.params.id;
+
+    itemDb.getByGroup(id).then(item => {
+        if (item.length >= 1) {
+            return res.status(200).json({data: item})
+        }
+
+        return res.status(404).json({message: "The requested item does not exist."});
+    })
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error - Retrieving Item`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        })
+})
+
 /**************************************************/
 
 // GET ALL ITEMS
