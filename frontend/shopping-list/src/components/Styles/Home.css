@@ -60,4 +60,14 @@
 
 section {
     margin: 20px 0px;
+    align-items: center;
+    margin: 0 5px;
+}
+
+.button:hover{
+    cursor: pointer;
+}
+
+.button{
+    color: #362023
 }

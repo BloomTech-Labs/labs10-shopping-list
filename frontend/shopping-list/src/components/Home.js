@@ -15,6 +15,7 @@ class Home extends React.Component{
 
                 <nav className = 'home-nav'>
                 <Navigation />
+
                 </nav>
 
                 <main className = 'home-content'>
