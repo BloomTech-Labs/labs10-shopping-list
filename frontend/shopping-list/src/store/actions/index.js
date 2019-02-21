@@ -7,6 +7,11 @@ export {
   EMAIL_CHECKED,
   ADDING_GROUPS_TO_STATE,
   ADDING_GROUPS_TO_STATE_FAILED,
+  GETTING_ITEMS,
+  GETTING_ITEMS_SUCCESS,
+  GETTING_ITEMS_FAILED,
   ERROR,
-    gettingGroups,
+  getItems,
+  addGroup,
+  gettingGroups,
 } from "./rootActions";

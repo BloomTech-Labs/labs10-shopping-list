@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
         table.increments('id');
         table.string('name', 255).notNullable();
         table.integer('purchasedBy').references('id').inTable('users');
-        table.integer('groupId').references('id').inTable('groups').notNullable();
+        table.integer('groupID').references('id').inTable('groups').notNullable();
         table.boolean('purchased').defaultTo(false);
         table.float('price').notNullable();
         table.integer('quantity').notNullable();

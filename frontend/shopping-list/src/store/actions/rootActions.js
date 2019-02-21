@@ -11,6 +11,11 @@ export const ERROR = 'ERROR';
 export const ADDING_USER_TO_STATE = 'ADDING_USER_TO_STATE';
 export const ADDING_GROUPS_TO_STATE = 'ADDING_GROUPS_TO_STATE';
 export const ADDING_GROUPS_TO_STATE_FAILED = 'ADDING_GROUPS_TO_STATE_FAILED';
+export const ADDING_GROUPS_TO_SERVER = 'ADDING_GROUPS_TO_SERVER';
+export const ADDING_GROUPS_TO_SERVER_FAILED = 'ADDING_GROUPS_TO_SERVER_FAILED';
+export const GETTING_ITEMS = 'GETTING_ITEMS';
+export const GETTING_ITEMS_SUCCESS = 'GETTING_ITEMS_SUCCESS';
+export const GETTING_ITEMS_FAILED = 'GETTING_ITEMS_FAILED';
 
 
 let backendURL;
@@ -92,11 +97,40 @@ export const addUserToState = () => {
   }
 }
 
-export const gettingGroups = () => dispatch => {
+export const addGroup = (group) => dispatch => {
+  const userID = localStorage.getItem('userId');
+  const token = localStorage.getItem('jwt');
+  const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/`;
+  const options = {
+    headers: {
+      Authorization: token
+    }
+  };
+
+  const grp = {
+    userID: userID,
+    name: group,
+  }
+
+  axios.post(endpoint, grp, options)
+      .then(() => {
+        gettingGroups()(dispatch)
+            .then(() => {
+              dispatch({ type: ADDING_GROUPS_TO_SERVER });
+            })
+      })
+      .catch(err => {
+        console.log("ADDING GROUP ERR => ", err);
+        dispatch({ type: ADDING_GROUPS_TO_SERVER_FAILED, payload: err });
+      });
+
+}
+
+export const gettingGroups = () => async dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
   const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/user/${userID}`;
-  // const endpoint = `https://shoptrak-backend.herokuapp.com/api/groupMember/user/${userID}`;
+
   const options = {
     headers: {
       Authorization: token
@@ -105,11 +139,33 @@ export const gettingGroups = () => dispatch => {
 
   axios.get(endpoint, options)
       .then(response => {
-        console.log("GETTING GROUPS => ", response);
         dispatch({ type: ADDING_GROUPS_TO_STATE, payload: response.data.data });
       })
       .catch(err => {
         console.log("GETTING GROUPS ERR => ", err);
         dispatch({ type: ADDING_GROUPS_TO_STATE_FAILED, payload: err });
       });
+};
+
+export const getItems = (id) => dispatch => {
+  dispatch({ type: GETTING_ITEMS });
+  const token = localStorage.getItem('jwt');
+  const endpoint = `https://shoptrak-backend.herokuapp.com/api/item/group/${id}`;
+
+  const options = {
+    headers: {
+      Authorization: token
+    }
+  };
+
+  axios.get(endpoint, options)
+      .then(response => {
+        dispatch({ type: GETTING_ITEMS_SUCCESS, payload: response.data.data });
+      })
+      .catch(err => {
+        console.log("GETTING GROUPS ERR => ", err);
+        dispatch({ type: GETTING_ITEMS_FAILED, payload: err });
+      });
+
+  // dispatch({ type: GETTING_ITEMS payload: items});
 }
