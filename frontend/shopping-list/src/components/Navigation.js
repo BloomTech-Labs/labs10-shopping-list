@@ -5,7 +5,7 @@ import auth0Client from './Auth';
 
 import {connect} from 'react-redux';
 import {checkEmail, addUserToState} from '../store/actions/rootActions';
-import './styles/Navigation.css';
+import './Styles/Navigation.css';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
     MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, MDBFormInline, MDBBtn } from "mdbreact";
 
