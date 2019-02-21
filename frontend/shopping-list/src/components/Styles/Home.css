@@ -28,7 +28,6 @@
     font-weight: 400;
     font-size: 2rem;
     text-shadow: -1px 2px 4px #3d3d3d;
-}
 
 .home-content{
     border-radius: 20px;
@@ -60,4 +59,14 @@
 
 section {
     margin: 20px 0px;
+    align-items: center;
+    margin: 0 5px;
+}
+
+.button:hover{
+    cursor: pointer;
+}
+
+.button{
+    color: #362023
 }

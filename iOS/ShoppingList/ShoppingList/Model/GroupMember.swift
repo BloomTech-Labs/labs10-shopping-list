@@ -18,4 +18,19 @@ struct GroupMember: Codable {
     var total: Double
     var userID: Int
     var weeklyNotification: Bool
+    
+    
+    enum CodingKeys: String, CodingKey {
+        case groupID
+        case moderator
+        case monthlyNotification
+        case net
+        case total
+        case userID
+        case weeklyNotification
+    }
+}
+
+struct GroupMemberList: Codable {
+    var members: [GroupMember]
 }

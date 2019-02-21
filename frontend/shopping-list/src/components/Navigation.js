@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, withRouter} from 'react-router-dom';
 // import {Link, withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
+
 import {connect} from 'react-redux';
 import {checkEmail, addUserToState} from '../store/actions/rootActions';
 import './styles/Navigation.css';
@@ -21,6 +22,13 @@ class Navigation extends React.Component{
         this.props.history.replace('/');
     };
 
+    goToProfile = () => {
+        this.props.history.replace('/profile');
+    }
+    
+    goToHome = () => {
+        this.props.history.replace('/');
+    }
 
     render(){
         return(
@@ -36,6 +44,7 @@ class Navigation extends React.Component{
                 {
                     !localStorage.getItem('email') && 
                     <span className = 'nav-login-btn' onClick={auth0Client.signIn}>LOGIN</span>
+
                 }
 
                 {
@@ -44,6 +53,19 @@ class Navigation extends React.Component{
                         <span>MY ACCOUNT</span>
                         <span className = 'nav-user-btn' onClick = {this.signOut}><img src = {this.props.profilePicture} alt = 'user profile picture'></img></span>
                         
+//                     <div className='signedInNavBar'>
+//                         <div className='userGreeting'>
+//                             Hello, {localStorage.getItem('name')}
+//                         </div>
+//                         <div className='buttons'>
+//                             <div className='button' onClick={this.goToHome}>
+//                                 Home
+//                             </div>
+//                             <div className='button' onClick={this.goToProfile}>
+//                                 Profile
+//                             </div>
+//                             <div className='button' onClick = {this.signOut}>Sign out</div>
+//                         </div>
                     </div>
                 }
 
