@@ -11,7 +11,11 @@ class App extends Component {
     return (
       <div className="App">
         <Route exact path='/' component={Home} />
-        <Route path = '/profile' component={UserProfile} />
+        <Route 
+          path = '/profile' 
+          component={UserProfile} 
+          profilePicture={localStorage.getItem('img_url')}
+        />
         <Route path = '/callback' component = {Callback} />
         <Route path='/groups' component={GroupsProfile} />
       </div>

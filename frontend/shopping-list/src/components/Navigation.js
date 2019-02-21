@@ -12,7 +12,11 @@ class Navigation extends React.Component{
     };
 
     goToProfile = () => {
-
+        this.props.history.replace('/profile');
+    }
+    
+    goToHome = () => {
+        this.props.history.replace('/');
     }
 
     render(){
@@ -30,6 +34,9 @@ class Navigation extends React.Component{
                             Hello, {localStorage.getItem('name')}
                         </div>
                         <div className='buttons'>
+                            <div className='button' onClick={this.goToHome}>
+                                Home
+                            </div>
                             <div className='button' onClick={this.goToProfile}>
                                 Profile
                             </div>
