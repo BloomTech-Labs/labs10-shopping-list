@@ -1,35 +1,26 @@
-.element{
-    background: #FFFFFF;
-    border-radius: 3px;
-}
-
-.Navbar{
-    background: #FFFFFF;
-    margin: 0 1%;
-    padding: 3px 0;
-    border-radius: 3px;
-}
-
-.homeElem{
-    margin: 1% 1%;
-}
-
-.componentName{
-    padding: 2% 0;
-    font-size: 69px;
-}
-
-.appDescription{
-    padding: 1% 0;
-}
-
-.userGreeting{
-    font-weight: bold;
-}
-
-.signedInNavBar{
+.home-banner{
+    background: url('../../images/banner-shop-girl.jpg') no-repeat;
+    background-size: cover;
+    height: 50vh;
+    background-position-y: 70%;
     display: flex;
-    justify-content: space-between;
+    flex-flow: column nowrap;
     align-items: center;
-    margin: 0 5px;
+    justify-content: center;
+    color: white;
+    font-family: "Roboto", sans-serif;
+}
+
+.home-banner h1{
+    font-size: 4rem;
+    font-weight: 800;
+    text-shadow: -1px 2px 4px #3d3d3d;
+    font-family: "Montserrat", sans-serif;
+}
+
+.home-banner h2{
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    text-shadow: -1px 2px 4px #3d3d3d;
 }

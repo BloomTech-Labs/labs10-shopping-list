@@ -1,15 +1,14 @@
 import React from 'react';
 import Navigation from './Navigation';
-import './Styles/Home.css';
+import './styles/Home.css';
 
 class Home extends React.Component{
     render(){
         return(
-            <div>
-                <Navigation />
-                <div className='componentName element homeElem'>Home</div>
-                <div className='appDescription element homeElem'>
-                    Welcome to ShopTrak. We know tracking home supplies & groceries can be difficult. Let's make it easier on you and the ones you care about.
+            <div className = 'home-container'>
+                <div className = 'home-banner'>
+                <h1>SHOPTRAK</h1>
+                <h2>Share what you shop.</h2>
                 </div>
             </div>
         )
