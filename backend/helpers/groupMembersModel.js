@@ -7,6 +7,7 @@ module.exports = {
   getByGroup,
   getByUser,
   getById,
+  returnUserGroups,
   add,
   update,
   remove
@@ -42,8 +43,26 @@ function getByUser(id) {
     .where("userID", id);
 }
 
+/**
+ * Return all the information owned by the given user ID and group ID
+ * @param userID - The ID of the user
+ * @param groupID - The ID of the group
+ * @returns {*} - Returns every information owned by given member
+ */
 function getById(groupID, userID) {
   return db.select("*").from("groupMembers").where({groupID}).where({userID});
+}
+
+/**
+ * Return all the group id's owned by the given user ID
+ * @param id - The ID of the user
+ * @returns {*} - Returns all groupID's owned by given user ID
+ */
+function returnUserGroups(userID) {
+  return db
+      .select("groupID")
+      .from("groupMembers")
+      .where({userID});
 }
 
 /**

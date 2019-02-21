@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {Route, Router} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 import Home from './components/Home';
 import UserProfile from './components/UserProfile';
 import Callback from './components/Callback';

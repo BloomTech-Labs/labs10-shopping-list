@@ -85,6 +85,7 @@ groupRouter.get('/:id', (req, res) => {
         if (group.length >= 1) {
             return res.status(200).json(group[0]);
         }
+
         return res.status(404).json({error: `The requested group does not exist.`});
     })
         .catch(err => {
@@ -107,11 +108,11 @@ groupRouter.get('/:id', (req, res) => {
 
 groupRouter.get('/', (req, res) => {
     groupDb.get().then(groups => {
-        if(!groups){
-            return res.status(404).json({message: "No groups exist."});
-        } else {
+        if(groups.length >= 1){
             return res.status(200).json(groups);
         }
+
+        return res.status(404).json({message: "No groups exist."});
     })
         .catch(err => {
             const error = {
@@ -138,9 +139,9 @@ groupRouter.put('/:id', (req, res) => {
         if(status.length >= 1 || !status){
             return res.status(200).json({message: `Group ${id} successfully updated.`, id: Number(id)});
 
-        } else {
-            return res.status(404).json({error: `The requested group does not exist.`});
         }
+
+        return res.status(404).json({error: `The requested group does not exist.`});
     })
         .catch(err => {
             const error = {
