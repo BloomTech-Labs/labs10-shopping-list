@@ -7,7 +7,7 @@ class Home extends React.Component{
         return(
             <div>
                 <Navigation />
-                <div className='componentName element homeElem'>Home</div>
+                <div className='componentName element homeElem'>ShopTrak</div>
                 <div className='appDescription element homeElem'>
                     Welcome to ShopTrak. We know tracking home supplies & groceries can be difficult. Let's make it easier on you and the ones you care about.
                 </div>
