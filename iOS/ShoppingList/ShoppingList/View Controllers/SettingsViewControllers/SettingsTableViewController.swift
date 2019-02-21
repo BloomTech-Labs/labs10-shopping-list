@@ -59,6 +59,12 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     
     @IBAction func logoutPressed(_ sender: Any) {
         
+        // Yvette, put this code wherever you complete your token deletion to reset to the login screen
+        // 👇🏼👇🏼👇🏼
+        UI {
+            defaults.set(false, forKey: Keys.isUserLoggedInKey)
+            UIApplication.shared.keyWindow?.rootViewController = LoginViewController.instantiate()
+        }
     }
     
 }
