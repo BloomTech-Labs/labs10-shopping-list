@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 // import {Link, withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
+import './Styles/Navigation.css';
 
 class Navigation extends React.Component{
     
@@ -25,7 +26,12 @@ class Navigation extends React.Component{
                         <div className='userGreeting'>
                             Hello, {localStorage.getItem('name')}
                         </div>
-                        <div className='button' onClick = {this.signOut}>Sign out</div>
+                        <div className='buttons'>
+                            <div className='button'>
+                                Profile
+                            </div>
+                            <div className='button' onClick = {this.signOut}>Sign out</div>
+                        </div>
                     </div>
                 }
             </div>
