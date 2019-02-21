@@ -93,43 +93,6 @@ class Navigation extends React.Component{
             </MDBNavbar>      
             </div>
 
-
-
-
-
-
-
-
-
-            // <div className = "navigation-container">
-
-            // <div className = 'nav-links'>
-            // <Link to = '/'>ABOUT</Link>
-            // <Link to = '/'>FEATURES</Link>
-            // <Link to = '/'>PLANS</Link>
-
-            // <div className = 'nav-login'>
-            //     {/* Conditionally renders a sign-in or sign-out button if user is logged in/out*/}
-            //     {
-            //         !localStorage.getItem('email') && 
-            //         <span className = 'nav-login-btn' onClick={auth0Client.signIn}>LOGIN</span>
-            //     }
-
-            //     {
-            //         localStorage.getItem('email') && 
-            //         <div className='nav-user-greeting'>
-            //             <span>MY ACCOUNT</span>
-            //             <span className = 'nav-user-btn' onClick = {this.signOut}><img src = {this.props.profilePicture} alt = 'user profile picture'></img></span>
-                        
-            //         </div>
-            //     }
-
-            //     </div>
-            //     </div>
-
-                
-            // </div>
-
         )
     }
 }

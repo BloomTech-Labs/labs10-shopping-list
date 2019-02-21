@@ -19,7 +19,7 @@ class App extends Component {
           component={UserProfile} 
           profilePicture={localStorage.getItem('img_url')}
         />
-        <Route path = '/callback' exact component = {Callback} />
+        <Route path = '/callback' component = {Callback} />
         <Route path ='/groups' component={GroupsProfile} />
       </Switch>
       </div>
