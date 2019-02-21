@@ -8,6 +8,7 @@
 
 import UIKit
 import Auth0
+import SwiftKeychainWrapper
 
 let defaults = UserDefaults.standard
 
@@ -20,17 +21,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
+      let accessToken: String? = KeychainWrapper.standard.string(forKey: "accessToken")
+      
+        
        
         
-        let isLoggedIn = defaults.bool(forKey: Keys.isUserLoggedInKey)
+       // let isLoggedIn = defaults.bool(forKey: Keys.isUserLoggedInKey)
         let loginVC = LoginViewController.instantiate()
         let mainVC = MainViewController.instantiate()
         
-         
         
-        
-        window?.rootViewController = isLoggedIn ? mainVC : loginVC
-        
+            window?.rootViewController = (accessToken != nil) ? mainVC : loginVC
+     
         return true
     }
 

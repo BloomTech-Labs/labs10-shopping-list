@@ -93,6 +93,9 @@
                                                 <integer key="value" value="8"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="addNewItemButtonPressed:" destination="WgK-Rm-0lC" eventType="touchUpInside" id="Ycz-GK-7sC"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96624473011217893" green="0.96157688117443896" blue="0.9709125790499189" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

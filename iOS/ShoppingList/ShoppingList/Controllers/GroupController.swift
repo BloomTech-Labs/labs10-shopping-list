@@ -8,8 +8,11 @@
 
 import Foundation
 import Alamofire
+import SwiftKeychainWrapper
 
 class GroupController {
+    
+    
     
     private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
     
@@ -27,19 +30,24 @@ class GroupController {
         }
     }
     
-    func newGroup(withName name: String, byUserID userID: Int, completion: @escaping (Group?) -> Void) {
+     func newGroup(withName name: String, byUserID userID: Int, completion: @escaping (Group?) -> Void) {
         
         var newGroup = Group(name: name, userID: userID)
         let url = baseURL.appendingPathComponent("group")
         
         guard let groupJSON = groupToJSON(group: newGroup) else { return }
         
+        guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
         
-        Alamofire.request(url, method: .post, parameters: groupJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+
+        
+        
+        Alamofire.request(url, method: .post, parameters: groupJSON, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(let value):
-                
+               NSLog("\(value)")
                 guard let jsonDict = value as? [String: Any], let groupID = jsonDict["groupID"] as? Int else {
                     print("Could not get groupID from API response")
                     completion(nil)
