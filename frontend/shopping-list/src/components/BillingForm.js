@@ -9,20 +9,19 @@ class BillingForm extends React.Component {
     constructor() {
         super();
         this.state = {
-          amount: 999,
+          amount: null
         };
     }
 
-    yearlylSub = () => {
+    yearlySub = () => {
         this.setState({ amount: 999 });
         console.log("Amount", this.state.amount);
     };
-    
+
     premiumSub = () => {
         this.setState({ amount: 2999 });
         console.log("Amount", this.state.amount);
     };
-
 
     onToken = (res) => {
         console.log('On Token Called!');
