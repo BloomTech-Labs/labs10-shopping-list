@@ -1,6 +1,7 @@
 .navigation-container {
     width: 100%;
     background: #00cc00;
+    position: sticky;
 }
 
 .nav-links{

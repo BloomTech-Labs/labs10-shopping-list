@@ -11,6 +11,7 @@ class Home extends React.Component{
                 <header className = 'home-banner'>
                 <h1>SHOPTRAK</h1>
                 <h2>Share what you shop.</h2>
+                
                 </header>
 
                 <nav className = 'home-nav'>

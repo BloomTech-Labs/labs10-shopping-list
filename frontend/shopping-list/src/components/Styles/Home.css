@@ -13,7 +13,7 @@
     justify-content: center;
     color: white;
     font-family: "Roboto", sans-serif;
-    border-radius: 20px;
+    /* border-radius: 20px; */
 }
 
 .home-banner h1{
@@ -31,7 +31,7 @@
 }
 
 .home-content{
-    border-radius: 20px;
+    /* border-radius: 20px; */
     background: white;
     padding: 10px 40px;
 }
