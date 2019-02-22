@@ -1,6 +1,7 @@
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import PropTypes from 'prop-types';
+import './Styles/BillingForm.css';
 
 class BillingForm extends React.Component {
     constructor() {
@@ -29,16 +30,32 @@ class BillingForm extends React.Component {
         
     render(){
         return(
-            <StripeCheckout
-                amount={this.state.amount}
-                name="Shoptrak"
-                description="Purchase Subscription"
-                stripeKey="pk_test_YRDXagNKMjZOXlX2ULVNUWbT"
-                currency="USD"
-                token={res => this.onToken(res)}
-            >
-                {this.props.children}
-            </StripeCheckout> 
+            <div className="billing-form">  
+            <h1>Billing</h1>
+                 <p>Choose your subscription</p>
+                 <form>
+                 <input 
+                    type="radio" 
+                    name="subscription"
+                    onClick={this.yearlySub}
+                />1 Year Subscription - $9.99 <br/>
+                <input 
+                    type="radio" 
+                    name="subscription" 
+                    onClick={this.premiumSub}
+                />1 Year Premium Subscription - $29.99
+                </form>
+                <StripeCheckout
+                    amount={this.state.amount}
+                    name="Shoptrak"
+                    description="Purchase Subscription"
+                    stripeKey="pk_test_YRDXagNKMjZOXlX2ULVNUWbT"
+                    currency="USD"
+                    token={res => this.onToken(res)}
+                >
+                    {this.props.children}
+                </StripeCheckout>
+            </div>
         )
     }
 }

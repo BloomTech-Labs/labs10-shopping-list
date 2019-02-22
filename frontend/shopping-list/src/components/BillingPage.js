@@ -13,16 +13,6 @@ class BillingPage extends Component {
           <Navigation />
           <div className="billing-container">
             <div className="billing">
-              <form>
-                <input 
-                  type="radio" 
-                  name="subscription" 
-                />1 Year Subscription - $9.99 <br/>
-                <input 
-                  type="radio" 
-                  name="subscription" 
-                />1 Year Premium Subscription - $29.99
-              </form>
               <BillingForm>
                 <button>Buy Now</button>
               </BillingForm>
