@@ -3,6 +3,14 @@ import StripeCheckout from 'react-stripe-checkout';
 import PropTypes from 'prop-types';
 
 class BillingForm extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+          amount: 0,
+        };
+    }
+
+
     onToken = (res) => {
         console.log('On Token Called!');
         console.log(res);
@@ -12,6 +20,7 @@ class BillingForm extends React.Component {
     render(){
         return(
             <StripeCheckout
+                amount={this.state.amount}
                 name="Shoptrak"
                 description="Purchase Subscription"
                 stripeKey="pk_test_YRDXagNKMjZOXlX2ULVNUWbT"
