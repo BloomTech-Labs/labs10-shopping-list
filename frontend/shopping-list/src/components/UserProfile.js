@@ -1,8 +1,9 @@
 import React from 'react';
 import {checkEmail, addUserToState} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
-import {Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button} from 'reactstrap';
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import Navigation from './Navigation.js';
+import './Styles/UserProfile.css';
 
 class UserProfile extends React.Component{
     constructor(props){
@@ -31,23 +32,23 @@ class UserProfile extends React.Component{
         return (
             <div className = 'user-profile-container'>
             <Navigation />
-            User profile page
-
+            <div className = 'user-profile-col'>
             <div className = 'user-profile-left'>
-            
-            
-            <Card>
-                <CardImg top width = "100%" src = {this.props.profilePicture} alt = 'user profile image'></CardImg>
-                <CardTitle>{this.props.name}</CardTitle>
-                <CardSubtitle>{this.props.email}</CardSubtitle>
-            </Card>
-
+            <MDBCol>
+                <MDBCard style = {{width: "22rem"}}>
+                <MDBCardImage className = "img-fluid" src = {this.props.profilePicture} waves />
+                <MDBCardBody>
+                    <MDBCardTitle>{this.props.name}</MDBCardTitle>
+                    <MDBCardText>{this.props.email}</MDBCardText>
+                </MDBCardBody>
+                </MDBCard>
+            </MDBCol>
             </div>
 
             <div className = 'user-profile-right'>
-            Right side
+            Subscription Settings
             </div>
-
+            </div>
             </div>
         )
     }

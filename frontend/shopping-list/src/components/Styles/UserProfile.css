@@ -1,0 +1,11 @@
+.user-profile-container{
+    width: 100%;
+    background: white;
+}
+
+.user-profile-col{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 40px;
+}
