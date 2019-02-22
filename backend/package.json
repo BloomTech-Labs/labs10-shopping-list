@@ -25,7 +25,8 @@
     "passport-jwt": "^4.0.0",
     "pg": "^7.8.1",
     "require-all": "^3.0.0",
-    "sqlite3": "^4.0.6"
+    "sqlite3": "^4.0.6",
+    "stripe": "^6.25.1"
   },
   "devDependencies": {},
   "scripts": {
