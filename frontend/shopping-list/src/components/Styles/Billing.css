@@ -1,0 +1,12 @@
+  .billing-container{
+    display: flex;
+  }
+  .billing{
+    padding-left: 20px;
+  }
+  button{
+    padding: 30px;
+    font-size: 20px;
+    width: 300px;
+    margin-top: 30px;
+  }

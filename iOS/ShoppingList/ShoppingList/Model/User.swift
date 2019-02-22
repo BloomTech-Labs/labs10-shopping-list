@@ -21,6 +21,8 @@ struct User: Codable {
     var updatedAt: Date
     var profilePicture: String
     
+    var groups: [Group]?
+    
     init(email: String, name: String, profilePicture: String) {
         self.email = email
         self.name = name
