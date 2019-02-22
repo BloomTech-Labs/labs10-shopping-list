@@ -49,7 +49,7 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
         Auth0
             .webAuth()
             .audience("https://shoptrak.auth0.com/api/v2/")
-            .scope("openid profile")
+            .scope("openid profile email")
             .start {
                 switch $0 {
                 case .failure(let error):

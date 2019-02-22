@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
-     let accessToken = A0SimpleKeychain(service: "Auth0").string(forKey: "id_token")
+     let accessToken = A0SimpleKeychain(service: "Auth0").string(forKey:"access_token")
       
         
        

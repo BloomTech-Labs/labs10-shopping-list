@@ -27,6 +27,7 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         guard let profile = SessionManager.shared.profile else  {return}
         profilePictureImageView.kf.setImage(with: profile.picture)
         print(profile.picture)
+        print(profile.email)
        profileNameLabel.text = profileName
         
         profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.height / 2
