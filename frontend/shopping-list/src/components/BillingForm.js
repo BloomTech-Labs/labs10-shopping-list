@@ -2,6 +2,8 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import PropTypes from 'prop-types';
 import './Styles/BillingForm.css';
+import axios from 'axios';
+
 
 class BillingForm extends React.Component {
     constructor() {
