@@ -3,7 +3,7 @@ import {checkEmail, gettingGroups, addGroup } from '../store/actions/rootActions
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
-    MDBListGroup, MDBListGroupItem, MDBCardHeader, MDBCardFooter, MDBModal, MDBModalBody,
+    MDBCardHeader, MDBModal, MDBModalBody,
     MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
 
 class GroupsPage extends Component{
@@ -62,8 +62,8 @@ class GroupsPage extends Component{
                         </MDBCard>
                         {this.props.groups !== null ? (
                             this.props.groups.map((g, i) => (
-                                <MDBNavLink to={`/groups/${g.id}`}>
-                                    <MDBCard key={{i}} border="primary" className="m-3" style={{ maxWidth: "18rem"}}>
+                                <MDBNavLink key={i} to={`/groups/${g.id}`}>
+                                    <MDBCard key={i} border="primary" className="m-3" style={{ maxWidth: "18rem"}}>
                                         <MDBCardHeader>{g.name}</MDBCardHeader>
                                         <MDBCardBody className="text-primary">
                                             <MDBCardTitle tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
@@ -75,8 +75,6 @@ class GroupsPage extends Component{
                                 </MDBNavLink>
                             ))
                         ) : null}
-
-
                     </MDBRow>
                 </MDBContainer>
 

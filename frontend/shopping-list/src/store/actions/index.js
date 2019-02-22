@@ -10,8 +10,12 @@ export {
   GETTING_ITEMS,
   GETTING_ITEMS_SUCCESS,
   GETTING_ITEMS_FAILED,
+  ADDING_ITEM_START,
+  ADDING_ITEM_SUCCESS,
+  ADDING_ITEM_FAILED,
   ERROR,
   getItems,
+  addItem,
   addGroup,
   gettingGroups,
 } from "./rootActions";

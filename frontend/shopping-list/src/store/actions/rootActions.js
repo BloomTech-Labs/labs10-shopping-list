@@ -9,13 +9,19 @@ export const CHECKING_EMAIL = 'CHECKING_EMAIL';
 export const EMAIL_CHECKED = 'EMAIL_CHECKED';
 export const ERROR = 'ERROR';
 export const ADDING_USER_TO_STATE = 'ADDING_USER_TO_STATE';
+
 export const ADDING_GROUPS_TO_STATE = 'ADDING_GROUPS_TO_STATE';
 export const ADDING_GROUPS_TO_STATE_FAILED = 'ADDING_GROUPS_TO_STATE_FAILED';
 export const ADDING_GROUPS_TO_SERVER = 'ADDING_GROUPS_TO_SERVER';
 export const ADDING_GROUPS_TO_SERVER_FAILED = 'ADDING_GROUPS_TO_SERVER_FAILED';
+
 export const GETTING_ITEMS = 'GETTING_ITEMS';
 export const GETTING_ITEMS_SUCCESS = 'GETTING_ITEMS_SUCCESS';
 export const GETTING_ITEMS_FAILED = 'GETTING_ITEMS_FAILED';
+
+export const ADDING_ITEM_START = 'ADDING_ITEM_START';
+export const ADDING_ITEM_SUCCESS = 'ADDING_ITEM_SUCCESS';
+export const ADDING_ITEM_FAILED = 'ADDING_ITEM_FAILED';
 
 
 let backendURL;
@@ -166,6 +172,28 @@ export const getItems = (id) => dispatch => {
         console.log("GETTING GROUPS ERR => ", err);
         dispatch({ type: GETTING_ITEMS_FAILED, payload: err });
       });
+}
 
-  // dispatch({ type: GETTING_ITEMS payload: items});
+export const addItem = (item) => dispatch => {
+  dispatch({ type: ADDING_ITEM_START });
+
+  const token = localStorage.getItem('jwt');
+  const endpoint = `https://shoptrak-backend.herokuapp.com/api/item`;
+
+  const options = {
+    headers: {
+      Authorization: token
+    }
+  };
+
+  console.log("ITEM => ", item);
+
+  // axios.post(endpoint, item, options)
+  //     .then(response => {
+  //       dispatch({ type: ADDING_ITEM_SUCCESS, payload: response.data.data });
+  //     })
+  //     .catch(err => {
+  //       console.log("ADDING ITEM ERR => ", err);
+  //       dispatch({ type: ADDING_ITEM_FAILED, payload: err });
+  //     });
 }

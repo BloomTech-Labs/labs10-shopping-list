@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups, addGroup, getItems } from '../store/actions/rootActions';
+import {addItem, getItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import "./Styles/Group.css";
@@ -10,9 +10,7 @@ import {
     MDBBtn,
     MDBIcon,
     MDBBadge,
-    MDBInput,
-    MDBNavLink,
-    MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText
+    MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
 } from "mdbreact";
 
 class GroupsPage extends Component{
@@ -28,7 +26,8 @@ class GroupsPage extends Component{
                 name: "eggs",
                 purchased: false,
             }
-        ]
+        ],
+        itemName: "",
     }
 
     componentDidMount(){
@@ -51,7 +50,7 @@ class GroupsPage extends Component{
     handleInput = e => {
         this.setState({
             [e.target.name]: e.target.value
-        },)
+        })
     }
 
     check = e => {
@@ -85,7 +84,7 @@ class GroupsPage extends Component{
                                     <MDBContainer>
                                         <MDBListGroup style={{ width: "22rem" }}>
                                             {this.props.items.map((item, i) => (
-                                                <MDBListGroupItem onClick={() => this.check(i)} className="d-flex justify-content-between align-items-center">{item.name}<MDBBadge
+                                                <MDBListGroupItem key={i} onClick={() => this.check(i)} className="d-flex justify-content-between align-items-center">{item.name}<MDBBadge
                                                     color="primary">{item.purchased ? <MDBIcon icon="check" /> : null}</MDBBadge>
                                                 </MDBListGroupItem>
                                             ))}
@@ -123,6 +122,18 @@ class GroupsPage extends Component{
                     </div>
 
                 </div>
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
+                        <MDBModalHeader toggle={this.toggle(14)}>Add New Item</MDBModalHeader>
+                        <MDBModalBody>
+                            <MDBInput label="Item Name" name={"itemName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
+                        </MDBModalBody>
+                        <MDBModalFooter>
+                            <MDBBtn color="secondary" onClick={this.toggle(14)}>Close</MDBBtn>
+                            <MDBBtn color="primary">Create</MDBBtn>
+                        </MDBModalFooter>
+                    </MDBModal>
+                </MDBContainer>
             </div>
         )
     }
@@ -138,5 +149,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    checkEmail, gettingGroups, addGroup, getItems
+    addItem, getItems
 })(GroupsPage);
