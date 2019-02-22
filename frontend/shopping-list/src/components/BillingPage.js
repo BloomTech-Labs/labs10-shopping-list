@@ -6,10 +6,7 @@ import BillingForm from './BillingForm';
 
 
 class BillingPage extends Component {
-    constructor() {
-        super();
-    }
-
+  
     render() {
       return(
         <div>
