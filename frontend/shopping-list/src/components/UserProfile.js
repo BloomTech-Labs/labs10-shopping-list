@@ -46,7 +46,11 @@ class UserProfile extends React.Component{
             </div>
 
             <div className = 'user-profile-right'>
+            
+            Notification Settings
+
             Subscription Settings
+
             </div>
             </div>
             </div>

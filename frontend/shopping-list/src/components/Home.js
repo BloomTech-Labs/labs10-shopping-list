@@ -2,21 +2,29 @@ import React from 'react';
 import Navigation from './Navigation';
 import tomatoShare from '../images/tomato-share.jpg';
 import '../components/Styles/Home.css';
+import bannerVideo from '../images/time-lapse-cc-blur-low.mp4';
 
 class Home extends React.Component{
     render(){
         return(
             <div className = 'home-container'>
                 
-                <header className = 'home-banner'>
-                <h1>SHOPTRAK</h1>
-                <h2>Share what you shop.</h2>
+                <header className = 'home-banner-vid'>
                 
+                <video playsInline autoPlay muted loop poster="poster.jpg" id = "bg-vid">
+                <source src = {bannerVideo}  type = "video/mp4" />
+                </video>
+
+                <div className = 'home-banner-overlay'>
+                <h1>SHOPTRAK</h1>
+
+                <h2>Share what you shop.</h2>
+                </div>
+
                 </header>
 
                 <nav className = 'home-nav'>
                 <Navigation />
-
                 </nav>
 
                 <main className = 'home-content'>
