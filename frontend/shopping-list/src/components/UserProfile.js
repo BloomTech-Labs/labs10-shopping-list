@@ -31,7 +31,6 @@ class UserProfile extends React.Component{
         console.log('render');
         return (
             <div className = 'user-profile-container'>
-            <Navigation />
             <div className = 'user-profile-col'>
             <div className = 'user-profile-left'>
             <MDBCol>

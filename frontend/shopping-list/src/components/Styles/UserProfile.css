@@ -1,11 +1,13 @@
 .user-profile-container{
     width: 100%;
     background: white;
+    margin-top: 60px;
+    padding: 40px 40px;
 }
 
 .user-profile-col{
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    padding: 40px;
+    padding: 0px;
 }

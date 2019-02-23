@@ -23,10 +23,6 @@ class Home extends React.Component{
 
                 </header>
 
-                <nav className = 'home-nav'>
-                <Navigation />
-                </nav>
-
                 <main className = 'home-content'>
                 <section className = 'about'>
                 <h2>About</h2>

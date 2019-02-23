@@ -61,7 +61,8 @@
 .home-content{
     /* border-radius: 20px; */
     background: white;
-    padding: 10px 40px;
+    padding: 60px 60px;
+    margin: 0 auto;
 }
 
 .content-tiles{

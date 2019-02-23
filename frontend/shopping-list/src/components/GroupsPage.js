@@ -47,8 +47,7 @@ class GroupsPage extends Component{
 
     render(){
         return (
-            <div>
-                <Navigation />
+            <div className = 'groups-container'>
                 <MDBContainer>
                     <MDBRow center>
                         <MDBCard className="text-center" style={{ width: "20rem", marginTop: "1rem" }}>
