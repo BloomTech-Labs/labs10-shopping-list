@@ -37,13 +37,13 @@ class GroupController {
         
         guard let groupJSON = groupToJSON(group: newGroup) else { return }
         
-        guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
+        //guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
         
-        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+      //  let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
         
         
-        Alamofire.request(url, method: .post, parameters: groupJSON, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .post, parameters: groupJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(let value):
@@ -106,7 +106,7 @@ class GroupController {
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("user").appendingPathComponent(String(userID))
         
         Alamofire.request(url).validate().responseData { (response) in
-            
+            print(url)
             switch response.result {
             case .success(let value):
                 

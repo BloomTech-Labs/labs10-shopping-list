@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftKeychainWrapper
-
+import SimpleKeychain
 
 class UserController {
     
@@ -36,7 +36,7 @@ class UserController {
         
         guard let userJSON = userToJSON(user: newUser) else { return }
         
-        guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
+       guard let accessToken = A0SimpleKeychain(service: "Auth0").string(forKey:"access_token") else {return}
         
         let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
@@ -74,17 +74,17 @@ class UserController {
             myUser.email = email
         }
         
-        if let emailNotification = emailNotification {
-            myUser.emailNotification = emailNotification
-        }
-        
-        if let role = role {
-            myUser.role = role
-        }
-        
-        if let textNotification = textNotification {
-            myUser.textNotification = textNotification
-        }
+//        if let emailNotification = emailNotification {
+//            myUser.emailNotification = emailNotification
+//        }
+//        
+//        if let role = role {
+//            myUser.role = role
+//        }
+//        
+//        if let textNotification = textNotification {
+//            myUser.textNotification = textNotification
+//        }
         
         if let profilePicture = profilePicture {
             myUser.profilePicture = profilePicture
@@ -94,7 +94,7 @@ class UserController {
             myUser.name = name
         }
         
-        myUser.updatedAt = Date()
+        myUser.updatedAt = Date().dateToString()
         
         let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(myUser.userID!))
         
@@ -114,25 +114,26 @@ class UserController {
             }
         }
     }
-    
     func getUser(forID id: Int, completion: @escaping (User?) -> Void) {
-        
+        guard let accessToken =  A0SimpleKeychain(service: "Auth0").string(forKey: "id_token") else {return}
         let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(id))
-        
-        guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
-        
-        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
-        
-        Alamofire.request(url, method: .get, headers: headers).validate().responseJSON { (response) in
-            
+         var request = URLRequest(url: url)
+       
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+               
+        Alamofire.request(request).validate().responseData { (response) in
+ 
+            print(url)
             switch response.result {
             case .success(let value):
-                
-                let decoder = JSONDecoder()
-                guard let data = response.data else { completion(nil); return }
+               
+                let string = String(data: value, encoding: .utf8)
+                 print("Data String: \(string!)")
+                //guard let data = response.data else { completion(nil); return }
                 
                 do {
-                    let user = try decoder.decode(User.self, from: data)
+                    let decoder = JSONDecoder()
+                    let user = try decoder.decode(User.self, from: value)
                     completion(user)
                     
                 } catch {
