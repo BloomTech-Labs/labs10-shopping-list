@@ -2,6 +2,8 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import PropTypes from 'prop-types';
 import './Styles/BillingForm.css';
+import axios from 'axios';
+
 
 class BillingForm extends React.Component {
     constructor() {
@@ -26,6 +28,20 @@ class BillingForm extends React.Component {
         console.log('On Token Called!');
         console.log(res);
         console.log(res.id);
+
+        if(this.state.amount === 999) {
+            axios
+              .post(`http:localhost:9000/api/billing/yearly?token=${res.id}`)
+              .then(response => console.log(response))
+              .catch(err => console.log(err))
+        } 
+        else if(this.state.amount === 2999) {
+            axios
+              .post(`http:localhost:9000/api/billing/premium?token=${res.id}`)
+              .then(response => console.log(response))
+              .catch(err => console.log(err))
+        } 
+        else return null
     }
         
     render(){
