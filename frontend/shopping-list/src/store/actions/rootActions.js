@@ -189,7 +189,15 @@ export const getItems = (id) => dispatch => {
   // Retrieve items from endpoint and dispatch them to state
   axios.get(endpoint, options)
       .then(response => {
-        dispatch({ type: GETTING_ITEMS_SUCCESS, payload: response.data.data });
+        const res = response.data.data;
+
+        // Sort the items by if they have been purchased or not.
+        // Sorts via boolean. False comes before true.
+        const sorted = res.sort((x,y) => {
+          return (x === y)? 0 : x? -1 : 1;
+        })
+
+        dispatch({ type: GETTING_ITEMS_SUCCESS, payload: sorted });
       })
       .catch(err => {
         console.log("GETTING GROUPS ERR => ", err);
