@@ -23,7 +23,17 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Gets the list of groups and sets up the group button title
+
+        let usersCon = UserController()
+        usersCon.getUser(forID: 501) { (user) in
+            if let users = user {
+                Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
+               print(users)
+              
+            }
+        }
+        
+
         let groupCon = GroupController()
         groupCon.getGroupWith(userID: 501) { (groups) in
             
@@ -62,6 +72,9 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
     }
     
     
+   
+    
+    
     
     func updateViews() {
         
@@ -72,4 +85,5 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
     }
 
 }
+
 

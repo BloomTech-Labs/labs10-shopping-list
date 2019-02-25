@@ -25,8 +25,9 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         navigationController?.navigationBar.layer.shadowOpacity = 0.4
         navigationController?.view.backgroundColor = .white
         guard let profile = SessionManager.shared.profile else  {return}
-        profilePictureImageView.kf.setImage(with: profile.profile)
-        print(profile.profile)
+        profilePictureImageView.kf.setImage(with: profile.picture)
+        print(profile.picture)
+        print(profile.email)
        profileNameLabel.text = profileName
         
         profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.height / 2
@@ -70,7 +71,13 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     }
     
     @IBAction func billingPressed(_ sender: Any) {
-        let billingMessage = "To change your subscription type or modify your billing details, access your ShopTrak account online."
+        guard let profile = SessionManager.shared.profile,
+        let email = profile.email,
+         let name = profile.name else {return}
+        
+        let billingMessage = "\(String(name)) \n \(String(describing: profile.customClaims)) \n \(email) \n \(String(describing: profile.emailVerified)) \n \(String(describing: profile.familyName)) \n \(String(describing: profile.gender)) \n \(String(describing: profile.givenName)) \n \(String(describing: profile.locale)) \n \(String(describing: profile.middleName)) \n \(String(describing: profile.name)) \n \(String(describing: profile.nickname)) \n \(String(describing: profile.phoneNumber)) \n \(String(describing: profile.phoneNumberVerified)) \n \(String(describing: profile.picture)) \n \(String(describing: profile.preferredUsername)) \n \(String(describing: profile.profile)) \n \(profile.sub ) \n \(String(describing: profile.updatedAt)) \n \(String(describing: profile.website)) \n \(String(describing: profile.zoneinfo))"
+        
+        //"To change your subscription type or modify your billing details, access your ShopTrak account online."
         Popovers.triggerMessagePopover(with: billingMessage)
     }
     
@@ -85,6 +92,10 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         let url = URL(string: "https://labs10-shopping-list.netlify.com")!
         UIApplication.shared.open(url)
     }
+    
+ 
+    
+    
     
     
     @IBAction func logoutPressed(_ sender: Any) {
