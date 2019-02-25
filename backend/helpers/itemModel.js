@@ -20,7 +20,7 @@ function getByGroup(groupId) {
   return db
     .select("*")
     .from("items")
-    .where("groupId", groupId);
+    .where("groupID", groupId);
 }
 
 function getByUser(userId) {

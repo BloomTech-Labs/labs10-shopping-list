@@ -22,9 +22,8 @@ class GroupsPage extends Component{
             // the second parameter is a callback that will execute once the email check is complete
             // in this case it is populating state with the complete user profile: email, userId, profilePicture, and name
         }
-
+        console.log("GROUPS => ", this.props.groups);
         this.props.gettingGroups();
-        this.setState({ groups: this.props.groups})
     }
 
     toggle = nr => () => {

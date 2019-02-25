@@ -1,3 +1,5 @@
+import {SUBMIT_PAID_ITEMS_SUCCESS} from "./rootActions";
+
 export {
   TEST_START,
   TEST_SUCCESS,
@@ -16,6 +18,8 @@ export {
   UPDATE_ITEM_PURCHASED_START,
   ERROR,
   SUBMIT_PAID_ITEMS_START,
+  SUBMIT_PAID_ITEMS_SUCCESS,
+  SUBMIT_PAID_ITEMS_FAILED,
   getItems,
   addItem,
   addGroup,

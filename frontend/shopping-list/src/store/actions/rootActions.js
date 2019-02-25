@@ -26,6 +26,8 @@ export const ADDING_ITEM_FAILED = 'ADDING_ITEM_FAILED';
 export const UPDATE_ITEM_PURCHASED_START = "UPDATE_ITEM_PURCHASED_START";
 
 export const SUBMIT_PAID_ITEMS_START = "SUBMIT_PAID_ITEMS_START";
+export const SUBMIT_PAID_ITEMS_SUCCESS = "SUBMIT_PAID_ITEMS_SUCCESS";
+export const SUBMIT_PAID_ITEMS_FAILED = "SUBMIT_PAID_ITEMS_FAILED";
 
 
 let backendURL;
@@ -160,6 +162,7 @@ export const gettingGroups = () => async dispatch => {
   // Retrieve all the groups the user owns
   axios.get(endpoint, options)
       .then(response => {
+        console.log("RES => ", response.data.data);
         dispatch({ type: ADDING_GROUPS_TO_STATE, payload: response.data.data });
       })
       .catch(err => {
@@ -213,7 +216,7 @@ export const addItem = (item) => dispatch => {
   // Add items to the server and then get the items to update state
   axios.post(endpoint, item, options)
       .then(() => {
-        getItems(item.groupId)(dispatch)
+        getItems(item.groupID)(dispatch)
       })
       .then(response => {
         dispatch({ type: ADDING_ITEM_SUCCESS, payload: response.data.data });
@@ -231,14 +234,11 @@ export const updateItemPurchesd = (id) => dispatch => {
   dispatch({ type: UPDATE_ITEM_PURCHASED_START, payload: id });
 }
 
-export const submitPaidItems = (items, userID) => dispatch => {
+export const submitPaidItems = (items, userID, total) => dispatch => {
   dispatch({ type: SUBMIT_PAID_ITEMS_START });
 
-  console.log("SPI ITEMS => ", items);
-  console.log("SPI ID => ", userID);
-
   const token = localStorage.getItem('jwt');
-  const endpoint = `${backendURL}/api/item`;
+  const endpoint = `${backendURL}/api/grouphistory/`;
 
   const options = {
     headers: {
@@ -246,18 +246,38 @@ export const submitPaidItems = (items, userID) => dispatch => {
     }
   };
 
-  // Add items to the server and then get the items to update state
-  axios.post(endpoint, item, options)
-      .then(() => {
-        getItems(item.groupId)(dispatch)
-      })
-      .then(response => {
-        dispatch({ type: ADDING_ITEM_SUCCESS, payload: response.data.data });
-      })
-      .catch(err => {
-        console.log("ADDING ITEM ERR => ", err);
-        dispatch({ type: ADDING_ITEM_FAILED, payload: err });
-      });
+  items.forEach(itm => {
+    const itemEndpoint = `${backendURL}/api/item/${itm.id}`
+    const history = {
+      "userID": userID,
+      "groupID": itm.groupID,
+      "itemID": itm.id,
+      "total": total,
+      "purchasedOn": new Date()
+    }
 
+    const item = {
+      purchased: true,
+      purchasedBy: userID,
+      purchasedOn: new Date()
+  }
+
+    axios.post(endpoint, history, options)
+        .then(res => {
+          axios.put(itemEndpoint, item, options)
+              .then(res1 => {
+                dispatch({ type: SUBMIT_PAID_ITEMS_SUCCESS });
+              })
+              .catch(errr => {
+                console.log("ADDING ITEM ERR => ", errr);
+                dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: errr });
+              })
+
+        })
+        .catch( err => {
+          console.log("ADDING HISTORY ERR => ", err);
+          dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: err });
+        })
+  })
 
 }

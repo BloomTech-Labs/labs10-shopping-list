@@ -28,6 +28,7 @@ class GroupsPage extends Component{
         itemQuantity: 1,
         itemMeasure: "",
         itemPurchased: false,
+        total: 0.00
     }
 
     componentWillMount() {
@@ -63,8 +64,8 @@ class GroupsPage extends Component{
 
     handleSubmitItems = e => {
         e.preventDefault();
-        const purchased = this.props.items.filter(itm => itm.purchased === true);
-        this.props.submitPaidItems(purchased, localStorage.getItem("userId"));
+        const purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null);
+        this.props.submitPaidItems(purchased, Number(localStorage.getItem("userId")), Number(this.state.total));
     }
 
     /*
@@ -73,7 +74,7 @@ class GroupsPage extends Component{
     handleAddItem = () => {
         const item = {
             name: this.state.itemName,
-            groupId: Number(this.props.match.params.id),
+            groupID: Number(this.props.match.params.id),
             price: Number(this.state.itemPrice),
             quantity: Number(this.state.itemQuantity),
             measurement: this.state.itemMeasure,
@@ -88,7 +89,7 @@ class GroupsPage extends Component{
 
     render(){
         let purchased = [];
-        this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true) : purchased = [];
+        this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
         return (
             <div>
                 <Navigation />
@@ -140,7 +141,7 @@ class GroupsPage extends Component{
                                     }
                                 </div>
                                 <div className={"group-profile-bought-input"}>
-                                    <h1>$</h1><MDBInput label="I Paid" />
+                                    <h1>$</h1><MDBInput label="I Paid" type={"number"} step={0.01} name={"total"} onChange={this.handleInput} defaultValue={this.state.total} />
                                 </div>
                                 <div className={"group-profile-bought-button"}>
                                     <MDBBtn color="primary" onClick={e => this.handleSubmitItems(e)} >Submit</MDBBtn>
