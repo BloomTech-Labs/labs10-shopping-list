@@ -2,6 +2,7 @@ PODS:
   - Alamofire (4.8.1)
   - Auth0 (1.14.1):
     - SimpleKeychain
+  - Kingfisher (5.1.1)
   - Popover (1.2.2)
   - SimpleKeychain (0.8.1)
   - SwiftKeychainWrapper (3.2.0)
@@ -9,13 +10,16 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - Auth0
+  - Kingfisher
   - Popover
+  - SimpleKeychain
   - SwiftKeychainWrapper
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Auth0
+    - Kingfisher
     - Popover
     - SimpleKeychain
     - SwiftKeychainWrapper
@@ -23,10 +27,11 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   Auth0: 064dc115cd99eec7334d1cab565f4d974eecac4d
+  Kingfisher: 2558186963e5be42d98c5b110ccb3130148b77e4
   Popover: 21e357f86d45c8d9e29a41a4adbca3664d6e511f
   SimpleKeychain: e2485c28d82fcece35e9e41faeac42ebfe614815
   SwiftKeychainWrapper: 82c4c02cdc36f9a24f7edfcaab3e336401caa1a1
 
-PODFILE CHECKSUM: 5bd0f0fe3cda4ad906141b5880bacca4abbd666e
+PODFILE CHECKSUM: 9cd2dbf9b3b3d7708113bacbbb670f1a30e45532
 
 COCOAPODS: 1.6.0

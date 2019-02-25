@@ -43,6 +43,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSAppTransportSecurity</key>
+	<dict/>
+	<key>Allow Arbitrary Loads</key>
+	<string>YES</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

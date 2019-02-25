@@ -7,19 +7,35 @@
 
 import Foundation
 
+struct UserList: Codable {
+    let data: [User]
+}
 
 struct User: Codable {
     
-    var createdAt: Date
+    var createdAt: String
     var email: String
-    var emailNotification: Bool
+  //  var emailNotification: Bool
     var userID: Int?
     var name: String
-    var role: String
+  //  var role: String
     var subscriptionType: Int
-    var textNotification: Bool
-    var updatedAt: Date
+  //  var textNotification: Bool
+    var updatedAt: String
     var profilePicture: String
+    
+    var groups: [Group]?
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case email
+        case subscriptionType
+        case userID = "id"
+        case createdAt
+        case updatedAt
+        case profilePicture
+    }
+
     
     init(email: String, name: String, profilePicture: String) {
         self.email = email
@@ -27,13 +43,12 @@ struct User: Codable {
         
         self.profilePicture = profilePicture
         
-        self.createdAt = Date()
-        self.updatedAt = Date()
+        self.createdAt = Date().dateToString()
+        self.updatedAt = Date().dateToString()
+      //  self.emailNotification = true
+      //  self.textNotification = true
         
-        self.emailNotification = true
-        self.textNotification = true
-        
-        self.role = "Free"
+       // self.role = "Free"
         
         self.subscriptionType = 0
     }

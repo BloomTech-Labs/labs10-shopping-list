@@ -9,11 +9,13 @@
 import UIKit
 import Auth0
 import SwiftKeychainWrapper
+import SimpleKeychain
+import Kingfisher
 
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
     
     static let storyboardName: StoryboardName = "SettingsTableViewController"
-    
+    var profile: UserInfo!
     
     // MARK: - Lifecycle methods
     
@@ -22,6 +24,11 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         navigationController?.navigationBar.layer.shadowRadius = 8
         navigationController?.navigationBar.layer.shadowOpacity = 0.4
         navigationController?.view.backgroundColor = .white
+        guard let profile = SessionManager.shared.profile else  {return}
+        profilePictureImageView.kf.setImage(with: profile.picture)
+        print(profile.picture)
+        print(profile.email)
+       profileNameLabel.text = profileName
         
         profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.height / 2
         profilePictureImageView.layer.borderColor = UIColor.lightGray.cgColor
@@ -35,14 +42,42 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     @IBOutlet weak var profileNameLabel: UILabel!
     
     
+    
     // MARK: - IBActions
     
     @IBAction func doneButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+        
+        
+        guard let accessToken = LoginViewController.accessToken() else { return }
+        
+        Auth0
+            .authentication()
+            .userInfo(withAccessToken: accessToken)
+            .start { result in
+                switch(result) {
+                case .success(let profile):
+                    // You've got the user's profile, good time to store it locally.
+                // e.g. self.profile = profile
+                    print(profile)
+                    if let name = profile.name {
+                        print(name)
+                    }
+                case .failure(let error):
+                    // Handle the error
+                    print("Error: \(error)")
+                }
+        }
     }
     
     @IBAction func billingPressed(_ sender: Any) {
-        let billingMessage = "To change your subscription type or modify your billing details, access your ShopTrak account online."
+        guard let profile = SessionManager.shared.profile,
+        let email = profile.email,
+         let name = profile.name else {return}
+        
+        let billingMessage = "\(String(name)) \n \(String(describing: profile.customClaims)) \n \(email) \n \(String(describing: profile.emailVerified)) \n \(String(describing: profile.familyName)) \n \(String(describing: profile.gender)) \n \(String(describing: profile.givenName)) \n \(String(describing: profile.locale)) \n \(String(describing: profile.middleName)) \n \(String(describing: profile.name)) \n \(String(describing: profile.nickname)) \n \(String(describing: profile.phoneNumber)) \n \(String(describing: profile.phoneNumberVerified)) \n \(String(describing: profile.picture)) \n \(String(describing: profile.preferredUsername)) \n \(String(describing: profile.profile)) \n \(profile.sub ) \n \(String(describing: profile.updatedAt)) \n \(String(describing: profile.website)) \n \(String(describing: profile.zoneinfo))"
+        
+        //"To change your subscription type or modify your billing details, access your ShopTrak account online."
         Popovers.triggerMessagePopover(with: billingMessage)
     }
     
@@ -58,10 +93,14 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         UIApplication.shared.open(url)
     }
     
+ 
+    
+    
+    
     
     @IBAction func logoutPressed(_ sender: Any) {
        
-        KeychainWrapper.standard.removeObject(forKey: "accessToken")
+        _ = SessionManager.shared.logout()
         
         // Yvette, put this code wherever you complete your token deletion to reset to the login screen
         // 👇🏼👇🏼👇🏼
