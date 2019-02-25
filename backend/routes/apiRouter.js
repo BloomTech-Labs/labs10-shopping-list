@@ -15,6 +15,9 @@ const subscriptionRouter = require('./subscription/subscriptionRouter');
 // imports the router for '/item' endpoints
 const itemRouter = require('./item/itemRouter');
 
+// imports the router for '/grouphistory' endpoints
+const groupHistoryRouter = require('./groupHistory/groupHistoryRouter');
+
 // imports the router for '/groupmember' endpoints
 const groupMemberRouter = require('./groupMember/groupMemberRouter');
 
@@ -43,6 +46,8 @@ apiRouter.use('/group', groupRouter);
 apiRouter.use('/subscription', subscriptionRouter);
 
 apiRouter.use('/item', itemRouter);
+
+apiRouter.use('/grouphistory', groupHistoryRouter);
 
 apiRouter.use('/groupmember', groupMemberRouter);
 

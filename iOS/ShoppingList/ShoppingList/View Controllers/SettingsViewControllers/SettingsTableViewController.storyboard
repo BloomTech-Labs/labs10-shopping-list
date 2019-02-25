@@ -73,9 +73,8 @@
                                                         <constraint firstAttribute="width" constant="50" id="jGK-gZ-acP"/>
                                                     </constraints>
                                                 </imageView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="wNy-Ef-UPD" userLabel="Username and subtitle stack">
-                                                    <rect key="frame" x="81" y="18.000000000000004" width="148" height="43.333333333333336"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="wNy-Ef-UPD" userLabel="Username and subtitle stack">
+                                                    <rect key="frame" x="82" y="16.000000000000004" width="243" height="43.333333333333343"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jason Modisett" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWl-da-U5e">
                                                             <rect key="frame" x="0.0" y="0.0" width="148" height="25.333333333333332"/>
@@ -84,7 +83,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="View your profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DXw-B5-M7b">
-                                                            <rect key="frame" x="0.0" y="26.333333333333329" width="113.66666666666667" height="17"/>
+                                                            <rect key="frame" x="0.0" y="26.333333333333336" width="113.66666666666667" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                                             <color key="textColor" red="0.69886183375634525" green="0.69886183375634525" blue="0.69886183375634525" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
@@ -94,7 +93,10 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="XAP-Mk-xLc" firstAttribute="centerY" secondItem="Xky-y0-REQ" secondAttribute="centerY" id="Msr-Jb-dad"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="wNy-Ef-UPD" secondAttribute="trailing" constant="8" id="YkU-xE-8Bf"/>
+                                                <constraint firstItem="wNy-Ef-UPD" firstAttribute="leading" secondItem="XAP-Mk-xLc" secondAttribute="trailing" constant="16" id="fKB-Tk-jvY"/>
                                                 <constraint firstItem="XAP-Mk-xLc" firstAttribute="leading" secondItem="Xky-y0-REQ" secondAttribute="leadingMargin" id="imC-d3-1He"/>
+                                                <constraint firstItem="wNy-Ef-UPD" firstAttribute="centerY" secondItem="Xky-y0-REQ" secondAttribute="centerY" id="k0G-Ba-2oX"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>

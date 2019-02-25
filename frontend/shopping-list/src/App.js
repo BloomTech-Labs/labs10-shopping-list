@@ -7,6 +7,7 @@ import UserProfile from './components/UserProfile';
 import Callback from './components/Callback';
 import GroupsPage from "./components/GroupsPage";
 import GroupsProfile from "./components/GroupsProfile";
+import BillingPage from './components/BillingPage';
 
 
 class App extends Component {
@@ -23,6 +24,7 @@ class App extends Component {
         <Route path = '/callback' component = {Callback} />
         <Route exact path='/groups' component={GroupsPage} />
         <Route path='/groups/:id' render={props => <GroupsProfile {...props} />} />
+        <Route path = '/billing' component = {BillingPage} />
       </Switch>
       </div>
     );
