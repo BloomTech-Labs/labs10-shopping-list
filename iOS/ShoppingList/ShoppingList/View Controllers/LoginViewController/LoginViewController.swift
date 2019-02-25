@@ -43,13 +43,11 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
     
 
     func showLogin() {
-        // guard let clientInfo = plistValues(bundle: Bundle.main) else { return }
         
-        // let APIIdentifier =  // Replace with the API Identifier value you created
         Auth0
             .webAuth()
             .audience("https://shoptrak.auth0.com/api/v2/")
-            .scope("openid profile")
+            .scope("openid profile email")
             .start {
                 switch $0 {
                 case .failure(let error):
@@ -66,7 +64,7 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
                     }
                 }
         }
-    
+  
     }
         
  func checkAccessToken() {
