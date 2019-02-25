@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {addItem, getItems } from '../store/actions/rootActions';
+import {addItem, getItems, updateItemPurchesd } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import "./Styles/Group.css";
@@ -21,23 +21,21 @@ class GroupsPage extends Component{
             {
                 name: "milk",
                 purchased: true,
-            },
-            {
-                name: "eggs",
-                purchased: false,
             }
         ],
         itemName: "",
+        itemPrice: 0.00,
+        itemQuantity: 1,
+        itemMeasure: "",
+        itemPurchased: false,
+    }
+
+    componentWillMount() {
+        this.props.getItems(Number(this.props.match.params.id));
     }
 
     componentDidMount(){
-        this.props.getItems(Number(this.props.match.params.id));
 
-        const group = this.props.groups.filter(g => g.id === Number(this.props.match.params.id));
-        const items = this.props.items;
-        console.log("ITEMS => ", items);
-
-        this.setState({ group: group[0], items: this.props.items })
     }
 
     toggle = nr => () => {
@@ -54,21 +52,41 @@ class GroupsPage extends Component{
     }
 
     check = e => {
-        const items = this.state.items.map((item, i) => {
-            if (i === e) item.purchased = !item.purchased;
-            return item;
-        })
-
-        this.setState({ items })
+        // const items = this.state.items.map((item, i) => {
+        //     if (i === e) item.purchased = !item.purchased;
+        //     return item;
+        // })
+        //
+        // this.setState({ items })
+        this.props.updateItemPurchesd(e);
     }
 
+    /*
+     * Creates an item object and send it to the action to add to the database
+    */
+    handleAddItem = () => {
+        const item = {
+            name: this.state.itemName,
+            groupId: Number(this.props.match.params.id),
+            price: Number(this.state.itemPrice),
+            quantity: Number(this.state.itemQuantity),
+            measurement: this.state.itemMeasure,
+            purchased: this.state.itemPurchased
+        };
+        this.props.addItem(item);
+        this.setState({modal14: false});
+
+    }
+
+
+
     render(){
-        const purchased = this.props.items.filter(itm => itm.purchased === true);
+        let purchased = [];
+        this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true) : purchased = [];
         return (
             <div>
                 <Navigation />
                 <div className={"group-profile-container"}>
-                    {/*<h1>{this.state.group !== null ? this.state.group.name : ""}</h1>*/}
                     <div className={"group-profile-header"}>
                         <MDBBtn color="primary" >List</MDBBtn>
                         <MDBBtn color="primary" >History</MDBBtn>
@@ -83,17 +101,20 @@ class GroupsPage extends Component{
                                 <MDBContainer>
                                     <MDBContainer>
                                         <MDBListGroup style={{ width: "22rem" }}>
-                                            {this.props.items.map((item, i) => (
-                                                <MDBListGroupItem key={i} onClick={() => this.check(i)} className="d-flex justify-content-between align-items-center">{item.name}<MDBBadge
-                                                    color="primary">{item.purchased ? <MDBIcon icon="check" /> : null}</MDBBadge>
-                                                </MDBListGroupItem>
-                                            ))}
+                                            {
+                                                this.props.items !== null ? this.props.items.map((item, i) => (
+                                                        <MDBListGroupItem key={i} onClick={() => this.check(item.id)} className="d-flex justify-content-between align-items-center">{item.name}<MDBBadge
+                                                            color="primary">{item.purchased ? <MDBIcon icon="check" /> : null}</MDBBadge>
+                                                        </MDBListGroupItem>
+                                                    )) : null
+                                            }
+
                                         </MDBListGroup>
                                     </MDBContainer>
                                 </MDBContainer>
                             </div>
                             <div className={"group-profile-list-button"}>
-                                <MDBBtn color="primary" >ADD</MDBBtn>
+                                <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
                             </div>
                         </div>
 
@@ -106,9 +127,10 @@ class GroupsPage extends Component{
                                 <h1>I BOUGHT</h1>
                                 <div className={"group-profile-bought-list"}>
                                     {
+                                        purchased !== null ?
                                         purchased.map(itm => (
                                             <p>{itm.name}, </p>
-                                        ))
+                                        )) : null
                                     }
                                 </div>
                                 <div className={"group-profile-bought-input"}>
@@ -126,11 +148,16 @@ class GroupsPage extends Component{
                     <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
                         <MDBModalHeader toggle={this.toggle(14)}>Add New Item</MDBModalHeader>
                         <MDBModalBody>
-                            <MDBInput label="Item Name" name={"itemName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
+                            <MDBInput required label="Item Name *" type={"text"} name={"itemName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
+                            <MDBInput required label="Item Price *" type={"number"} step={0.01} name={"itemPrice"} onChange={this.handleInput} defaultValue={this.state.itemPrice}/>
+                            <MDBInput required label="Item Quantity *" type={"number"} name={"itemQuantity"} onChange={this.handleInput} defaultValue={this.state.itemQuantity}/>
+                            <MDBInput label="Item Measurement" type={"text"} name={"itemMeasure"} onChange={this.handleInput} defaultValue={this.state.itemMeasure}/>
+                            <MDBInput label="Item Purchased" type={"checkbox"} name={"itemPurchased"} onChange={this.handleInput} defaultValue={this.state.itemPurchased}/>
+
                         </MDBModalBody>
                         <MDBModalFooter>
                             <MDBBtn color="secondary" onClick={this.toggle(14)}>Close</MDBBtn>
-                            <MDBBtn color="primary">Create</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.handleAddItem}>Create</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
                 </MDBContainer>
@@ -149,5 +176,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    addItem, getItems
+    addItem, getItems, updateItemPurchesd
 })(GroupsPage);

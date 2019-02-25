@@ -23,6 +23,8 @@ export const ADDING_ITEM_START = 'ADDING_ITEM_START';
 export const ADDING_ITEM_SUCCESS = 'ADDING_ITEM_SUCCESS';
 export const ADDING_ITEM_FAILED = 'ADDING_ITEM_FAILED';
 
+export const UPDATE_ITEM_PURCHASED_START = "UPDATE_ITEM_PURCHASED_START";
+
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -110,7 +112,7 @@ export const addUserToState = () => {
 export const addGroup = (group) => dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/`;
+  const endpoint = `${backendURL}/api/group/`;
   const options = {
     headers: {
       Authorization: token
@@ -145,7 +147,7 @@ export const addGroup = (group) => dispatch => {
 export const gettingGroups = () => async dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/user/${userID}`;
+  const endpoint = `${backendURL}/api/group/user/${userID}`;
 
   const options = {
     headers: {
@@ -171,7 +173,7 @@ export const gettingGroups = () => async dispatch => {
 export const getItems = (id) => dispatch => {
   dispatch({ type: GETTING_ITEMS });
   const token = localStorage.getItem('jwt');
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/item/group/${id}`;
+  const endpoint = `${backendURL}/api/item/group/${id}`;
 
   const options = {
     headers: {
@@ -198,7 +200,7 @@ export const addItem = (item) => dispatch => {
   dispatch({ type: ADDING_ITEM_START });
 
   const token = localStorage.getItem('jwt');
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/item`;
+  const endpoint = `${backendURL}/api/item`;
 
   const options = {
     headers: {
@@ -208,12 +210,19 @@ export const addItem = (item) => dispatch => {
 
   console.log("ITEM => ", item);
 
-  // axios.post(endpoint, item, options)
-  //     .then(response => {
-  //       dispatch({ type: ADDING_ITEM_SUCCESS, payload: response.data.data });
-  //     })
-  //     .catch(err => {
-  //       console.log("ADDING ITEM ERR => ", err);
-  //       dispatch({ type: ADDING_ITEM_FAILED, payload: err });
-  //     });
+  axios.post(endpoint, item, options)
+      .then(() => {
+        getItems(item.groupId)(dispatch)
+      })
+      .then(response => {
+        dispatch({ type: ADDING_ITEM_SUCCESS, payload: response.data.data });
+      })
+      .catch(err => {
+        console.log("ADDING ITEM ERR => ", err);
+        dispatch({ type: ADDING_ITEM_FAILED, payload: err });
+      });
+}
+
+export const updateItemPurchesd = (id) => dispatch => {
+  dispatch({ type: UPDATE_ITEM_PURCHASED_START, payload: id });
 }
