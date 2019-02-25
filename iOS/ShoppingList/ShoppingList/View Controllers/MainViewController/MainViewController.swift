@@ -23,6 +23,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         let usersCon = UserController()
         usersCon.getUser(forID: 501) { (user) in
             if let users = user {
@@ -32,6 +33,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
             }
         }
         
+
         let groupCon = GroupController()
         groupCon.getGroupWith(userID: 501) { (groups) in
             
@@ -41,6 +43,14 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
                 self.updateViews()
             }
         }
+        
+        // Testing creating new groups
+//        groupCon.newGroup(withName: "Testing1", byUserID: 502) { (group) in
+//
+//            if let group = group {
+//                print(group)
+//            }
+//        }
     }
     
     
