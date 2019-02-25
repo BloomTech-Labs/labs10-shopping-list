@@ -100,7 +100,7 @@ export const addUserToState = () => {
 export const addGroup = (group) => dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/`;
+  const endpoint = `${backendURL}/api/group/`;
   const options = {
     headers: {
       Authorization: token
@@ -129,7 +129,7 @@ export const addGroup = (group) => dispatch => {
 export const gettingGroups = () => async dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/user/${userID}`;
+  const endpoint = `${backendURL}/api/group/user/${userID}`;
 
   const options = {
     headers: {
@@ -150,7 +150,7 @@ export const gettingGroups = () => async dispatch => {
 export const getItems = (id) => dispatch => {
   dispatch({ type: GETTING_ITEMS });
   const token = localStorage.getItem('jwt');
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/item/group/${id}`;
+  const endpoint = `${backendURL}/api/item/group/${id}`;
 
   const options = {
     headers: {

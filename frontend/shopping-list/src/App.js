@@ -7,13 +7,14 @@ import UserProfile from './components/UserProfile';
 import Callback from './components/Callback';
 import GroupsPage from "./components/GroupsPage";
 import GroupsProfile from "./components/GroupsProfile";
+import Navigation from './components/Navigation';
 import BillingPage from './components/BillingPage';
-
 
 class App extends Component {
   render() {
     return (
       <div className = 'App'>
+      <Navigation />
       <Switch>
         <Route exact path='/' component={Home} />
         <Route 
