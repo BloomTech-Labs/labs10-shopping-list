@@ -16,6 +16,8 @@ export const ADDING_GROUPS_TO_SERVER_FAILED = 'ADDING_GROUPS_TO_SERVER_FAILED';
 export const GETTING_ITEMS = 'GETTING_ITEMS';
 export const GETTING_ITEMS_SUCCESS = 'GETTING_ITEMS_SUCCESS';
 export const GETTING_ITEMS_FAILED = 'GETTING_ITEMS_FAILED';
+export const FETCHING_SINGLE_GROUP = 'FETCHING_SINGLE_GROUP';
+export const SINGLE_GROUP_FETCHED = 'SINGLE_GROUP_FETCHED';
 
 
 let backendURL;
@@ -100,10 +102,10 @@ export const addUserToState = () => {
 export const addGroup = (group) => dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/`;
+  const endpoint = `${backendURL}/api/group/`;
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -129,11 +131,11 @@ export const addGroup = (group) => dispatch => {
 export const gettingGroups = () => async dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/group/user/${userID}`;
+  const endpoint = `${backendURL}/api/group/user/${userID}`;
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -150,11 +152,11 @@ export const gettingGroups = () => async dispatch => {
 export const getItems = (id) => dispatch => {
   dispatch({ type: GETTING_ITEMS });
   const token = localStorage.getItem('jwt');
-  const endpoint = `https://shoptrak-backend.herokuapp.com/api/item/group/${id}`;
+  const endpoint = `${backendURL}/api/item/group/${id}`;
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -168,4 +170,29 @@ export const getItems = (id) => dispatch => {
       });
 
   // dispatch({ type: GETTING_ITEMS payload: items});
+}
+
+export const getSingleGroup = (groupId) => {
+  let token = localStorage.getItem('jwt');
+
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  }
+
+  const fetchGroup = axios.get(`${backendURL}/api/group/${groupId}`, options)
+
+  return dispatch => {
+    dispatch({type: FETCHING_SINGLE_GROUP});
+
+    fetchGroup.then(res => {
+      console.log('single group', res.data);
+
+      dispatch({type: SINGLE_GROUP_FETCHED, payload: res.data});
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+  }
 }

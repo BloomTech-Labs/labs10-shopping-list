@@ -6,6 +6,7 @@ const groupMemDb = require('../../helpers/groupMembersModel');
 
 const checkJwt = require('../../validators/checkJwt');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
+const checkUser = require('../../validators/checkUser');
 
 /****************************************************************************************************/
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/group ENDPOINT **/
@@ -20,6 +21,9 @@ const checkJwt = require('../../validators/checkJwt');
  * @param group.token is an optional parameter to generate a unique token to invite other members
  *
  * ***********************************************/
+
+groupRouter.use(checkJwt);
+groupRouter.use(checkUser);
 
 /** ADD GROUP
  * @TODO Add middleware to ensure user is logged in

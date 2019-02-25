@@ -3,6 +3,7 @@ const userRouter = express.Router();
 const userDb = require('../../helpers/userModel');
 
 const checkJwt = require('../../validators/checkJwt'); 
+const checkUser = require('../../validators/checkUser');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
 
 /****************************************************************************************************/
@@ -30,12 +31,11 @@ const checkJwt = require('../../validators/checkJwt');
  * ***********************************************/
 
 userRouter.use(checkJwt);
+userRouter.use(checkUser);
 
 userRouter.post('/', (req, res) => {
-    console.log(req.body);
     let user = req.body;
     userDb.add(user).then(id => {
-        console.log(id);
         return res.status(200).json({message: `User adder to database with ID ${id[0]}`, id: id[0]});
     })
     .catch(err => {
@@ -60,7 +60,6 @@ userRouter.get('/:id', (req, res) => {
     const id = req.params.id;
 
     userDb.getById(id).then(user => {
-        console.log(user);
         if (user.length >= 1) {
             return res.status(200).json(user[0]);
         }
@@ -183,10 +182,8 @@ userRouter.delete('/:id', (req, res) => {
 /**************************************************/
 
 userRouter.post('/getid', (req, res) => {
-    console.log('req body', req.body);
     let email = req.body.email;
     userDb.getIdByEmail(email).then(id => {
-        console.log('email id', id[0]);
         if(!id || id.length === 0){
             console.log('no user found');
             // CREATE NEW USER ENTRY

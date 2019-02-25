@@ -3,6 +3,7 @@ const groupMemberRouter = express.Router();
 const groupMemDb = require('../../helpers/groupMembersModel');
 
 const checkJwt = require('../../validators/checkJwt');
+const checkUser = require('../../validators/checkUser');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
 
 /****************************************************************************************************/
@@ -25,6 +26,9 @@ const checkJwt = require('../../validators/checkJwt');
  * @param groupMember.net is the total net gross amount of items they have spent
  *
  * ***********************************************/
+
+groupMemberRouter.use(checkJwt);
+groupMemberRouter.use(checkUser);
 
 /** ADD GROUP MEMBER
  * @TODO Add middleware to ensure user is logged in

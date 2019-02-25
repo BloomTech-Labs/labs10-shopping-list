@@ -32,6 +32,8 @@ class GroupsPage extends Component{
     }
 
     componentDidMount(){
+        console.log(this.props.groups)
+
         this.props.getItems(Number(this.props.match.params.id));
 
         const group = this.props.groups.filter(g => g.id === Number(this.props.match.params.id));
