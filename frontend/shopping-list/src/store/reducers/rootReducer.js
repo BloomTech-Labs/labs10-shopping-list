@@ -10,6 +10,7 @@ import {
   GETTING_ITEMS_SUCCESS,
   GETTING_ITEMS_FAILED,
   UPDATE_ITEM_PURCHASED_START,
+  SUBMIT_PAID_ITEMS_START,
 } from "../actions";
 import { ADDING_USER_TO_STATE } from "../actions/rootActions";
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {addItem, getItems, updateItemPurchesd } from '../store/actions/rootActions';
+import {addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import "./Styles/Group.css";
@@ -59,6 +59,12 @@ class GroupsPage extends Component{
         //
         // this.setState({ items })
         this.props.updateItemPurchesd(e);
+    }
+
+    handleSubmitItems = e => {
+        e.preventDefault();
+        const purchased = this.props.items.filter(itm => itm.purchased === true);
+        this.props.submitPaidItems(purchased, localStorage.getItem("userId"));
     }
 
     /*
@@ -137,7 +143,7 @@ class GroupsPage extends Component{
                                     <h1>$</h1><MDBInput label="I Paid" />
                                 </div>
                                 <div className={"group-profile-bought-button"}>
-                                    <MDBBtn color="primary" >Submit</MDBBtn>
+                                    <MDBBtn color="primary" onClick={e => this.handleSubmitItems(e)} >Submit</MDBBtn>
                                 </div>
                             </div>
                         </div>
@@ -176,5 +182,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    addItem, getItems, updateItemPurchesd
+    addItem, getItems, updateItemPurchesd, submitPaidItems
 })(GroupsPage);

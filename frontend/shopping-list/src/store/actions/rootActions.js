@@ -25,6 +25,8 @@ export const ADDING_ITEM_FAILED = 'ADDING_ITEM_FAILED';
 
 export const UPDATE_ITEM_PURCHASED_START = "UPDATE_ITEM_PURCHASED_START";
 
+export const SUBMIT_PAID_ITEMS_START = "SUBMIT_PAID_ITEMS_START";
+
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -208,8 +210,7 @@ export const addItem = (item) => dispatch => {
     }
   };
 
-  console.log("ITEM => ", item);
-
+  // Add items to the server and then get the items to update state
   axios.post(endpoint, item, options)
       .then(() => {
         getItems(item.groupId)(dispatch)
@@ -223,6 +224,40 @@ export const addItem = (item) => dispatch => {
       });
 }
 
+/*
+ * Update items array with purchased
+ */
 export const updateItemPurchesd = (id) => dispatch => {
   dispatch({ type: UPDATE_ITEM_PURCHASED_START, payload: id });
+}
+
+export const submitPaidItems = (items, userID) => dispatch => {
+  dispatch({ type: SUBMIT_PAID_ITEMS_START });
+
+  console.log("SPI ITEMS => ", items);
+  console.log("SPI ID => ", userID);
+
+  const token = localStorage.getItem('jwt');
+  const endpoint = `${backendURL}/api/item`;
+
+  const options = {
+    headers: {
+      Authorization: token
+    }
+  };
+
+  // Add items to the server and then get the items to update state
+  axios.post(endpoint, item, options)
+      .then(() => {
+        getItems(item.groupId)(dispatch)
+      })
+      .then(response => {
+        dispatch({ type: ADDING_ITEM_SUCCESS, payload: response.data.data });
+      })
+      .catch(err => {
+        console.log("ADDING ITEM ERR => ", err);
+        dispatch({ type: ADDING_ITEM_FAILED, payload: err });
+      });
+
+
 }
