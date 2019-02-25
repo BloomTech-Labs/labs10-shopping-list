@@ -32,10 +32,8 @@ class GroupsPage extends Component{
     }
 
     async componentWillMount(){
-        console.log("CDM")
-        console.log(this.props.match.params.id);
         // see if the desired group is in state
-        if(!this.props.currentGroup || this.props.currentGroup === null){
+        if(!this.props.currentGroup || this.props.currentGroup === null || this.props.currentGroup.id !== this.props.match.params.id){
             console.log('NO GROUP IN STATE');
             // if not, fetch it from the database
             // this function is necessary to prevent the app crashing on refresh or if a user visits it from a direct link, e.g. a bookmark
