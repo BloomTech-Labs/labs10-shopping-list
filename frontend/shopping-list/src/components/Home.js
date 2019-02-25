@@ -2,7 +2,6 @@ import React from 'react';
 import Navigation from './Navigation';
 import tomatoShare from '../images/tomato-share.jpg';
 import '../components/Styles/Home.css';
-import bannerVideo from '../images/time-lapse-cc-blur-low.mp4';
 
 class Home extends React.Component{
     render(){
@@ -12,7 +11,7 @@ class Home extends React.Component{
                 <header className = 'home-banner-vid'>
                 
                 <video playsInline autoPlay muted loop poster="poster.jpg" id = "bg-vid">
-                <source src = {bannerVideo}  type = "video/mp4" />
+                <source src = 'http://adamreid.me/images/time-lapse-cc-blur-low.mp4'  type = "video/mp4" />
                 </video>
 
                 <div className = 'home-banner-overlay'>
