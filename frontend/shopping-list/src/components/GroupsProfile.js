@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups, addGroup, getItems } from '../store/actions/rootActions';
+import {checkEmail, gettingGroups, addGroup, getItems, getSingleGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import "./Styles/Group.css";
@@ -11,8 +11,8 @@ import {
     MDBIcon,
     MDBBadge,
     MDBInput,
-    MDBNavLink,
-    MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText
+    // MDBNavLink,
+    // MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText
 } from "mdbreact";
 
 class GroupsPage extends Component{
@@ -31,16 +31,16 @@ class GroupsPage extends Component{
         ]
     }
 
-    componentDidMount(){
-        console.log(this.props.groups)
-
-        this.props.getItems(Number(this.props.match.params.id));
-
-        const group = this.props.groups.filter(g => g.id === Number(this.props.match.params.id));
-        const items = this.props.items;
-        console.log("ITEMS => ", items);
-
-        this.setState({ group: group[0], items: this.props.items })
+    async componentWillMount(){
+        console.log("CDM")
+        console.log(this.props.match.params.id);
+        // see if the desired group is in state
+        if(!this.props.currentGroup || this.props.currentGroup === null){
+            console.log('NO GROUP IN STATE');
+            // if not, fetch it from the database
+            // this function is necessary to prevent the app crashing on refresh or if a user visits it from a direct link, e.g. a bookmark
+            await this.props.getSingleGroup(this.props.match.params.id); // fetches group info from server and adds it to state
+        }
     }
 
     toggle = nr => () => {
@@ -66,19 +66,32 @@ class GroupsPage extends Component{
     }
 
     render(){
+        console.log('current group', this.props.currentGroup);
         const purchased = this.props.items.filter(itm => itm.purchased === true);
+        
+        if(!this.props.currentGroup){ // tell user info is loading...
+            /**
+             * @TODO Create a loading component that can render during data queries
+             */
+            return (
+                <div>Fetching group information...</div>
+            )
+        } else {
+        
         return (
             <div>
                 <Navigation />
                 <div className={"group-profile-container"}>
                     {/*<h1>{this.state.group !== null ? this.state.group.name : ""}</h1>*/}
+                    
+                    <h1>{this.props.currentGroup.name}</h1>
                     <div className={"group-profile-header"}>
                         <MDBBtn color="primary" >List</MDBBtn>
                         <MDBBtn color="primary" >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" >Total</MDBBtn>
                     </div>
-                    <div className={"group-profile-header-title"}><h3>{this.state.group !== null ? this.state.group.name : ""}</h3></div>
+                    <div className={"group-profile-header-title"}><h3>{this.props.currentGroup.name}</h3></div>
                     <div className={"group-profile-columns"}>
 
                         <div className={"group-profile-list"}>
@@ -129,6 +142,7 @@ class GroupsPage extends Component{
         )
     }
 }
+}
 
 const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
@@ -136,9 +150,10 @@ const mapStateToProps = state => {
         //state items
         groups: state.groups,
         items: state.items,
+        currentGroup: state.currentGroup,
     }
 }
 
 export default connect(mapStateToProps, {
-    checkEmail, gettingGroups, addGroup, getItems
+    checkEmail, gettingGroups, addGroup, getItems, getSingleGroup
 })(GroupsPage);

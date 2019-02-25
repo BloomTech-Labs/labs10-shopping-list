@@ -187,8 +187,6 @@ export const getSingleGroup = (groupId) => {
     dispatch({type: FETCHING_SINGLE_GROUP});
 
     fetchGroup.then(res => {
-      console.log('single group', res.data);
-
       dispatch({type: SINGLE_GROUP_FETCHED, payload: res.data});
     }).catch(err => {
       console.log(err);

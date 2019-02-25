@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 // import {Link, withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
 
@@ -7,7 +7,9 @@ import {connect} from 'react-redux';
 import {checkEmail, addUserToState} from '../store/actions/rootActions';
 import './Styles/Navigation.css';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
-    MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, MDBFormInline, MDBBtn } from "mdbreact";
+    MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem,
+    // MDBIcon, MDBFormInline, 
+    MDBBtn } from "mdbreact";
 
 class Navigation extends React.Component{
     state = {

@@ -3,7 +3,11 @@ import {checkEmail, gettingGroups, addGroup } from '../store/actions/rootActions
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
-    MDBListGroup, MDBListGroupItem, MDBCardHeader, MDBCardFooter, MDBModal, MDBModalBody,
+    // MDBListGroup, 
+    // MDBListGroupItem, 
+    MDBCardHeader, 
+    // MDBCardFooter, 
+    MDBModal, MDBModalBody,
     MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
 
 class GroupsPage extends Component{

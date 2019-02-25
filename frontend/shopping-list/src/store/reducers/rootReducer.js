@@ -8,7 +8,9 @@ import {
   ADDING_GROUPS_TO_STATE_FAILED,
   GETTING_ITEMS,
   GETTING_ITEMS_SUCCESS,
-  GETTING_ITEMS_FAILED
+  GETTING_ITEMS_FAILED,
+  FETCHING_SINGLE_GROUP,
+  SINGLE_GROUP_FETCHED,
 } from "../actions";
 import { ADDING_USER_TO_STATE } from "../actions/rootActions";
 
@@ -18,7 +20,8 @@ const initialState = {
   email: null,
   profilePicture: null,
   groups: [{name: "Lament House", memberAmount: 1}],
-  items: [{groupId: 0, name: "Milk"}]
+  items: [{groupId: 0, name: "Milk"}],
+  currentGroup: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -65,6 +68,17 @@ export const rootReducer = (state = initialState, action) => {
 
     case GETTING_ITEMS_FAILED:
       return { ...state, items: [{groupId: 0}] };
+
+    case FETCHING_SINGLE_GROUP:
+      return {
+        ...state,
+      }
+
+    case SINGLE_GROUP_FETCHED:
+      return {
+        ...state,
+        currentGroup: action.payload,
+      }
 
     default:
       return state;
