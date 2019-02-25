@@ -103,6 +103,10 @@ export const addUserToState = () => {
   }
 }
 
+/*
+ * Adds a new group to the database that the user has created
+ * @param group - The newly created group `name`
+ */
 export const addGroup = (group) => dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
@@ -113,11 +117,13 @@ export const addGroup = (group) => dispatch => {
     }
   };
 
+  // The group object to be sent to the server
   const grp = {
     userID: userID,
     name: group,
   }
 
+  // Add's the new group to the server and dispatches success or failure
   axios.post(endpoint, grp, options)
       .then(() => {
         gettingGroups()(dispatch)
@@ -132,6 +138,10 @@ export const addGroup = (group) => dispatch => {
 
 }
 
+/*
+ * Retrieves a list of groups that the user owns.
+ */
+// TODO - Change this to groupMembers to get ALL the groups the user is IN - not just owned
 export const gettingGroups = () => async dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
@@ -143,6 +153,7 @@ export const gettingGroups = () => async dispatch => {
     }
   };
 
+  // Retrieve all the groups the user owns
   axios.get(endpoint, options)
       .then(response => {
         dispatch({ type: ADDING_GROUPS_TO_STATE, payload: response.data.data });
@@ -153,6 +164,10 @@ export const gettingGroups = () => async dispatch => {
       });
 };
 
+/*
+ * Retrieves a list of items for a specified group with a group ID.
+ * @param id - Group ID
+ */
 export const getItems = (id) => dispatch => {
   dispatch({ type: GETTING_ITEMS });
   const token = localStorage.getItem('jwt');
@@ -164,6 +179,7 @@ export const getItems = (id) => dispatch => {
     }
   };
 
+  // Retrieve items from endpoint and dispatch them to state
   axios.get(endpoint, options)
       .then(response => {
         dispatch({ type: GETTING_ITEMS_SUCCESS, payload: response.data.data });
@@ -174,6 +190,10 @@ export const getItems = (id) => dispatch => {
       });
 }
 
+/*
+ * Add an item to the database for a specified group.
+ * @param id - Group ID
+ */
 export const addItem = (item) => dispatch => {
   dispatch({ type: ADDING_ITEM_START });
 
