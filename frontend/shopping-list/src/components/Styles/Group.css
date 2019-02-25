@@ -73,3 +73,35 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.close {
+    width: 20px;
+    margin-left: -60%;
+}
+
+.close1 {
+    width: 20px;
+    margin-left: 1%;
+    margin-right: 0;
+}
+
+.item-name {
+    margin-left: -60%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.item-purchased {
+    opacity: 1 !important;
+}
+
+input[type="button"]{
+    outline:none;
+}
+input[type="button"]::-moz-focus-inner {
+    border: 0;
+}
+
+*:focus {
+    outline: 0 !important;
+}

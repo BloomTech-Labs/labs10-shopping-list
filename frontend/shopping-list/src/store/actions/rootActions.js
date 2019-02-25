@@ -262,6 +262,9 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
       purchasedOn: new Date()
   }
 
+  console.log("history => ", history);
+    console.log("item => ", item);
+
     axios.post(endpoint, history, options)
         .then(res => {
           axios.put(itemEndpoint, item, options)

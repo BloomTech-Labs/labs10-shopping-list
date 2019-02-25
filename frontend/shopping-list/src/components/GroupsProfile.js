@@ -11,6 +11,7 @@ import {
     MDBIcon,
     MDBBadge,
     MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
+    MDBPopover, MDBPopoverBody, MDBPopoverHeader,
 } from "mdbreact";
 
 class GroupsPage extends Component{
@@ -53,13 +54,13 @@ class GroupsPage extends Component{
     }
 
     check = e => {
-        // const items = this.state.items.map((item, i) => {
-        //     if (i === e) item.purchased = !item.purchased;
-        //     return item;
-        // })
-        //
-        // this.setState({ items })
-        this.props.updateItemPurchesd(e);
+        // Filter the item so we can check if the item has already been purchased.
+        const item = this.props.items.filter(itm => itm.id === e);
+
+        // Only check to box if the item hasn't been purchased
+        if (item[0].purchasedBy === null) {
+            this.props.updateItemPurchesd(e);
+        }
     }
 
     handleSubmitItems = e => {
@@ -110,8 +111,14 @@ class GroupsPage extends Component{
                                         <MDBListGroup style={{ width: "22rem" }}>
                                             {
                                                 this.props.items !== null ? this.props.items.map((item, i) => (
-                                                        <MDBListGroupItem key={i} onClick={() => this.check(item.id)} className="d-flex justify-content-between align-items-center">{item.name}<MDBBadge
-                                                            color="primary">{item.purchased ? <MDBIcon icon="check" /> : null}</MDBBadge>
+                                                        <MDBListGroupItem key={i} className="d-flex justify-content-between align-items-center">
+                                                            <button type="button" onClick={() => this.check(item.id)} className={item.purchased ? "close1 item-purchased close" : "close close1"} aria-label="Close">
+                                                                <MDBBadge color="primary"><MDBIcon icon="check" /> </MDBBadge>
+                                                            </button>
+                                                            <p className={"item-name"}>{item.name}</p>
+                                                            <button type="button" className="close" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
                                                         </MDBListGroupItem>
                                                     )) : null
                                             }
