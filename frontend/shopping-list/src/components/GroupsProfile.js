@@ -38,6 +38,9 @@ class GroupsPage extends Component{
             // if not, fetch it from the database
             // this function is necessary to prevent the app crashing on refresh or if a user visits it from a direct link, e.g. a bookmark
             await this.props.getSingleGroup(this.props.match.params.id); // fetches group info from server and adds it to state
+        /**
+         * @NOTE There is a lag between rendering the old and new currentGroup that needs to be addressed
+         */
         }
     }
 
