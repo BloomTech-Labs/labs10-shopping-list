@@ -72,8 +72,8 @@ class GroupController {
     }
     
     
-    
-    func updateGroup(group: Group, name: String?, userID: Int?, completion: @escaping (Group) -> Void) {
+    // Updates the group and downloads all groups from server. Optional success completion.
+    func updateGroup(group: Group, name: String?, userID: Int?, completion: @escaping (Bool) -> Void = {_ in }) {
         
         var myGroup = group
         
@@ -95,18 +95,27 @@ class GroupController {
 
             switch response.result {
             case .success(_):
-                completion(myGroup)
+                
+                // This downloads allGroups from server so we have fresh data
+                //TODO: Need current userID here
+                self.getGroups(forUserID: 501, completion: { (success) in
+                    if success {
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                })
                 return
                 
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(myGroup)
+                completion(false)
                 return
             }
         }
     }
     
-    
+    // Gets groups from server and updates the singleton. Optional success completion
     func getGroups(forUserID userID: Int, completion: @escaping (Bool) -> Void = { _ in }) {
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("user").appendingPathComponent(String(userID))
