@@ -34,14 +34,14 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
     
     @IBAction func loginButtonPressed(_ sender: Any) {
         checkAccessToken()
-
-        }
         
+    }
     
-
-   
     
-
+    
+    
+    
+    
     func showLogin() {
         
         Auth0
@@ -60,25 +60,25 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
                         guard error == nil else {
                             return self.showLogin()
                         }
-                       
+                        
                     }
                 }
         }
-  
-    }
         
- func checkAccessToken() {
-       
+    }
+    
+    func checkAccessToken() {
+        
         SessionManager.shared.logout()
         SessionManager.shared.retrieveProfile { error in
-                guard error == nil else {
-                    return self.showLogin()
-                }
-                UI {
-                    defaults.set(true, forKey: Keys.isUserLoggedInKey)
-                    UIApplication.shared.keyWindow?.rootViewController = MainViewController.instantiate()
+            guard error == nil else {
+                return self.showLogin()
+            }
+            UI {
+                defaults.set(true, forKey: Keys.isUserLoggedInKey)
+                UIApplication.shared.keyWindow?.rootViewController = MainViewController.instantiate()
+            }
         }
     }
-       }
 }
 
