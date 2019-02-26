@@ -1,5 +1,5 @@
 const express = require('express');
-const userRouter = express.Router();
+const userRouter = express.Router({mergeParams: true});
 const userDb = require('../../helpers/userModel');
 
 const checkJwt = require('../../validators/checkJwt'); 

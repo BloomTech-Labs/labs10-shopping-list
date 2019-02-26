@@ -23,7 +23,16 @@ const checkUser = require('../../validators/checkUser');
  * ***********************************************/
 
 groupRouter.use(checkJwt);
-groupRouter.use(checkUser);
+/** this middleware will decode the JWT and store the user information in req.user
+ * it should be initiated before any other middleware, as the req.user contains valuable
+ * user information (e.g. email) that needs to be verified in the database
+ * **
+
+/**
+ * @NOTE The @checkUser middleware must be route-specific, as it requires the req.params value
+ * to function without unnecessary complexity. Trying to use router.use() with checkUser will not
+ * pass the req.params to the function, and therefore it will not operate properly.
+ */
 
 /** ADD GROUP
  * @TODO Add middleware to ensure user is logged in
@@ -83,7 +92,7 @@ groupRouter.post('/', (req, res) => {
  * **/
 
 /**************************************************/
-groupRouter.get('/:id', (req, res) => {
+groupRouter.get('/:id', checkUser, (req, res) => {
     const id = req.params.id;
 
     groupDb.getById(id).then(group => {
@@ -107,7 +116,9 @@ groupRouter.get('/:id', (req, res) => {
 /**************************************************/
 
 /** GET GROUP BY USER ID
- * @TODO Add middleware to ensure user is logged in
+ * 
+ * @NOTE @checkUser middleware ensures only users with permission can access
+ * their own group information
  * **/
 
 /**************************************************/
@@ -118,7 +129,7 @@ function fetch_group_mem(id) {
     })
 }
 
-groupRouter.get('/user/:id', async (req, res) => {
+groupRouter.get('/user/:id', checkUser, async (req, res) => {
     const id = req.params.id;
     const groups = [];
 
