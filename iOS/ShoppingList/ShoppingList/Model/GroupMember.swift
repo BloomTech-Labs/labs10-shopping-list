@@ -11,6 +11,7 @@ import Foundation
 
 struct GroupMember: Codable {
     
+    var id: Int
     var groupID: Int
     var moderator: Bool
     var monthlyNotification: Bool
@@ -31,6 +32,7 @@ struct GroupMember: Codable {
         case weeklyNotification
         case createdAt
         case updatedAt
+        case id
     }
 }
 

@@ -18,10 +18,10 @@ const checkJwt = require('../../validators/checkJwt');
  * @TODO Add middleware to ensure user is logged in
  * **/
 groupHistoryRouter.post('/', (req, res) => {
-    const groupHistory = req.body;
+    const groupHistory  = req.body;
     if(!groupHistory.groupID || typeof(groupHistory.groupID) !== 'number') return res.status(404).json({message: `groupID does not exist or is invalid.`});
     if(!groupHistory.userID || typeof(groupHistory.userID) !== 'number') return res.status(404).json({message: `userID does not exist or is invalid.`});
-    groupHistory.purchasedOn = new Date();
+    console.log("COR");
     groupHistoryDb.add(groupHistory).then(id => {
         if(id >= 1){
             return res.status(200).json({message: `Group history added.`, id: id[0]});
