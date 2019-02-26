@@ -24,6 +24,13 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
                 selectedGroup = groups[0]
                 self.updateViews()
             }
+            
+            let groupMemberCon = GroupMemberController()
+            groupMemberCon.getGroupMembers(forGroup: self.selectedGroup!) { (group) in
+                guard let group = group else { return }
+                
+                print("Got a group with id: \(group.groupID) and \(group.memberAmount) members. The first member's userID is: \(String(describing: group.members?.first?.userID))")
+            }
         }
     }
     
