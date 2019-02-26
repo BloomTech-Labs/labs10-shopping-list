@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import {gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
+import {
+    gettingGroups,
+    addItem,
+    getItems,
+    updateItemPurchesd,
+    submitPaidItems,
+    ADD_ITEM_SUCCESS, ADD_ITEM_FAILED
+} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import "./Styles/Group.css";
@@ -13,6 +20,7 @@ import {
     MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
     MDBTooltip,
 } from "mdbreact";
+import axios from "axios";
 
 class GroupsPage extends Component{
     state = {
@@ -31,6 +39,7 @@ class GroupsPage extends Component{
         itemPurchased: false,
         total: 0.00,
         listClass: true,
+        groupHistory: null,
     }
 
     /*
@@ -45,6 +54,24 @@ class GroupsPage extends Component{
             const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
             this.setState({ group: group[0]})
         }
+    }
+
+    getGroupHistory = () => {
+        const token = localStorage.getItem('jwt');
+        const endpoint = `http://localhost:9000/api/grouphistory/group/${this.props.match.params.id}`;
+
+        const options = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+
+        let history = [];
+
+        axios.get(endpoint, options).then(res => {
+            console.log("HISTORY", res.data.data);
+            this.setState({ groupHistory: res.data.data})
+        }).catch(err => console.log(err));
     }
 
     // Toggles the modals
@@ -97,6 +124,7 @@ class GroupsPage extends Component{
 
     // Change between List and History views
     changeListClass = () => {
+        this.getGroupHistory();
         this.setState({ listClass: !this.state.listClass})
     }
 
@@ -134,11 +162,14 @@ class GroupsPage extends Component{
         }
 
     }
+    
 
     render(){
         // Filter items by which has been purchased - used for the `I Bought` form
         let purchased = [];
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
+        const histories = this.state.groupHistory;
+        if (histories !== null) console.log("NOT NULL => ", JSON.stringify(histories))
         return (
             <div>
                 <div className={"group-profile-container"}>
@@ -155,7 +186,7 @@ class GroupsPage extends Component{
                                 <MDBContainer>
                                     <MDBContainer>
                                         {
-                                            this.state.listClass === true ? <MDBListGroup style={{ width: "22rem" }}>
+                                            <MDBListGroup style={{ width: "22rem" }}>
                                                 {
                                                     this.props.items !== null ? this.props.items.map((item, i) => (
                                                         <MDBListGroupItem key={i} className="d-flex justify-content-between align-items-center">
@@ -169,9 +200,13 @@ class GroupsPage extends Component{
                                                         </MDBListGroupItem>
                                                     )) : null
                                                 }
-
-                                            </MDBListGroup> : <p>History</p>
+                                            </MDBListGroup>
                                         }
+                                        <div>
+                                            {
+                                                histories !== null ? <p>NOT NULL</p> : <p>NULL</p>
+                                            }
+                                        </div>
 
                                     </MDBContainer>
                                 </MDBContainer>

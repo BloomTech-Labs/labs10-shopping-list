@@ -23,6 +23,7 @@ export const UPDATE_ITEM_PURCHASED_START = 'UPDATE_ITEM_PURCHASED_START';
 export const SUBMIT_PAID_ITEMS_START = 'SUBMIT_PAID_ITEMS_START';
 export const SUBMIT_PAID_ITEMS_SUCCESS = 'SUBMIT_PAID_ITEMS_SUCCESS';
 export const SUBMIT_PAID_ITEMS_FAILED = 'SUBMIT_PAID_ITEMS_FAILED';
+export const GET_GROUPMEMBERS_START = 'GET_GROUPMEMBERS_START';
 
 
 let backendURL;
@@ -273,4 +274,8 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
   });
   getItems(items[0].groupID)(dispatch);
 
+}
+
+export const getGroupMembers = (groupID) => dispatch => {
+  dispatch({ type: GET_GROUPMEMBERS_START });
 }

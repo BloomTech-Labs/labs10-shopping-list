@@ -180,3 +180,6 @@ input[type="button"]::-moz-focus-inner {
     box-sizing: border-box;
 }
 
+.history-list {
+    border: 4px solid black;
+}
