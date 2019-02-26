@@ -26,7 +26,7 @@ export const UPDATE_ITEM_PURCHASED_START = 'UPDATE_ITEM_PURCHASED_START';
 export const SUBMIT_PAID_ITEMS_START = 'SUBMIT_PAID_ITEMS_START';
 export const SUBMIT_PAID_ITEMS_SUCCESS = 'SUBMIT_PAID_ITEMS_SUCCESS';
 export const SUBMIT_PAID_ITEMS_FAILED = 'SUBMIT_PAID_ITEMS_FAILED';
-
+export const USER_ADDED_TO_STATE = 'USER_ADDED_TO_STATE';
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -78,24 +78,28 @@ export const checkEmail = () => {
   }
 }
 
-export const addUserToState = () => {
+export const addUserToState = (userID) => {
 
-  let userState = {
-    email: localStorage.getItem('email'),
-    name: localStorage.getItem('name'),
-    profilePicture: localStorage.getItem('img_url'),
+  const token = localStorage.getItem('jwt');
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
   }
 
-  if(userState.email && userState.name && userState.profilePicture){
-    return dispatch => {
-      dispatch({type: ADDING_USER_TO_STATE, payload: userState});
+  const fetchUserProfile = axios.get(`${backendURL}/api/user/${userID}`, options);
 
-    }
-  } else {
-    return dispatch => {
+  return dispatch => {
+    dispatch({type: ADDING_USER_TO_STATE})
+    fetchUserProfile.then(res => {
+      console.log('fetch user profile', res.data);
+      dispatch({type: USER_ADDED_TO_STATE, payload: res.data})
+    }).catch(err => {
+      console.log(err);
       dispatch({type: ERROR})
-    }
+    })
   }
+  
 }
 
 export const addGroup = (group) => dispatch => {

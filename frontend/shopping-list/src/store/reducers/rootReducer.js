@@ -13,7 +13,8 @@ import {
   FETCHING_SINGLE_GROUP,
   SINGLE_GROUP_FETCHED,
   CLEARING_CURRENT_GROUP,
-  UPDATE_ITEM_PURCHASED_START
+  UPDATE_ITEM_PURCHASED_START,
+  USER_ADDED_TO_STATE,
 } from "../actions";
 
 const initialState = {
@@ -24,6 +25,8 @@ const initialState = {
   currentGroup: null,
   groups: null,
   items: null,
+  currentUser: null,
+  emailChecked: false,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -43,16 +46,20 @@ export const rootReducer = (state = initialState, action) => {
       localStorage.setItem('userId', action.payload.id);
       return {
         ...state,
+        emailChecked: true,
         userId: action.payload.id
       }
 
     case ADDING_USER_TO_STATE:
+      return state;
+
+    case USER_ADDED_TO_STATE:
       return {
         ...state,
-        name: action.payload.name,
-        email: action.payload.email,
-        profilePicture: action.payload.profilePicture,
+        currentUser: action.payload,
       }
+
+
     case ADDING_GROUPS_TO_STATE:
       return {
         ...state,

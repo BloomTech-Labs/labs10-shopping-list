@@ -7,25 +7,40 @@ import './Styles/UserProfile.css';
 
 class UserProfile extends React.Component{
    async componentDidMount(){
-        if(localStorage.getItem('isLoggedIn') && this.props.userId === null){
+        if(localStorage.getItem('isLoggedIn') && this.props.userId === null && this.props.emailChecked === false){
             // if a user is logged in and no userID is found, call the checkemail function
             await this.props.checkEmail();
-
-            await this.props.addUserToState();
         }
     }
 
+    componentWillReceiveProps(newProps){
+        if(newProps.emailChecked !== this.props.emailChecked){
+            this.handleProfileFetch(newProps.userId);
+        }
+    }
+
+    handleProfileFetch = id => {
+        this.props.addUserToState(id);
+    }
+
     render(){
+        let name, email, profilePicture = '';
+
+        if(this.props.currentUser){
+            name = this.props.currentUser.name;
+            email = this.props.currentUser.email;
+            profilePicture = this.props.currentUser.profilePicture;
+        }
         return (
             <div className = 'user-profile-container'>
             <div className = 'user-profile-col'>
             <div className = 'user-profile-left'>
             <MDBCol>
                 <MDBCard style = {{width: "22rem"}}>
-                <MDBCardImage className = "img-fluid" src = {this.props.profilePicture} waves />
+                <MDBCardImage className = "img-fluid" src = {profilePicture} waves />
                 <MDBCardBody>
-                    <MDBCardTitle>{this.props.name}</MDBCardTitle>
-                    <MDBCardText>{this.props.email}</MDBCardText>
+                    <MDBCardTitle>{name}</MDBCardTitle>
+                    <MDBCardText>{email}</MDBCardText>
                 </MDBCardBody>
                 </MDBCard>
             </MDBCol>
@@ -49,9 +64,8 @@ const mapStateToProps = state => {
     return {
         //state items
         userId: state.userId,
-        name: state.name,
-        email: state.email,
-        profilePicture: state.profilePicture,
+        currentUser: state.currentUser,
+        emailChecked: state.emailChecked,
     }
 }
 
