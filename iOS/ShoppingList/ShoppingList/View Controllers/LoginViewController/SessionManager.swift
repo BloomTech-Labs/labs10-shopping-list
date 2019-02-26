@@ -37,6 +37,12 @@ class SessionManager {
                 switch(result) {
                 case .success(let profile):
                     userProfile = profile
+                    if !isLoggedIn {
+                        UI {
+                            let mainVC = MainViewController.instantiate()
+                            UIApplication.shared.keyWindow?.rootViewController = mainVC
+                        }
+                    }
                     callback(nil)
                 case .failure(let error):
                     callback(error)

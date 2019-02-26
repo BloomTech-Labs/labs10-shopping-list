@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         let accessToken = A0SimpleKeychain(service: "Auth0").string(forKey:"access_token")
+        isLoggedIn = accessToken != nil ? true : false
         
         let loginVC = LoginViewController.instantiate()
         let mainVC = MainViewController.instantiate()

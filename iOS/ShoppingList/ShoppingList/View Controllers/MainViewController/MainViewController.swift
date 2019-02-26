@@ -8,23 +8,20 @@
 
 import UIKit
 
-class MainViewController: UIViewController, StoryboardInstantiatable {
+class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopoverViewDelegate {
 
     static let storyboardName: StoryboardName = "MainViewController"
     @IBOutlet weak var groupName: UIButton!
-    
-    var user: User?
-    var selectedGroup: Group?
     
     // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         GroupController.shared.getGroupWith(userID: 501) { (groups) in
             if let groups = groups {
-                self.user?.groups = groups
-                self.selectedGroup = groups[0]
+                allGroups = groups
+                selectedGroup = groups[0]
                 self.updateViews()
             }
         }
@@ -36,6 +33,10 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
         }
     }
     
+    func selectedGroupChanged() {
+        updateViews()
+    }
+    
     
     // MARK: - IBActions
     
@@ -43,7 +44,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
     }
     
     @IBAction func showGroupsButtonPressed(_ sender: Any) {
-        Popovers.triggerGroupsPopover()
+        Popovers.triggerGroupsPopover(self)
     }
     
     @IBAction func settingsButtonPressed(_ sender: Any) {

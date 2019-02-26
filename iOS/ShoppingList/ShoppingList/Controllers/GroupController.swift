@@ -108,7 +108,7 @@ class GroupController {
     }
     
     
-    func getGroupWith(userID: Int, completion: @escaping ([Group]?) -> Void) {
+    func getGroupWith(userID: Int, completion: @escaping ([Group]?) -> Void = { _ in }) {
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("user").appendingPathComponent(String(userID))
         
