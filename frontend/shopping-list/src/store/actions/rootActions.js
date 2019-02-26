@@ -62,7 +62,7 @@ export const checkEmail = (email, callback) => {
 
   let mailChimpOptions = {
     headers: {
-      Authorization: `apikey c32e6495243af66eed1f96809158484e-us20`
+      Authorization: `apikey ${process.env.APIKEY}`
     }
   }
 
