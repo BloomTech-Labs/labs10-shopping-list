@@ -45,7 +45,7 @@ class GroupController {
         let parameters: Parameters = ["userID": userID, "name": name, "token": token]
         
 
-        Alamofire.request(url, method: .post, parameters: groupJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { (response) in
 
             
             switch response.result {
