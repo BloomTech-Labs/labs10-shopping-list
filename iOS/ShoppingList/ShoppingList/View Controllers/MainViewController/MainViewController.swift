@@ -18,20 +18,15 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GroupController.shared.getGroupWith(userID: 501) { (groups) in
-            if let groups = groups {
-                allGroups = groups
-                selectedGroup = groups[0]
+        GroupController.shared.getGroups(forUserID: 501) { (success) in
+            if allGroups.count > 0 {
+                let selected = allGroups[0]
+                selectedGroup = selected
                 self.updateViews()
             }
-            
-            let groupMemberCon = GroupMemberController()
-            groupMemberCon.getGroupMembers(forGroup: self.selectedGroup!) { (group) in
-                guard let group = group else { return }
-                
-                print("Got a group with id: \(group.groupID) and \(group.memberAmount) members. The first member's userID is: \(String(describing: group.members?.first?.userID))")
-            }
         }
+        
+        
     }
     
     private func updateViews() {

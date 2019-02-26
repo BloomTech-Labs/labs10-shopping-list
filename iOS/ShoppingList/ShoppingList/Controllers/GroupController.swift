@@ -141,7 +141,7 @@ class GroupController {
         }
     }
     
-    func delete(userID: Int, group: Group, completion: @escaping (Bool) -> Void) {
+    func delete(group: Group, userID: Int,  completion: @escaping (Bool) -> Void) {
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("remove")
         
