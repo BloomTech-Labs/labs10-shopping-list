@@ -29,16 +29,18 @@ class GroupsPage extends Component{
         itemQuantity: 1,
         itemMeasure: "",
         itemPurchased: false,
-        total: 0.00,
-        nameError: false,
-        priceError: false,
-        quantityError: false,
+        total: 0.00
     }
 
+    /*
+     * Triggers before the component mounts.
+     * Retrieve a list of items from state
+    */
     componentWillMount() {
         this.props.getItems(Number(this.props.match.params.id));
     }
 
+    // Toggles the modals
     toggle = nr => () => {
         let modalNumber = 'modal' + nr
         this.setState({
@@ -46,16 +48,27 @@ class GroupsPage extends Component{
         });
     }
 
+    /*
+     * Handles all text/number inputs
+     * @param e - Event
+     */
     handleInput = e => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
 
+    /*
+     * Ticks the item checkbox in adding an item
+     */
     itmPurchased = () => {
         this.setState({itemPurchased: true})
     }
 
+    /*
+     * Checks the item checkbox on the list
+     * @param e - Event
+     */
     check = e => {
         // Filter the item so we can check if the item has already been purchased.
         const item = this.props.items.filter(itm => itm.id === e);
@@ -66,8 +79,10 @@ class GroupsPage extends Component{
         }
     }
 
+    // Submits a one or more items to be purchased
     handleSubmitItems = e => {
         e.preventDefault();
+        // Filter to make sure we are not sending in previous bought items
         const purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null);
         this.props.submitPaidItems(purchased, Number(localStorage.getItem("userId")), Number(this.state.total));
     }
@@ -107,10 +122,7 @@ class GroupsPage extends Component{
 
     }
 
-
-
     render(){
-
         // Filter items by which has been purchased - used for the `I Bought` form
         let purchased = [];
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
