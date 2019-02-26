@@ -5,25 +5,16 @@ import {Card, CardImg, CardTitle, CardSubtitle} from 'reactstrap';
 import Navigation from './Navigation.js';
 
 class UserProfile extends React.Component{
-    constructor(props){
-        super(props);
+   async componentDidMount(){
+        if(localStorage.getItem('isLoggedIn') && this.props.userId === null){
+            // if a user is logged in and no userID is found, call the checkemail function
+            await this.props.checkEmail();
 
-        this.state = {
-            input: null,
-            userId: null,
-        }
-    }
-
-    async componentDidMount(){
-        if(localStorage.getItem('isLoggedIn') && !this.props.userId){
-            // if a user is logged in and no userID is found, call the checkemail function passing the state populator as a callback
-            this.props.checkEmail(this.props.addUserToState);
-            // the callback will populate state with the complete user profile: email, userId, profilePicture, and name
+            await this.props.addUserToState();
         }
     }
 
     render(){
-        console.log('render');
         return (
             <div className = 'user-profile-container'>
             <Navigation />

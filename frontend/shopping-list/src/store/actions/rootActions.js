@@ -45,7 +45,7 @@ export const testFunction = () => dispatch => {
 // sends email to server to obtain user ID
 // if no ID found, creates a new user record and returns the ID
 // once complete, calls the callback function, which in this case is addUserToState in order to populate state completely
-export const checkEmail = (callback) => {
+export const checkEmail = () => {
   let token = localStorage.getItem('jwt');
   // console.log('token', token);
   let options = {
@@ -56,14 +56,13 @@ export const checkEmail = (callback) => {
 
   const fetchUserId = axios.get(`${backendURL}/api/user/check/getid`, options);
 
-  return dispatch => {
-    dispatch({type: CHECKING_EMAIL});
+    return (dispatch) => {
+      dispatch({type: CHECKING_EMAIL});
 
     fetchUserId.then(res => {
       console.log('check email', res.data);
       dispatch({type: EMAIL_CHECKED, payload: res.data});
 
-      callback();
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})

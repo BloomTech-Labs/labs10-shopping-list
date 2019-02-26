@@ -37,7 +37,7 @@ export const rootReducer = (state = initialState, action) => {
       return state;
 
     case EMAIL_CHECKED:
-      console.log('emc payload', action.payload.id);
+      // console.log('emc payload', action.payload.id);
       localStorage.setItem('userId', action.payload.id);
       return {
         ...state,
@@ -45,7 +45,7 @@ export const rootReducer = (state = initialState, action) => {
       }
       
     case ADDING_USER_TO_STATE:
-    console.log('auts payload', action.payload);
+    // console.log('auts payload', action.payload);
       return {
         ...state,
         name: action.payload.name,
