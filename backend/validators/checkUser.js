@@ -146,6 +146,13 @@ async function routeCheck(req, res, next, userId){
           })
       }
 
+      /**
+       * @TODO Protect groupmember deletion route
+       * Ensures only moderators and self-same members can delete a given user from the group
+       */
+      
+
+
 }
     
 
