@@ -84,6 +84,7 @@ export const addUserToState = () => {
 
   if(userState.email && userState.name && userState.profilePicture){
     return dispatch => {
+      gettingGroups()(dispatch);
       dispatch({type: ADDING_USER_TO_STATE, payload: userState});
 
     }
@@ -113,7 +114,6 @@ export const gettingGroups = () => async dispatch => {
   // Retrieve all the groups the user owns
   axios.get(endpoint, options)
       .then(response => {
-        console.log("RES => ", response.data.data);
         dispatch({ type: GET_GROUPS_SUCCESS, payload: response.data.data });
       })
       .catch(err => {

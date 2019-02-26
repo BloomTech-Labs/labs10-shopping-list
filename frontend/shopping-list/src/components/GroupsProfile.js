@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
+import {gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import "./Styles/Group.css";
@@ -37,7 +37,13 @@ class GroupsPage extends Component{
      * Retrieve a list of items from state
     */
     componentWillMount() {
+        this.props.gettingGroups();
         this.props.getItems(Number(this.props.match.params.id));
+
+        if (this.props.groups !== null) {
+            const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
+            this.setState({ group: group[0]})
+        }
     }
 
     // Toggles the modals
@@ -138,7 +144,6 @@ class GroupsPage extends Component{
                     </div>
                     <div className={"group-profile-header-title"}><h3>{this.state.group !== null ? this.state.group.name : ""}</h3></div>
                     <div className={"group-profile-columns"}>
-
                         <div className={"group-profile-list"}>
                             <div className={"group-profile-list-container"}>
                                 <MDBContainer>
@@ -236,5 +241,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    addItem, getItems, updateItemPurchesd, submitPaidItems
+    gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems
 })(GroupsPage);
