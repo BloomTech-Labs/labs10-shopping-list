@@ -53,7 +53,6 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <state key="normal" title="Group name"/>
                                         <connections>
                                             <action selector="showGroupsButtonPressed:" destination="WgK-Rm-0lC" eventType="touchUpInside" id="0X0-O6-v39"/>
                                         </connections>

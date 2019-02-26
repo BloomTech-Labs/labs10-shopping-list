@@ -16,7 +16,9 @@ class GroupsPopoverView: UIView, NibInstantiatable, UITableViewDelegate, UITable
         super.awakeFromNib()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .red
+        tableView.rowHeight = 80
+        tableView.separatorStyle = .none
+        tableView.tableFooterView = UIView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ReuseIdentifier")
     }
     

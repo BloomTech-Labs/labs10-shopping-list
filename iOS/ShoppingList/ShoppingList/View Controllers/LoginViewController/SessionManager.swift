@@ -37,15 +37,6 @@ class SessionManager {
                 switch(result) {
                 case .success(let profile):
                     userProfile = profile
-                    // Creating the main view controller
-                    let mainVC = MainViewController.instantiate()
-                    // If the main view controller is not the root view controller,
-                    // set it
-                    UI {
-                        if UIApplication.shared.keyWindow?.rootViewController != mainVC {
-                            UIApplication.shared.keyWindow?.rootViewController = mainVC
-                        }
-                    }
                     callback(nil)
                 case .failure(let error):
                     callback(error)

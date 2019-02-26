@@ -113,7 +113,6 @@ class GroupController {
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("user").appendingPathComponent(String(userID))
         
         Alamofire.request(url).validate().responseData { (response) in
-            print(url)
             switch response.result {
             case .success(let value):
                 
