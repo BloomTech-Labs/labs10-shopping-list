@@ -107,7 +107,7 @@ class GroupController {
     }
     
     
-    func getGroupWith(userID: Int, completion: @escaping ([Group]?) -> Void = { _ in }) {
+    func getGroups(forUserID userID: Int, completion: @escaping (Bool) -> Void = { _ in }) {
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("user").appendingPathComponent(String(userID))
         
@@ -123,17 +123,19 @@ class GroupController {
                     let decoder = JSONDecoder()
                     let groups = try decoder.decode(GroupsList.self, from: value)
                     
-                    completion(groups.data)
+                    allGroups = groups
+                    
+                    completion(true)
                     
                 } catch {
                     print("Error getting groups from API response")
-                    completion(nil)
+                    completion(false)
                     return
                 }
                 
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(nil)
+                completion(false)
                 return
             }
         }
