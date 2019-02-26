@@ -10,19 +10,16 @@ import Foundation
 import SimpleKeychain
 import Auth0
 
-var profileName: String = ""
+var userProfile: UserInfo? = nil
 
 enum SessionManagerError: Error {
     case noAccessToken
 }
 
 class SessionManager {
+    
     static let shared = SessionManager()
     let keychain = A0SimpleKeychain(service: "Auth0")
-    
-    var profile: UserInfo?
-    
-    private init () { }
     
     func storeTokens(_ accessToken: String, idToken: String) {
         self.keychain.setString(accessToken, forKey: "access_token")
@@ -39,11 +36,15 @@ class SessionManager {
             .start { result in
                 switch(result) {
                 case .success(let profile):
-                    self.profile = profile
-                    profileName = profile.name ?? " "
+                    userProfile = profile
+                    // Creating the main view controller
+                    let mainVC = MainViewController.instantiate()
+                    // If the main view controller is not the root view controller,
+                    // set it
                     UI {
-                        defaults.set(true, forKey: Keys.isUserLoggedInKey)
-                        UIApplication.shared.keyWindow?.rootViewController = MainViewController.instantiate()
+                        if UIApplication.shared.keyWindow?.rootViewController != mainVC {
+                            UIApplication.shared.keyWindow?.rootViewController = mainVC
+                        }
                     }
                     callback(nil)
                 case .failure(let error):

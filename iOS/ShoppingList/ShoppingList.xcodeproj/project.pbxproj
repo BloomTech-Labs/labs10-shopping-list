@@ -31,6 +31,8 @@
 		96476B522215D41300E57EB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4F2215D41300E57EB9 /* Assets.xcassets */; };
 		96700E2E221C025E00F084B3 /* SettingsTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96700E2D221C025E00F084B3 /* SettingsTableViewController.storyboard */; };
 		96700E31221C035600F084B3 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96700E30221C035600F084B3 /* SettingsTableViewController.swift */; };
+		9691AB552225AEB600C1EE1E /* GroupsPopoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9691AB542225AEB600C1EE1E /* GroupsPopoverView.xib */; };
+		9691AB572225B07600C1EE1E /* GroupsPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9691AB562225B07600C1EE1E /* GroupsPopoverView.swift */; };
 		969A83C82215C9840003BB37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83C52215C9840003BB37 /* AppDelegate.swift */; };
 		969A84012215C99A0003BB37 /* ChameleonShorthand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83CF2215C99A0003BB37 /* ChameleonShorthand.swift */; };
 		969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 969A83D22215C99A0003BB37 /* UIColor+ChameleonPrivate.m */; };
@@ -99,6 +101,8 @@
 		96476B4F2215D41300E57EB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		96700E2D221C025E00F084B3 /* SettingsTableViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsTableViewController.storyboard; sourceTree = "<group>"; };
 		96700E30221C035600F084B3 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		9691AB542225AEB600C1EE1E /* GroupsPopoverView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupsPopoverView.xib; sourceTree = "<group>"; };
+		9691AB562225B07600C1EE1E /* GroupsPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsPopoverView.swift; sourceTree = "<group>"; };
 		969A83C52215C9840003BB37 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		969A83CB2215C99A0003BB37 /* ShoppingList-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShoppingList-Bridging-Header.h"; sourceTree = "<group>"; };
 		969A83CC2215C99A0003BB37 /* Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon.h; sourceTree = "<group>"; };
@@ -253,6 +257,8 @@
 			children = (
 				960FBF6A221C41570076C662 /* MessagePopoverView.xib */,
 				960FBF6C221C427A0076C662 /* MessagePopoverView.swift */,
+				9691AB542225AEB600C1EE1E /* GroupsPopoverView.xib */,
+				9691AB562225B07600C1EE1E /* GroupsPopoverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -490,6 +496,7 @@
 				96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */,
 				96DE3035221637FE00213C3E /* LoginViewController.storyboard in Resources */,
 				96700E2E221C025E00F084B3 /* SettingsTableViewController.storyboard in Resources */,
+				9691AB552225AEB600C1EE1E /* GroupsPopoverView.xib in Resources */,
 				96DE3032221637FE00213C3E /* MainViewController.storyboard in Resources */,
 				96476B522215D41300E57EB9 /* Assets.xcassets in Resources */,
 				960FBF6B221C41570076C662 /* MessagePopoverView.xib in Resources */,
@@ -504,15 +511,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-ShoppingList-checkManifestLockResult.txt",
 			);
@@ -526,10 +529,8 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Auth0/Auth0.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -538,8 +539,6 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Auth0.framework",
@@ -550,7 +549,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -583,6 +582,7 @@
 				969A84182215C99A0003BB37 /* Nib+UIViewController.swift in Sources */,
 				96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */,
 				969A840E2215C99A0003BB37 /* Reusable+NSTableView.swift in Sources */,
+				9691AB572225B07600C1EE1E /* GroupsPopoverView.swift in Sources */,
 				969A84102215C99A0003BB37 /* Storyboard+NSViewController.swift in Sources */,
 				118646D4221CA8CD00D0F04B /* Group.swift in Sources */,
 				443C1B4C22160D9E00220C28 /* Shopping.swift in Sources */,

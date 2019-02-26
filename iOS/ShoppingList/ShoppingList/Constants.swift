@@ -52,4 +52,11 @@ struct Popovers {
         popover.show(popoverView, point: startPoint)
     }
     
+    static func triggerGroupsPopover() {
+        let popoverView = GroupsPopoverView.instantiate()
+        popoverView.frame = CGRect(x: 20, y: -115, width: screen.width - 40, height: 230)
+        let startPoint = CGPoint(x: screen.width / 2, y: (screen.height / 2) - 115)
+        popover.show(popoverView, point: startPoint)
+    }
+    
 }
