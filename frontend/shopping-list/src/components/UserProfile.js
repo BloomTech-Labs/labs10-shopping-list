@@ -15,13 +15,10 @@ class UserProfile extends React.Component{
     }
 
     async componentDidMount(){
-        let email = localStorage.getItem('email');
-
-        if(email && !this.props.userId){
-            // if a user is logged in and no userID is found, retrieve their user ID from the database via their email and store in local storage
-            this.props.checkEmail(email, this.props.addUserToState);
-            // the second parameter is a callback that will execute once the email check is complete
-            // in this case it is populating state with the complete user profile: email, userId, profilePicture, and name
+        if(localStorage.getItem('isLoggedIn') && !this.props.userId){
+            // if a user is logged in and no userID is found, call the checkemail function passing the state populator as a callback
+            this.props.checkEmail(this.props.addUserToState);
+            // the callback will populate state with the complete user profile: email, userId, profilePicture, and name
         }
     }
 

@@ -19,9 +19,11 @@ const checkUser = (req, res, next) => {
 
     userDb.getIdByEmail(req.user.email).then(id => { 
         if(!id || id.length === 0){
-            console.log('no user found with that email');
-            return res.status(403).json({error: `You are not authorized to do that.`})
-            // this ensures that only registered users can access API routes with the checkUser middleware
+            if(req.originalUrl === '/api/user/check/getid'){
+                return next(); // generate user if no user found
+            } else {
+                return res.status(403).json({warning: `You do not have permission to do that.`})
+            }
         } else {
             // console.log('id', id);
             return routeCheck(req, res, next, id[0].id); // if a valid user ID is found, pass it to the routeChecker
@@ -44,14 +46,19 @@ async function routeCheck(req, res, next, userId){
     // console.log('req.url', req.url);
     // console.log('baseUrl', req.baseUrl);
     console.log('originalUrl', req.originalUrl);
+    console.log('req method', req.method);
     // console.log('_parsedUrl', req._parsedUrl)
     // console.log('req params', req.params)
 
     /**
      * Protect User Groups @ /api/group/user/:id
-     * Ensure that only the self-same user can view their user group information
+     * Ensure that only the self-same user can view/update their user group information
      * This way no other users can scrape the API and view another user's group information
-     */
+     *  @TODO Expand this to account for moderator requests
+     * 
+     * */
+
+
     if(req.originalUrl === `/api/group/user/${req.params.id}`){
         let paramId = Number(req.params.id);
         if(userId !== paramId){
@@ -81,8 +88,36 @@ async function routeCheck(req, res, next, userId){
             } else {
                 return next();
             }
-        });
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({error: `Internal server error.`})
+        })
     }
+
+    /**
+     * Protect User Profiles
+     * Ensures that only self-same users can modify their profile information or
+     * delete their accounts (@NOTE strict protection for UPDATE/DELETE requests,
+     * GET requests should be managed individually for public profile schemas,
+     * and CREATE requests should be open to anyone that logs in through Auth0)
+     */
+
+     if(req.originalUrl === `/api/user/${req.params.id}`){
+         let paramId = Number(req.params.id);
+
+         userDb.getById(paramId).then(user => {
+
+             if(userId !== user[0].id){
+                 return res.status(403).json({warning: `You do not have permission to do that.`})
+             } else if(userId === user[0].id){
+                 return next();
+             }
+         }).catch(err => {
+             console.log(err);
+             return res.status(500).json({error: `Internal server error.`})
+         })
+     }
 
 
 }
