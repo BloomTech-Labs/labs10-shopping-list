@@ -41,7 +41,10 @@ class GroupController {
         
         let parameters: Parameters = ["userID": userID, "name": name, "token": token]
         
+
+
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+
             
             switch response.result {
             case .success(let value):
@@ -113,6 +116,9 @@ class GroupController {
             print(url)
             switch response.result {
             case .success(let value):
+                
+                let string = String(data: value, encoding: .utf8)
+                print("Data String: \(string!)")
                 
                 do {
                     

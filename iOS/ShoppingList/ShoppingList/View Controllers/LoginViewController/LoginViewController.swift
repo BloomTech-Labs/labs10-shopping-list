@@ -15,15 +15,8 @@ import SimpleKeychain
 class LoginViewController: UIViewController, StoryboardInstantiatable {
     
     
-    
-    static func accessToken() -> String? {
-        if let tk = KeychainWrapper.standard.string(forKey: "accessToken") {
-            NSLog("accessToken: \(tk)")
-            return tk
-        }
-        NSLog("NO ACCESS TOKEN")
-        return nil
-    }
+
+  
     
     let credentialsManager = CredentialsManager.init(authentication: Auth0.authentication())
     static let storyboardName: StoryboardName = "LoginViewController"
@@ -35,6 +28,7 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
     @IBAction func loginButtonPressed(_ sender: Any) {
         checkAccessToken()
         
+
     }
     
     
@@ -42,6 +36,7 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
     
     
     
+
     func showLogin() {
         
         Auth0
