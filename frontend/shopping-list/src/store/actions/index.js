@@ -17,4 +17,6 @@ export {
   getSingleGroup,
   FETCHING_SINGLE_GROUP,
   SINGLE_GROUP_FETCHED,
+  clearCurrentGroup,
+  CLEARING_CURRENT_GROUP,
 } from "./rootActions";

@@ -11,6 +11,7 @@ import {
   GETTING_ITEMS_FAILED,
   FETCHING_SINGLE_GROUP,
   SINGLE_GROUP_FETCHED,
+  CLEARING_CURRENT_GROUP,
 } from "../actions";
 import { ADDING_USER_TO_STATE } from "../actions/rootActions";
 
@@ -78,6 +79,12 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         currentGroup: action.payload,
+      }
+
+    case CLEARING_CURRENT_GROUP:
+      return {
+        ...state,
+        currentGroup: null,
       }
 
     default:

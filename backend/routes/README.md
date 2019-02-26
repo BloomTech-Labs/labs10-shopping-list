@@ -7,6 +7,7 @@
     * [Add User](#Add-User)
     * [Update User](#Update-User)
     * [Remove User](#Remove-User)
+    * [Get User ID](#Get-User-ID)
 * [Group Endpoints](#Group-Endpoints)
     * [Get Group](#Get-Group)
     * [Add Group](#Add-Group)
@@ -135,6 +136,40 @@ None
   ```javascript
     $.ajax({
       url: "/api/user/email/annam45@gmail.com",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+### Get User ID
+Returns the user ID of the user with the email embedded in the JWT.
+If no user in the database matches the token, a new database entry will be created, and return the new user ID.
+* **URL**<br>
+/api/user/check/getid
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`None`
+* **Data Params**<br>
+`JavaScript Web Token in Authorization Header`
+* **Success Response:**<br>
+    * **Code:** 200 or 201 if new user<br>
+      **Content:** { id: 12 }
+* **Error Response:**<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** {error: "Error retrieving user ID."}
+      * **Code:** 500 INTERNAL SERVER ERROR<br>
+      **Content:** {error: "Error adding new user DB entry."}
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/user/check/getid",
       dataType: "json",
       type : "GET",
       success : function(r) {

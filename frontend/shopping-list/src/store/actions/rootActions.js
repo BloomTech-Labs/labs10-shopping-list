@@ -18,6 +18,7 @@ export const GETTING_ITEMS_SUCCESS = 'GETTING_ITEMS_SUCCESS';
 export const GETTING_ITEMS_FAILED = 'GETTING_ITEMS_FAILED';
 export const FETCHING_SINGLE_GROUP = 'FETCHING_SINGLE_GROUP';
 export const SINGLE_GROUP_FETCHED = 'SINGLE_GROUP_FETCHED';
+export const CLEARING_CURRENT_GROUP = 'CLEARING_CURRENT_GROUP';
 
 
 let backendURL;
@@ -183,5 +184,11 @@ export const getSingleGroup = (groupId) => {
       console.log(err);
       dispatch({type: ERROR})
     })
+  }
+}
+
+export const clearCurrentGroup = () => {
+  return dispatch => {
+    dispatch({type: CLEARING_CURRENT_GROUP});
   }
 }

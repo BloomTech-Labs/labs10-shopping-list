@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups, addGroup } from '../store/actions/rootActions';
+import {checkEmail, gettingGroups, addGroup, clearCurrentGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
@@ -29,6 +29,8 @@ class GroupsPage extends Component{
 
         this.props.gettingGroups();
         this.setState({ groups: this.props.groups})
+
+        this.props.clearCurrentGroup();
     }
 
     toggle = nr => () => {
@@ -115,5 +117,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    checkEmail, gettingGroups, addGroup
+    checkEmail, gettingGroups, addGroup, clearCurrentGroup,
 })(GroupsPage);

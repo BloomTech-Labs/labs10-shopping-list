@@ -38,9 +38,6 @@ class GroupsPage extends Component{
             // if not, fetch it from the database
             // this function is necessary to prevent the app crashing on refresh or if a user visits it from a direct link, e.g. a bookmark
             await this.props.getSingleGroup(this.props.match.params.id); // fetches group info from server and adds it to state
-        /**
-         * @NOTE There is a lag between rendering the old and new currentGroup that needs to be addressed
-         */
         }
     }
 
@@ -70,14 +67,14 @@ class GroupsPage extends Component{
         console.log('current group', this.props.currentGroup);
         const purchased = this.props.items.filter(itm => itm.purchased === true);
         
-        if(!this.props.currentGroup){ // tell user info is loading...
-            /**
-             * @TODO Create a loading component that can render during data queries
-             */
-            return (
-                <div>Fetching group information...</div>
-            )
-        } else {
+        // if(!this.props.currentGroup){ // tell user info is loading...
+        //     /**
+        //      * @TODO Create a loading component that can render during data queries
+        //      */
+        //     return (
+        //         <div>Fetching group information...</div>
+        //     )
+        // } else {
         
         return (
             <div>
@@ -85,14 +82,14 @@ class GroupsPage extends Component{
                 <div className={"group-profile-container"}>
                     {/*<h1>{this.state.group !== null ? this.state.group.name : ""}</h1>*/}
                     
-                    <h1>{this.props.currentGroup.name}</h1>
+                    <h1>{this.props.currentGroup !== null ? this.props.currentGroup.name : ""}</h1>
                     <div className={"group-profile-header"}>
                         <MDBBtn color="primary" >List</MDBBtn>
                         <MDBBtn color="primary" >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" >Total</MDBBtn>
                     </div>
-                    <div className={"group-profile-header-title"}><h3>{this.props.currentGroup.name}</h3></div>
+                    <div className={"group-profile-header-title"}><h3></h3></div>
                     <div className={"group-profile-columns"}>
 
                         <div className={"group-profile-list"}>
@@ -142,7 +139,6 @@ class GroupsPage extends Component{
             </div>
         )
     }
-}
 }
 
 const mapStateToProps = state => {
