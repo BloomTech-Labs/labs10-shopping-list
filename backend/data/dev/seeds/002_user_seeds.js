@@ -13,7 +13,7 @@ exports.seed = function(knex, promise) {
   }
 
   // Deletes ALL existing entries and resets primary keys
-  return knex(`users`).truncate()
+  return knex(`users`).del()
       .then(function () {
         // Inserts seed entries
         return knex(`users`).insert(fakeUsers);

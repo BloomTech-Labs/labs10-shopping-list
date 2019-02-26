@@ -16,7 +16,7 @@ struct GroupsList: Codable {
 struct Group: Codable {
     
     var name: String
-    var groupID: Int?
+    var groupID: Int
     var token: String?
     var userID: Int
     
@@ -27,6 +27,7 @@ struct Group: Codable {
     
     var members: [GroupMember]?
     var trips: [Trip]?
+    var items: [Item]?
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -41,7 +42,7 @@ struct Group: Codable {
     }
     
     
-    init(name: String, userID: Int, token: String) {
+    init(name: String, userID: Int, token: String, groupID: Int) {
         
         self.name = name
 
@@ -52,6 +53,8 @@ struct Group: Codable {
         
         self.memberAmount = 1
         self.token = token
+        
+        self.groupID = groupID
     }
 }
 

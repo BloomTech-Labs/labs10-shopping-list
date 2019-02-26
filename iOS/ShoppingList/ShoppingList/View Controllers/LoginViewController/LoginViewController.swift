@@ -15,7 +15,6 @@ import SimpleKeychain
 class LoginViewController: UIViewController, StoryboardInstantiatable {
     
     static let storyboardName: StoryboardName = "LoginViewController"
-    
     let credentialsManager = CredentialsManager.init(authentication: Auth0.authentication())
     
     override func viewDidLoad() {
@@ -25,8 +24,6 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
     @IBAction func loginButtonPressed(_ sender: Any) {
         checkAccessToken()
     }
-   
-    
 
     func showLogin() {
         
