@@ -36,10 +36,6 @@ class GroupsPage extends Component{
         this.props.getItems(Number(this.props.match.params.id));
     }
 
-    componentDidMount(){
-
-    }
-
     toggle = nr => () => {
         let modalNumber = 'modal' + nr
         this.setState({
@@ -51,6 +47,10 @@ class GroupsPage extends Component{
         this.setState({
             [e.target.name]: e.target.value
         })
+    }
+
+    itmPurchased = () => {
+        this.setState({itemPurchased: true})
     }
 
     check = e => {
@@ -73,16 +73,35 @@ class GroupsPage extends Component{
      * Creates an item object and send it to the action to add to the database
     */
     handleAddItem = () => {
-        const item = {
-            name: this.state.itemName,
-            groupID: Number(this.props.match.params.id),
-            price: Number(this.state.itemPrice),
-            quantity: Number(this.state.itemQuantity),
-            measurement: this.state.itemMeasure,
-            purchased: this.state.itemPurchased
-        };
-        this.props.addItem(item);
-        this.setState({modal14: false});
+        let item = null;
+        if (this.state.itemPurchased) {
+            item = {
+                name: this.state.itemName,
+                groupID: Number(this.props.match.params.id),
+                price: Number(this.state.itemPrice),
+                quantity: Number(this.state.itemQuantity),
+                measurement: this.state.itemMeasure,
+                purchased: this.state.itemPurchased
+            };
+
+            this.props.addItem(item);
+            const purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null);
+            this.props.submitPaidItems(purchased, Number(localStorage.getItem("userId")), Number(this.state.itemPrice));
+            this.setState({modal14: false});
+        } else {
+            item = {
+                name: this.state.itemName,
+                groupID: Number(this.props.match.params.id),
+                price: Number(this.state.itemPrice),
+                quantity: Number(this.state.itemQuantity),
+                measurement: this.state.itemMeasure
+            };
+            this.props.addItem(item);
+            this.setState({modal14: false});
+        }
+
+
+
 
     }
 
@@ -166,7 +185,7 @@ class GroupsPage extends Component{
                             <MDBInput required label="Item Price *" type={"number"} step={0.01} name={"itemPrice"} onChange={this.handleInput} defaultValue={this.state.itemPrice}/>
                             <MDBInput required label="Item Quantity *" type={"number"} name={"itemQuantity"} onChange={this.handleInput} defaultValue={this.state.itemQuantity}/>
                             <MDBInput label="Item Measurement" type={"text"} name={"itemMeasure"} onChange={this.handleInput} defaultValue={this.state.itemMeasure}/>
-                            <MDBInput label="Item Purchased" type={"checkbox"} name={"itemPurchased"} onChange={this.handleInput} defaultValue={this.state.itemPurchased}/>
+                            <MDBInput label="Item Purchased" type={"checkbox"} name={"itemPurchased"} onClick={this.itmPurchased} defaultValue={this.state.itemPurchased}/>
 
                         </MDBModalBody>
                         <MDBModalFooter>

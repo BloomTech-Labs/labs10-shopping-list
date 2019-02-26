@@ -221,6 +221,8 @@ export const addItem = (item) => dispatch => {
     }
   };
 
+  console.log("ITEM => ", item);
+
   // Add items to the server and then get the items to update state
   axios.post(endpoint, item, options)
       .then(() => {
