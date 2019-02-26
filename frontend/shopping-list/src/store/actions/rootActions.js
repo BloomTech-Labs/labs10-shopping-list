@@ -60,11 +60,26 @@ export const checkEmail = (email, callback) => {
     }
   }
 
+  let mailChimpOptions = {
+    headers: {
+      Authorization: `apikey c32e6495243af66eed1f96809158484e-us20`
+    }
+  }
+
+  let mailChimpBody = {
+    email_address: email,
+    status: "subscribed"
+  }
+
   const fetchUserId = axios.post(`${backendURL}/api/user/getid`, user, options);
 
   return dispatch => {
     dispatch({type: CHECKING_EMAIL});
-
+    axios.post(
+      `https://us20.api.mailchimp.com/3.0/lists/fb7a741034/members`,
+      mailChimpBody,
+      mailChimpOptions
+    )
     fetchUserId.then(res => {
       console.log('check email', res.data);
       dispatch({type: EMAIL_CHECKED, payload: res.data});
