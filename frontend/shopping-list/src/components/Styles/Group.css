@@ -49,9 +49,7 @@
 }
 
 .group-profile-bought-list {
-    width: 30%;
     display: flex;
-    margin-left: 5%;
 }
 
 .group-profile-bought-input {
