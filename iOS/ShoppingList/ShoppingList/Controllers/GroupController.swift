@@ -93,9 +93,9 @@ class GroupController {
 
             switch response.result {
             case .success(_):
-                
                 completion(myGroup)
                 return
+                
             case .failure(let error):
                 print(error.localizedDescription)
                 completion(myGroup)
