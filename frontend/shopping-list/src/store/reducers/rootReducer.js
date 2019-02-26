@@ -6,19 +6,24 @@ import {
   EMAIL_CHECKED,
   ADDING_GROUPS_TO_STATE,
   ADDING_GROUPS_TO_STATE_FAILED,
+  ADDING_USER_TO_STATE,
   GETTING_ITEMS,
   GETTING_ITEMS_SUCCESS,
-  GETTING_ITEMS_FAILED
+  GETTING_ITEMS_FAILED,
+  FETCHING_SINGLE_GROUP,
+  SINGLE_GROUP_FETCHED,
+  CLEARING_CURRENT_GROUP,
+  UPDATE_ITEM_PURCHASED_START
 } from "../actions";
-import { ADDING_USER_TO_STATE } from "../actions/rootActions";
 
 const initialState = {
   userId: null,
   name: null,
   email: null,
   profilePicture: null,
-  groups: [{name: "Lament House", memberAmount: 1}],
-  items: [{groupId: 0, name: "Milk"}]
+  currentGroup: null,
+  groups: null,
+  items: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -34,15 +39,14 @@ export const rootReducer = (state = initialState, action) => {
       return state;
 
     case EMAIL_CHECKED:
-      console.log('emc payload', action.payload.id);
+      // console.log('emc payload', action.payload.id);
       localStorage.setItem('userId', action.payload.id);
       return {
         ...state,
         userId: action.payload.id
       }
-      
+
     case ADDING_USER_TO_STATE:
-    console.log('auts payload', action.payload);
       return {
         ...state,
         name: action.payload.name,
@@ -64,7 +68,35 @@ export const rootReducer = (state = initialState, action) => {
       return { ...state, items: action.payload}
 
     case GETTING_ITEMS_FAILED:
-      return { ...state, items: [{groupId: 0}] };
+      return { ...state, items: null };
+
+      // Purchasing Items
+    case UPDATE_ITEM_PURCHASED_START:
+      let itms = state.items.map(itm => {
+        if (itm.id === action.payload) {
+          itm.purchased = !itm.purchased
+        }
+
+        return itm;
+      })
+      return { ...state, items: itms}
+
+    case FETCHING_SINGLE_GROUP:
+      return {
+        ...state,
+      }
+
+    case SINGLE_GROUP_FETCHED:
+      return {
+        ...state,
+        currentGroup: action.payload,
+      }
+
+    case CLEARING_CURRENT_GROUP:
+      return {
+        ...state,
+        currentGroup: null,
+      }
 
     default:
       return state;
