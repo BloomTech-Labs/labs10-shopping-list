@@ -1,27 +1,26 @@
 import axios from 'axios';
 // import auth0Client from '../../components/Auth';
 
-
-export const TEST_START = "TEST_START";
-export const TEST_SUCCESS = "TEST_SUCCESS";
-export const TEST_FAILURE = "TEST_FAILURE";
 export const CHECKING_EMAIL = 'CHECKING_EMAIL';
 export const EMAIL_CHECKED = 'EMAIL_CHECKED';
 export const ERROR = 'ERROR';
 export const ADDING_USER_TO_STATE = 'ADDING_USER_TO_STATE';
 
-export const ADDING_GROUPS_TO_STATE = 'ADDING_GROUPS_TO_STATE';
-export const ADDING_GROUPS_TO_STATE_FAILED = 'ADDING_GROUPS_TO_STATE_FAILED';
-export const ADDING_GROUPS_TO_SERVER = 'ADDING_GROUPS_TO_SERVER';
-export const ADDING_GROUPS_TO_SERVER_FAILED = 'ADDING_GROUPS_TO_SERVER_FAILED';
+export const GET_GROUPS_START = 'GET_GROUPS_START';
+export const GET_GROUPS_SUCCESS = 'GET_GROUPS_SUCCESS';
+export const GET_GROUPS_FAILED = 'GET_GROUPS_FAILED';
 
-export const GETTING_ITEMS = 'GETTING_ITEMS';
-export const GETTING_ITEMS_SUCCESS = 'GETTING_ITEMS_SUCCESS';
-export const GETTING_ITEMS_FAILED = 'GETTING_ITEMS_FAILED';
+export const ADD_GROUP_START = 'ADD_GROUP_START';
+export const ADD_GROUP_SUCCESS = 'ADD_GROUP_SUCCESS';
+export const ADD_GROUP_FAILED = 'ADD_GROUP_FAILED';
 
-export const ADDING_ITEM_START = 'ADDING_ITEM_START';
-export const ADDING_ITEM_SUCCESS = 'ADDING_ITEM_SUCCESS';
-export const ADDING_ITEM_FAILED = 'ADDING_ITEM_FAILED';
+export const GET_ITEMS_START = 'GET_ITEMS_START';
+export const GET_ITEMS_SUCCESS = 'GET_ITEMS_SUCCESS';
+export const GET_ITEMS_FAILED = 'GET_ITEMS_FAILED';
+
+export const ADD_ITEM_START = 'ADD_ITEM_START';
+export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
+export const ADD_ITEM_FAILED = 'ADD_ITEM_FAILED';
 
 export const UPDATE_ITEM_PURCHASED_START = "UPDATE_ITEM_PURCHASED_START";
 
@@ -36,20 +35,6 @@ if(process.env.NODE_ENV === 'development'){
 } else {
   backendURL = `https://shoptrak-backend.herokuapp.com`
 }
-
-/**
- * Test function
- * @param  {} dispatch
- */
-export const testFunction = () => dispatch => {
-  dispatch({ type: TEST_START });
-
-  const result = true;
-
-  if (result) return dispatch({ type: TEST_SUCCESS });
-
-  dispatch({ type: TEST_FAILURE });
-};
 
 // takes in the user email from auth0 profile
 // sends email to server to obtain user ID
@@ -110,10 +95,39 @@ export const addUserToState = () => {
 }
 
 /*
+ * Retrieves a list of groups that the user owns.
+ */
+// TODO - Change this to groupMembers to get ALL the groups the user is IN - not just owned
+export const gettingGroups = () => async dispatch => {
+  dispatch({ type: GET_GROUPS_START });
+  const userID = localStorage.getItem('userId');
+  const token = localStorage.getItem('jwt');
+  const endpoint = `${backendURL}/api/group/user/${userID}`;
+
+  const options = {
+    headers: {
+      Authorization: token
+    }
+  };
+
+  // Retrieve all the groups the user owns
+  axios.get(endpoint, options)
+      .then(response => {
+        console.log("RES => ", response.data.data);
+        dispatch({ type: GET_GROUPS_SUCCESS, payload: response.data.data });
+      })
+      .catch(err => {
+        console.log("GETTING GROUPS ERR => ", err);
+        dispatch({ type: GET_GROUPS_FAILED, payload: err });
+      });
+};
+
+/*
  * Adds a new group to the database that the user has created
  * @param group - The newly created group `name`
  */
 export const addGroup = (group) => dispatch => {
+  dispatch({ type: ADD_GROUP_START });
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/group/`;
@@ -134,49 +148,22 @@ export const addGroup = (group) => dispatch => {
       .then(() => {
         gettingGroups()(dispatch)
             .then(() => {
-              dispatch({ type: ADDING_GROUPS_TO_SERVER });
+              dispatch({ type: ADD_GROUP_SUCCESS });
             })
       })
       .catch(err => {
         console.log("ADDING GROUP ERR => ", err);
-        dispatch({ type: ADDING_GROUPS_TO_SERVER_FAILED, payload: err });
+        dispatch({ type: ADD_GROUP_FAILED, payload: err });
       });
 
 }
-
-/*
- * Retrieves a list of groups that the user owns.
- */
-// TODO - Change this to groupMembers to get ALL the groups the user is IN - not just owned
-export const gettingGroups = () => async dispatch => {
-  const userID = localStorage.getItem('userId');
-  const token = localStorage.getItem('jwt');
-  const endpoint = `${backendURL}/api/group/user/${userID}`;
-
-  const options = {
-    headers: {
-      Authorization: token
-    }
-  };
-
-  // Retrieve all the groups the user owns
-  axios.get(endpoint, options)
-      .then(response => {
-        console.log("RES => ", response.data.data);
-        dispatch({ type: ADDING_GROUPS_TO_STATE, payload: response.data.data });
-      })
-      .catch(err => {
-        console.log("GETTING GROUPS ERR => ", err);
-        dispatch({ type: ADDING_GROUPS_TO_STATE_FAILED, payload: err });
-      });
-};
 
 /*
  * Retrieves a list of items for a specified group with a group ID.
  * @param id - Group ID
  */
 export const getItems = (id) => dispatch => {
-  dispatch({ type: GETTING_ITEMS });
+  dispatch({ type: GET_ITEMS_START });
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/item/group/${id}`;
 
@@ -197,11 +184,11 @@ export const getItems = (id) => dispatch => {
           return (x === y)? 0 : x? -1 : 1;
         })
 
-        dispatch({ type: GETTING_ITEMS_SUCCESS, payload: sorted });
+        dispatch({ type: GET_ITEMS_SUCCESS, payload: sorted });
       })
       .catch(err => {
         console.log("GETTING GROUPS ERR => ", err);
-        dispatch({ type: GETTING_ITEMS_FAILED, payload: err });
+        dispatch({ type: GET_ITEMS_FAILED, payload: err });
       });
 }
 
@@ -210,7 +197,7 @@ export const getItems = (id) => dispatch => {
  * @param id - Group ID
  */
 export const addItem = (item) => dispatch => {
-  dispatch({ type: ADDING_ITEM_START });
+  dispatch({ type: ADD_ITEM_START });
 
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/item`;
@@ -228,11 +215,11 @@ export const addItem = (item) => dispatch => {
         getItems(item.groupID)(dispatch)
       })
       .then(response => {
-        dispatch({ type: ADDING_ITEM_SUCCESS, payload: response.data.data });
+        dispatch({ type: ADD_ITEM_SUCCESS, payload: response.data.data });
       })
       .catch(err => {
         console.log("ADDING ITEM ERR => ", err);
-        dispatch({ type: ADDING_ITEM_FAILED, payload: err });
+        dispatch({ type: ADD_ITEM_FAILED, payload: err });
       });
 }
 

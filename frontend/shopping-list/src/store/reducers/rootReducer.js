@@ -1,18 +1,25 @@
 import {
-  TEST_START,
-  TEST_SUCCESS,
-  TEST_FAILURE,
   CHECKING_EMAIL,
   EMAIL_CHECKED,
-  ADDING_GROUPS_TO_STATE,
-  ADDING_GROUPS_TO_STATE_FAILED,
-  GETTING_ITEMS,
-  GETTING_ITEMS_SUCCESS,
-  GETTING_ITEMS_FAILED,
+  ERROR,
+  ADDING_USER_TO_STATE,
+  GET_GROUPS_START,
+  GET_GROUPS_SUCCESS,
+  GET_GROUPS_FAILED,
+  ADD_GROUP_START,
+  ADD_GROUP_SUCCESS,
+  ADD_GROUP_FAILED,
+  GET_ITEMS_START,
+  GET_ITEMS_SUCCESS,
+  GET_ITEMS_FAILED,
+  ADD_ITEM_START,
+  ADD_ITEM_SUCCESS,
+  ADD_ITEM_FAILED,
   UPDATE_ITEM_PURCHASED_START,
   SUBMIT_PAID_ITEMS_START,
+  SUBMIT_PAID_ITEMS_SUCCESS,
+  SUBMIT_PAID_ITEMS_FAILED,
 } from "../actions";
-import { ADDING_USER_TO_STATE } from "../actions/rootActions";
 
 const initialState = {
   userId: null,
@@ -25,18 +32,11 @@ const initialState = {
 
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TEST_START:
-      return state;
-    case TEST_SUCCESS:
-      return state;
-    case TEST_FAILURE:
-      return state;
-
+    // User
     case CHECKING_EMAIL:
       return state;
 
     case EMAIL_CHECKED:
-      console.log('emc payload', action.payload.id);
       localStorage.setItem('userId', action.payload.id);
       return {
         ...state,
@@ -44,30 +44,56 @@ export const rootReducer = (state = initialState, action) => {
       }
       
     case ADDING_USER_TO_STATE:
-    console.log('auts payload', action.payload);
       return {
         ...state,
         name: action.payload.name,
         email: action.payload.email,
         profilePicture: action.payload.profilePicture,
       }
-    case ADDING_GROUPS_TO_STATE:
+
+    // Getting Groups
+    case GET_GROUPS_START:
+      return state;
+
+    case GET_GROUPS_SUCCESS:
       return {
         ...state,
         groups: action.payload
       }
-    case ADDING_GROUPS_TO_STATE_FAILED:
+    case GET_GROUPS_FAILED:
       return state;
 
-    case GETTING_ITEMS:
+    // Adding Group
+    case ADD_GROUP_START:
       return state;
 
-    case GETTING_ITEMS_SUCCESS:
+    case ADD_GROUP_SUCCESS:
+      return state;
+
+    case ADD_GROUP_FAILED:
+      return state;
+
+    // Getting Items
+    case GET_ITEMS_START:
+      return state;
+
+    case GET_ITEMS_SUCCESS:
       return { ...state, items: action.payload}
 
-    case GETTING_ITEMS_FAILED:
-      return { ...state };
+    case GET_ITEMS_FAILED:
+      return { ...state, items: null };
 
+    // Adding Item
+    case ADD_ITEM_START:
+      return state;
+
+    case ADD_ITEM_SUCCESS:
+      return state;
+
+    case ADD_ITEM_FAILED:
+      return state;
+
+    // Purchasing Items
     case UPDATE_ITEM_PURCHASED_START:
       let itms = state.items.map(itm => {
         if (itm.id === action.payload) {
@@ -77,6 +103,16 @@ export const rootReducer = (state = initialState, action) => {
         return itm;
       })
       return { ...state, items: itms}
+
+    // Submitting Paid Items
+    case SUBMIT_PAID_ITEMS_START:
+      return state;
+
+    case SUBMIT_PAID_ITEMS_SUCCESS:
+      return state;
+
+    case SUBMIT_PAID_ITEMS_FAILED:
+      return state;
 
     default:
       return state;
