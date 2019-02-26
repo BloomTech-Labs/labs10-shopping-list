@@ -14,19 +14,8 @@ import SimpleKeychain
 
 class LoginViewController: UIViewController, StoryboardInstantiatable {
     
-    
-    
-    static func accessToken() -> String? {
-        if let tk = KeychainWrapper.standard.string(forKey: "accessToken") {
-            NSLog("accessToken: \(tk)")
-            return tk
-        }
-        NSLog("NO ACCESS TOKEN")
-        return nil
-    }
-    
-    let credentialsManager = CredentialsManager.init(authentication: Auth0.authentication())
     static let storyboardName: StoryboardName = "LoginViewController"
+    let credentialsManager = CredentialsManager.init(authentication: Auth0.authentication())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +23,12 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
     
     @IBAction func loginButtonPressed(_ sender: Any) {
         checkAccessToken()
-
-        }
-        
+    }
     
-
-   
+    
+    
+    
+    
     
 
     func showLogin() {
@@ -60,25 +49,25 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
                         guard error == nil else {
                             return self.showLogin()
                         }
-                       
+                        
                     }
                 }
         }
-  
-    }
         
- func checkAccessToken() {
-       
+    }
+    
+    func checkAccessToken() {
+        
         SessionManager.shared.logout()
         SessionManager.shared.retrieveProfile { error in
-                guard error == nil else {
-                    return self.showLogin()
-                }
-                UI {
-                    defaults.set(true, forKey: Keys.isUserLoggedInKey)
-                    UIApplication.shared.keyWindow?.rootViewController = MainViewController.instantiate()
+            guard error == nil else {
+                return self.showLogin()
+            }
+            UI {
+                defaults.set(true, forKey: Keys.isUserLoggedInKey)
+                UIApplication.shared.keyWindow?.rootViewController = MainViewController.instantiate()
+            }
         }
     }
-       }
 }
 
