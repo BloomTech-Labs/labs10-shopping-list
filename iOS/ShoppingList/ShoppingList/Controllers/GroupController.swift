@@ -115,9 +115,6 @@ class GroupController {
             switch response.result {
             case .success(let value):
                 
-                let string = String(data: value, encoding: .utf8)
-                print("Data String: \(string!)")
-                
                 do {
                     
                     let decoder = JSONDecoder()
