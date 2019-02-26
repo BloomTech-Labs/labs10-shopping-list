@@ -19,7 +19,8 @@ struct GroupMember: Codable {
     var total: Double
     var userID: Int
     var weeklyNotification: Bool
-    
+    var createdAt: String
+    var updatedAt: String
     
     enum CodingKeys: String, CodingKey {
         case groupID
@@ -29,6 +30,8 @@ struct GroupMember: Codable {
         case total
         case userID
         case weeklyNotification
+        case createdAt
+        case updatedAt
         case id
     }
 }
