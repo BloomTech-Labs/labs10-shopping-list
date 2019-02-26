@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {checkEmail, gettingGroups, addGroup, getItems, getSingleGroup } from '../store/actions/rootActions';
-import {gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
+import {addItem, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import "./Styles/Group.css";

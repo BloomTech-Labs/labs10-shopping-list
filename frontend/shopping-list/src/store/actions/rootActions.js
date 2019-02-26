@@ -62,38 +62,39 @@ export const checkEmail = () => {
     }
   }
 
-<<<<<<< HEAD
   let mailChimpOptions = {
     headers: {
       Authorization: `apikey ${process.env.APIKEY}`
     }
   }
 
-  let mailChimpBody = {
-    email_address: email,
-    status: "subscribed"
-  }
-
-  const fetchUserId = axios.post(`${backendURL}/api/user/getid`, user, options);
-
+  
+  const fetchUserId = axios.get(`${backendURL}/api/user/check/getid`, options);
+  
   return dispatch => {
     dispatch({type: CHECKING_EMAIL});
-    axios.post(
-      `https://us20.api.mailchimp.com/3.0/lists/fb7a741034/members`,
-      mailChimpBody,
-      mailChimpOptions
-    )
-=======
-  const fetchUserId = axios.get(`${backendURL}/api/user/check/getid`, options);
-
-    return (dispatch) => {
-      dispatch({type: CHECKING_EMAIL});
-
->>>>>>> master
     fetchUserId.then(res => {
       console.log('check email', res.data);
       dispatch({type: EMAIL_CHECKED, payload: res.data});
-
+      axios.get(`${backendURL}/api/user/${res.data.id}`, options).then(res => {
+        let mailChimpBody = {
+          email_address: res.data.email,
+          status: "subscribed"
+        }
+        axios.post(
+          `https://us20.api.mailchimp.com/3.0/lists/fb7a741034/members`,
+          mailChimpBody,
+          mailChimpOptions
+        ).then(res => {
+          console.log(res.data);
+        }).catch(err => {
+          console.log(err);
+          dispatch({type: ERROR})
+        })
+      }).catch(err => {
+        console.log(err);
+        dispatch({type: ERROR})
+      })
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})
@@ -221,7 +222,7 @@ export const clearCurrentGroup = () => {
   return dispatch => {
     dispatch({type: CLEARING_CURRENT_GROUP});
   }
-
+}
 /*
  * Add an item to the database for a specified group.
  * @param id - Group ID
@@ -316,4 +317,4 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
           dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: err });
         })
   });
-}}
+}

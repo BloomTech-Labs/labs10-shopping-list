@@ -74,9 +74,6 @@ typings/
 .DS_Store
 package-lock.json
 yarn.lock
-<<<<<<< HEAD
 yarn.error.log
-=======
 yarn
->>>>>>> master
 
