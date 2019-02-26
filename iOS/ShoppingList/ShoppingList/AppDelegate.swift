@@ -8,7 +8,6 @@
 
 import UIKit
 import Auth0
-import SwiftKeychainWrapper
 import SimpleKeychain
 
 let defaults = UserDefaults.standard
@@ -22,16 +21,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         window?.makeKeyAndVisible()
+
         let accessToken = A0SimpleKeychain(service: "Auth0").string(forKey:"access_token")
-        
-        
-        // let isLoggedIn = defaults.bool(forKey: Keys.isUserLoggedInKey)
+        isLoggedIn = accessToken != nil ? true : false
+
         let loginVC = LoginViewController.instantiate()
         let mainVC = MainViewController.instantiate()
         
+        window?.rootViewController = accessToken != nil ? mainVC : loginVC
         
-        window?.rootViewController = (accessToken != nil) ? mainVC : loginVC
-        
+        SessionManager.shared.retrieveProfile { (_) in }
+
         return true
     }
     
