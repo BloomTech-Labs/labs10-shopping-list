@@ -23,9 +23,8 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         super.viewDidLoad()
         setup()
         
-        guard let profile = userProfile else { return }
-        profilePictureImageView.kf.setImage(with: profile.picture)
-        profileNameLabel.text = profile.name
+        profilePictureImageView.kf.setImage(with: userProfile.picture)
+        profileNameLabel.text = userProfile.name
     }
     
     private func setup() {

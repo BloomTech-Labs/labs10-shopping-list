@@ -10,7 +10,7 @@ import Foundation
 import SimpleKeychain
 import Auth0
 
-var userProfile: UserInfo? = nil
+var userProfile: UserInfo!
 
 enum SessionManagerError: Error {
     case noAccessToken
