@@ -123,7 +123,7 @@ class GroupController {
                     let decoder = JSONDecoder()
                     let groups = try decoder.decode(GroupsList.self, from: value)
                     
-                    allGroups = groups
+                    allGroups = groups.data
                     
                     completion(true)
                     
