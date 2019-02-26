@@ -67,7 +67,6 @@ class GroupsPage extends Component{
         const purchased = this.props.items.filter(itm => itm.purchased === true);
         return (
             <div>
-                <Navigation />
                 <div className={"group-profile-container"}>
                     {/*<h1>{this.state.group !== null ? this.state.group.name : ""}</h1>*/}
                     <div className={"group-profile-header"}>
