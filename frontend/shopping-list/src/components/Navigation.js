@@ -24,7 +24,7 @@ class Navigation extends React.Component{
         }
     }
     
-// Toggles dropdown menus for MDB
+    // Toggles dropdown menus for MDB
     toggleCollapse = collapseID => () =>
         this.setState(prevState => ({
             collapseID: prevState.collapseID !== collapseID ? collapseID : ""

@@ -73,7 +73,6 @@ groupRouter.post('/', (req, res) => {
             })
         }
 
-
     }).catch(err => {
         const error = {
             message: `Internal Server Error - Adding Group`,

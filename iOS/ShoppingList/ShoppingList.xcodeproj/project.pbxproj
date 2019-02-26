@@ -16,6 +16,7 @@
 		118646DC221CAA5600D0F04B /* GroupMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646DB221CAA5600D0F04B /* GroupMember.swift */; };
 		118646DE221CAAA100D0F04B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646DD221CAAA100D0F04B /* Category.swift */; };
 		118646E0221DCE9B00D0F04B /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646DF221DCE9B00D0F04B /* UserController.swift */; };
+		119B303D2225ABC300DF93E6 /* GroupMemberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119B303C2225ABC300DF93E6 /* GroupMemberController.swift */; };
 		11F5380D221F51EA0046BDFC /* HelperFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5380C221F51EA0046BDFC /* HelperFile.swift */; };
 		1423D70A921BE0FF6817A9D5 /* Pods_ShoppingList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */; };
 		443C1B4C22160D9E00220C28 /* Shopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C1B4B22160D9E00220C28 /* Shopping.swift */; };
@@ -81,6 +82,7 @@
 		118646DB221CAA5600D0F04B /* GroupMember.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMember.swift; sourceTree = "<group>"; };
 		118646DD221CAAA100D0F04B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		118646DF221DCE9B00D0F04B /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
+		119B303C2225ABC300DF93E6 /* GroupMemberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberController.swift; sourceTree = "<group>"; };
 		11F5380C221F51EA0046BDFC /* HelperFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFile.swift; sourceTree = "<group>"; };
 		443C1B322214A45100220C28 /* ShoppingList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShoppingList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		443C1B4B22160D9E00220C28 /* Shopping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shopping.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			children = (
 				11F5380C221F51EA0046BDFC /* HelperFile.swift */,
 				112430AD2216267E0081784C /* GroupController.swift */,
+				119B303C2225ABC300DF93E6 /* GroupMemberController.swift */,
 				118646DF221DCE9B00D0F04B /* UserController.swift */,
 				112430AF221631350081784C /* ItemController.swift */,
 			);
@@ -529,7 +532,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Auth0/Auth0.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -550,7 +553,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -597,6 +600,7 @@
 				969A84062215C99A0003BB37 /* UIView+ChameleonPrivate.m in Sources */,
 				969A84132215C99A0003BB37 /* Nib.swift in Sources */,
 				96DE3033221637FE00213C3E /* MainViewController.swift in Sources */,
+				119B303D2225ABC300DF93E6 /* GroupMemberController.swift in Sources */,
 				96DE3034221637FE00213C3E /* LoginViewController.swift in Sources */,
 				969A84082215C99A0003BB37 /* NSArray+Chameleon.m in Sources */,
 				969A840A2215C99A0003BB37 /* UILabel+Chameleon.m in Sources */,

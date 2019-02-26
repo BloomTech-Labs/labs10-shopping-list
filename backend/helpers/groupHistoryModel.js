@@ -63,10 +63,10 @@ function getById(groupID, userID) {
  * @param groupMember - The new group history to add
  * @returns {*} - Returns the group history
  */
-function add(groupHistory) {
+function add(groupMember) {
   return db("groupHistory")
       .returning("id")
-    .insert(groupHistory)
+    .insert(groupMember)
     .into("groupHistory");
 }
 

@@ -3,12 +3,17 @@ import {checkEmail, gettingGroups, addGroup, clearCurrentGroup } from '../store/
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
-    // MDBListGroup, 
-    // MDBListGroupItem, 
-    MDBCardHeader, 
-    // MDBCardFooter, 
-    MDBModal, MDBModalBody,
-    MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
+    MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
+
+function makeid() {
+    let text = "";
+    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < 5; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
 
 class GroupsPage extends Component{
     state = {
@@ -26,8 +31,9 @@ class GroupsPage extends Component{
             // the second parameter is a callback that will execute once the email check is complete
             // in this case it is populating state with the complete user profile: email, userId, profilePicture, and name
         }
-
+        console.log("GROUPS => ", this.props.groups);
         this.props.gettingGroups();
+
         this.setState({ groups: this.props.groups})
 
         this.props.clearCurrentGroup();
@@ -53,8 +59,7 @@ class GroupsPage extends Component{
 
     render(){
         return (
-            <div>
-                <Navigation />
+            <div className = 'groups-container'>
                 <MDBContainer>
                     <MDBRow center>
                         <MDBCard className="text-center" style={{ width: "20rem", marginTop: "1rem" }}>
@@ -68,12 +73,12 @@ class GroupsPage extends Component{
                         </MDBCard>
                         {this.props.groups !== null ? (
                             this.props.groups.map((g, i) => (
-                                <MDBNavLink to={`/groups/${g.id}`}>
-                                    <MDBCard key={{i}} border="primary" className="m-3" style={{ maxWidth: "18rem"}}>
-                                        <MDBCardHeader>{g.name}</MDBCardHeader>
-                                        <MDBCardBody className="text-primary">
-                                            <MDBCardTitle tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
-                                            <MDBCardText>
+                                <MDBNavLink key={makeid()} to={`/groups/${g.id}`}>
+                                    <MDBCard key={makeid()} border="primary" className="m-3" style={{ maxWidth: "18rem"}}>
+                                        <MDBCardHeader key={makeid()}>{g.name}</MDBCardHeader>
+                                        <MDBCardBody key={makeid()} className="text-primary">
+                                            <MDBCardTitle key={makeid()} tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
+                                            <MDBCardText key={makeid()}>
                                                 Group members go here
                                             </MDBCardText>
                                         </MDBCardBody>
@@ -81,8 +86,6 @@ class GroupsPage extends Component{
                                 </MDBNavLink>
                             ))
                         ) : null}
-
-
                     </MDBRow>
                 </MDBContainer>
 
