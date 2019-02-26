@@ -66,7 +66,7 @@ class UserController {
     
     
     
-    func updateUser(user: User, email: String?, emailNotification: Bool?, role: String?, textNotification: Bool?, profilePicture: String?, name: String?, completion: @escaping (User) -> Void) {
+    func updateUser(user: User, email: String?, profilePicture: String?, name: String?, completion: @escaping (User) -> Void) {
         
         var myUser = user
         
@@ -74,17 +74,6 @@ class UserController {
             myUser.email = email
         }
         
-//        if let emailNotification = emailNotification {
-//            myUser.emailNotification = emailNotification
-//        }
-//        
-//        if let role = role {
-//            myUser.role = role
-//        }
-//        
-//        if let textNotification = textNotification {
-//            myUser.textNotification = textNotification
-//        }
         
         if let profilePicture = profilePicture {
             myUser.profilePicture = profilePicture
