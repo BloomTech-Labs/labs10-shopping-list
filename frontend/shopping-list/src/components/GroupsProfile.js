@@ -11,7 +11,7 @@ import {
     MDBIcon,
     MDBBadge,
     MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
-    MDBPopover, MDBPopoverBody, MDBPopoverHeader,
+    MDBTooltip,
 } from "mdbreact";
 
 class GroupsPage extends Component{
@@ -29,7 +29,10 @@ class GroupsPage extends Component{
         itemQuantity: 1,
         itemMeasure: "",
         itemPurchased: false,
-        total: 0.00
+        total: 0.00,
+        nameError: false,
+        priceError: false,
+        quantityError: false,
     }
 
     componentWillMount() {
@@ -72,8 +75,12 @@ class GroupsPage extends Component{
     /*
      * Creates an item object and send it to the action to add to the database
     */
-    handleAddItem = () => {
+    handleAddItem = (e) => {
+        e.preventDefault();
+
         let item = null;
+
+        // Check if purchased checkbox was ticked
         if (this.state.itemPurchased) {
             item = {
                 name: this.state.itemName,
@@ -85,8 +92,6 @@ class GroupsPage extends Component{
             };
 
             this.props.addItem(item);
-            const purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null);
-            this.props.submitPaidItems(purchased, Number(localStorage.getItem("userId")), Number(this.state.itemPrice));
             this.setState({modal14: false});
         } else {
             item = {
@@ -100,14 +105,13 @@ class GroupsPage extends Component{
             this.setState({modal14: false});
         }
 
-
-
-
     }
 
 
 
     render(){
+
+        // Filter items by which has been purchased - used for the `I Bought` form
         let purchased = [];
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
         return (
@@ -181,16 +185,27 @@ class GroupsPage extends Component{
                     <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
                         <MDBModalHeader toggle={this.toggle(14)}>Add New Item</MDBModalHeader>
                         <MDBModalBody>
-                            <MDBInput required label="Item Name *" type={"text"} name={"itemName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
-                            <MDBInput required label="Item Price *" type={"number"} step={0.01} name={"itemPrice"} onChange={this.handleInput} defaultValue={this.state.itemPrice}/>
-                            <MDBInput required label="Item Quantity *" type={"number"} name={"itemQuantity"} onChange={this.handleInput} defaultValue={this.state.itemQuantity}/>
-                            <MDBInput label="Item Measurement" type={"text"} name={"itemMeasure"} onChange={this.handleInput} defaultValue={this.state.itemMeasure}/>
-                            <MDBInput label="Item Purchased" type={"checkbox"} name={"itemPurchased"} onClick={this.itmPurchased} defaultValue={this.state.itemPurchased}/>
-
+                            <form className="needs-validation" onSubmit={this.handleAddItem}>
+                                <MDBInput className={"form-control"} required label="Item Name *" type={"text"} name={"itemName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
+                                <MDBInput required label="Item Price *" type={"number"} step={0.01} name={"itemPrice"} onChange={this.handleInput} defaultValue={this.state.itemPrice}/>
+                                <MDBInput required label="Item Quantity *" type={"number"} name={"itemQuantity"} onChange={this.handleInput} defaultValue={this.state.itemQuantity}/>
+                                <MDBInput label="Item Measurement" type={"text"} name={"itemMeasure"} onChange={this.handleInput} defaultValue={this.state.itemMeasure}/>
+                                <MDBTooltip
+                                    placement="top"
+                                    tag="div"
+                                    tooltipContent="Item will be added to bought list. Does not save until you submit all purchased items.">
+                                    <div style={{ textAlign: "center" }}>
+                                        <div className="md-checkbox md-checkbox-inline">
+                                            <input id="i2" type="checkbox" defaultChecked={this.state.itemPurchased} onClick={this.itmPurchased} />
+                                            <label htmlFor="i2">Purchased</label>
+                                        </div>
+                                    </div>
+                                </MDBTooltip>
+                            </form>
                         </MDBModalBody>
                         <MDBModalFooter>
                             <MDBBtn color="secondary" onClick={this.toggle(14)}>Close</MDBBtn>
-                            <MDBBtn color="primary" onClick={this.handleAddItem}>Create</MDBBtn>
+                            <MDBBtn color="primary" onClick={e => this.handleAddItem(e)}>Create</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
                 </MDBContainer>

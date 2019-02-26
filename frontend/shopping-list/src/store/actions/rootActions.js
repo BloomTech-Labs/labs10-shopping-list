@@ -221,11 +221,10 @@ export const addItem = (item) => dispatch => {
     }
   };
 
-  console.log("ITEM => ", item);
-
   // Add items to the server and then get the items to update state
   axios.post(endpoint, item, options)
       .then(() => {
+        // Retrieve the items
         getItems(item.groupID)(dispatch)
       })
       .then(response => {
@@ -239,11 +238,18 @@ export const addItem = (item) => dispatch => {
 
 /*
  * Update items array with purchased
+ * @param id - ID of the item
  */
 export const updateItemPurchesd = (id) => dispatch => {
   dispatch({ type: UPDATE_ITEM_PURCHASED_START, payload: id });
 }
 
+/*
+ * Add paid items to the database and update items purchase/purchasedBy params
+ * @param items - Array of items to submit
+ * @param userID - ID of the user who purchased the items
+ * @param total - Total amount the user paid for all items
+ */
 export const submitPaidItems = (items, userID, total) => dispatch => {
   dispatch({ type: SUBMIT_PAID_ITEMS_START });
 
@@ -256,8 +262,10 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
     }
   };
 
+  // Loop through each item and send it to groupHistory DB and update the item in the items DB
   items.forEach(itm => {
     const itemEndpoint = `${backendURL}/api/item/${itm.id}`
+
     const history = {
       "userID": userID,
       "groupID": itm.groupID,
@@ -272,11 +280,10 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
       purchasedOn: new Date()
   }
 
-  console.log("history => ", history);
-    console.log("item => ", item);
-
+    // Add a new item history
     axios.post(endpoint, history, options)
         .then(res => {
+          // Update the item
           axios.put(itemEndpoint, item, options)
               .then(res1 => {
                 dispatch({ type: SUBMIT_PAID_ITEMS_SUCCESS });
@@ -291,6 +298,7 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
           console.log("ADDING HISTORY ERR => ", err);
           dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: err });
         })
-  })
+  });
 
 }
+

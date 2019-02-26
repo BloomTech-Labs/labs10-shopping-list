@@ -19,7 +19,6 @@
 }
 
 .group-profile-list {
-    margin-left: 10%;
     height: 500px;
 }
 
@@ -30,7 +29,7 @@
 }
 
 .group-profile-list-button {
-    margin-left: 35%;
+    margin-left: 20%;
 }
 
 .group-profile-list-header {
@@ -49,9 +48,7 @@
 }
 
 .group-profile-bought-list {
-    width: 30%;
     display: flex;
-    margin-left: 5%;
 }
 
 .group-profile-bought-input {
@@ -104,4 +101,73 @@ input[type="button"]::-moz-focus-inner {
 
 *:focus {
     outline: 0 !important;
+}
+
+/*---------------------------------------------*/
+
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+.md-checkbox {
+    position: relative;
+    margin: 1em 0;
+    text-align: left;
+}
+.md-checkbox.md-checkbox-inline {
+    display: inline-block;
+}
+.md-checkbox label {
+    cursor: pointer;
+    display: inline;
+    line-height: 1.25em;
+    vertical-align: top;
+    clear: both;
+    padding-left: 1px;
+}
+.md-checkbox label:not(:empty) {
+    padding-left: 0.75em;
+}
+.md-checkbox label:before, .md-checkbox label:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.md-checkbox label:before {
+    width: 1.25em;
+    height: 1.25em;
+    background: #fff;
+    border: 2px solid rgba(0, 0, 0, 0.54);
+    border-radius: 0.125em;
+    cursor: pointer;
+    transition: background .3s;
+}
+.md-checkbox input[type="checkbox"] {
+    outline: 0;
+    visibility: hidden;
+    width: 1.25em;
+    margin: 0;
+    display: block;
+    float: left;
+    font-size: inherit;
+}
+.md-checkbox input[type="checkbox"]:checked + label:before {
+    background: #337ab7;
+    border: none;
+}
+.md-checkbox input[type="checkbox"]:checked + label:after {
+    transform: translate(0.25em, 0.3365384615em) rotate(-45deg);
+    width: 0.75em;
+    height: 0.375em;
+    border: 0.125em solid #fff;
+    border-top-style: none;
+    border-right-style: none;
+}
+.md-checkbox input[type="checkbox"]:disabled + label:before {
+    border-color: rgba(0, 0, 0, 0.26);
+}
+.md-checkbox input[type="checkbox"]:disabled:checked + label:before {
+    background: rgba(0, 0, 0, 0.26);
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
 }

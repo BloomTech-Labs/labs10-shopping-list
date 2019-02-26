@@ -6,6 +6,16 @@ import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
     MDBCardHeader, MDBModal, MDBModalBody,
     MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
 
+function makeid() {
+    let text = "";
+    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < 5; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
 class GroupsPage extends Component{
     state = {
         modal14: false,
@@ -61,12 +71,12 @@ class GroupsPage extends Component{
                         </MDBCard>
                         {this.props.groups !== null ? (
                             this.props.groups.map((g, i) => (
-                                <MDBNavLink key={i} to={`/groups/${g.id}`}>
-                                    <MDBCard key={i} border="primary" className="m-3" style={{ maxWidth: "18rem"}}>
-                                        <MDBCardHeader>{g.name}</MDBCardHeader>
-                                        <MDBCardBody className="text-primary">
-                                            <MDBCardTitle tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
-                                            <MDBCardText>
+                                <MDBNavLink key={makeid()} to={`/groups/${g.id}`}>
+                                    <MDBCard key={makeid()} border="primary" className="m-3" style={{ maxWidth: "18rem"}}>
+                                        <MDBCardHeader key={makeid()}>{g.name}</MDBCardHeader>
+                                        <MDBCardBody key={makeid()} className="text-primary">
+                                            <MDBCardTitle key={makeid()} tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
+                                            <MDBCardText key={makeid()}>
                                                 Group members go here
                                             </MDBCardText>
                                         </MDBCardBody>
