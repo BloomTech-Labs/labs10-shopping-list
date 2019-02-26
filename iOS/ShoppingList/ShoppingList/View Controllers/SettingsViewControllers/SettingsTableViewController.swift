@@ -7,16 +7,12 @@
 //
 
 import UIKit
-import Auth0
-import SwiftKeychainWrapper
-import SimpleKeychain
 import Kingfisher
 
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
     
     static let storyboardName: StoryboardName = "SettingsTableViewController"
-    var profile: UserInfo!
-    
+
     // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
