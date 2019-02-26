@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {checkEmail, gettingGroups, addGroup, getItems, getSingleGroup } from '../store/actions/rootActions';
 import {gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
@@ -31,6 +32,14 @@ class GroupsPage extends Component{
         itemPurchased: false,
         total: 0.00
     }
+
+//     async componentWillMount(){ // this version of CWM queries the single group, rather than collecting all groups.
+//         // see if the desired group is in state
+//         if(!this.props.currentGroup || this.props.currentGroup === null || this.props.currentGroup.id !== this.props.match.params.id){
+//             console.log('NO GROUP IN STATE');
+//             // if not, fetch it from the database
+//             // this function is necessary to prevent the app crashing on refresh or if a user visits it from a direct link, e.g. a bookmark
+//             await this.props.getSingleGroup(this.props.match.params.id); // fetches group info from server and adds it to state
 
     /*
      * Triggers before the component mounts.
@@ -129,19 +138,33 @@ class GroupsPage extends Component{
     }
 
     render(){
+//         console.log('current group', this.props.currentGroup);
+//         const purchased = this.props.items.filter(itm => itm.purchased === true);
+        
+        // if(!this.props.currentGroup){ // tell user info is loading...
+        //     /**
+        //      * @TODO Create a loading component that can render during data queries
+        //      */
+        //     return (
+        //         <div>Fetching group information...</div>
+        //     )
+        // } else {
+        
         // Filter items by which has been purchased - used for the `I Bought` form
         let purchased = [];
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
         return (
             <div>
                 <div className={"group-profile-container"}>
-                    <div className={"group-profile-header"}>
+                    <h1>{this.state.group !== null ? this.state.group.name : ""}</h1>
+                    
+                 {/* <h1>{this.props.currentGroup !== null ? this.props.currentGroup.name : ""}</h1> // conditional if using single query */}                    <div className={"group-profile-header"}>
                         <MDBBtn color="primary" >List</MDBBtn>
                         <MDBBtn color="primary" >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" >Total</MDBBtn>
                     </div>
-                    <div className={"group-profile-header-title"}><h3>{this.state.group !== null ? this.state.group.name : ""}</h3></div>
+                    <div className={"group-profile-header-title"}><h3></h3></div>
                     <div className={"group-profile-columns"}>
                         <div className={"group-profile-list"}>
                             <div className={"group-profile-list-container"}>
@@ -236,9 +259,11 @@ const mapStateToProps = state => {
         //state items
         groups: state.groups,
         items: state.items,
+        currentGroup: state.currentGroup,
     }
 }
 
 export default connect(mapStateToProps, {
+//     checkEmail, gettingGroups, addGroup, getItems, getSingleGroup
     gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems
 })(GroupsPage);
