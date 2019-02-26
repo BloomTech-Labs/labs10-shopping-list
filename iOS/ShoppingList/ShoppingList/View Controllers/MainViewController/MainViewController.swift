@@ -68,7 +68,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
         let storyboard = UIStoryboard(name: "SettingsTableViewController", bundle: nil)
         let settingsVC = storyboard.instantiateInitialViewController() ?? SettingsTableViewController.instantiate()
         present(settingsVC, animated: true, completion: nil)
-        print(LoginViewController.accessToken()!)
+        
     }
     
     

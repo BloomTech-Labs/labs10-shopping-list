@@ -49,25 +49,7 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         dismiss(animated: true, completion: nil)
         
         
-        guard let accessToken = LoginViewController.accessToken() else { return }
-        
-        Auth0
-            .authentication()
-            .userInfo(withAccessToken: accessToken)
-            .start { result in
-                switch(result) {
-                case .success(let profile):
-                    // You've got the user's profile, good time to store it locally.
-                // e.g. self.profile = profile
-                    print(profile)
-                    if let name = profile.name {
-                        print(name)
-                    }
-                case .failure(let error):
-                    // Handle the error
-                    print("Error: \(error)")
-                }
-        }
+    
     }
     
     @IBAction func billingPressed(_ sender: Any) {
