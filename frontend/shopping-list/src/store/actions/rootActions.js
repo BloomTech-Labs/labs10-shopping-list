@@ -198,6 +198,7 @@ export const clearCurrentGroup = () => {
   return dispatch => {
     dispatch({type: CLEARING_CURRENT_GROUP});
   }
+}
 
 /*
  * Add an item to the database for a specified group.
@@ -211,7 +212,7 @@ export const addItem = (item) => dispatch => {
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -234,7 +235,7 @@ export const addItem = (item) => dispatch => {
  * Update items array with purchased
  * @param id - ID of the item
  */
-export const updateItemPurchesd = (id) => dispatch => {
+export const updateItemPurchased = (id) => dispatch => {
   dispatch({ type: UPDATE_ITEM_PURCHASED_START, payload: id });
 }
 
@@ -252,7 +253,7 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`
     }
   };
 
@@ -292,5 +293,5 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
           console.log("ADDING HISTORY ERR => ", err);
           dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: err });
         })
-  });
+  })
 }
