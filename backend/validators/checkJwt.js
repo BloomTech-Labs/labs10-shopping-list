@@ -21,7 +21,7 @@ if(process.env.NODE_ENV !== 'production'){
 //     sess.cookie.secure = true; // serves secure cookies in https production
 // }
 
-console.log('checkJWT auth0 domain: ', process.env.AUTH0_DOMAIN);
+// console.log('checkJWT auth0 domain: ', process.env.AUTH0_DOMAIN);
 
 const checkJwt = jwt({
     secret: jwksRsa.expressJwtSecret({
