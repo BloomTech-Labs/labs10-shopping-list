@@ -28,7 +28,6 @@ const checkUser = require('../../validators/checkUser');
  * ***********************************************/
 
 groupMemberRouter.use(checkJwt);
-groupMemberRouter.use(checkUser);
 
 /** ADD GROUP MEMBER
  * @TODO Add middleware to ensure user is logged in
@@ -60,7 +59,7 @@ groupMemberRouter.post('/', (req, res) => {
  * **/
 
 /**************************************************/
-groupMemberRouter.get('/group/:id', (req, res) => {
+groupMemberRouter.get('/group/:id', checkUser, (req, res) => {
     const id = req.params.id;
 
     groupMemDb.getByGroup(id).then(mem => {

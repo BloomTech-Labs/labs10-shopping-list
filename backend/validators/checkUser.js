@@ -119,6 +119,32 @@ async function routeCheck(req, res, next, userId){
          })
      }
 
+     /**
+      * Protect group members
+      * ensures only members of a group can see group members
+      */
+
+      if(req.originalUrl === `/api/groupmember/group/${req.params.id}`){
+          let paramId = Number(req.params.id);
+
+          groupMembersDb.getByGroup(paramId).then(members => {
+              let member = members.filter(m => {
+                  if(m.userID === userId){
+                      return m;
+                  }
+              })
+
+              console.log(member);
+              if(member.length === 0){
+                  return res.status(403).json({warning: `You do not have permission to do that.`})
+              } else {
+                  return next();
+              }
+          }).catch(err => {
+              console.log(err);
+              return res.status(500).json({error: `Internal server error.`})
+          })
+      }
 
 }
     
