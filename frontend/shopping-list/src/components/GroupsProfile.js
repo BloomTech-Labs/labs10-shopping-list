@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups, addGroup, getItems, getSingleGroup } from '../store/actions/rootActions';
-import {gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
+import {gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
 import "./Styles/Group.css";
@@ -90,7 +89,7 @@ class GroupsPage extends Component{
 
         // Only check to box if the item hasn't been purchased
         if (item[0].purchasedBy === null) {
-            this.props.updateItemPurchesd(e);
+            this.props.updateItemPurchased(e);
         }
     }
 
@@ -265,5 +264,5 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
 //     checkEmail, gettingGroups, addGroup, getItems, getSingleGroup
-    gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems
+    gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems
 })(GroupsPage);

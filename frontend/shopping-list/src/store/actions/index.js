@@ -29,7 +29,8 @@ export {
   clearCurrentGroup,
   CLEARING_CURRENT_GROUP,
   submitPaidItems,
-  updateItemPurchesd,
+  updateItemPurchased,
   addUserToState,
   checkEmail,
+
 } from "./rootActions";
