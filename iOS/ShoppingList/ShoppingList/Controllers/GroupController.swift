@@ -12,8 +12,7 @@ import SwiftKeychainWrapper
 
 class GroupController {
     
-    
-    
+    static let shared = GroupController()
     private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
     
     private func groupToJSON(group: Group) -> [String: Any]? {
@@ -32,7 +31,6 @@ class GroupController {
     
     func newGroup(withName name: String, byUserID userID: Int, completion: @escaping (Group?) -> Void) {
         
-        
         let url = baseURL.appendingPathComponent("group")
         
         //guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
@@ -44,8 +42,7 @@ class GroupController {
         
         let parameters: Parameters = ["userID": userID, "name": name, "token": token]
         
-
-        Alamofire.request(url, method: .post, parameters: groupJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { (response) in
 
             
             switch response.result {
@@ -61,9 +58,9 @@ class GroupController {
                     return
                 }
                 
-                var newGroup = Group(name: name, userID: userID, token: token)
+                let newGroup = Group(name: name, userID: userID, token: token, groupID: groupID)
                 
-                newGroup.groupID = groupID
+//                newGroup.groupID = groupID
                 completion(newGroup)
                 
             case .failure(let error):
@@ -90,7 +87,7 @@ class GroupController {
         
         myGroup.updatedAt = Date().dateToString()
         
-        let url = baseURL.appendingPathComponent("group").appendingPathComponent(String(myGroup.groupID!))
+        let url = baseURL.appendingPathComponent("group").appendingPathComponent(String(myGroup.groupID))
         
         guard let groupJSON = groupToJSON(group: myGroup) else { return }
         
@@ -98,9 +95,9 @@ class GroupController {
 
             switch response.result {
             case .success(_):
-                
                 completion(myGroup)
                 return
+                
             case .failure(let error):
                 print(error.localizedDescription)
                 completion(myGroup)
@@ -110,12 +107,11 @@ class GroupController {
     }
     
     
-    func getGroupWith(userID: Int, completion: @escaping ([Group]?) -> Void) {
+    func getGroupWith(userID: Int, completion: @escaping ([Group]?) -> Void = { _ in }) {
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("user").appendingPathComponent(String(userID))
         
         Alamofire.request(url).validate().responseData { (response) in
-            print(url)
             switch response.result {
             case .success(let value):
                 
@@ -140,6 +136,26 @@ class GroupController {
         }
     }
     
+    func delete(userID: Int, group: Group, completion: @escaping (Bool) -> Void) {
+        
+        let url = baseURL.appendingPathComponent("group").appendingPathComponent("remove")
+        
+        let parameters: Parameters = ["userID": userID, "groupID": group.groupID]
+        
+        Alamofire.request(url, parameters: parameters).validate().response { (response) in
+            
+            if let error = response.error {
+                print(error.localizedDescription)
+                completion(false)
+                return
+            }
+            
+            print("reponse.reponse: \(String(describing: response.response))")
+            print("reponse.request: \(String(describing: response.request))")
+            
+            completion(true)
+        }
+    }
     
     
 }

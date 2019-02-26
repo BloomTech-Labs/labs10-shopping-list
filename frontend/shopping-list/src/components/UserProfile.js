@@ -6,29 +6,16 @@ import Navigation from './Navigation.js';
 import './Styles/UserProfile.css';
 
 class UserProfile extends React.Component{
-    constructor(props){
-        super(props);
+   async componentDidMount(){
+        if(localStorage.getItem('isLoggedIn') && this.props.userId === null){
+            // if a user is logged in and no userID is found, call the checkemail function
+            await this.props.checkEmail();
 
-        this.state = {
-            input: null,
-            userId: null,
-        }
-    }
-
-    async componentDidMount(){
-        console.log('cdm');
-        let email = localStorage.getItem('email');
-
-        if(email && !this.props.userId){
-            // if a user is logged in and no userID is found, retrieve their user ID from the database via their email and store in local storage
-            this.props.checkEmail(email, this.props.addUserToState);
-            // the second parameter is a callback that will execute once the email check is complete
-            // in this case it is populating state with the complete user profile: email, userId, profilePicture, and name
+            await this.props.addUserToState();
         }
     }
 
     render(){
-        console.log('render');
         return (
             <div className = 'user-profile-container'>
             <div className = 'user-profile-col'>
