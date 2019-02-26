@@ -271,5 +271,6 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
           dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: err });
         })
   });
+  getItems(items[0].groupID)(dispatch);
 
 }

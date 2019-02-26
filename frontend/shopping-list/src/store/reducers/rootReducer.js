@@ -20,6 +20,7 @@ const initialState = {
   profilePicture: null,
   groups: null,
   items: null,
+  itemPurchasedText: null,
 };
 
 export const rootReducer = (state = initialState, action) => {

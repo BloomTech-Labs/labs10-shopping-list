@@ -29,7 +29,8 @@ class GroupsPage extends Component{
         itemQuantity: 1,
         itemMeasure: "",
         itemPurchased: false,
-        total: 0.00
+        total: 0.00,
+        listClass: true,
     }
 
     /*
@@ -91,6 +92,12 @@ class GroupsPage extends Component{
         // Filter to make sure we are not sending in previous bought items
         const purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null);
         this.props.submitPaidItems(purchased, Number(localStorage.getItem("userId")), Number(this.state.total));
+        this.props.getItems(Number(this.props.match.params.id));
+    }
+
+    // Change between List and History views
+    changeListClass = () => {
+        this.setState({ listClass: !this.state.listClass})
     }
 
     /*
@@ -136,8 +143,8 @@ class GroupsPage extends Component{
             <div>
                 <div className={"group-profile-container"}>
                     <div className={"group-profile-header"}>
-                        <MDBBtn color="primary" >List</MDBBtn>
-                        <MDBBtn color="primary" >History</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.changeListClass()}}>List</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.changeListClass()}} >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" >Total</MDBBtn>
                     </div>
@@ -147,9 +154,10 @@ class GroupsPage extends Component{
                             <div className={"group-profile-list-container"}>
                                 <MDBContainer>
                                     <MDBContainer>
-                                        <MDBListGroup style={{ width: "22rem" }}>
-                                            {
-                                                this.props.items !== null ? this.props.items.map((item, i) => (
+                                        {
+                                            this.state.listClass === true ? <MDBListGroup style={{ width: "22rem" }}>
+                                                {
+                                                    this.props.items !== null ? this.props.items.map((item, i) => (
                                                         <MDBListGroupItem key={i} className="d-flex justify-content-between align-items-center">
                                                             <button type="button" onClick={() => this.check(item.id)} className={item.purchased ? "close1 item-purchased close" : "close close1"} aria-label="Close">
                                                                 <MDBBadge color="primary"><MDBIcon icon="check" /> </MDBBadge>
@@ -160,15 +168,20 @@ class GroupsPage extends Component{
                                                             </button>
                                                         </MDBListGroupItem>
                                                     )) : null
-                                            }
+                                                }
 
-                                        </MDBListGroup>
+                                            </MDBListGroup> : <p>History</p>
+                                        }
+
                                     </MDBContainer>
                                 </MDBContainer>
                             </div>
-                            <div className={"group-profile-list-button"}>
-                                <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
-                            </div>
+                            {
+                                this.state.listClass === true ? <div className={"group-profile-list-button"}>
+                                    <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
+                                </div> : null
+                            }
+
                         </div>
 
                         <div className={"group-profile-right-col"}>
