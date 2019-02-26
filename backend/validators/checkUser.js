@@ -71,7 +71,7 @@ async function routeCheck(req, res, next, userId){
         // // query the db for all users in that group
         let paramId = Number(req.params.id);
         groupMembersDb.getByGroup(paramId).then(members => {
-            console.log('members', members);
+            // console.log('members', members);
             let member = members.filter(m => {
                 return m.userID === userId;
             });
