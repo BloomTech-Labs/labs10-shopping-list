@@ -27,6 +27,7 @@ struct Group: Codable {
     
     var members: [GroupMember]?
     var trips: [Trip]?
+    var items: [Item]?
     
     enum CodingKeys: String, CodingKey {
         case name
