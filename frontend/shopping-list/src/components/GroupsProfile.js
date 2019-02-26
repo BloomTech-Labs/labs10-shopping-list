@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
-import Navigation from "./Navigation";
 import "./Styles/Group.css";
 import {
     MDBListGroup,

@@ -110,7 +110,7 @@ export const addGroup = (group) => dispatch => {
   const endpoint = `${backendURL}/api/group/`;
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -140,7 +140,7 @@ export const gettingGroups = () => async dispatch => {
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -161,7 +161,7 @@ export const getItems = (id) => dispatch => {
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -189,7 +189,7 @@ export const addItem = (item) => dispatch => {
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -230,7 +230,7 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
