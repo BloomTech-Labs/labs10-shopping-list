@@ -11,28 +11,27 @@ import Kingfisher
 import Auth0
 
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
+ 
     
     static let storyboardName: StoryboardName = "SettingsTableViewController"
-    private var userProfile: UserInfo?
+    
+    var userProfile: UserInfo? {
+        didSet {
+            update()
+        }
+    }
     
     // MARK: - Lifecycle methods
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        SessionManager.retrieveProfile { (profile, error) in
-            if let error = error {
-                NSLog("settings: retrieveProfile: \(error)")
-                return
-            }
-            
-            self.userProfile = profile
-            
-            UI {
-                self.setup()
-                self.profilePictureImageView.kf.setImage(with: self.userProfile?.picture)
-                self.profileNameLabel.text = self.userProfile?.name
-            }
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setup()
+        update()
+    }
+    
+    func update() {
+        profilePictureImageView.kf.setImage(with: userProfile?.picture)
+        profileNameLabel.text = userProfile?.name
     }
     
     private func setup() {
