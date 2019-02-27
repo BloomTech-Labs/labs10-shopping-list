@@ -5,14 +5,13 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 
 class Item extends React.Component {
-
-
     constructor(props){
         super(props);
 
         this.state = {
             purchased: props.item.purchased,
-            price: props.item.price
+            price: props.item.price,
+            oldprice: null,
         }
     }
 
@@ -22,6 +21,27 @@ class Item extends React.Component {
         this.setState({
             price: Number(event.target.value)
         })
+    }
+
+    clearField = event => {
+        // event.preventDefault();
+        document.addEventListener('mousedown', this.handleClickOutside);
+        let oldprice = this.state.price;
+        this.setState({
+            oldprice: oldprice,
+            price: '',
+        })
+    }
+
+    handleClickOutside = event => {
+        // event.preventDefault();
+        if(this.state.price === ''){
+            this.setState({
+                price: this.state.oldprice
+            })
+        }
+
+        document.removeEventListener('mousedown', this.handleClickOutside);
     }
 
 
@@ -53,7 +73,7 @@ class Item extends React.Component {
            
 
             <form>
-                $<input type = 'number' onChange = {this.handleChange} value = {this.state.price} placeholder = '$0.00' min = '0' step = 'any' >
+                $<input type = 'number' onMouseDown = {this.clearField} onChange = {this.handleChange} value = {this.state.price} placeholder = 'Enter price ($0.00)' min = '0' step = 'any' >
                 
                 </input>
             <button type = 'submit' onClick = {this.handlePurchase}>Purchase</button>
