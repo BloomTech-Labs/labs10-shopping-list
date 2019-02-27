@@ -196,7 +196,7 @@ userRouter.get('/check/getid', (req, res) => {
         service: 'gmail',
         auth:{
             user: 'shoptraklab@gmail.com',
-            pass: 'PaperSpainDramatic'
+            pass: `${process.env.EMAIL_PASSWORD}`
         }
     });
 
@@ -222,7 +222,7 @@ userRouter.get('/check/getid', (req, res) => {
                 if(error){
                     console.log(error);
                 }else{
-                    console.log('Email send: '+info.response);
+                    console.log('Email sent: '+info.response);
                 }
             });
             
@@ -236,20 +236,6 @@ userRouter.get('/check/getid', (req, res) => {
             })
         } else {
             console.log('user found', id[0]);
-            let mailOptions = {
-                from: `${senderEmail}`,
-                to: `${email}`,
-                subject: 'Signed into ShopTrak',
-                text: 'You have signed into ShopTrak.'
-            };
-            // send the email now
-            // transporter.sendMail(mailOptions, function(error, info){
-            //     if(error){
-            //         console.log(error);
-            //     }else{
-            //         console.log('Email sent: '+info.response);
-            //     }
-            // });
             return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
         }
     })
