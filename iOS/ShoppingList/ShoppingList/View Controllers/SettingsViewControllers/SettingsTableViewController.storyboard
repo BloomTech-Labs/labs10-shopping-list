@@ -14,7 +14,7 @@
         <!--Navigation Controller-->
         <scene sceneID="g7F-a4-QEI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HhP-pv-HLw" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HhP-pv-HLw" customClass="NavigationController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="kdH-lZ-bcF">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>

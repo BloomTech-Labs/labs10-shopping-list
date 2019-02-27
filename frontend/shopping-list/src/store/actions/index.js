@@ -19,6 +19,7 @@ export {
   SUBMIT_PAID_ITEMS_START,
   SUBMIT_PAID_ITEMS_SUCCESS,
   SUBMIT_PAID_ITEMS_FAILED,
+  GET_GROUPMEMBERS_START,
   addItem,
   getItems,
   addGroup,
@@ -32,4 +33,5 @@ export {
   updateItemPurchesd,
   addUserToState,
   checkEmail,
+    getGroupMembers,
 } from "./rootActions";
