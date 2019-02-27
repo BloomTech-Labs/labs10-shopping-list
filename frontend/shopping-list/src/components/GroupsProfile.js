@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import "./Styles/Group.css";
+import "./Styles/Scrollbar.css";
 import {
     MDBListGroup,
     MDBListGroupItem,
@@ -11,6 +12,7 @@ import {
     MDBBadge,
     MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
     MDBTooltip,
+    MDBScrollbar,
 } from "mdbreact";
 import axios from "axios";
 
@@ -30,7 +32,8 @@ class GroupsPage extends Component{
         itemMeasure: "",
         itemPurchased: false,
         total: 0.00,
-        listClass: true,
+        listToggle: true,
+        histToggle: false,
         groupHistory: null,
     }
 
@@ -49,6 +52,7 @@ class GroupsPage extends Component{
     componentWillMount() {
         this.props.gettingGroups();
         this.props.getItems(Number(this.props.match.params.id));
+        this.getGroupHistory();
 
         if (this.props.groups !== null) {
             const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
@@ -130,9 +134,13 @@ class GroupsPage extends Component{
     }
 
     // Change between List and History views
-    changeListClass = () => {
-        this.getGroupHistory();
-        this.setState({ listClass: !this.state.listClass})
+    toggleListClass = () => {
+
+        this.setState({ histToggle: false, listToggle: true})
+    }
+
+    toggleHistClass = () => {
+        this.setState({ histToggle: true, listToggle: false})
     }
 
     /*
@@ -186,7 +194,7 @@ class GroupsPage extends Component{
     render(){
 //         console.log('current group', this.props.currentGroup);
 //         const purchased = this.props.items.filter(itm => itm.purchased === true);
-        
+
         // if(!this.props.currentGroup){ // tell user info is loading...
         //     /**
         //      * @TODO Create a loading component that can render during data queries
@@ -195,7 +203,7 @@ class GroupsPage extends Component{
         //         <div>Fetching group information...</div>
         //     )
         // } else {
-        
+
         // Filter items by which has been purchased - used for the `I Bought` form
         let purchased = [];
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
@@ -208,29 +216,29 @@ class GroupsPage extends Component{
             <div>
                 <div className={"group-profile-container"}>
                     <div className={"group-profile-header"}>
-                        <MDBBtn color="primary" onClick={() => {this.changeListClass()}}>List</MDBBtn>
-                        <MDBBtn color="primary" onClick={() => {this.changeListClass()}} >History</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleListClass()}}>List</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleHistClass()}} >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" >Total</MDBBtn>
                     </div>
                     <div className={"group-profile-header-title"}><h3></h3></div>
                     <div className={"group-profile-columns"}>
                         <div className={"group-profile-list"}>
-                            <div className={"group-profile-list-container"}>
+                            <div className={"group-profile-list-container scrollbar"}>
                                 <MDBContainer>
-                                    <MDBContainer>
+                                    <MDBContainer >
                                         {
-                                            this.state.listClass === true ? <MDBListGroup style={{ width: "22rem" }}>
+                                            this.state.listToggle === true ? <MDBListGroup>
                                                 {
                                                     this.props.items !== null ? this.props.items.map((item, i) => (
-                                                        <MDBListGroupItem key={i} className="d-flex justify-content-between align-items-center">
+                                                        <MDBListGroupItem key={i} className="d-flex justify-content-evenly align-items-center">
                                                             <button type="button" onClick={() => this.check(item.id)} className={item.purchased ? "close1 item-purchased close" : "close close1"} aria-label="Close">
                                                                 <MDBBadge color="primary"><MDBIcon icon="check" /> </MDBBadge>
                                                             </button>
                                                             <p className={"item-name"}>{item.name}</p>
-                                                            <button type="button" className="close" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
+                                                            {/*<button type="button" className="close" aria-label="Close">*/}
+                                                                {/*<span aria-hidden="true">×</span>*/}
+                                                            {/*</button>*/}
                                                         </MDBListGroupItem>
                                                     )) : null
                                                 }
@@ -238,16 +246,18 @@ class GroupsPage extends Component{
                                                 {
                                                     histories !== null ? histories.map((itm,i) => (
                                                         <div>
-                                                            <p>{histories[i][0].user}</p>
-                                                            {
-                                                                histories[i].map((it, ii) => (
-                                                                    <div>
-                                                                        <p>{it.name}</p>
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                            <p>{histories[i][0].date}</p>
-                                                            <p>Total: $ {this.totalItems(histories[i])}</p>
+                                                            <MDBListGroup>
+                                                                <MDBListGroupItem>
+                                                                <h3>{histories[i][0].user}</h3>
+                                                                {
+                                                                    histories[i].map((it, ii) => (
+                                                                        <p className={"history-items"}>{it.name}</p>
+                                                                    ))
+                                                                }
+                                                                <h4>{histories[i][0].date} | Total: $ {histories[i][histories[i].length - 1].grandTotal}</h4>
+                                                                </MDBListGroupItem>
+                                                                <br></br>
+                                                            </MDBListGroup>
                                                         </div>
 
 
@@ -262,7 +272,7 @@ class GroupsPage extends Component{
                                 </MDBContainer>
                             </div>
                             {
-                                this.state.listClass === true ? <div className={"group-profile-list-button"}>
+                                this.state.listToggle === true ? <div className={"group-profile-list-button"}>
                                     <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
                                 </div> : null
                             }
@@ -274,7 +284,7 @@ class GroupsPage extends Component{
                                 <p>MEM 1</p>
                                 <p>MEM 2</p>
                             </div>
-                            {this.state.listClass === true ? <div className={"group-profile-bought"}>
+                            {this.state.listToggle === true ? <div className={"group-profile-bought"}>
                                 <h1>I BOUGHT</h1>
                                 <div className={"group-profile-bought-list"}>
                                     {
