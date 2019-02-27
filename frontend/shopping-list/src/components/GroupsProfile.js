@@ -56,9 +56,19 @@ class GroupsPage extends Component{
         }
     }
 
+    /*
+     * Retrieve the group history and save to component state
+    */
     getGroupHistory = () => {
+        let backendURL;
+        if(process.env.NODE_ENV === 'development'){
+            backendURL = `http://localhost:9000`
+        } else {
+            backendURL = `https://shoptrak-backend.herokuapp.com`
+        }
+
         const token = localStorage.getItem('jwt');
-        const endpoint = `http://localhost:9000/api/grouphistory/group/${this.props.match.params.id}`;
+        const endpoint = `${backendURL}/api/grouphistory/group/${this.props.match.params.id}`;
 
         const options = {
             headers: {
@@ -66,10 +76,7 @@ class GroupsPage extends Component{
             }
         };
 
-        let history = [];
-
         axios.get(endpoint, options).then(res => {
-            console.log("HISTORY", res.data.data);
             this.setState({ groupHistory: res.data.data})
         }).catch(err => console.log(err));
     }
@@ -163,13 +170,15 @@ class GroupsPage extends Component{
 
     }
 
+    /*
+     * Calculate the total amount the member has spent
+     * @params items - Array of items to tally
+     */
     totalItems = (items) => {
-        console.log("ITEMS =>", items);
         const total = items.reduce((accumulator, currentValue) => {
             return accumulator + currentValue.total;
         }, 0);
 
-        console.log("TOTAL => ", total);
         return total;
     }
 
@@ -178,6 +187,7 @@ class GroupsPage extends Component{
         // Filter items by which has been purchased - used for the `I Bought` form
         let purchased = [];
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
+        // Gather histories
         const histories = this.state.groupHistory;
         if (histories !== null) {
             console.log("NOT NULL => ", histories)
