@@ -6,6 +6,10 @@ import moment from 'moment';
 import './Styles/Item.css';
 
 class Item extends React.Component {
+    componentDidMount(){
+        this.makeFloat(); // parses all item prices to be 0.00 format, even with trailing zeroes
+    }
+
     constructor(props){
         super(props);
 
@@ -34,22 +38,29 @@ class Item extends React.Component {
     }
 
     makeFloat = () => {
-        if(this.state.price && this.state.price.indexOf('.') === -1){
+        if(typeof this.state.price === 'string' && this.state.price.indexOf('.') === -1){
             
             let floatPrice = Number(this.state.price);
             floatPrice = floatPrice.toFixed(2);
             this.setState({
                 price: floatPrice,
             })
-        }
-
-        if(this.state.price && this.state.price.indexOf('.')){
+        } else if(typeof this.state.price === 'string' && this.state.price.indexOf('.')){
             let length = this.state.price.length;
             if(this.state.price.indexOf('.') - length < 2){
                 let floatPrice = Number(this.state.price);
                 floatPrice = floatPrice.toFixed(2);
                 this.setState({
                     price: floatPrice,
+                })
+            }
+        } else {
+            let strPrice = String(this.state.price);
+            if(strPrice.indexOf('.') - strPrice.length < 2){
+                let floatPrice = Number(strPrice);
+                floatPrice = floatPrice.toFixed(2);
+                this.setState({
+                    price: floatPrice
                 })
             }
         }

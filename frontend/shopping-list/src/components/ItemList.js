@@ -64,7 +64,7 @@ class ItemList extends React.Component{
                 name: this.state.item,
                 quantity: this.state.quantity,
                 purchased: false,
-                price: 0.00,
+                price: parseFloat('0.00'),
                 measurement: this.state.measurement,
             }
 
