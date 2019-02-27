@@ -61,6 +61,7 @@ export const checkEmail = () => {
       Authorization: `Bearer ${token}`, // we can extract the email from the token instead of explicitly sending it in req.body
     }
   }
+  
   let mailChimpOptions = {
     headers: {
       Authorization: `apikey ${process.env.APIKEY}`
