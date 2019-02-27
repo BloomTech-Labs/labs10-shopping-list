@@ -216,7 +216,7 @@ class GroupsPage extends Component{
                                                 {
                                                     histories !== null ? histories.map((itm,i) => (
                                                         <div>
-                                                            <p>{itm[i].user}</p>
+                                                            <p>{histories[i][0].user}</p>
                                                             {
                                                                 histories[i].map((it, ii) => (
                                                                     <div>
@@ -224,7 +224,7 @@ class GroupsPage extends Component{
                                                                     </div>
                                                                 ))
                                                             }
-                                                            <p>{itm[i].date}</p>
+                                                            <p>{histories[i][0].date}</p>
                                                             <p>Total: $ {this.totalItems(histories[i])}</p>
                                                         </div>
 

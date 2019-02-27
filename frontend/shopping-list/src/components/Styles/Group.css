@@ -19,12 +19,13 @@
 }
 
 .group-profile-list {
-    margin-left: 10%;
+    margin-left: 20%;
     height: 500px;
 }
 
 .group-profile-list-container {
     height: 400px;
+    width: 100%;
     margin-left: 7%;
     overflow: auto;
 }
