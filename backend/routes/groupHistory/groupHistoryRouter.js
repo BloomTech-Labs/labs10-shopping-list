@@ -30,16 +30,16 @@ groupHistoryRouter.post('/', (req, res) => {
         }
         return res.status(400).json({message: `Failed to add.`});
     })
-    .catch(err => {
-        console.log(err);
-        const error = {
-            message: `Internal Server Error - Adding Group History`,
-            data: {
-                err: err
-            },
-        }
-        return res.status(500).json(error);
-    });
+        .catch(err => {
+            console.log(err);
+            const error = {
+                message: `Internal Server Error - Adding Group History`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        });
 });
 
 /**************************************************/
@@ -49,19 +49,41 @@ groupHistoryRouter.post('/', (req, res) => {
  * **/
 
 /**************************************************/
+/*
+ * Groups the array by user and date
+ * @params array - Array to sort
+ * @params f - What to sort by
+ */
 function groupBy( array , f )
 {
+    // Set a new group object
     var groups = {};
+
+    // Loop through the array and start sorting based on the f inputs
     array.forEach( function( o )
     {
         var group = JSON.stringify( f(o) );
         groups[group] = groups[group] || [];
         groups[group].push( o );
     });
+
+    // Return a new array of groups
     return Object.keys(groups).map( function( group )
     {
         return groups[group];
     })
+}
+
+/*
+ * Calculate the total amount the member has spent
+ * @params items - Array of items to tally
+ */
+totalItems = (items) => {
+    const total = items.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.total;
+    }, 0);
+
+    return total;
 }
 
 groupHistoryRouter.get('/group/:id', async (req, res) => {
@@ -71,18 +93,15 @@ groupHistoryRouter.get('/group/:id', async (req, res) => {
     try {
         const grpHistory = await groupHistoryDb.getByGroup(groupId);
 
-        // console.log("GRPHISTORY => ", grpHistory);
-
+        // Loop through the history and gather information on the item and user
         for (let i = 0; i < grpHistory.length; i++) {
+            // Gather the item
             const mem = await itemDb.getById(grpHistory[i].itemID);
 
+            // Gather the user
             const usr = await userDb.getById(mem[0].purchasedBy);
 
-            // console.log("MEM => ", mem);
-            // console.log("USR => ", usr[0].name);
-
-
-
+            // Create an item object to return
             const item = {
                 id: mem[0].id,
                 name: mem[0].name,
@@ -90,63 +109,63 @@ groupHistoryRouter.get('/group/:id', async (req, res) => {
                 price: mem[0].price,
             }
 
-            // console.log(item);
-
+            // The overall history object to return
             const hist = {
                 total: grpHistory[i].total,
                 item: item,
                 name: mem[0].name,
                 user: usr[0].name,
                 date: new Date(grpHistory[i].createdAt).toLocaleDateString(),
+                utcDate: new Date(grpHistory[i].createdAt).toUTCString()
             }
 
-            // console.log("HIST => ", hist);
+            // Add to the groups array
             groups.push(hist);
         }
 
-        // console.log(groups);
-        let newGroups = [];
-
-
-        const sorted = groups.sort((a,b) => {
-            if (a.item.user > b.item.user ) return -1;
-            if (a.item.user  < b.item.user ) return 1;
-
-            if (a.date > b.date) return -1;
-            if (a.date < b.date) return 1;
-        })
-
-        const result = groupBy(groups, function(itm) {
+        // Sort the array by the item's date (2/27/2019) and user(name)
+        const results = groupBy(groups, function(itm) {
             return [itm.date, itm.user]
         })
 
-        console.log(result);
+        // Map a new array to use for calculating the total. This sets any item that was purchased on the same
+        // date/time to a total of 0 so it does not get recalculated
+        let result = results.map((x, i) => {
 
-        return res.status(200).json({data: result });
+            // Check the utcDate to see if they match, if so, return a new object overwriting the prev with a total 0
+            // else, return the original object
+            let rr = x.map((y, iy) => {
+                if (results[i][iy-1] && results[i][iy].utcDate === results[i][iy - 1].utcDate) {
+                    return {total: 0};
+                } else {
+                    return y;
+                }
+            })
+
+            return rr;
+
+        });
+
+        // Create a new array
+        let newSorted = results.map(x => x);
+
+        // Calculate the total and send to te newSorted array
+        result.forEach((rs, i) => {
+            let total = totalItems(result[i]);
+            const grandTotal = {
+                grandTotal: total,
+            }
+            newSorted[i].push(grandTotal);
+        })
+
+        // Finally, reverse the order to have the newest dates first.
+        const sorted = newSorted.reverse();
+
+        return res.status(200).json({data: sorted });
 
     } catch (e) {
         return res.status(500).json({message: "Internal Server Error", err: e})
     }
-    // groupHistoryDb.getByGroup(groupId).then(groupHistories => {
-    //
-    //     console.log("GROUPS => ", groupHistories);
-    //
-    //
-    //
-    //     if (groupHistories.length >= 1) {
-    //         return res.status(200).json(groupHistories);
-    //     }
-    //     return res.status(404).json({message: "The requested group histories do not exist."});
-    // })
-    // .catch(err => {
-    //     const error = {
-    //         message: `Internal Server Error - Getting Group History`,
-    //         data: {
-    //             err: err
-    //         },
-    //     }
-    //     return res.status(500).json(error);
-    // });
 });
 
 /**************************************************/
@@ -164,15 +183,15 @@ groupHistoryRouter.get('/user/:id', (req, res) => {
         }
         return res.status(404).json({message: "The requested group histories do not exist."});
     })
-    .catch(err => {
-        const error = {
-            message: `Internal Server Error - Getting Group History`,
-            data: {
-                err: err
-            },
-        }
-        return res.status(500).json(error);
-    });
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error - Getting Group History`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        });
 });
 
 /**************************************************/
@@ -192,15 +211,15 @@ groupHistoryRouter.get('/gethistory/', (req, res) => {
         }
         return res.status(404).json({message: "The requested group histories do not exist."});
     })
-    .catch(err => {
-        const error = {
-            message: `Internal Server Error - Getting Group Histories`,
-            data: {
-                err: err
-            },
-        }
-        return res.status(500).json(error);
-    });
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error - Getting Group Histories`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        });
 });
 
 /**************************************************/
@@ -218,15 +237,15 @@ groupHistoryRouter.get('/', (req, res) => {
         }
         return res.status(404).json({error: `No group histories exist.`});
     })
-    .catch(err => {
-        const error = {
-            message: `Internal Server Error - Getting All Group Histories`,
-            data: {
-                err: err
-            },
-        }
-        return res.status(500).json(error);
-    });
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error - Getting All Group Histories`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        });
 });
 
 /**************************************************/
@@ -246,15 +265,15 @@ groupHistoryRouter.put('/update/:id', (req, res) => {
         }
         return res.status(400).json({message: "Failed to update."});
     })
-    .catch(err => {
-        const error = {
-            message: `Internal Server Error - Updating Group History`,
-            data: {
-                err: err
-            },
-        }
-        return res.status(500).json(error);
-    });
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error - Updating Group History`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        });
 });
 
 /**************************************************/
@@ -273,15 +292,15 @@ groupHistoryRouter.delete('/remove/:id', (req, res) => {
         }
         return res.status(400).json({message: "Failed to delete."});
     })
-    .catch(err => {
-        const error = {
-            message: `Internal Server Error - Removing Group History`,
-            data: {
-                err: err
-            },
-        }
-        return res.status(500).json(error);
-    });
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error - Removing Group History`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        });
 });
 
 /**************************************************/
@@ -300,15 +319,15 @@ groupHistoryRouter.get('/user/:id', (req, res) => {
         }
         return res.status(400).json({message: "Failed to get group history."});
     })
-    .catch(err => {
-        const error = {
-            message: `Internal Server Error - Getting Group History Group ID's`,
-            data: {
-                err: err
-            },
-        }
-        return res.status(500).json(error);
-    });
+        .catch(err => {
+            const error = {
+                message: `Internal Server Error - Getting Group History Group ID's`,
+                data: {
+                    err: err
+                },
+            }
+            return res.status(500).json(error);
+        });
 });
 
 module.exports = groupHistoryRouter;
