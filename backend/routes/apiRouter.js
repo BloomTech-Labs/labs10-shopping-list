@@ -4,7 +4,7 @@ const apiRouter = express.Router();
 // imports the router for '/user' endpoints
 const userRouter = require('./user/userRouter');
 
-const authRouter = require('./auth/authRouter');
+// const authRouter = require('./auth/authRouter');
 
 // imports the router for '/group' endpoints
 const groupRouter = require('./group/groupRouter');
@@ -39,7 +39,7 @@ apiRouter.get('/', (req, res) => {
 
 apiRouter.use('/user', userRouter);
 
-apiRouter.use('/auth', authRouter);
+// apiRouter.use('/auth', authRouter);
 
 apiRouter.use('/group', groupRouter);
 
