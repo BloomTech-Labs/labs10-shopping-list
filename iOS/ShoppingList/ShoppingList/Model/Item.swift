@@ -18,7 +18,7 @@ struct Item: Codable {
     var createdAt: String
     var measurement: String
     var name: String
-    var purchasedBy: String
+    var purchasedBy: Int
     var price: Double
     var quantity: Int
     var updatedAt: String
@@ -26,8 +26,9 @@ struct Item: Codable {
     var category: String
     var groupId: Int?
     var id: Int?
+    var purchasedOn: String
     
-    init(name: String, measurement: String, purchased: Bool,purchasedBy: String, category: String, price: Double, quantity: Int, groupId: Int? ) {
+    init(name: String, measurement: String, purchased: Bool,purchasedBy: Int, category: String, price: Double, quantity: Int, groupId: Int?) {
      //  self.groupID = groupID
         self.name = name
         self.measurement = measurement
@@ -36,6 +37,7 @@ struct Item: Codable {
         self.category = category
         self.createdAt = Date().dateToString()
         self.updatedAt = Date().dateToString()
+        self.purchasedOn = Date().dateToString()
         self.price = price
         self.quantity = quantity
         self.id = nil

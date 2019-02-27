@@ -22,7 +22,7 @@ class SaveItem {
     
    static func test(){
         saveItem(
-            item: Item(name: "milk", measurement: "1 lb", purchased: false ,purchasedBy: "501", category: "dairy", price: 1.5, quantity: 1, groupId: 1),
+            item: Item(name: "Lemons", measurement: "2 lbs", purchased: false, purchasedBy: 2, category: "fruits", price: 0.69, quantity: 1, groupId: 12),
             completion: { (item, error) in
                 NSLog("\(item) -- \(error?.localizedDescription)")
         }
@@ -31,11 +31,17 @@ class SaveItem {
     }
     
      static func saveItem(item: Item, completion: @escaping (Item?, Error?) -> Void) {
-        
+        guard let accessToken = SessionManager.tokens?.idToken else {return}
+       let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         var item = item
         
         var url = baseURL.appendingPathComponent("item")
+        
+       
+        
+        
         var method = HTTPMethod.post
+        
         if let id = item.id {
             url = url.appendingPathComponent(String(describing: id))
             method = .put
@@ -51,7 +57,7 @@ class SaveItem {
             return
         }
         
-        Alamofire.request(url, method: method, parameters: json, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        Alamofire.request(url, method: method, parameters: json, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
         
             switch response.result {
             case .success(let value):

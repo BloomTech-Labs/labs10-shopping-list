@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Auth0
 
 class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopoverViewDelegate {
     
@@ -18,15 +19,21 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GroupController.shared.getGroups(forUserID: 501) { (success) in
-            if allGroups.count > 0 {
-                let selected = allGroups[0]
-                selectedGroup = selected
-                
+        GroupController.getUserID { (user) in
+            
+            guard let userID = user?.id else {return}
+            
+            GroupController.getGroups(forUserID: userID) { (success) in
+                if allGroups.count > 0 {
+                    selectedGroup = allGroups[0]
+                    UI{self.updateViews()}
+                }
                 
                 
                 let usersCon = UserController()
-                usersCon.getUser(forID: 501) { (user) in
+                
+                
+                usersCon.getUser(forID: userID) { (user) in
                     if let users = user {
                         /*Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
                          print(users)
@@ -34,18 +41,10 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
                         SaveItem.test()
                     }
                 }
-                
-                GroupController.shared.getGroups(forUserID: 501, completion: { (success) in
-                    
-                    if success {
-                        selectedGroup = allGroups[0]
-                        self.updateViews()
-                    }
-                    
-                })
             }
         }
     }
+    
     
     private func updateViews() {
         if let name = selectedGroup {

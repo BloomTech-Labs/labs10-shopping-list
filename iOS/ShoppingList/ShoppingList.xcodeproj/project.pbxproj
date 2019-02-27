@@ -23,6 +23,7 @@
 		443C1B4E221B628D00220C28 /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B4D221B628D00220C28 /* Auth0.plist */; };
 		447BEE43221F473300FA1D82 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447BEE42221F473300FA1D82 /* SessionManager.swift */; };
 		44A167FF22264D5500227DFB /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A167FE22264D5500227DFB /* NavigationController.swift */; };
+		44A16801222746E600227DFB /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A16800222746E600227DFB /* ItemController.swift */; };
 		960FBF63221C26220076C662 /* ManageGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */; };
 		960FBF65221C27050076C662 /* AccountInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF64221C27050076C662 /* AccountInformationViewController.swift */; };
 		960FBF68221C31E60076C662 /* AboutShopTrakTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */; };
@@ -92,6 +93,7 @@
 		443C1B4D221B628D00220C28 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
 		447BEE42221F473300FA1D82 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		44A167FE22264D5500227DFB /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		44A16800222746E600227DFB /* ItemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageGroupsTableViewController.swift; sourceTree = "<group>"; };
 		960FBF64221C27050076C662 /* AccountInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInformationViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				11F5380C221F51EA0046BDFC /* HelperFile.swift */,
 				112430AD2216267E0081784C /* GroupController.swift */,
 				119B303C2225ABC300DF93E6 /* GroupMemberController.swift */,
+				44A16800222746E600227DFB /* ItemController.swift */,
 				118646DF221DCE9B00D0F04B /* UserController.swift */,
 				112430AF221631350081784C /* SaveItem.swift */,
 			);
@@ -273,6 +276,7 @@
 			children = (
 				96700E2D221C025E00F084B3 /* SettingsTableViewController.storyboard */,
 				96700E30221C035600F084B3 /* SettingsTableViewController.swift */,
+				44A167FE22264D5500227DFB /* NavigationController.swift */,
 				960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */,
 				960FBF64221C27050076C662 /* AccountInformationViewController.swift */,
 				960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */,
@@ -408,7 +412,6 @@
 				96DE302C221637FE00213C3E /* MainViewController */,
 				96DE302F221637FE00213C3E /* LoginViewController */,
 				96700E2F221C034000F084B3 /* SettingsViewControllers */,
-				44A167FE22264D5500227DFB /* NavigationController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -536,7 +539,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Auth0/Auth0.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -555,7 +558,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -569,6 +572,7 @@
 				96DE302A221637EB00213C3E /* Constants.swift in Sources */,
 				118646D8221CA9D900D0F04B /* User.swift in Sources */,
 				960FBF63221C26220076C662 /* ManageGroupsTableViewController.swift in Sources */,
+				44A16801222746E600227DFB /* ItemController.swift in Sources */,
 				969A84112215C99A0003BB37 /* Reusable+NSCollectionView.swift in Sources */,
 				969A84092215C99A0003BB37 /* UINavigationController+Chameleon.m in Sources */,
 				118646E0221DCE9B00D0F04B /* UserController.swift in Sources */,

@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import SwiftKeychainWrapper
 import SimpleKeychain
+import Auth0
 
 class UserController {
     

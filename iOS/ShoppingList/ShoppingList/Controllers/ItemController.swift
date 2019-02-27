@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import Auth0
 
 class ItemController {
     
@@ -16,11 +17,14 @@ class ItemController {
     // Loads items for the selected group
     func loadItems(completion: @escaping (Bool) -> Void = {_ in}) {
         guard let group = selectedGroup else { completion(false); return }
-        
+       guard let accessToken = SessionManager.tokens?.idToken else {return}
+       
         // TODO: This is a fake URL since there is no endpoint in the api for this yet
         let url = baseURL.appendingPathComponent("item").appendingPathComponent("group").appendingPathComponent(String(group.groupID))
+        var request = URLRequest(url: url)
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         
-        Alamofire.request(url).validate().response { (response) in
+        Alamofire.request(request).validate().response { (response) in
             
             if let error = response.error {
                 print(error.localizedDescription)
@@ -29,13 +33,17 @@ class ItemController {
             }
             
             guard let data = response.data else {
+                
                 print("Error: No data when trying to load items")
                 completion(false)
                 return
+                
             }
             
             do {
                 let items = try JSONDecoder().decode([Item].self, from: data)
+                let string = String(data: data, encoding: .utf8)
+                print("Data String: \(string!)")
                 selectedGroup?.items = items
                 completion(true)
                 
