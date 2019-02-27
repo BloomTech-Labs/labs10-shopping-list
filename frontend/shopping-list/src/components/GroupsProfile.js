@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups, addGroup, getItems, getSingleGroup } from '../store/actions/rootActions';
-import {addItem, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
+import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
-import Navigation from "./Navigation";
 import "./Styles/Group.css";
 import {
     MDBListGroup,
@@ -14,6 +12,7 @@ import {
     MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
     MDBTooltip,
 } from "mdbreact";
+import axios from "axios";
 
 class GroupsPage extends Component{
     state = {
@@ -30,7 +29,9 @@ class GroupsPage extends Component{
         itemQuantity: 1,
         itemMeasure: "",
         itemPurchased: false,
-        total: 0.00
+        total: 0.00,
+        listClass: true,
+        groupHistory: null,
     }
 
 //     async componentWillMount(){ // this version of CWM queries the single group, rather than collecting all groups.
@@ -53,6 +54,31 @@ class GroupsPage extends Component{
             const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
             this.setState({ group: group[0]})
         }
+    }
+
+    /*
+     * Retrieve the group history and save to component state
+    */
+    getGroupHistory = () => {
+        let backendURL;
+        if(process.env.NODE_ENV === 'development'){
+            backendURL = `http://localhost:9000`
+        } else {
+            backendURL = `https://shoptrak-backend.herokuapp.com`
+        }
+
+        const token = localStorage.getItem('jwt');
+        const endpoint = `${backendURL}/api/grouphistory/group/${this.props.match.params.id}`;
+
+        const options = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+
+        axios.get(endpoint, options).then(res => {
+            this.setState({ groupHistory: res.data.data})
+        }).catch(err => console.log(err));
     }
 
     // Toggles the modals
@@ -100,6 +126,13 @@ class GroupsPage extends Component{
         // Filter to make sure we are not sending in previous bought items
         const purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null);
         this.props.submitPaidItems(purchased, Number(localStorage.getItem("userId")), Number(this.state.total));
+        this.props.getItems(Number(this.props.match.params.id));
+    }
+
+    // Change between List and History views
+    changeListClass = () => {
+        this.getGroupHistory();
+        this.setState({ listClass: !this.state.listClass})
     }
 
     /*
@@ -137,6 +170,19 @@ class GroupsPage extends Component{
 
     }
 
+    /*
+     * Calculate the total amount the member has spent
+     * @params items - Array of items to tally
+     */
+    totalItems = (items) => {
+        const total = items.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.total;
+        }, 0);
+
+        return total;
+    }
+
+
     render(){
 //         console.log('current group', this.props.currentGroup);
 //         const purchased = this.props.items.filter(itm => itm.purchased === true);
@@ -153,14 +199,17 @@ class GroupsPage extends Component{
         // Filter items by which has been purchased - used for the `I Bought` form
         let purchased = [];
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
+        // Gather histories
+        const histories = this.state.groupHistory;
+        if (histories !== null) {
+            console.log("NOT NULL => ", histories)
+        }
         return (
             <div>
                 <div className={"group-profile-container"}>
-                    <h1>{this.state.group !== null ? this.state.group.name : ""}</h1>
-                    
-                 {/* <h1>{this.props.currentGroup !== null ? this.props.currentGroup.name : ""}</h1> // conditional if using single query */}                    <div className={"group-profile-header"}>
-                        <MDBBtn color="primary" >List</MDBBtn>
-                        <MDBBtn color="primary" >History</MDBBtn>
+                    <div className={"group-profile-header"}>
+                        <MDBBtn color="primary" onClick={() => {this.changeListClass()}}>List</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.changeListClass()}} >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" >Total</MDBBtn>
                     </div>
@@ -170,9 +219,10 @@ class GroupsPage extends Component{
                             <div className={"group-profile-list-container"}>
                                 <MDBContainer>
                                     <MDBContainer>
-                                        <MDBListGroup style={{ width: "22rem" }}>
-                                            {
-                                                this.props.items !== null ? this.props.items.map((item, i) => (
+                                        {
+                                            this.state.listClass === true ? <MDBListGroup style={{ width: "22rem" }}>
+                                                {
+                                                    this.props.items !== null ? this.props.items.map((item, i) => (
                                                         <MDBListGroupItem key={i} className="d-flex justify-content-between align-items-center">
                                                             <button type="button" onClick={() => this.check(item.id)} className={item.purchased ? "close1 item-purchased close" : "close close1"} aria-label="Close">
                                                                 <MDBBadge color="primary"><MDBIcon icon="check" /> </MDBBadge>
@@ -183,15 +233,40 @@ class GroupsPage extends Component{
                                                             </button>
                                                         </MDBListGroupItem>
                                                     )) : null
-                                            }
+                                                }
+                                            </MDBListGroup> : <div className={"history-list"}>
+                                                {
+                                                    histories !== null ? histories.map((itm,i) => (
+                                                        <div>
+                                                            <p>{histories[i][0].user}</p>
+                                                            {
+                                                                histories[i].map((it, ii) => (
+                                                                    <div>
+                                                                        <p>{it.name}</p>
+                                                                    </div>
+                                                                ))
+                                                            }
+                                                            <p>{histories[i][0].date}</p>
+                                                            <p>Total: $ {this.totalItems(histories[i])}</p>
+                                                        </div>
 
-                                        </MDBListGroup>
+
+
+                                                    )) : <p>NULL</p>
+                                                }
+                                            </div>
+                                        }
+
+
                                     </MDBContainer>
                                 </MDBContainer>
                             </div>
-                            <div className={"group-profile-list-button"}>
-                                <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
-                            </div>
+                            {
+                                this.state.listClass === true ? <div className={"group-profile-list-button"}>
+                                    <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
+                                </div> : null
+                            }
+
                         </div>
 
                         <div className={"group-profile-right-col"}>
@@ -199,23 +274,25 @@ class GroupsPage extends Component{
                                 <p>MEM 1</p>
                                 <p>MEM 2</p>
                             </div>
-                            <div className={"group-profile-bought"}>
+                            {this.state.listClass === true ? <div className={"group-profile-bought"}>
                                 <h1>I BOUGHT</h1>
                                 <div className={"group-profile-bought-list"}>
                                     {
                                         purchased !== null ?
-                                        purchased.map(itm => (
-                                            <p>{itm.name}, </p>
-                                        )) : null
+                                            purchased.map(itm => (
+                                                <p>{itm.name}, </p>
+                                            )) : null
                                     }
                                 </div>
                                 <div className={"group-profile-bought-input"}>
-                                    <h1>$</h1><MDBInput label="I Paid" type={"number"} step={0.01} name={"total"} onChange={this.handleInput} defaultValue={this.state.total} />
+                                    <h1>$</h1><MDBInput label="I Paid" type={"number"} step={0.01} name={"total"}
+                                                        onChange={this.handleInput} defaultValue={this.state.total}/>
                                 </div>
                                 <div className={"group-profile-bought-button"}>
-                                    <MDBBtn color="primary" onClick={e => this.handleSubmitItems(e)} >Submit</MDBBtn>
+                                    <MDBBtn color="primary" onClick={e => this.handleSubmitItems(e)}>Submit</MDBBtn>
                                 </div>
-                            </div>
+                            </div> : null
+                            }
                         </div>
                     </div>
 
