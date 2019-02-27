@@ -31,9 +31,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
         }
         
 
-        let groupCon = GroupController()
-        groupCon.getGroupWith(userID: 501) { (groups) in
-            
+        
 
         GroupController.shared.getGroupWith(userID: 501) { (groups) in
 

@@ -275,6 +275,7 @@
 				96700E30221C035600F084B3 /* SettingsTableViewController.swift */,
 				960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */,
 				960FBF64221C27050076C662 /* AccountInformationViewController.swift */,
+				44A167FE22264D5500227DFB /* NavigationController.swift */,
 				960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */,
 			);
 			path = SettingsViewControllers;
@@ -408,7 +409,6 @@
 				96DE302C221637FE00213C3E /* MainViewController */,
 				96DE302F221637FE00213C3E /* LoginViewController */,
 				96700E2F221C034000F084B3 /* SettingsViewControllers */,
-				44A167FE22264D5500227DFB /* NavigationController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
