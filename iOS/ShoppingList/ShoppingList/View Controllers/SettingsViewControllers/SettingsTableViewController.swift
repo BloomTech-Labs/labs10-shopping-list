@@ -8,19 +8,31 @@
 
 import UIKit
 import Kingfisher
+import Auth0
 
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
     
     static let storyboardName: StoryboardName = "SettingsTableViewController"
-
+    private var userProfile: UserInfo?
+    
     // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
-        
-        profilePictureImageView.kf.setImage(with: userProfile.picture)
-        profileNameLabel.text = userProfile.name
+        SessionManager.retrieveProfile { (profile, error) in
+            if let error = error {
+                NSLog("settings: retrieveProfile: \(error)")
+                return
+            }
+            
+            self.userProfile = profile
+            
+            UI {
+                self.setup()
+                self.profilePictureImageView.kf.setImage(with: self.userProfile?.picture)
+                self.profileNameLabel.text = self.userProfile?.name
+            }
+        }
     }
     
     private func setup() {
@@ -47,7 +59,7 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     
     @IBAction func billingPressed(_ sender: Any) {
         let billingMessage = "To change your subscription type or modify your billing details, access your ShopTrak account online."
-
+        
         Popovers.triggerMessagePopover(with: billingMessage)
     }
     
@@ -64,10 +76,8 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     
     @IBAction func logoutPressed(_ sender: Any) {
         UI {
-            SessionManager.shared.logout()
-            defaults.set(false, forKey: Keys.isUserLoggedInKey)
+            SessionManager.tokens = nil
             UIApplication.shared.keyWindow?.rootViewController = LoginViewController.instantiate()
         }
     }
-    
 }
