@@ -19,14 +19,15 @@
 }
 
 .group-profile-list {
+    width: 90%;
     margin-left: 20%;
     height: 500px;
 }
 
 .group-profile-list-container {
     height: 400px;
-    width: 100%;
-    margin-left: 7%;
+    /*width: 100%;*/
+    /*margin-left: 7%;*/
     overflow: auto;
 }
 
@@ -94,13 +95,14 @@
 }
 
 .item-name {
-    margin-left: -60%;
+    margin-left: 40%;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .item-purchased {
     opacity: 1 !important;
+
 }
 
 input[type="button"]{
@@ -182,4 +184,9 @@ input[type="button"]::-moz-focus-inner {
 }
 
 .history-list {
+}
+
+.history-items {
+    font-size: 18px;
+    font-weight: bold;
 }
