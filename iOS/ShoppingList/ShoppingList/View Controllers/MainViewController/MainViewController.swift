@@ -18,7 +18,25 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+
+        let usersCon = UserController()
+        usersCon.getUser(forID: 501) { (user) in
+            if let users = user {
+                /*Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
+               print(users)
+              */
+                SaveItem.test()
+            }
+        }
+        
+
+        let groupCon = GroupController()
+        groupCon.getGroupWith(userID: 501) { (groups) in
+            
+
         GroupController.shared.getGroupWith(userID: 501) { (groups) in
+
             if let groups = groups {
                 allGroups = groups
                 selectedGroup = groups[0]
