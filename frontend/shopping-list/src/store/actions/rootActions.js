@@ -65,8 +65,8 @@ export const checkEmail = () => {
 
   const fetchUserId = axios.get(`${backendURL}/api/user/check/getid`, options);
 
-    return (dispatch) => {
-      dispatch({type: CHECKING_EMAIL});
+  return (dispatch) => {
+    dispatch({type: CHECKING_EMAIL});
 
     fetchUserId.then(res => {
       console.log('check email', res.data);
@@ -199,20 +199,21 @@ export const clearCurrentGroup = () => {
   return dispatch => {
     dispatch({type: CLEARING_CURRENT_GROUP});
   }
+}
 
 /*
  * Add an item to the database for a specified group.
  * @param id - Group ID
  */
 export const addItem = (item) => dispatch => {
-  dispatch({ type: ADD_ITEM_START });
+  dispatch({type: ADD_ITEM_START});
 
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/item`;
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -223,11 +224,11 @@ export const addItem = (item) => dispatch => {
         getItems(item.groupID)(dispatch)
       })
       .then(response => {
-        dispatch({ type: ADD_ITEM_SUCCESS, payload: response.data.data });
+        dispatch({type: ADD_ITEM_SUCCESS, payload: response.data.data});
       })
       .catch(err => {
         console.log("ADDING ITEM ERR => ", err);
-        dispatch({ type: ADD_ITEM_FAILED, payload: err });
+        dispatch({type: ADD_ITEM_FAILED, payload: err});
       });
 }
 
@@ -236,7 +237,7 @@ export const addItem = (item) => dispatch => {
  * @param id - ID of the item
  */
 export const updateItemPurchesd = (id) => dispatch => {
-  dispatch({ type: UPDATE_ITEM_PURCHASED_START, payload: id });
+  dispatch({type: UPDATE_ITEM_PURCHASED_START, payload: id});
 }
 
 /*
@@ -246,14 +247,14 @@ export const updateItemPurchesd = (id) => dispatch => {
  * @param total - Total amount the user paid for all items
  */
 export const submitPaidItems = (items, userID, total) => dispatch => {
-  dispatch({ type: SUBMIT_PAID_ITEMS_START });
+  dispatch({type: SUBMIT_PAID_ITEMS_START});
 
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/grouphistory/`;
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -281,17 +282,17 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
           // Update the item
           axios.put(itemEndpoint, item, options)
               .then(res1 => {
-                dispatch({ type: SUBMIT_PAID_ITEMS_SUCCESS });
+                dispatch({type: SUBMIT_PAID_ITEMS_SUCCESS});
               })
               .catch(errr => {
                 console.log("ADDING ITEM ERR => ", errr);
-                dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: errr });
+                dispatch({type: SUBMIT_PAID_ITEMS_FAILED, payload: errr});
               })
 
         })
-        .catch( err => {
+        .catch(err => {
           console.log("ADDING HISTORY ERR => ", err);
-          dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: err });
+          dispatch({type: SUBMIT_PAID_ITEMS_FAILED, payload: err});
         })
   });
   getItems(items[0].groupID)(dispatch);
@@ -299,5 +300,5 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
 }
 
 export const getGroupMembers = (groupID) => dispatch => {
-  dispatch({ type: GET_GROUPMEMBERS_START });
+  dispatch({type: GET_GROUPMEMBERS_START});
 }

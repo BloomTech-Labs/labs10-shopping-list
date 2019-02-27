@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups, addGroup, getItems, getSingleGroup } from '../store/actions/rootActions';
-import {gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
+import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
-import Navigation from "./Navigation";
 import "./Styles/Group.css";
 import {
     MDBListGroup,
@@ -188,7 +186,7 @@ class GroupsPage extends Component{
     render(){
 //         console.log('current group', this.props.currentGroup);
 //         const purchased = this.props.items.filter(itm => itm.purchased === true);
-        
+
         // if(!this.props.currentGroup){ // tell user info is loading...
         //     /**
         //      * @TODO Create a loading component that can render during data queries
@@ -197,7 +195,7 @@ class GroupsPage extends Component{
         //         <div>Fetching group information...</div>
         //     )
         // } else {
-        
+
         // Filter items by which has been purchased - used for the `I Bought` form
         let purchased = [];
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
@@ -249,7 +247,7 @@ class GroupsPage extends Component{
                                                                 ))
                                                             }
                                                             <p>{histories[i][0].date}</p>
-                                                            <p>Total: $ {this.totalItems(histories[i])}</p>
+                                                            <p>Total: $ {histories[i][histories[i].length - 1].grandTotal}</p>
                                                         </div>
 
 
