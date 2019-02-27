@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Item from './Item';
 import {getItems, addItem} from '../store/actions/rootActions';
+import './Styles/ItemList.css';
 
 class ItemList extends React.Component{
     async componentDidMount(){
@@ -58,7 +59,7 @@ class ItemList extends React.Component{
         event.preventDefault();
         if(this.state.item && this.state.quantity > 0){
             let item = {
-                purchasedBy: this.props.userId,
+                purchasedBy: null,
                 groupID: Number(this.state.groupID),
                 name: this.state.item,
                 quantity: this.state.quantity,
@@ -82,7 +83,7 @@ class ItemList extends React.Component{
         let itemList = [];
         if(this.props.items){
             itemList = this.props.items.map(item => {
-                return <Item item = {item} />
+                return <Item item = {item} key = {item.id}/>
             })
         } else {
             return <h2>No Items on the List</h2>
@@ -113,6 +114,7 @@ class ItemList extends React.Component{
                     <option>lb</option>
                     <option>L</option>
                     <option>gal</option>
+                    <option>dozen</option>
                     <option>piece</option>
                 </select>
                 </div>

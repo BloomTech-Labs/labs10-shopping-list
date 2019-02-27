@@ -3,6 +3,7 @@ import {purchaseItem} from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import moment from 'moment';
+import './Styles/Item.css';
 
 class Item extends React.Component {
     constructor(props){
@@ -88,19 +89,22 @@ class Item extends React.Component {
     render(){
     
         return (
-            <div className = 'item-container'>
-            <h2>
-            {this.props.item.name}
-            </h2>
-
-            <h2>{this.props.item.quantity}</h2>
-           
+            <div className = 'item-container' key = {this.props.key}>
+            
 
             <form>
-                $<input type = 'number' onMouseDown = {this.clearField} onChange = {this.handleChange} value = {this.state.price} placeholder = 'Enter price ($0.00)' min = '0' step = 'any' >
+            <div className = 'item-list-name'>{this.props.item.name}</div>
+                <div className = 'item-list-quantity'>Quantity: {this.props.item.quantity}</div>
                 
+                {this.props.item.purchasedBy ? 
+                <div className = 'item-purchased-by'>Purchased By: {this.props.item.purchasedBy}</div>
+                : <div className = 'item-purchased-by'>Not purchased</div>}
+
+                <div>
+                $<input type = 'number' onMouseDown = {this.clearField} onChange = {this.handleChange} value = {this.state.price} placeholder = 'Enter price ($0.00)' min = '0' step = 'any' >
                 </input>
-            <button type = 'submit' onClick = {this.handlePurchase}>Purchase</button>
+                </div>
+                <button type = 'submit' onClick = {this.handlePurchase}>Purchase</button>
             </form>
             </div>
         )

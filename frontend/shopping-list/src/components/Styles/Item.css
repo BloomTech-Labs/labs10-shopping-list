@@ -1,0 +1,21 @@
+.item-container {
+    width: 100%;
+    background: white;
+    margin: 10px 0px;
+    padding: 5px;
+}
+
+.item-container form {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.item-container button {
+    max-width: fit-content;
+    padding: 5px;
+}
+
+.item-container input {
+    padding: 5px 5px;
+}

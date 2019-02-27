@@ -1,0 +1,8 @@
+.item-list-container {
+    border: 2px solid black;
+    padding: 40px;
+}
+
+.item-list {
+    max-width: 50%;
+}
