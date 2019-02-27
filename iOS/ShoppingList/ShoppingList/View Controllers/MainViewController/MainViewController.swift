@@ -9,7 +9,7 @@
 import UIKit
 
 class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopoverViewDelegate {
-
+    
     static let storyboardName: StoryboardName = "MainViewController"
     @IBOutlet weak var groupName: UIButton!
     
@@ -18,29 +18,31 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-
-        let usersCon = UserController()
-        usersCon.getUser(forID: 501) { (user) in
-            if let users = user {
-                /*Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
-               print(users)
-              */
-                SaveItem.test()
-            }
-        }
-        
-
-        let groupCon = GroupController()
-        groupCon.getGroupWith(userID: 501) { (groups) in
-            
-
-        GroupController.shared.getGroupWith(userID: 501) { (groups) in
-
-            if let groups = groups {
-                allGroups = groups
-                selectedGroup = groups[0]
-                self.updateViews()
+        GroupController.shared.getGroups(forUserID: 501) { (success) in
+            if allGroups.count > 0 {
+                let selected = allGroups[0]
+                selectedGroup = selected
+                
+                
+                
+                let usersCon = UserController()
+                usersCon.getUser(forID: 501) { (user) in
+                    if let users = user {
+                        /*Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
+                         print(users)
+                         */
+                        SaveItem.test()
+                    }
+                }
+                
+                GroupController.shared.getGroups(forUserID: 501, completion: { (success) in
+                    
+                    if success {
+                        selectedGroup = allGroups[0]
+                        self.updateViews()
+                    }
+                    
+                })
             }
         }
     }
@@ -71,6 +73,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
         present(settingsVC, animated: true, completion: nil)
     }
 }
+
 
 
 
