@@ -191,11 +191,10 @@ userRouter.get('/check/getid', (req, res) => {
     let email = req.user.email; // use jwt's req.user instead of req.body which is vulnerable
 
     // setting up sender e-mail
-    let senderEmail = 'shoptraklab@gmail.com';
     let transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: `${process.env.EMAIL_SERVICE}`,
         auth:{
-            user: 'shoptraklab@gmail.com',
+            user: `${process.env.EMAIL_ADDRESS}`,
             pass: `${process.env.EMAIL_PASSWORD}`
         }
     });
@@ -212,7 +211,7 @@ userRouter.get('/check/getid', (req, res) => {
             // email new user with welcome e-mail
             // set up the email
             let mailOptions = {
-                from: `${senderEmail}`,
+                from: `${process.env.EMAIL_ADDRESS}`,
                 to: `${email}`,
                 subject: 'Signed up for ShopTrak',
                 text: 'Thank you for signing up with ShopTrak.'
