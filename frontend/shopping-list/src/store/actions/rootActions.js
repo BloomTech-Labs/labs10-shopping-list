@@ -16,6 +16,9 @@ export const ADDING_GROUPS_TO_SERVER_FAILED = 'ADDING_GROUPS_TO_SERVER_FAILED';
 export const GETTING_ITEMS = 'GETTING_ITEMS';
 export const GETTING_ITEMS_SUCCESS = 'GETTING_ITEMS_SUCCESS';
 export const GETTING_ITEMS_FAILED = 'GETTING_ITEMS_FAILED';
+export const FETCHING_SINGLE_GROUP = 'FETCHING_SINGLE_GROUP';
+export const SINGLE_GROUP_FETCHED = 'SINGLE_GROUP_FETCHED';
+export const CLEARING_CURRENT_GROUP = 'CLEARING_CURRENT_GROUP';
 export const ADD_ITEM_START = 'ADD_ITEM_START';
 export const ADD_ITEM_SUCCESS = 'ADD_ITEM_SUCCESS';
 export const ADD_ITEM_FAILED = 'ADD_ITEM_FAILED';
@@ -51,33 +54,24 @@ export const testFunction = () => dispatch => {
 // sends email to server to obtain user ID
 // if no ID found, creates a new user record and returns the ID
 // once complete, calls the callback function, which in this case is addUserToState in order to populate state completely
-export const checkEmail = (email, callback) => {
-  console.log('checkemail function', email);
-
-  let user = {
-    email: email,
-    name: localStorage.getItem('name'),
-    img_url: localStorage.getItem('img_url'),
-  }
-
+export const checkEmail = () => {
   let token = localStorage.getItem('jwt');
   // console.log('token', token);
   let options = {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`, // we can extract the email from the token instead of explicitly sending it in req.body
     }
   }
 
-  const fetchUserId = axios.post(`${backendURL}/api/user/getid`, user, options);
+  const fetchUserId = axios.get(`${backendURL}/api/user/check/getid`, options);
 
-  return dispatch => {
-    dispatch({type: CHECKING_EMAIL});
+    return (dispatch) => {
+      dispatch({type: CHECKING_EMAIL});
 
     fetchUserId.then(res => {
       console.log('check email', res.data);
       dispatch({type: EMAIL_CHECKED, payload: res.data});
 
-      callback();
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})
@@ -111,7 +105,7 @@ export const addGroup = (group) => dispatch => {
   const endpoint = `${backendURL}/api/group/`;
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -141,7 +135,7 @@ export const gettingGroups = () => async dispatch => {
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -162,7 +156,7 @@ export const getItems = (id) => dispatch => {
 
   const options = {
     headers: {
-      Authorization: token
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -177,6 +171,34 @@ export const getItems = (id) => dispatch => {
 
   // dispatch({ type: GETTING_ITEMS payload: items});
 }
+
+export const getSingleGroup = (groupId) => {
+  let token = localStorage.getItem('jwt');
+
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  }
+
+  const fetchGroup = axios.get(`${backendURL}/api/group/${groupId}`, options)
+
+  return dispatch => {
+    dispatch({type: FETCHING_SINGLE_GROUP});
+
+    fetchGroup.then(res => {
+      dispatch({type: SINGLE_GROUP_FETCHED, payload: res.data});
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+  }
+}
+
+export const clearCurrentGroup = () => {
+  return dispatch => {
+    dispatch({type: CLEARING_CURRENT_GROUP});
+  }
 
 /*
  * Add an item to the database for a specified group.
