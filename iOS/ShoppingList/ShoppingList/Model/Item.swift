@@ -9,6 +9,10 @@
 import Foundation
 
 
+struct ItemList: Codable {
+    let data: [Item]
+}
+
 struct Item: Codable {
     
     var createdAt: String
@@ -20,10 +24,10 @@ struct Item: Codable {
     var updatedAt: String
     var purchased: Bool
     var category: String
-    var groupID: [Group]?
+    var groupId: Int?
+    var id: Int?
     
-    
-    init(name: String, measurement: String, purchased: Bool, purchasedBy: String, category: String, price: Double, quantity: Int ) {
+    init(name: String, measurement: String, purchased: Bool,purchasedBy: String, category: String, price: Double, quantity: Int, groupId: Int? ) {
      //  self.groupID = groupID
         self.name = name
         self.measurement = measurement
@@ -34,7 +38,7 @@ struct Item: Codable {
         self.updatedAt = Date().dateToString()
         self.price = price
         self.quantity = quantity
+        self.id = nil
+        self.groupId = groupId
     }
-    
-    
 }

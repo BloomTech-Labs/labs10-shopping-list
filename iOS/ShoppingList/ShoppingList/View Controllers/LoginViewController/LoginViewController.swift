@@ -22,17 +22,10 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
     }
     
     @IBAction func loginButtonPressed(_ sender: Any) {
-        checkAccessToken()
+        showLogin()
     }
-    
-    
-    
-    
-    
-    
 
     func showLogin() {
-        
         Auth0
             .webAuth()
             .audience("https://shoptrak.auth0.com/api/v2/")
@@ -40,34 +33,16 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
             .start {
                 switch $0 {
                 case .failure(let error):
-                    // Handle the error
-                    print("Error: \(error)")
+                    print("showLogin: \(error)")
                 case .success(let credentials):
                     guard let accessToken = credentials.accessToken, let idToken = credentials.idToken else { return }
-                    SessionManager.shared.storeTokens(accessToken, idToken: idToken)
-                    SessionManager.shared.retrieveProfile { error in
-                        guard error == nil else {
-                            return self.showLogin()
-                        }
-                        
+                    SessionManager.tokens = Tokens(accessToken: accessToken, idToken: idToken)
+                    UI {
+                        UIApplication.shared.keyWindow?.rootViewController = MainViewController.instantiate()
                     }
                 }
         }
         
-    }
-    
-    func checkAccessToken() {
-        
-        SessionManager.shared.logout()
-        SessionManager.shared.retrieveProfile { error in
-            guard error == nil else {
-                return self.showLogin()
-            }
-            UI {
-                defaults.set(true, forKey: Keys.isUserLoggedInKey)
-                UIApplication.shared.keyWindow?.rootViewController = MainViewController.instantiate()
-            }
-        }
     }
 }
 
