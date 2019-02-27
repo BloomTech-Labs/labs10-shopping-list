@@ -26,7 +26,7 @@ const checkUser = require('../../validators/checkUser');
  * ***********************************************/
 
 itemRouter.use(checkJwt);
-itemRouter.use(checkUser);
+// itemRouter.use(checkUser);
 
 /** ADD ITEM
  * @TODO Add middleware to ensure user is logged in

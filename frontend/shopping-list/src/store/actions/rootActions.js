@@ -199,105 +199,106 @@ export const clearCurrentGroup = () => {
   return dispatch => {
     dispatch({type: CLEARING_CURRENT_GROUP});
   }
-
-/*
- * Add an item to the database for a specified group.
- * @param id - Group ID
- */
-export const addItem = (item) => dispatch => {
-  dispatch({ type: ADD_ITEM_START });
-
-  const token = localStorage.getItem('jwt');
-  const endpoint = `${backendURL}/api/item`;
-
-  const options = {
-    headers: {
-      Authorization: token
-    }
-  };
-
-  // Add items to the server and then get the items to update state
-  axios.post(endpoint, item, options)
-      .then(() => {
-        // Retrieve the items
-        getItems(item.groupID)(dispatch)
-      })
-      .then(response => {
-        dispatch({ type: ADD_ITEM_SUCCESS, payload: response.data.data });
-      })
-      .catch(err => {
-        console.log("ADDING ITEM ERR => ", err);
-        dispatch({ type: ADD_ITEM_FAILED, payload: err });
-      });
 }
 
-/*
- * Update items array with purchased
- * @param id - ID of the item
- */
-export const updateItemPurchesd = (id) => dispatch => {
-  dispatch({ type: UPDATE_ITEM_PURCHASED_START, payload: id });
-}
+  /*
+   * Add an item to the database for a specified group.
+   * @param id - Group ID
+   */
+  export const addItem = (item) => dispatch => {
+    dispatch({type: ADD_ITEM_START});
 
-/*
- * Add paid items to the database and update items purchase/purchasedBy params
- * @param items - Array of items to submit
- * @param userID - ID of the user who purchased the items
- * @param total - Total amount the user paid for all items
- */
-export const submitPaidItems = (items, userID, total) => dispatch => {
-  dispatch({ type: SUBMIT_PAID_ITEMS_START });
+    const token = localStorage.getItem('jwt');
+    const endpoint = `${backendURL}/api/item`;
 
-  const token = localStorage.getItem('jwt');
-  const endpoint = `${backendURL}/api/grouphistory/`;
+    const options = {
+      headers: {
+        Authorization: token
+      }
+    };
 
-  const options = {
-    headers: {
-      Authorization: token
-    }
-  };
-
-  // Loop through each item and send it to groupHistory DB and update the item in the items DB
-  items.forEach(itm => {
-    const itemEndpoint = `${backendURL}/api/item/${itm.id}`
-
-    const history = {
-      "userID": userID,
-      "groupID": itm.groupID,
-      "itemID": itm.id,
-      "total": total,
-      "purchasedOn": new Date()
-    }
-
-    const item = {
-      purchased: true,
-      purchasedBy: userID,
-      purchasedOn: new Date()
-    }
-
-    // Add a new item history
-    axios.post(endpoint, history, options)
-        .then(res => {
-          // Update the item
-          axios.put(itemEndpoint, item, options)
-              .then(res1 => {
-                dispatch({ type: SUBMIT_PAID_ITEMS_SUCCESS });
-              })
-              .catch(errr => {
-                console.log("ADDING ITEM ERR => ", errr);
-                dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: errr });
-              })
-
+    // Add items to the server and then get the items to update state
+    axios.post(endpoint, item, options)
+        .then(() => {
+          // Retrieve the items
+          getItems(item.groupID)(dispatch)
         })
-        .catch( err => {
-          console.log("ADDING HISTORY ERR => ", err);
-          dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: err });
+        .then(response => {
+          dispatch({type: ADD_ITEM_SUCCESS, payload: response.data.data});
         })
-  });
-  getItems(items[0].groupID)(dispatch);
+        .catch(err => {
+          console.log("ADDING ITEM ERR => ", err);
+          dispatch({type: ADD_ITEM_FAILED, payload: err});
+        });
+  }
 
-}
+  /*
+   * Update items array with purchased
+   * @param id - ID of the item
+   */
+  export const updateItemPurchesd = (id) => dispatch => {
+    dispatch({type: UPDATE_ITEM_PURCHASED_START, payload: id});
+  }
 
-export const getGroupMembers = (groupID) => dispatch => {
-  dispatch({ type: GET_GROUPMEMBERS_START });
-}
+  /*
+   * Add paid items to the database and update items purchase/purchasedBy params
+   * @param items - Array of items to submit
+   * @param userID - ID of the user who purchased the items
+   * @param total - Total amount the user paid for all items
+   */
+  export const submitPaidItems = (items, userID, total) => dispatch => {
+    dispatch({type: SUBMIT_PAID_ITEMS_START});
+
+    const token = localStorage.getItem('jwt');
+    const endpoint = `${backendURL}/api/grouphistory/`;
+
+    const options = {
+      headers: {
+        Authorization: token
+      }
+    };
+
+    // Loop through each item and send it to groupHistory DB and update the item in the items DB
+    items.forEach(itm => {
+      const itemEndpoint = `${backendURL}/api/item/${itm.id}`
+
+      const history = {
+        "userID": userID,
+        "groupID": itm.groupID,
+        "itemID": itm.id,
+        "total": total,
+        "purchasedOn": new Date()
+      }
+
+      const item = {
+        purchased: true,
+        purchasedBy: userID,
+        purchasedOn: new Date()
+      }
+
+      // Add a new item history
+      axios.post(endpoint, history, options)
+          .then(res => {
+            // Update the item
+            axios.put(itemEndpoint, item, options)
+                .then(res1 => {
+                  dispatch({type: SUBMIT_PAID_ITEMS_SUCCESS});
+                })
+                .catch(errr => {
+                  console.log("ADDING ITEM ERR => ", errr);
+                  dispatch({type: SUBMIT_PAID_ITEMS_FAILED, payload: errr});
+                })
+
+          })
+          .catch(err => {
+            console.log("ADDING HISTORY ERR => ", err);
+            dispatch({type: SUBMIT_PAID_ITEMS_FAILED, payload: err});
+          })
+    });
+    getItems(items[0].groupID)(dispatch);
+
+  }
+
+  export const getGroupMembers = (groupID) => dispatch => {
+    dispatch({type: GET_GROUPMEMBERS_START});
+  }
