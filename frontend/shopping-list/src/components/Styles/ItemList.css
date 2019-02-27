@@ -6,3 +6,59 @@
 .item-list {
     max-width: 50%;
 }
+
+.item-form{
+    width: 50%;
+}
+
+.item-form-top{
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    justify-content: space-between;  
+}
+
+.item-form-top #name{
+    width: 60%;
+}
+
+.item-form h3{
+    font-size: 0.4rem;
+}
+
+.item-quantity{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    width: fit-content;
+}
+
+
+.item-measurement{
+    margin: 0px 5px;
+}
+
+.item-form form{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+/* 
+.item-form form input{
+    width: 100%;
+} */
+
+.item-form input[name='item']{
+    width: 100%;
+}
+
+
+.item-form input[name='quantity']{
+    text-align: center;
+    width: 50px;
+}
+
+.item-list button {
+    max-width: fit-content;
+}

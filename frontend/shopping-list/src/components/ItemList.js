@@ -31,6 +31,7 @@ class ItemList extends React.Component{
 
     increase = event => {
         event.preventDefault();
+        console.log('q', this.state.quantity);
         let newQuantity = this.state.quantity += 1;
         this.setState({
             quantity: newQuantity,
@@ -39,7 +40,8 @@ class ItemList extends React.Component{
 
     decrease = event => {
         event.preventDefault();
-        if((this.state.quantity - 1) > 0 ){
+        if((this.state.quantity - 1) >= 0 ){
+            console.log('quant', this.state.quantity);
             let newQuantity = this.state.quantity -= 1;
             this.setState({
                 quantity: newQuantity,
@@ -48,13 +50,52 @@ class ItemList extends React.Component{
         
     }
 
+    clearInput = event => {
+        event.preventDefault();
+        document.addEventListener('mousedown', this.handleClickOutside);
+        if(event.target.name === 'quantity'){
+            let oldQuantity = this.state.quantity;
+            this.setState({
+                [event.target.name]: '',
+                oldQuantity: oldQuantity
+            })
+        }
+    }
+
     handleInput = event => {
         event.preventDefault();
-        this.setState({
-            [event.target.name]: event.target.value,
-        });
+        if(event.target.name === 'quantity'){
+            if(event.target.value){
+                if(!isNaN(event.target.value)){
+                    this.setState({
+                        [event.target.name]: Number(event.target.value)
+                    })
+                }
+            }
+        } else {
+
+            this.setState({
+                [event.target.name]: event.target.value,
+            });
+        }
     }
-    
+
+    handleClickOutside = event => {
+        if(!this.state.quantity){
+            if(this.state.oldQuantity){
+                this.setState({
+                    quantity: this.state.oldQuantity,
+                })
+            } else {
+                this.setState({
+                    quantity: 0,
+                })
+            }
+            
+        }
+        document.removeEventListener('mousedown', this.handleClickOutside);
+    }    
+
     handleSubmit = event => {
         event.preventDefault();
         if(this.state.item && this.state.quantity > 0){
@@ -73,8 +114,15 @@ class ItemList extends React.Component{
             // send item to db
             this.props.addItem(item);
 
-        } else {
+            this.setState({
+                item: '',
+                quantity: 0,
+                measurement: '(none)',
+                groupID: this.props.match.params.id,
+            })
 
+        } else {
+            window.alert('Must include name and quantity.');
         }
     }
 
@@ -98,16 +146,34 @@ class ItemList extends React.Component{
             
             <div className = 'item-form'>
 
+            <div className = 'item-form-top'>
+            <span id = 'name'>
+            Name
+            </span>
+
+            <span id = 'quantity'>
+            Quantity
+            </span>
+
+            <span id = 'measurement'>
+            Measurement
+            </span>
+
+            <span id = 'submit'>
+            Submit
+            </span>
+
+            </div>
+
             <form onSubmit = {this.handleSubmit}>
                 <input type = 'text' name = 'item' placeholder = 'Add an item' value = {this.state.item} onChange = {this.handleInput}/>
+                
                 <div className = 'item-quantity'>
                 <button onClick = {this.decrease}>-</button>
-                <input type = 'number' name = 'quantity' placeholder = 'Quantity' onChange = {this.handleInput} value = {this.state.quantity} /> 
+                <input type = 'text' name = 'quantity' placeholder = 'Quantity' onClick = {this.clearInput} onChange = {this.handleInput} value = {this.state.quantity} /> 
                 <button onClick = {this.increase}>+</button>
                 </div>
-
-                <div className = 'item-measurement'>
-                <h4>measurement</h4>
+                
                 <select name = 'measurement' onChange = {this.handleInput}>
                     <option>(none)</option>
                     <option>oz</option>
@@ -117,7 +183,7 @@ class ItemList extends React.Component{
                     <option>dozen</option>
                     <option>piece</option>
                 </select>
-                </div>
+
                 <button type = 'submit'>Add Item</button>
             </form>
 
