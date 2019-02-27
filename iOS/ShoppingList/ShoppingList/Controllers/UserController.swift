@@ -36,12 +36,10 @@ class UserController {
         
         guard let userJSON = userToJSON(user: newUser) else { return }
         
-       guard let accessToken = A0SimpleKeychain(service: "Auth0").string(forKey:"access_token") else {return}
-        
-        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+       
         
         
-        Alamofire.request(url, method: .post, parameters: userJSON, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .post, parameters: userJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(let value):

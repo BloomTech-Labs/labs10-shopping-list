@@ -27,9 +27,10 @@ class MainViewController: UIViewController, StoryboardInstantiatable {
         let usersCon = UserController()
         usersCon.getUser(forID: 501) { (user) in
             if let users = user {
-                Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
+                /*Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
                print(users)
-              
+              */
+                SaveItem.test()
             }
         }
         

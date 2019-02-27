@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		112430AE2216267E0081784C /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AD2216267E0081784C /* GroupController.swift */; };
-		112430B0221631350081784C /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AF221631350081784C /* ItemController.swift */; };
+		112430B0221631350081784C /* SaveItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AF221631350081784C /* SaveItem.swift */; };
 		118646D4221CA8CD00D0F04B /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646D3221CA8CD00D0F04B /* Group.swift */; };
 		118646D6221CA93900D0F04B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646D5221CA93900D0F04B /* Item.swift */; };
 		118646D8221CA9D900D0F04B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646D7221CA9D900D0F04B /* User.swift */; };
@@ -74,7 +74,7 @@
 
 /* Begin PBXFileReference section */
 		112430AD2216267E0081784C /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
-		112430AF221631350081784C /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
+		112430AF221631350081784C /* SaveItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveItem.swift; sourceTree = "<group>"; };
 		118646D3221CA8CD00D0F04B /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		118646D5221CA93900D0F04B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		118646D7221CA9D900D0F04B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 				112430AD2216267E0081784C /* GroupController.swift */,
 				119B303C2225ABC300DF93E6 /* GroupMemberController.swift */,
 				118646DF221DCE9B00D0F04B /* UserController.swift */,
-				112430AF221631350081784C /* ItemController.swift */,
+				112430AF221631350081784C /* SaveItem.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -532,7 +532,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Auth0/Auth0.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -553,7 +553,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -579,7 +579,7 @@
 				96700E31221C035600F084B3 /* SettingsTableViewController.swift in Sources */,
 				969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */,
 				118646DC221CAA5600D0F04B /* GroupMember.swift in Sources */,
-				112430B0221631350081784C /* ItemController.swift in Sources */,
+				112430B0221631350081784C /* SaveItem.swift in Sources */,
 				969A84152215C99A0003BB37 /* Nib+UIView.swift in Sources */,
 				969A84012215C99A0003BB37 /* ChameleonShorthand.swift in Sources */,
 				969A840B2215C99A0003BB37 /* UIViewController+Chameleon.m in Sources */,
