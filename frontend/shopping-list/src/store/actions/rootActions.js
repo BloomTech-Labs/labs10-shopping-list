@@ -213,7 +213,7 @@ export const clearCurrentGroup = () => {
 
     const options = {
       headers: {
-        Authorization: token
+        Authorization: `Bearer ${token}`,
       }
     };
 
@@ -254,7 +254,7 @@ export const clearCurrentGroup = () => {
 
     const options = {
       headers: {
-        Authorization: token
+        Authorization: `Bearer ${token}`,
       }
     };
 

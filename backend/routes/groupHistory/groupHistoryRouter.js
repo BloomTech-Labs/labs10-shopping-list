@@ -64,6 +64,19 @@ function groupBy( array , f )
     })
 }
 
+/*
+     * Calculate the total amount the member has spent
+     * @params items - Array of items to tally
+     */
+totalItems = (items) => {
+    console.log("TOTALING....");
+    const total = items.reduce((accumulator, currentValue) => {
+        return accumulator + currentValue.total;
+    }, 0);
+
+    return total;
+}
+
 groupHistoryRouter.get('/group/:id', async (req, res) => {
     const groupId = req.params.id;
     const groups = [];
@@ -71,17 +84,10 @@ groupHistoryRouter.get('/group/:id', async (req, res) => {
     try {
         const grpHistory = await groupHistoryDb.getByGroup(groupId);
 
-        // console.log("GRPHISTORY => ", grpHistory);
-
         for (let i = 0; i < grpHistory.length; i++) {
             const mem = await itemDb.getById(grpHistory[i].itemID);
 
             const usr = await userDb.getById(mem[0].purchasedBy);
-
-            // console.log("MEM => ", mem);
-            // console.log("USR => ", usr[0].name);
-
-
 
             const item = {
                 id: mem[0].id,
@@ -90,63 +96,50 @@ groupHistoryRouter.get('/group/:id', async (req, res) => {
                 price: mem[0].price,
             }
 
-            // console.log(item);
-
             const hist = {
                 total: grpHistory[i].total,
                 item: item,
                 name: mem[0].name,
                 user: usr[0].name,
                 date: new Date(grpHistory[i].createdAt).toLocaleDateString(),
+                utcDate: new Date(grpHistory[i].createdAt).toUTCString()
             }
 
-            // console.log("HIST => ", hist);
             groups.push(hist);
         }
 
-        // console.log(groups);
-        let newGroups = [];
-
-
-        const sorted = groups.sort((a,b) => {
-            if (a.item.user > b.item.user ) return -1;
-            if (a.item.user  < b.item.user ) return 1;
-
-            if (a.date > b.date) return -1;
-            if (a.date < b.date) return 1;
-        })
-
-        const result = groupBy(groups, function(itm) {
+        const results = groupBy(groups, function(itm) {
             return [itm.date, itm.user]
         })
 
-        console.log(result);
+        let result = results.map((x, i) => {
+            let rr = x.map((y, iy) => {
+                if (results[i][iy-1] && results[i][iy].utcDate === results[i][iy - 1].utcDate) {
+                    return {total: 0};
+                } else {
+                    return y;
+                }
+            })
 
-        return res.status(200).json({data: result });
+            return rr;
+
+        });
+
+        let newSorted = results.map(x => x);
+
+        result.forEach((rs, i) => {
+            let total = totalItems(result[i]);
+            const grandTotal = {
+                grandTotal: total,
+            }
+            newSorted[i].push(grandTotal);
+        })
+
+        return res.status(200).json({data: newSorted });
 
     } catch (e) {
         return res.status(500).json({message: "Internal Server Error", err: e})
     }
-    // groupHistoryDb.getByGroup(groupId).then(groupHistories => {
-    //
-    //     console.log("GROUPS => ", groupHistories);
-    //
-    //
-    //
-    //     if (groupHistories.length >= 1) {
-    //         return res.status(200).json(groupHistories);
-    //     }
-    //     return res.status(404).json({message: "The requested group histories do not exist."});
-    // })
-    // .catch(err => {
-    //     const error = {
-    //         message: `Internal Server Error - Getting Group History`,
-    //         data: {
-    //             err: err
-    //         },
-    //     }
-    //     return res.status(500).json(error);
-    // });
 });
 
 /**************************************************/

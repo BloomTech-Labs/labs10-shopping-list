@@ -247,7 +247,7 @@ class GroupsPage extends Component{
                                                                 ))
                                                             }
                                                             <p>{histories[i][0].date}</p>
-                                                            <p>Total: $ {this.totalItems(histories[i])}</p>
+                                                            <p>Total: $ {histories[i][histories[i].length - 1].grandTotal}</p>
                                                         </div>
 
 
