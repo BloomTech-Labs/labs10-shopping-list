@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import "./Styles/Group.css";
+import "./Styles/Scrollbar.css";
 import {
     MDBListGroup,
     MDBListGroupItem,
@@ -11,6 +12,7 @@ import {
     MDBBadge,
     MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
     MDBTooltip,
+    MDBScrollbar,
 } from "mdbreact";
 import axios from "axios";
 
@@ -216,21 +218,21 @@ class GroupsPage extends Component{
                     <div className={"group-profile-header-title"}><h3></h3></div>
                     <div className={"group-profile-columns"}>
                         <div className={"group-profile-list"}>
-                            <div className={"group-profile-list-container"}>
+                            <div className={"group-profile-list-container scrollbar scrollbar-rare-wind"}>
                                 <MDBContainer>
-                                    <MDBContainer>
+                                    <MDBContainer >
                                         {
-                                            this.state.listClass === true ? <MDBListGroup style={{ width: "22rem" }}>
+                                            this.state.listClass === true ? <MDBListGroup>
                                                 {
                                                     this.props.items !== null ? this.props.items.map((item, i) => (
-                                                        <MDBListGroupItem key={i} className="d-flex justify-content-between align-items-center">
+                                                        <MDBListGroupItem key={i} className="d-flex justify-content-evenly align-items-center">
                                                             <button type="button" onClick={() => this.check(item.id)} className={item.purchased ? "close1 item-purchased close" : "close close1"} aria-label="Close">
                                                                 <MDBBadge color="primary"><MDBIcon icon="check" /> </MDBBadge>
                                                             </button>
                                                             <p className={"item-name"}>{item.name}</p>
-                                                            <button type="button" className="close" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
+                                                            {/*<button type="button" className="close" aria-label="Close">*/}
+                                                                {/*<span aria-hidden="true">×</span>*/}
+                                                            {/*</button>*/}
                                                         </MDBListGroupItem>
                                                     )) : null
                                                 }
@@ -238,16 +240,18 @@ class GroupsPage extends Component{
                                                 {
                                                     histories !== null ? histories.map((itm,i) => (
                                                         <div>
-                                                            <p>{histories[i][0].user}</p>
-                                                            {
-                                                                histories[i].map((it, ii) => (
-                                                                    <div>
-                                                                        <p>{it.name}</p>
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                            <p>{histories[i][0].date}</p>
-                                                            <p>Total: $ {histories[i][histories[i].length - 1].grandTotal}</p>
+                                                            <MDBListGroup>
+                                                                <MDBListGroupItem>
+                                                                <h3>{histories[i][0].user}</h3>
+                                                                {
+                                                                    histories[i].map((it, ii) => (
+                                                                        <p className={"history-items"}>{it.name}</p>
+                                                                    ))
+                                                                }
+                                                                <h4>{histories[i][0].date} | Total: $ {histories[i][histories[i].length - 1].grandTotal}</h4>
+                                                                </MDBListGroupItem>
+                                                                <br></br>
+                                                            </MDBListGroup>
                                                         </div>
 
 
