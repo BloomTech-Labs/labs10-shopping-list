@@ -141,6 +141,7 @@ export const gettingGroups = () => async dispatch => {
 
   axios.get(endpoint, options)
       .then(response => {
+        console.log(response.data.data);
         dispatch({ type: ADDING_GROUPS_TO_STATE, payload: response.data.data });
       })
       .catch(err => {

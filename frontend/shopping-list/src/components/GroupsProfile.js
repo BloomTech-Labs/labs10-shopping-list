@@ -19,13 +19,6 @@ import axios from "axios";
 class GroupsPage extends Component{
     state = {
         modal14: false,
-        group: null,
-        items: [
-            {
-                name: "milk",
-                purchased: true,
-            }
-        ],
         itemName: "",
         itemPrice: 0.00,
         itemQuantity: 1,
@@ -35,15 +28,9 @@ class GroupsPage extends Component{
         listToggle: true,
         histToggle: false,
         groupHistory: null,
+        members: null,
+        totals: null,
     }
-
-//     async componentWillMount(){ // this version of CWM queries the single group, rather than collecting all groups.
-//         // see if the desired group is in state
-//         if(!this.props.currentGroup || this.props.currentGroup === null || this.props.currentGroup.id !== this.props.match.params.id){
-//             console.log('NO GROUP IN STATE');
-//             // if not, fetch it from the database
-//             // this function is necessary to prevent the app crashing on refresh or if a user visits it from a direct link, e.g. a bookmark
-//             await this.props.getSingleGroup(this.props.match.params.id); // fetches group info from server and adds it to state
 
     /*
      * Triggers before the component mounts.
@@ -54,10 +41,13 @@ class GroupsPage extends Component{
         this.props.getItems(Number(this.props.match.params.id));
         this.getGroupHistory();
 
+
         if (this.props.groups !== null) {
             const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
-            this.setState({ group: group[0]})
+            this.setState({ members: group[0].members})
         }
+
+
     }
 
     /*
@@ -190,6 +180,81 @@ class GroupsPage extends Component{
         return total;
     }
 
+    groupBy = ( array , f ) =>
+    {
+        // Set a new group object
+        var groups = {};
+
+        // Loop through the array and start sorting based on the f inputs
+        array.forEach( function( o )
+        {
+            var group = JSON.stringify( f(o) );
+            groups[group] = groups[group] || [];
+            groups[group].push( o );
+        });
+
+        // Return a new array of groups
+        return Object.keys(groups).map( function( group )
+        {
+            return groups[group];
+        })
+    }
+
+    calculateTotal = () => {
+        console.log("HISTORY => ", this.state.groupHistory);
+        const hists = this.state.groupHistory;
+        const members = this.state.members;
+
+        let newSorted = [];
+
+        let arr = [];
+
+        if (hists !== null) {
+
+            hists.forEach((itm, i) => {
+                // console.log("ITM => ", itm);
+
+                itm.forEach((x, j) => {
+                    if (x.grandTotal) {
+                        // console.log(x);
+                        arr.push({user: itm[0].user, total: x.grandTotal});
+                    }
+                })
+            })
+
+            // console.log(arr);
+
+            const ress = this.groupBy(arr, function(itm) {
+                return [itm.user]
+            })
+
+            // console.log("RESS => ", ress);
+            //
+            // let newSorted = [];
+
+            // Calculate the total and send to te newSorted array
+            ress.forEach((rs, i) => {
+                let total = this.totalItems(ress[i]);
+                const grandTotal = {
+                    grandTotal: total,
+                    user: rs[0].user,
+                }
+                newSorted.push(grandTotal);
+            })
+
+            console.log("NEW SORTED => ", newSorted);
+            return newSorted;
+
+            // this.setState({totals: newSorted});
+
+
+        }
+
+        // this.setState({totals: newSorted});
+
+
+    }
+
 
     render(){
 //         console.log('current group', this.props.currentGroup);
@@ -209,9 +274,9 @@ class GroupsPage extends Component{
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
         // Gather histories
         const histories = this.state.groupHistory;
-        if (histories !== null) {
-            console.log("NOT NULL => ", histories)
-        }
+        let total = this.calculateTotal();
+        console.log("TOTAL => ", total);
+
         return (
             <div>
                 <div className={"group-profile-container"}>
@@ -281,8 +346,29 @@ class GroupsPage extends Component{
 
                         <div className={"group-profile-right-col"}>
                             <div className={"group-profile-gross"}>
-                                <p>MEM 1</p>
-                                <p>MEM 2</p>
+                                {
+                                    this.props.groups !== null ? this.props.groups.map((elem, i) => (
+                                        <div>
+                                            {
+                                                elem.id === Number(this.props.match.params.id) ? elem.members.map((el, id) => (
+                                                    <div>
+                                                        {
+                                                            total !== undefined ? total.map((item, j) => (
+                                                                <div>
+                                                                    {
+                                                                        item.user === el.name ? <p>{item.grandTotal}</p> : null
+                                                                    }
+                                                                </div>
+                                                            )) : <p>T NULL</p>
+                                                        }
+                                                        <img src={el.pic} alt="Avatar" className="avatar" />
+                                                        <p>{el.name}</p>
+                                                    </div>
+                                                )) : null
+                                            }
+                                        </div>
+                                    )) : <p>NULL</p>
+                                }
                             </div>
                             {this.state.listToggle === true ? <div className={"group-profile-bought"}>
                                 <h1>I BOUGHT</h1>

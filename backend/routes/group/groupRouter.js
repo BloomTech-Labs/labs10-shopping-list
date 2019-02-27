@@ -3,6 +3,7 @@ const groupRouter = express.Router();
 const groupDb = require('../../helpers/groupModel');
 const groupMembersDb = require('../../helpers/groupMembersModel');
 const groupMemDb = require('../../helpers/groupMembersModel');
+const userDb = require('../../helpers/userModel');
 
 const checkJwt = require('../../validators/checkJwt');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
@@ -131,6 +132,7 @@ function fetch_group_mem(id) {
 groupRouter.get('/user/:id', checkUser, async (req, res) => {
     const id = req.params.id;
     const groups = [];
+    let members = [];
 
     try {
         const grp = await groupDb.getByUser(id);
@@ -138,7 +140,17 @@ groupRouter.get('/user/:id', checkUser, async (req, res) => {
         // console.log("GRP => ", grp);
         for (let i = 0; i < grp.length; i++) {
             const member = await groupMemDb.getByGroup(grp[i].id);
+
+
             // console.log("MEMBER => ", member);
+
+
+            for (let i = 0; i < member.length; i++) {
+                const usr = await userDb.getById(member[i].userID);
+                members.push({id: usr[0].id, name: usr[0].name, pic: usr[0].profilePicture});
+            }
+
+            console.log("MEMS => ", members);
 
             const data = {
                 id: grp[i].id,
@@ -148,6 +160,7 @@ groupRouter.get('/user/:id', checkUser, async (req, res) => {
                 createdAt: grp[i].createdAt,
                 updatedAt: grp[i].updatedAt,
                 memberAmount: member.length,
+                members: members,
             };
 
             groups.push(data);
