@@ -17,9 +17,8 @@ class Item extends React.Component {
 
     handleChange = event => {
         event.preventDefault();
-        console.log(event.target.value);
         this.setState({
-            price: Number(event.target.value)
+            price: event.target.value
         })
     }
 
@@ -33,6 +32,28 @@ class Item extends React.Component {
         })
     }
 
+    makeFloat = () => {
+        if(this.state.price && this.state.price.indexOf('.') === -1){
+            
+            let floatPrice = Number(this.state.price);
+            floatPrice = floatPrice.toFixed(2);
+            this.setState({
+                price: floatPrice,
+            })
+        }
+
+        if(this.state.price && this.state.price.indexOf('.')){
+            let length = this.state.price.length;
+            if(this.state.price.indexOf('.') - length < 2){
+                let floatPrice = Number(this.state.price);
+                floatPrice = floatPrice.toFixed(2);
+                this.setState({
+                    price: floatPrice,
+                })
+            }
+        }
+    }
+
     handleClickOutside = event => {
         // event.preventDefault();
         if(this.state.price === ''){
@@ -41,17 +62,20 @@ class Item extends React.Component {
             })
         }
 
+        this.makeFloat();
+
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
 
 
     handlePurchase = event => {
         event.preventDefault();
+        this.makeFloat();
 
         let time = moment().format(); //ISO standard
 
         let item = {
-            price: this.state.price.toFixed(2),
+            price: this.state.price,
             purchasedBy: this.props.userId,
             purchased: true,
             purchasedOn: time,
