@@ -31,6 +31,7 @@ class GroupsPage extends Component{
         itemPurchased: false,
         total: 0.00,
         listClass: true,
+        histClass: false,
         groupHistory: null,
     }
 
@@ -129,10 +130,16 @@ class GroupsPage extends Component{
         this.props.getItems(Number(this.props.match.params.id));
     }
 
-    // Change between List and History views
-    changeListClass = () => {
+    // Toggle list view
+    toggleListClass = () => {
         this.getGroupHistory();
-        this.setState({ listClass: !this.state.listClass})
+        this.setState({ listClass: true, histClass: false })
+    }
+
+    // toggle history view
+    toggleHistClass = () => {
+        this.getGroupHistory();
+        this.setState({ histClass: true, listClass: false })
     }
 
     /*
@@ -208,8 +215,8 @@ class GroupsPage extends Component{
             <div>
                 <div className={"group-profile-container"}>
                     <div className={"group-profile-header"}>
-                        <MDBBtn color="primary" onClick={() => {this.changeListClass()}}>List</MDBBtn>
-                        <MDBBtn color="primary" onClick={() => {this.changeListClass()}} >History</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleListClass()}}>List</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleHistClass()}} >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" >Total</MDBBtn>
                     </div>
@@ -262,7 +269,7 @@ class GroupsPage extends Component{
                                 </MDBContainer>
                             </div>
                             {
-                                this.state.listClass === true ? <div className={"group-profile-list-button"}>
+                                this.state.histClass === true ? <div className={"group-profile-list-button"}>
                                     <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
                                 </div> : null
                             }
