@@ -2,12 +2,11 @@ import React from 'react';
 import {checkEmail, addUserToState} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
-import Navigation from './Navigation.js';
 import './Styles/UserProfile.css';
 
 class UserProfile extends React.Component{
    async componentDidMount(){
-        if(localStorage.getItem('isLoggedIn') && this.props.userId === null && this.props.emailChecked === false){
+        if(localStorage.getItem('email') && this.props.userId === null){
             // if a user is logged in and no userID is found, call the checkemail function
             await this.props.checkEmail();
         }

@@ -62,6 +62,7 @@ class Auth {
         localStorage.setItem('email', authResult.idTokenPayload.email);
         localStorage.setItem('name', authResult.idTokenPayload.name);
         localStorage.setItem('img_url', authResult.idTokenPayload.picture);
+        localStorage.setItem('isLoggedIn', true);
     
         resolve();
       });
