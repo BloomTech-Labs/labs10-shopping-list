@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		112430AE2216267E0081784C /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AD2216267E0081784C /* GroupController.swift */; };
-		112430B0221631350081784C /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AF221631350081784C /* ItemController.swift */; };
+		112430B0221631350081784C /* SaveItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112430AF221631350081784C /* SaveItem.swift */; };
 		118646D4221CA8CD00D0F04B /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646D3221CA8CD00D0F04B /* Group.swift */; };
 		118646D6221CA93900D0F04B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646D5221CA93900D0F04B /* Item.swift */; };
 		118646D8221CA9D900D0F04B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118646D7221CA9D900D0F04B /* User.swift */; };
@@ -22,6 +22,7 @@
 		443C1B4C22160D9E00220C28 /* Shopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C1B4B22160D9E00220C28 /* Shopping.swift */; };
 		443C1B4E221B628D00220C28 /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B4D221B628D00220C28 /* Auth0.plist */; };
 		447BEE43221F473300FA1D82 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447BEE42221F473300FA1D82 /* SessionManager.swift */; };
+		44A167FF22264D5500227DFB /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A167FE22264D5500227DFB /* NavigationController.swift */; };
 		960FBF63221C26220076C662 /* ManageGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */; };
 		960FBF65221C27050076C662 /* AccountInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF64221C27050076C662 /* AccountInformationViewController.swift */; };
 		960FBF68221C31E60076C662 /* AboutShopTrakTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */; };
@@ -76,7 +77,7 @@
 
 /* Begin PBXFileReference section */
 		112430AD2216267E0081784C /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
-		112430AF221631350081784C /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
+		112430AF221631350081784C /* SaveItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveItem.swift; sourceTree = "<group>"; };
 		118646D3221CA8CD00D0F04B /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		118646D5221CA93900D0F04B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		118646D7221CA9D900D0F04B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -90,6 +91,7 @@
 		443C1B4B22160D9E00220C28 /* Shopping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shopping.swift; sourceTree = "<group>"; };
 		443C1B4D221B628D00220C28 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
 		447BEE42221F473300FA1D82 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
+		44A167FE22264D5500227DFB /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageGroupsTableViewController.swift; sourceTree = "<group>"; };
 		960FBF64221C27050076C662 /* AccountInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInformationViewController.swift; sourceTree = "<group>"; };
@@ -183,7 +185,7 @@
 				112430AD2216267E0081784C /* GroupController.swift */,
 				119B303C2225ABC300DF93E6 /* GroupMemberController.swift */,
 				118646DF221DCE9B00D0F04B /* UserController.swift */,
-				112430AF221631350081784C /* ItemController.swift */,
+				112430AF221631350081784C /* SaveItem.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -406,6 +408,7 @@
 				96DE302C221637FE00213C3E /* MainViewController */,
 				96DE302F221637FE00213C3E /* LoginViewController */,
 				96700E2F221C034000F084B3 /* SettingsViewControllers */,
+				44A167FE22264D5500227DFB /* NavigationController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -533,7 +536,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Auth0/Auth0.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
@@ -552,7 +555,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -578,7 +581,7 @@
 				96700E31221C035600F084B3 /* SettingsTableViewController.swift in Sources */,
 				969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */,
 				118646DC221CAA5600D0F04B /* GroupMember.swift in Sources */,
-				112430B0221631350081784C /* ItemController.swift in Sources */,
+				112430B0221631350081784C /* SaveItem.swift in Sources */,
 				969A84152215C99A0003BB37 /* Nib+UIView.swift in Sources */,
 				969A84012215C99A0003BB37 /* ChameleonShorthand.swift in Sources */,
 				969A840B2215C99A0003BB37 /* UIViewController+Chameleon.m in Sources */,
@@ -593,6 +596,7 @@
 				969A841E2215C99A0003BB37 /* Identifier.swift in Sources */,
 				969A84192215C99A0003BB37 /* Reusable+UITableView.swift in Sources */,
 				969A84142215C99A0003BB37 /* Reusable.swift in Sources */,
+				44A167FF22264D5500227DFB /* NavigationController.swift in Sources */,
 				969A84052215C99A0003BB37 /* UIButton+Chameleon.m in Sources */,
 				960FBF6D221C427A0076C662 /* MessagePopoverView.swift in Sources */,
 				969A83C82215C9840003BB37 /* AppDelegate.swift in Sources */,
