@@ -15,6 +15,8 @@ import {
   CLEARING_CURRENT_GROUP,
   UPDATE_ITEM_PURCHASED_START,
   USER_ADDED_TO_STATE,
+  PURCHASING_ITEM,
+  ITEM_PURCHASED,
 } from "../actions";
 
 const initialState = {

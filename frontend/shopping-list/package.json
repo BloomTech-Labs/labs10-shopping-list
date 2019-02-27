@@ -9,6 +9,7 @@
     "dotenv": "^6.2.0",
     "gsap": "^2.1.1",
     "mdbreact": "^4.11.0",
+    "moment": "^2.24.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-redux": "^6.0.0",

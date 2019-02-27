@@ -27,6 +27,9 @@ export const SUBMIT_PAID_ITEMS_START = 'SUBMIT_PAID_ITEMS_START';
 export const SUBMIT_PAID_ITEMS_SUCCESS = 'SUBMIT_PAID_ITEMS_SUCCESS';
 export const SUBMIT_PAID_ITEMS_FAILED = 'SUBMIT_PAID_ITEMS_FAILED';
 export const USER_ADDED_TO_STATE = 'USER_ADDED_TO_STATE';
+export const PURCHASING_ITEM = 'PURCHASING_ITEM';
+export const ITEM_PURCHASED = 'ITEM_PURCHASED';
+
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -165,14 +168,13 @@ export const getItems = (id) => dispatch => {
 
   axios.get(endpoint, options)
       .then(response => {
+        console.log('get items', response.data);
         dispatch({ type: GETTING_ITEMS_SUCCESS, payload: response.data.data });
       })
       .catch(err => {
-        console.log("GETTING GROUPS ERR => ", err);
+        console.log("GETTING ITEMS ERR => ", err);
         dispatch({ type: GETTING_ITEMS_FAILED, payload: err });
       });
-
-  // dispatch({ type: GETTING_ITEMS payload: items});
 }
 
 export const getSingleGroup = (groupId) => {
@@ -298,4 +300,25 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
           dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: err });
         })
   })
+}
+
+export const purchaseItem = (item, itemId) => {
+  // update the item as purchased with the value and who purchased it
+  let token = localStorage.getItem('jwt');
+  console.log(item, itemId, token);
+  let options = {
+    headers: {
+    Authorization: `Bearer ${token}`
+  }
+}
+
+  const updateItem = axios.put(`${backendURL}/api/item/${itemId}`, item, options);
+  return dispatch => {
+    dispatch({type: PURCHASING_ITEM})
+
+  updateItem.then(res => {
+    console.log(res.data);
+    dispatch({type: ITEM_PURCHASED})
+  })
+  }
 }

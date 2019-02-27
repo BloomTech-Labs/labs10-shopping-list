@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {checkEmail, gettingGroups, addGroup, clearCurrentGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
-import Navigation from "./Navigation";
 import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
     MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
 

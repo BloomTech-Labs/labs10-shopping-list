@@ -17,12 +17,18 @@ class Navigation extends React.Component{
         activeTabClassname: "home"
     }
     
-    // componentDidMount(){
-    //     // populate state with user information
-    //     if(!this.props.userId && localStorage.getItem('email')){
-    //         this.props.checkEmail(localStorage.getItem('email'), this.props.addUserToState)
-    //     }
-    // }
+    componentDidMount(){
+        // populate state with user information
+        if(!this.props.userId && localStorage.getItem('email')){
+            this.props.checkEmail();
+        }
+    }
+
+    componentWillReceiveProps = newProps => {
+        if(newProps.checkEmail !== this.props.checkEmail && this.props.userId){
+            this.props.addUserToState();
+        }
+    }
     
     // Toggles dropdown menus for MDB
     toggleCollapse = collapseID => () =>

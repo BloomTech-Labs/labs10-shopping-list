@@ -152,6 +152,33 @@ async function routeCheck(req, res, next, userId){
        */
       
 
+       /**
+        * Add Item to Group
+        * Ensures member adding item is a member of the group
+        */
+
+        if(req.originalUrl === `/api/item` && req.method === 'POST'){
+            let groupId = req.body.groupID;
+
+            groupMembersDb.getByGroup(groupId).then(res => {
+                let member = res.map(m => {
+                    if(m.userID === userId){
+                        return m;
+                    }
+                })
+
+                if(member.length === 0){
+                    return res.status(403).json({warning: `You do not have permission to do that.`})
+                } else {
+                    return next();
+                }
+
+            }).catch(err => {
+                console.log(err);
+                return res.status(500).json({error: `Internal server error.`})
+            })
+        }
+
 
 }
     

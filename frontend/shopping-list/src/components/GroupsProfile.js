@@ -13,6 +13,7 @@ import {
     MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
     MDBTooltip,
 } from "mdbreact";
+import ItemList from './ItemList';
 
 class GroupsPage extends Component{
     state = {
@@ -67,6 +68,7 @@ class GroupsPage extends Component{
      * @param e - Event
      */
     handleInput = e => {
+        e.preventDefault();
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -153,9 +155,9 @@ class GroupsPage extends Component{
         let purchased = [];
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
         return (
-            <div>
                 <div className={"group-profile-container"}>
                     <h1>{this.state.group !== null ? this.state.group.name : ""}</h1>
+                
                     
                  {/* <h1>{this.props.currentGroup !== null ? this.props.currentGroup.name : ""}</h1> // conditional if using single query */}                    <div className={"group-profile-header"}>
                         <MDBBtn color="primary" >List</MDBBtn>
@@ -163,8 +165,12 @@ class GroupsPage extends Component{
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" >Total</MDBBtn>
                     </div>
-                    <div className={"group-profile-header-title"}><h3></h3></div>
-                    <div className={"group-profile-columns"}>
+                    <div className={"group-profile-header-title"}><h3> something </h3></div>
+                    
+                    <ItemList />
+                    
+                    
+                    {/* <div className={"group-profile-columns"}>
                         <div className={"group-profile-list"}>
                             <div className={"group-profile-list-container"}>
                                 <MDBContainer>
@@ -246,11 +252,12 @@ class GroupsPage extends Component{
                             <MDBBtn color="primary" onClick={e => this.handleAddItem(e)}>Create</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
-                </MDBContainer>
+                </MDBContainer> */}
             </div>
         )
     }
 }
+
 
 const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer

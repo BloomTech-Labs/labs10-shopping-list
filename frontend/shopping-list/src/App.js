@@ -11,6 +11,8 @@ import Navigation from './components/Navigation';
 import BillingPage from './components/BillingPage';
 
 class App extends Component {
+
+
   render() {
     return (
       <div className = 'App'>

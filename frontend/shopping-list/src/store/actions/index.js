@@ -33,5 +33,8 @@ export {
   addUserToState,
   checkEmail,
   USER_ADDED_TO_STATE,
+  purchaseItem,
+  PURCHASING_ITEM,
+  ITEM_PURCHASED,
 
 } from "./rootActions";
