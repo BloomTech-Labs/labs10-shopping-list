@@ -62,16 +62,40 @@ export const checkEmail = () => {
       Authorization: `Bearer ${token}`, // we can extract the email from the token instead of explicitly sending it in req.body
     }
   }
+  
+  let mailChimpOptions = {
+    headers: {
+      Authorization: `apikey ${process.env.APIKEY}`
+    }
+  }
 
+  
   const fetchUserId = axios.get(`${backendURL}/api/user/check/getid`, options);
-
-    return (dispatch) => {
-      dispatch({type: CHECKING_EMAIL});
-
+  
+  return dispatch => {
+    dispatch({type: CHECKING_EMAIL});
     fetchUserId.then(res => {
       console.log('check email', res.data);
       dispatch({type: EMAIL_CHECKED, payload: res.data});
-
+      axios.get(`${backendURL}/api/user/${res.data.id}`, options).then(res => {
+        let mailChimpBody = {
+          email_address: res.data.email,
+          status: "subscribed"
+        }
+        axios.post(
+          `https://us20.api.mailchimp.com/3.0/lists/fb7a741034/members`,
+          mailChimpBody,
+          mailChimpOptions
+        ).then(res => {
+          console.log(res.data);
+        }).catch(err => {
+          console.log(err);
+          dispatch({type: ERROR})
+        })
+      }).catch(err => {
+        console.log(err);
+        dispatch({type: ERROR})
+      })
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})
