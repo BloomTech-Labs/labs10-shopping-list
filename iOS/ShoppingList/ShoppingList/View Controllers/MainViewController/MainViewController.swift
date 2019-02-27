@@ -70,7 +70,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
         let settingsVC = storyboard.instantiateInitialViewController() ?? SettingsTableViewController.instantiate()
         present(settingsVC, animated: true, completion: nil)
     }
-
 }
+
 
 

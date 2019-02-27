@@ -9,14 +9,6 @@
 import Foundation
 import Popover
 
-// MARK: - UserDefaults keys
-
-enum Keys {
-    static let isUserLoggedInKey = "isUserLoggedIn"
-    static let isUserPremiumKey = "isUserPremium"
-}
-
-var isLoggedIn: Bool = false
 var allGroups: [Group] = []
 var selectedGroup: Group? = nil
 

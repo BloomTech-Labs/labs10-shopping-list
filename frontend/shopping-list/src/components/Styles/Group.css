@@ -1,5 +1,5 @@
 .group-profile-container {
-    margin-top: 60px;
+    margin-top: 65px;
 }
 
 .group-profile-header {
@@ -19,12 +19,13 @@
 }
 
 .group-profile-list {
-    margin-left: 10%;
+    margin-left: 20%;
     height: 500px;
 }
 
 .group-profile-list-container {
     height: 400px;
+    width: 100%;
     margin-left: 7%;
     overflow: auto;
 }
@@ -178,4 +179,7 @@ input[type="button"]::-moz-focus-inner {
 
 *, *:before, *:after {
     box-sizing: border-box;
+}
+
+.history-list {
 }

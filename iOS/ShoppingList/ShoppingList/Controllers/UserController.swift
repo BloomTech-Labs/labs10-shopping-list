@@ -102,7 +102,7 @@ class UserController {
         }
     }
     func getUser(forID id: Int, completion: @escaping (User?) -> Void) {
-        guard let accessToken =  A0SimpleKeychain(service: "Auth0").string(forKey: "id_token") else {return}
+        guard let accessToken = SessionManager.tokens?.idToken else {return}
         let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(id))
          var request = URLRequest(url: url)
        
@@ -129,10 +129,8 @@ class UserController {
                     return
                 }
                 
-                
-                
             case .failure(let error):
-                print(error.localizedDescription)
+                NSLog("getUser: \(error.localizedDescription)")
                 completion(nil)
                 return
             }

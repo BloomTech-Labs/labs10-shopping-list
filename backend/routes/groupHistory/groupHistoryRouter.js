@@ -1,6 +1,8 @@
 const express = require('express');
 const groupHistoryRouter = express.Router();
 const groupHistoryDb = require('../../helpers/groupHistoryModel');
+const itemDb = require('../../helpers/itemModel');
+const userDb = require('../../helpers/userModel');
 
 const checkJwt = require('../../validators/checkJwt');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
@@ -47,23 +49,104 @@ groupHistoryRouter.post('/', (req, res) => {
  * **/
 
 /**************************************************/
-groupHistoryRouter.get('/group/:id', (req, res) => {
-    const groupId = req.params.id;
-    groupHistoryDb.getByGroup(groupId).then(groupHistories => {
-        if (groupHistories.length >= 1) {
-            return res.status(200).json(groupHistories);
-        }
-        return res.status(404).json({message: "The requested group histories do not exist."});
-    })
-    .catch(err => {
-        const error = {
-            message: `Internal Server Error - Getting Group History`,
-            data: {
-                err: err
-            },
-        }
-        return res.status(500).json(error);
+function groupBy( array , f )
+{
+    var groups = {};
+    array.forEach( function( o )
+    {
+        var group = JSON.stringify( f(o) );
+        groups[group] = groups[group] || [];
+        groups[group].push( o );
     });
+    return Object.keys(groups).map( function( group )
+    {
+        return groups[group];
+    })
+}
+
+groupHistoryRouter.get('/group/:id', async (req, res) => {
+    const groupId = req.params.id;
+    const groups = [];
+
+    try {
+        const grpHistory = await groupHistoryDb.getByGroup(groupId);
+
+        // console.log("GRPHISTORY => ", grpHistory);
+
+        for (let i = 0; i < grpHistory.length; i++) {
+            const mem = await itemDb.getById(grpHistory[i].itemID);
+
+            const usr = await userDb.getById(mem[0].purchasedBy);
+
+            // console.log("MEM => ", mem);
+            // console.log("USR => ", usr[0].name);
+
+
+
+            const item = {
+                id: mem[0].id,
+                name: mem[0].name,
+                user: usr[0].name,
+                price: mem[0].price,
+            }
+
+            // console.log(item);
+
+            const hist = {
+                total: grpHistory[i].total,
+                item: item,
+                name: mem[0].name,
+                user: usr[0].name,
+                date: new Date(grpHistory[i].createdAt).toLocaleDateString(),
+            }
+
+            // console.log("HIST => ", hist);
+            groups.push(hist);
+        }
+
+        // console.log(groups);
+        let newGroups = [];
+
+
+        const sorted = groups.sort((a,b) => {
+            if (a.item.user > b.item.user ) return -1;
+            if (a.item.user  < b.item.user ) return 1;
+
+            if (a.date > b.date) return -1;
+            if (a.date < b.date) return 1;
+        })
+
+        const result = groupBy(groups, function(itm) {
+            return [itm.date, itm.user]
+        })
+
+        console.log(result);
+
+        return res.status(200).json({data: result });
+
+    } catch (e) {
+        return res.status(500).json({message: "Internal Server Error", err: e})
+    }
+    // groupHistoryDb.getByGroup(groupId).then(groupHistories => {
+    //
+    //     console.log("GROUPS => ", groupHistories);
+    //
+    //
+    //
+    //     if (groupHistories.length >= 1) {
+    //         return res.status(200).json(groupHistories);
+    //     }
+    //     return res.status(404).json({message: "The requested group histories do not exist."});
+    // })
+    // .catch(err => {
+    //     const error = {
+    //         message: `Internal Server Error - Getting Group History`,
+    //         data: {
+    //             err: err
+    //         },
+    //     }
+    //     return res.status(500).json(error);
+    // });
 });
 
 /**************************************************/
