@@ -32,7 +32,8 @@ class GroupsPage extends Component{
         itemMeasure: "",
         itemPurchased: false,
         total: 0.00,
-        listClass: true,
+        listToggle: true,
+        histToggle: false,
         groupHistory: null,
     }
 
@@ -51,6 +52,7 @@ class GroupsPage extends Component{
     componentWillMount() {
         this.props.gettingGroups();
         this.props.getItems(Number(this.props.match.params.id));
+        this.getGroupHistory();
 
         if (this.props.groups !== null) {
             const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
@@ -132,9 +134,13 @@ class GroupsPage extends Component{
     }
 
     // Change between List and History views
-    changeListClass = () => {
-        this.getGroupHistory();
-        this.setState({ listClass: !this.state.listClass})
+    toggleListClass = () => {
+
+        this.setState({ histToggle: false, listToggle: true})
+    }
+
+    toggleHistClass = () => {
+        this.setState({ histToggle: true, listToggle: false})
     }
 
     /*
@@ -210,19 +216,19 @@ class GroupsPage extends Component{
             <div>
                 <div className={"group-profile-container"}>
                     <div className={"group-profile-header"}>
-                        <MDBBtn color="primary" onClick={() => {this.changeListClass()}}>List</MDBBtn>
-                        <MDBBtn color="primary" onClick={() => {this.changeListClass()}} >History</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleListClass()}}>List</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleHistClass()}} >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" >Total</MDBBtn>
                     </div>
                     <div className={"group-profile-header-title"}><h3></h3></div>
                     <div className={"group-profile-columns"}>
                         <div className={"group-profile-list"}>
-                            <div className={"group-profile-list-container scrollbar scrollbar-rare-wind"}>
+                            <div className={"group-profile-list-container scrollbar"}>
                                 <MDBContainer>
                                     <MDBContainer >
                                         {
-                                            this.state.listClass === true ? <MDBListGroup>
+                                            this.state.listToggle === true ? <MDBListGroup>
                                                 {
                                                     this.props.items !== null ? this.props.items.map((item, i) => (
                                                         <MDBListGroupItem key={i} className="d-flex justify-content-evenly align-items-center">
@@ -266,7 +272,7 @@ class GroupsPage extends Component{
                                 </MDBContainer>
                             </div>
                             {
-                                this.state.listClass === true ? <div className={"group-profile-list-button"}>
+                                this.state.listToggle === true ? <div className={"group-profile-list-button"}>
                                     <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
                                 </div> : null
                             }
@@ -278,7 +284,7 @@ class GroupsPage extends Component{
                                 <p>MEM 1</p>
                                 <p>MEM 2</p>
                             </div>
-                            {this.state.listClass === true ? <div className={"group-profile-bought"}>
+                            {this.state.listToggle === true ? <div className={"group-profile-bought"}>
                                 <h1>I BOUGHT</h1>
                                 <div className={"group-profile-bought-list"}>
                                     {
