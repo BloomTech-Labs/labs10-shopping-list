@@ -10,6 +10,9 @@ import {
   GETTING_ITEMS,
   GETTING_ITEMS_SUCCESS,
   GETTING_ITEMS_FAILED,
+  FETCHING_SINGLE_GROUP,
+  SINGLE_GROUP_FETCHED,
+  CLEARING_CURRENT_GROUP,
   UPDATE_ITEM_PURCHASED_START
 } from "../actions";
 
@@ -18,6 +21,7 @@ const initialState = {
   name: null,
   email: null,
   profilePicture: null,
+  currentGroup: null,
   groups: null,
   items: null,
 };
@@ -35,7 +39,7 @@ export const rootReducer = (state = initialState, action) => {
       return state;
 
     case EMAIL_CHECKED:
-      console.log('emc payload', action.payload.id);
+      // console.log('emc payload', action.payload.id);
       localStorage.setItem('userId', action.payload.id);
       return {
         ...state,
@@ -43,7 +47,6 @@ export const rootReducer = (state = initialState, action) => {
       }
 
     case ADDING_USER_TO_STATE:
-      console.log('auts payload', action.payload);
       return {
         ...state,
         name: action.payload.name,
@@ -77,6 +80,23 @@ export const rootReducer = (state = initialState, action) => {
         return itm;
       })
       return { ...state, items: itms}
+
+    case FETCHING_SINGLE_GROUP:
+      return {
+        ...state,
+      }
+
+    case SINGLE_GROUP_FETCHED:
+      return {
+        ...state,
+        currentGroup: action.payload,
+      }
+
+    case CLEARING_CURRENT_GROUP:
+      return {
+        ...state,
+        currentGroup: null,
+      }
 
     default:
       return state;

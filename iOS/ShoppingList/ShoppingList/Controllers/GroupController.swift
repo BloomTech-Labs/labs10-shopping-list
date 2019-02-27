@@ -12,6 +12,7 @@ import SwiftKeychainWrapper
 
 class GroupController {
     
+    static let shared = GroupController()
     private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
     
     private func groupToJSON(group: Group) -> [String: Any]? {
@@ -41,8 +42,6 @@ class GroupController {
         
         let parameters: Parameters = ["userID": userID, "name": name, "token": token]
         
-
-
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { (response) in
 
             
@@ -96,9 +95,9 @@ class GroupController {
 
             switch response.result {
             case .success(_):
-                
                 completion(myGroup)
                 return
+                
             case .failure(let error):
                 print(error.localizedDescription)
                 completion(myGroup)
@@ -108,17 +107,13 @@ class GroupController {
     }
     
     
-    func getGroupWith(userID: Int, completion: @escaping ([Group]?) -> Void) {
+    func getGroupWith(userID: Int, completion: @escaping ([Group]?) -> Void = { _ in }) {
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("user").appendingPathComponent(String(userID))
         
         Alamofire.request(url).validate().responseData { (response) in
-            print(url)
             switch response.result {
             case .success(let value):
-                
-                let string = String(data: value, encoding: .utf8)
-                print("Data String: \(string!)")
                 
                 do {
                     
@@ -141,6 +136,26 @@ class GroupController {
         }
     }
     
+    func delete(userID: Int, group: Group, completion: @escaping (Bool) -> Void) {
+        
+        let url = baseURL.appendingPathComponent("group").appendingPathComponent("remove")
+        
+        let parameters: Parameters = ["userID": userID, "groupID": group.groupID]
+        
+        Alamofire.request(url, parameters: parameters).validate().response { (response) in
+            
+            if let error = response.error {
+                print(error.localizedDescription)
+                completion(false)
+                return
+            }
+            
+            print("reponse.reponse: \(String(describing: response.response))")
+            print("reponse.request: \(String(describing: response.request))")
+            
+            completion(true)
+        }
+    }
     
     
 }
