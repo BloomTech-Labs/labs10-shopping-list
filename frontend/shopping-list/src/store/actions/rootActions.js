@@ -305,7 +305,6 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
 export const purchaseItem = (item, itemId) => {
   // update the item as purchased with the value and who purchased it
   let token = localStorage.getItem('jwt');
-  console.log(item, itemId, token);
   let options = {
     headers: {
     Authorization: `Bearer ${token}`

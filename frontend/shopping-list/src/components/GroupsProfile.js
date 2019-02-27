@@ -165,10 +165,8 @@ class GroupsPage extends Component{
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" >Total</MDBBtn>
                     </div>
-                    <div className={"group-profile-header-title"}><h3> something </h3></div>
                     
                     <ItemList />
-                    
                     
                     {/* <div className={"group-profile-columns"}>
                         <div className={"group-profile-list"}>
