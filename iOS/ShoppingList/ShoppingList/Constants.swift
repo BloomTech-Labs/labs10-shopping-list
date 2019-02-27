@@ -9,14 +9,6 @@
 import Foundation
 import Popover
 
-// MARK: - UserDefaults keys
-
-enum Keys {
-    static let isUserLoggedInKey = "isUserLoggedIn"
-    static let isUserPremiumKey = "isUserPremium"
-}
-
-var isLoggedIn: Bool = false
 var allGroups: [Group] = []
 var selectedGroup: Group? = nil
 
@@ -50,7 +42,7 @@ struct Popovers {
     static func triggerMessagePopover(with message: String) {
         let popoverView = MessagePopoverView.instantiate()
         popoverView.message = message
-        popoverView.frame = CGRect(x: 20, y: -115, width: screen.width - 40, height: 230)
+        popoverView.frame = CGRect(x: 20, y: 0, width: screen.width - 40, height: 230)
         let startPoint = CGPoint(x: screen.width / 2, y: (screen.height / 2) - 115)
         popover.show(popoverView, point: startPoint)
     }
@@ -58,8 +50,8 @@ struct Popovers {
     static func triggerGroupsPopover(_ delegate: GroupsPopoverViewDelegate) {
         let popoverView = GroupsPopoverView.instantiate()
         popoverView.delegate = delegate
-        popoverView.frame = CGRect(x: 20, y: -115, width: screen.width - 40, height: 230)
-        let startPoint = CGPoint(x: screen.width / 2, y: (screen.height / 2) - 115)
+        popoverView.frame = CGRect(x: 20, y: 0, width: screen.width - 40, height: 320)
+        let startPoint = CGPoint(x: screen.width / 2, y: (screen.height / 2) - 160)
         popover.show(popoverView, point: startPoint)
     }
     

@@ -73,5 +73,10 @@ typings/
 # misc
 .DS_Store
 package-lock.json
-# yarn.lock
+yarn.lock
+<<<<<<< HEAD
+yarn.error.log
+=======
+>>>>>>> e0c08a5b695c514c77115cfae84e6fe6f003060a
+yarn
 

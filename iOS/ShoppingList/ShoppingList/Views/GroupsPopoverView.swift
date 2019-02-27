@@ -33,7 +33,13 @@ class GroupsPopoverView: UIView, NibInstantiatable, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReuseIdentifier", for: indexPath)
-        cell.textLabel?.text = allGroups[indexPath.row].name
+        cell.tintColor = UIColor(named: "Theme")
+        let group = allGroups[indexPath.row]
+        guard let selectedGroup = selectedGroup else { return cell }
+        
+        cell.textLabel?.text = group.name
+        cell.accessoryType = (group == selectedGroup) ? .checkmark : .none
+        
         return cell
     }
     

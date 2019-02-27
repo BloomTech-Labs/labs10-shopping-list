@@ -13,7 +13,7 @@ struct GroupsList: Codable {
 }
 
 
-struct Group: Codable {
+struct Group: Codable, Equatable {
     
     var name: String
     var groupID: Int
@@ -56,5 +56,14 @@ struct Group: Codable {
         
         self.groupID = groupID
     }
+}
+
+extension Group {
+    
+    static func ==(lhs: Group, rhs: Group) -> Bool {
+        return lhs.name == rhs.name &&
+            lhs.groupID == rhs.groupID
+    }
+    
 }
 

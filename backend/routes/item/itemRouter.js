@@ -3,6 +3,7 @@ const itemRouter = express.Router();
 const itemDb = require('../../helpers/itemModel');
 
 const checkJwt = require('../../validators/checkJwt');
+const checkUser = require('../../validators/checkUser');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
 
 /****************************************************************************************************/
@@ -23,6 +24,9 @@ const checkJwt = require('../../validators/checkJwt');
  * @param item.purchasedOn is the date that the item was purchased on. Nullable.
  *
  * ***********************************************/
+
+itemRouter.use(checkJwt);
+// itemRouter.use(checkUser);
 
 /** ADD ITEM
  * @TODO Add middleware to ensure user is logged in
