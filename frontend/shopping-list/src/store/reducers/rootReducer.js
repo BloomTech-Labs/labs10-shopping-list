@@ -44,6 +44,7 @@ export const rootReducer = (state = initialState, action) => {
     case EMAIL_CHECKED:
       // console.log('emc payload', action.payload.id);
       localStorage.setItem('userId', action.payload.id);
+      console.log('REDUCER', action.payload)
       return {
         ...state,
         emailChecked: true,

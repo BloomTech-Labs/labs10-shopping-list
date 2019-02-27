@@ -12,8 +12,9 @@ class UserProfile extends React.Component{
         }
     }
 
-    componentWillReceiveProps(newProps){
-        if(newProps.emailChecked !== this.props.emailChecked){
+    componentWillReceiveProps = newProps => {
+        console.log('this vs new', this.props, newProps)
+        if(newProps.emailChecked !== this.props.emailChecked && newProps.userId){
             this.handleProfileFetch(newProps.userId);
         }
     }

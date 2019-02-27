@@ -199,7 +199,7 @@ userRouter.get('/check/getid', (req, res) => {
             
             return userDb.add(newUser).then(id => {
                 console.log('newuserID', id[0]);
-                return res.status(201).json({message: `New user added to database with ID ${id}.`, id: id[0].id});
+                return res.status(201).json({message: `New user added to database with ID ${id}.`, id: id[0]});
             })
             .catch(err => {
                 console.log(err);
