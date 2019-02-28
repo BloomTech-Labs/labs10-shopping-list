@@ -135,6 +135,7 @@ function fetch_group_mem(id) {
     })
 }
 
+
 groupRouter.get('/user/:id', checkUser, (req, res) => {
     let userId = req.params.id;
   
@@ -150,12 +151,63 @@ groupRouter.get('/user/:id', checkUser, (req, res) => {
                 // console.log('GROUPS', groups);
                 if(i === groups.length - 1){
                     return res.status(200).json({groups: groups}); // returns all groups with groupmembers appended
-                }
+                 }
             }).catch(err => {
                 console.log(err);
                 return res.status(500).json({error: `Internal server error.`})
             })
-=======
+        }
+    })
+})
+
+
+// function contains(a, obj) {
+//     var i = a.length;
+//     while (i--) {
+//         if (a[i] === obj) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+
+
+// groupRouter.get('/user/:id', checkUser, async (req, res) => {
+//     const id = req.params.id;
+
+//     let groups = [];
+//     let members = [];
+
+//     const groupmembs = await groupMemDb.returnUserGroups(id);
+
+//     // console.log("GM => ", groupmembs);
+
+//     for (let i = 0; i < groupmembs.length; i++) {
+//         const grp = await groupDb.getById(groupmembs[i].groupID)
+//         groups.push(grp[0]);
+//     }
+
+//     let newGroups = [];
+
+//     try {
+
+//         // console.log("GRP => ", grp);
+//         for (let i = 0; i < groups.length; i++) {
+//             console.log(`GROUPS ${i}=> `, groups[i])
+
+//             let curMembs = []
+//             const groupMember = await groupMemDb.getByGroup(groups[i].id);
+
+
+//             // console.log(`GROUP MEMBER ${i} => `, groupMember);
+
+//             for (let j = 0; j < groupMember.length; j++) {
+//                 const user = await userDb.getById(groupMember[j].userID);
+//                 // console.log("USER => ", user);
+//                 if (!contains(curMembs, user[0])) {
+//                     curMembs.push(user[0]);
+               
+
 // function contains(a, obj) {
 //     var i = a.length;
 //     while (i--) {
@@ -270,6 +322,29 @@ groupRouter.get('/user/:id', checkUser, (req, res) => {
 
 //             groups.push(data);
 //         }
+    //         }
+
+    //         // console.log(`CUR MEMBS => `, curMembs)
+
+    //         const data = {
+    //             id: groups[i].id,
+    //             userID: groups[i].userID,
+    //             name: groups[i].name,
+    //             token: groups[i].token,
+    //             createdAt: groups[i].createdAt,
+    //             updatedAt: groups[i].updatedAt,
+    //             memberAmount: groupMember.length,
+    //             members: curMembs,
+    //         };
+
+    //         newGroups.push(data);
+    //     }
+
+    //     return res.status(200).json({data: newGroups });
+
+    // } catch (e) {
+    //     return res.status(500).json({message: "Internal Server Error", err: e})
+    // }
 
 //         return res.status(200).json({data: groups });
 
@@ -343,37 +418,56 @@ groupRouter.put('/:id', (req, res) => {
 
 /**************************************************/
 
-groupRouter.delete('/remove', (req, res) => {
-    const {groupID, userID} = req.body;
+groupRouter.delete('/remove/:groupID::userID', async (req, res) => {
+    const groupID = Number(req.params.groupID);
+    const userID = Number(req.params.userID);
 
-    groupMembersDb.remove(userID, groupID).then(id => {
-        groupDb.remove(groupID).then(status => {
-            if(status.length >= 1 || !status){
-                return res.status(200).json({message: `Group ${status[0]} successfully removed.`, id: Number(groupID)});
+    console.log("GROUP ID => ", groupID)
+    console.log("USER ID => ", userID)
+
+    let groups = [];
+    let members = [];
+
+    try {
+        const ress = await groupDb.getById(groupID);
+        console.log("RESS => ", ress);
+
+        if (ress[0].userID === userID) {
+            for (let i = 0; i < ress.length; i++) {
+                const membs = await groupMemDb.getByGroup(groupID);
+                console.log("MEMBS => ", membs);
+
+                if (membs.length >= 1) {
+                    membs.forEach(elem => {
+                        members.push(elem);
+                    })
+                }
 
             }
 
-            return res.status(404).json({error: `The requested group does not exist.`});
-        })
-            .catch(err => {
-                const error = {
-                    message: `Error removing group with ID ${groupID}.`,
-                    data: {
-                        err: err
-                    },
-                }
-                return res.status(500).json(error);
-            })
+            console.log("MEMBESR => ", members)
 
-    }).catch(err => {
-        const error = {
-            message: `Error removing group member.`,
-            data: {
-                err: err
-            },
+            if (members.length >= 1) {
+                for (let i = 0; i < members.length; i++) {
+                    // console.log("ID => ", members[i].id)
+                    const returns = await groupMemDb.remove(members[i].id);
+                }
+            }
+
+
+            const deletion = await groupDb.remove(groupID);
+            console.log("DELETION => ", deletion)
+
+            return res.status(200).json({removedID: deletion[0]});
+        } else {
+            res.status(403).json({message: "You can not delete a group you do not own!"});
         }
-        return res.status(500).json(error);
-    })
+
+
+    } catch(err) {
+        res.status(404).json(err)
+    }
+
 
 
 })

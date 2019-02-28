@@ -333,6 +333,7 @@ groupHistoryRouter.get('/user/:id', (req, res) => {
         });
 });
 
+
 groupHistoryRouter.get('/total/group/:id', (req, res) => {
     let groupID = req.params.id;
 
