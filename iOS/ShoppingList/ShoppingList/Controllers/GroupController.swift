@@ -18,9 +18,9 @@ class GroupController {
     }
     
     static let shared = GroupController()
-    static private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
+    private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
     
-    static func getUserID(completion: @escaping (UserID?) -> Void) {
+    func getUserID(completion: @escaping (UserID?) -> Void) {
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let url = baseURL.appendingPathComponent("user").appendingPathComponent("check").appendingPathComponent("getid")
         var request = URLRequest(url: url)
@@ -59,7 +59,7 @@ class GroupController {
     
     
     
-    static private func groupToJSON(group: Group) -> [String: Any]? {
+    private func groupToJSON(group: Group) -> [String: Any]? {
         
         guard let jsonData = try? JSONEncoder().encode(group) else {
             return nil
@@ -73,7 +73,7 @@ class GroupController {
         }
     }
     
-    static func newGroup(withName name: String, completion: @escaping (Group?) -> Void) {
+    func newGroup(withName name: String, completion: @escaping (Group?) -> Void) {
         
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         
@@ -82,7 +82,7 @@ class GroupController {
             guard let userID = id?.id else { completion(nil); return }
             
             let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
-            let url = baseURL.appendingPathComponent("group")
+            let url = self.baseURL.appendingPathComponent("group")
             
             
             let token = "12345"
@@ -121,7 +121,7 @@ class GroupController {
     
     
     // Updates the group and downloads all groups from server. Optional success completion.
-    static func updateGroup(group: Group, name: String?, userID: Int?, completion: @escaping (Bool) -> Void = {_ in }) {
+    func updateGroup(group: Group, name: String?, userID: Int?, completion: @escaping (Bool) -> Void = {_ in }) {
         
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
@@ -168,7 +168,7 @@ class GroupController {
     }
     
     // Gets groups from server and updates the singleton. Optional success completion
-    static func getGroups(forUserID userID: Int, completion: @escaping (Bool) -> Void = { _ in }) {
+    func getGroups(forUserID userID: Int, completion: @escaping (Bool) -> Void = { _ in }) {
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("user").appendingPathComponent(String(userID))
@@ -208,7 +208,7 @@ class GroupController {
         }
     }
     
-    static func delete(group: Group, userID: Int,  completion: @escaping (Bool) -> Void) {
+    func delete(group: Group, userID: Int,  completion: @escaping (Bool) -> Void) {
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
