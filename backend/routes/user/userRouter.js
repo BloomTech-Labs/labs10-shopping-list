@@ -200,93 +200,48 @@ userRouter.delete('/:id', checkUser, (req, res) => {
  * **/
 
 /**************************************************/
-
 userRouter.get('/check/getid', (req, res) => {
-    let email = req.user.email; // use jwt's req.user instead of req.body which is vulnerable
-
-    // setting up sender e-mail
-    let transporter = nodemailer.createTransport({
-        service: `${process.env.EMAIL_SERVICE}`,
-        auth:{
-            user: `${process.env.EMAIL_ADDRESS}`,
-            pass: `${process.env.EMAIL_PASSWORD}`
-        }
-    });
+    let email = req.user.email;
 
     userDb.getIdByEmail(email).then(id => {
-        console.log(id, 'ID res');
+        console.log(id, 'id response /check/getid');
         if(!id || id.length === 0){
-            // CREATE NEW USER ENTRY IF NO USER FOUND
+            //create new user
             let newUser = {
                 name: req.user.name,
                 email: req.user.email,
                 profilePicture: req.user.picture,
             }
 
-            // email new user with welcome e-mail
-            // set up the email
-            let mailOptions = {
-                from: `${process.env.EMAIL_ADDRESS}`,
-                to: `${email}`,
-                subject: 'Signed up for ShopTrak',
-                text: 'Thank you for signing up with ShopTrak.'
-            };
-            // send the email now
-            transporter.sendMail(mailOptions, function(error, info){
-                if(error){
-                    console.log(error);
-                }else{
-                    console.log('Email sent: '+info.response);
-                }
-            });
-            
             return userDb.add(newUser).then(id => {
-                console.log('newuser', id[0])
+                console.log('newuser', id[0]);
                 return userDb.getById(id).then(profile => {
-                    console.log('profile', profile);
-                    return res.status(201).json({message: `New user added to database with ID ${id}.`, profile: profile[0]});
+                    console.log('profile', profile[0], 'id', id[0])
+                    return res.status(201).json({message: `New user added with ID ${id}.`, profile: profile[0], id:id[0]})
                 }).catch(err => {
                     console.log(err);
-                    return res.status(404).json({error: `Error adding user/no user found.`})
+                    return res.status(404).json({error: `Error addind user/no user found.`})
                 })
-            })
-            .catch(err => {
+            }).catch(err => {
                 console.log(err);
-                return res.status(500).json({error: `Error adding new user DB entry.`})
+                return res.status(404).json({error: `Error adding user/no user found.`})
             })
         } else {
             console.log('user found', id[0].id);
-          
-            userDb.getById(id[0].id).then(profile => {
-                return res.status(200).json({profile: profile[0]})
-            }).catch(err => { 
-                console.log(err);
-                return res.status(404).json({error: `Nothing there.`})
-            })
 
-            
-            let mailOptions = {
-                from: `${process.env.EMAIL_ADDRESS}`,
-                to: `${email}`,
-                subject: 'Signed into ShopTrak',
-                text: 'You have signed into ShopTrak.'
-            };
-            // send the email now
-            // transporter.sendMail(mailOptions, function(error, info){
-            //     if(error){
-            //         console.log(error);
-            //     }else{
-            //         console.log('Email sent: '+info.response);
-            //     }
-            // });
-            // console.log('user found', id[0]);
-            // return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
+            userDb.getById(id[0].id).then(profile => {
+                return res.status(200).json({profile: profile[0], id: id[0].id})
+            }).catch(err => {
+                console.log(err);
+                return res.status(404).json({error: `Nothing here.`})
+            })
         }
-    })
-    .catch(err => {
+    }).catch(err => {
         console.log(err);
         return res.status(500).json({error: `Error retrieving user ID.`})
     })
 })
+
+
 
 module.exports = userRouter;
