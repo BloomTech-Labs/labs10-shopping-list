@@ -37,6 +37,7 @@ groupRouter.use(checkJwt);
 /** ADD GROUP
  * @TODO Add middleware to ensure user is logged in
  * **/
+
 groupRouter.post('/', (req, res) => {
     let group = req.body;
     groupDb.add(group).then(groupId => {
@@ -45,7 +46,7 @@ groupRouter.post('/', (req, res) => {
             groupID: groupId[0],
             moderator: true
         };
-
+        
         if (groupId.length >= 1) {
             groupMembersDb.add(member).then(mId => {
                 const msg = {
@@ -61,8 +62,8 @@ groupRouter.post('/', (req, res) => {
                 if(mId.length >= 1) return res.status(200).json(msg)
 
                 return res.status(500).json({message: `Could not add member to groupMembers.`})
-
-            }).catch(e => {
+            }).catch(err => {
+                console.log(err);
                 const error = {
                     message: `Internal Server Error - Adding Group Member`,
                     data: {

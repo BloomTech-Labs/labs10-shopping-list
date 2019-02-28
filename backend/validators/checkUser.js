@@ -73,7 +73,7 @@ async function routeCheck(req, res, next, userId){
      * Protect Group Profiles
      * Ensures that only members of a group can see that group's profile information
      */
-    if(req.originalUrl === `/api/group/${req.params.id}`){
+    if(req.originalUrl === `/api/group/${req.params.id}` && req.method === 'GET'){
         
         // // query the db for all users in that group
         let paramId = Number(req.params.id);

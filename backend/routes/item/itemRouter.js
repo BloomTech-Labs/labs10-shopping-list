@@ -140,7 +140,7 @@ itemRouter.get('/', (req, res) => {
 itemRouter.put('/:id', (req, res) => {
     let id = req.params.id;
     let changes = req.body;
-    changes.price = parseFloat(changes.price);
+    // changes.price = parseFloat(changes.price);
     console.log('changes', changes);
     itemDb.update(id, changes).then(status => {
         console.log('status', status)

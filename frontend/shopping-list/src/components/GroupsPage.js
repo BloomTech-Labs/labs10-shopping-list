@@ -21,7 +21,6 @@ class GroupsPage extends Component{
     }
 
     componentDidMount(){
-        console.log('cdm');
         let email = localStorage.getItem('email');
 
         if(email && !this.props.userId){

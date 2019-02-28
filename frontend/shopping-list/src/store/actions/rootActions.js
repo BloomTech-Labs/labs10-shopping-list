@@ -107,22 +107,24 @@ export const addUserToState = (userID) => {
   
 }
 
-export const addGroup = (group) => dispatch => {
+export const addGroup = (groupName) => dispatch => {
   const userID = localStorage.getItem('userId');
   const token = localStorage.getItem('jwt');
-  const endpoint = `${backendURL}/api/group/`;
+  const endpoint = `${backendURL}/api/group`;
   const options = {
     headers: {
       Authorization: `Bearer ${token}`,
     }
   };
 
-  const grp = {
-    userID: userID,
-    name: group,
+  let group = {
+    userID: Number(userID),
+    name: groupName,
   }
 
-  axios.post(endpoint, grp, options)
+  console.log('\n GROUP\n', group);
+
+  axios.post(endpoint, group, options)
       .then(() => {
         gettingGroups()(dispatch)
             .then(() => {
@@ -313,6 +315,7 @@ export const purchaseItem = (item, itemId) => {
     dispatch({type: PURCHASING_ITEM})
 
   updateItem.then((res) => {
+    console.log('item id', res.data);
     dispatch({type: ITEM_PURCHASED})
   }).catch(err => {
     console.log(err);
