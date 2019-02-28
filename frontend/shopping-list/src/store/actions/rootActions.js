@@ -70,6 +70,12 @@ export const CHECK_OUT_COMPLETE = 'CHECK_OUT_COMPLETE';
 export const GET_GROUP_HISTORY = 'GET_GROUP_HISTORY';
 export const SAVE_GROUP_HISTORY = 'SAVE_GROUP_HISTORY';
 
+export const GET_GROUP_USERS = 'GET_GROUP_USERS';
+export const SAVE_GROUP_USERS = 'SAVE_GROUP_USERS';
+
+export const GET_USER_PROFILE = 'GET_USER_PROFILE';
+export const SAVE_USER_PROFILE = 'SAVE_USER_PROFILE';
+
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
   backendURL = `http://localhost:9000`
@@ -349,10 +355,10 @@ export const getGroupUsers = (groupId) => {
   const fetchGroupUsers = axios.get(`${backendURL}/api/groupmember/group/${groupId}`, options);
 
   return dispatch => {
-    dispatch({type: FETCHING_GROUP_USERS});
+    dispatch({type: GET_GROUP_USERS});
 
     fetchGroupUsers.then(res => {
-      dispatch({type: USER_GROUPS_FETCHED, payload: res.data})
+      dispatch({type: SAVE_GROUP_USERS, payload: res.data})
     })
   }
 }
@@ -368,40 +374,13 @@ export const getUserProfile = userId => {
   const fetchGroupProfile = axios.get(`${backendURL}/api/user/${userId}`, options);
 
   return dispatch => {
-    dispatch({type: FETCHING_USER_PROFILE});
+    dispatch({type: GET_USER_PROFILE});
 
     fetchGroupProfile.then(res => {
-      dispatch({type: USER_PROFILE_FETCHED, payload: res.data});
+      dispatch({type: SAVE_USER_PROFILE, payload: res.data});
     })
   }
 }
-
-export const markItemForPurchase = item => {
-  return dispatch => {
-    console.log(item);
-    
-    dispatch({type: START_MARK});
-    item.purchased = true;
-    item.purchasedBy = Number(localStorage.getItem('userId'));
-    
-    dispatch({type: MARK_ITEM, payload: item})
-  }
-}
-
-export const unMarkItem = item => {
-  return dispatch => {
-    dispatch({type: START_MARK})
-
-    item.purchased = false;
-    item.purchasedBy = null;
-    dispatch({type: UNMARK_ITEM, payload: item})
-  }
-  }
-  
-export const getGroupMembers = (groupID) => dispatch => {
-  dispatch({type: GET_GROUPMEMBERS_START});
-}
-
 
 
 
@@ -614,7 +593,7 @@ export const checkOut = info => {
 
 export const getGroupHistory = groupId => {
   const token = localStorage.getItem('jwt');
-  const endpoint = `${backendURL}/api/grouphistory/group/${groupId}`;
+  const endpoint = `${backendURL}/api/grouphistory/total/group/${groupId}`;
 
   const options = {
       headers: {

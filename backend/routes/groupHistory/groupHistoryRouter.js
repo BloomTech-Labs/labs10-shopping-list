@@ -333,4 +333,15 @@ groupHistoryRouter.get('/user/:id', (req, res) => {
         });
 });
 
+groupHistoryRouter.get('/total/group/:id', (req, res) => {
+    let groupID = req.params.id;
+
+    groupHistoryDb.getByGroup(groupID).then(data => {
+        return res.status(200).json({data})
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Internal server error.`})
+    })
+})
+
 module.exports = groupHistoryRouter;

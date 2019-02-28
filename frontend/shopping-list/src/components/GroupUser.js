@@ -5,6 +5,9 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 class GroupUser extends React.Component{
+    componentWillMount(){
+        this.props.getUserProfile(this.props.match.params.id);
+    }
 
     render(){
         
@@ -12,9 +15,9 @@ class GroupUser extends React.Component{
         let userNet = 0;
 
 
-        if(this.props.items){
+        if(this.props.groupItems){
             for(let i = 0; i < this.props.items.length; i++){
-                if(this.props.items[i].purchasedBy === Number(this.props.profile.id)){
+                if(this.props.items[i].purchasedBy === Number(this.props.currentUser.id)){
                     userTotal = userTotal + Number(this.props.items[i].price);
                 }
             }
@@ -40,6 +43,10 @@ const mapStateToProps = state => {
         items: state.items,
         groupTotal: state.groupTotal,
         needsNewItems: state.needsNewItems,
+
+
+        currentUser: state.currentUser,
+        groupUserProfiles: state.groupUserProfiles
     }
 }
 

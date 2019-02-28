@@ -53,12 +53,19 @@ class GroupsProfile extends Component{
      * Retrieve a list of items from state
     */
     componentWillMount() {
+        console.log('CWMOUNT')
         if(!this.props.groupItems){
             this.props.getGroupItems(this.props.match.params.id);
+        } 
+        
+        if(this.props.groupHistory.length === 0){
+            console.log('\n GROUP HISTORY FETCH ==>')
+            this.props.getGroupHistory(this.props.match.params.id);
         }
 
-        if(!this.props.groupHistory){
-            this.props.getGroupHistory(this.props.match.params.id);
+        if(this.props.groupUsers.length === 0){
+            console.log('GET GROUP USERS ===>')
+            this.props.getGroupUsers(this.props.match.params.id);
         }
     }
 
@@ -67,7 +74,7 @@ class GroupsProfile extends Component{
             this.props.getGroupItems(this.props.match.params.id);
         }
 
-        if(newProps.needsNewHistory){
+        if(newProps.needsNewHistory || this.props.groupHistory.length === 0){
             this.props.getGroupHistory(this.props.match.params.id);
         }
     }

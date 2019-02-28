@@ -32,6 +32,9 @@ import {
   GET_GROUP_HISTORY,
   SAVE_GROUP_HISTORY,
 
+  GET_GROUP_USERS,
+  SAVE_GROUP_USERS
+
 
 } from "../actions";
 
@@ -43,6 +46,8 @@ const initialState = {
   needsNewHistory: false,
   userCart: [],
   groupHistory: [],
+  groupUsers: [],
+  groupUserProfiles: [],
 
 
 
@@ -50,8 +55,7 @@ const initialState = {
   groups: null,
   items: null,
   emailChecked: false,
-  groupUsers: null,
-  groupUserProfiles: null,
+  
   groupTotal: null,
   
   userTotal: null,
@@ -143,7 +147,7 @@ export const rootReducer = (state = initialState, action) => {
     case SAVE_GROUP_HISTORY:
       return {
         ...state,
-        groupHistory: action.payload,
+        groupHistory: action.payload.data,
         needsNewHistory: false
       }
 
