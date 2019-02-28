@@ -49,6 +49,12 @@ export const SAVE_USER_GROUPS = 'SAVE_USER_GROUPS';
 export const CREATING_GROUP = 'CREATING_GROUP';
 export const GROUP_CREATED = 'GROUP_CREATED';
 
+export const GET_GROUP_ITEMS = 'GET_GROUP_ITEMS';
+export const SAVE_GROUP_ITEMS = 'SAVE_GROUP_ITEMS';
+
+export const CREATE_ITEM = 'CREATE_ITEM';
+export const ITEM_CREATED = 'ITEM_CREATED';
+
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -228,26 +234,28 @@ export const clearCurrentGroup = () => {
  * Add an item to the database for a specified group.
  * @param id - Group ID
  */
-export const addItem = (item) => dispatch => {
-  dispatch({type: ADD_ITEM_START});
-
+export const addItem = (item) => {
   const token = localStorage.getItem('jwt');
-  const endpoint = `${backendURL}/api/item`;
-
   const options = {
     headers: {
       Authorization: `Bearer ${token}`,
     }
   };
-  // Add items to the server and then get the items to update state
-  axios.post(endpoint, item, options)
-      .then(response => {
-        dispatch({ type: ADD_ITEM_SUCCESS});
-      })
-      .catch(err => {
-        console.log("ADDING ITEM ERR => ", err);
-        dispatch({type: ADD_ITEM_FAILED, payload: err});
-      });
+
+  const endpoint = axios.post(`${backendURL}/api/item`, item, options);
+
+  return dispatch => {
+    dispatch({type: CREATE_ITEM})
+
+    endpoint.then(res => {
+      console.log(res.data, 'new item');
+
+      dispatch({type: ITEM_CREATED})
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+  }
 }
 
 /*
@@ -485,5 +493,26 @@ export const createGroup = (groupName, userId) => {
     dispatch({type: ERROR})
   })
 }
+}
+
+export const getGroupItems = (groupId) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.get(`${backendURL}/api/item/group/${groupId}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_GROUP_ITEMS})
+    endpoint.then(res => {
+      dispatch({type: SAVE_GROUP_ITEMS, payload: res.data});
+    })
+  }
+}
+
+export const getGroupHistory = groupId => {
 
 }

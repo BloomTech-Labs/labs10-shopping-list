@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems } from '../store/actions/rootActions';
+import {checkEmail, getSingleGroup, addGroup, getGroupItems, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import "./Styles/Group.css";
 import "./Styles/Scrollbar.css";
@@ -52,21 +52,17 @@ class GroupsPage extends Component{
      * Retrieve a list of items from state
     */
     componentWillMount() {
-        this.props.gettingGroups();
-        this.props.getItems(Number(this.props.match.params.id));
-        this.getGroupHistory();
-
-        if (this.props.groups !== null) {
-            const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
-            this.setState({ group: group[0]})
+        if(!this.props.groupItems){
+            this.props.getGroupItems(this.props.match.params.id);
         }
     }
 
     componentWillReceiveProps = newProps => {
         if(newProps.needsNewItems){
-            this.props.getItems(this.props.match.params.id);
+            this.props.getGroupItems(this.props.match.params.id);
         }
     }
+
     /*
      * Retrieve the group history and save to component state
     */
@@ -201,18 +197,6 @@ class GroupsPage extends Component{
 
 
     render(){
-//         console.log('current group', this.props.currentGroup);
-//         const purchased = this.props.items.filter(itm => itm.purchased === true);
-
-        // if(!this.props.currentGroup){ // tell user info is loading...
-        //     /**
-        //      * @TODO Create a loading component that can render during data queries
-        //      */
-        //     return (
-        //         <div>Fetching group information...</div>
-        //     )
-        // } else {
-
         // Filter items by which has been purchased - used for the `I Bought` form
         let purchased = [];
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
@@ -230,8 +214,9 @@ class GroupsPage extends Component{
                         <MDBBtn color="primary" >Total</MDBBtn>
                     </div>
                     
-                    <ItemList />
-                    <GroupUserList />
+                    <ItemList items = {this.props.groupItems} />
+                    
+                    <GroupUserList users = {this.props.groupUsers} />
                     
                 <div className={"group-profile-columns"}>
                 
@@ -363,11 +348,17 @@ const mapStateToProps = state => {
         groups: state.groups,
         items: state.items,
         currentGroup: state.currentGroup,
-        needsNewItems: state.needsNewItems
+        needsNewItems: state.needsNewItems,
+
+
+
+        groupItems: state.groupItems,
+        currentUser: state.currentUser,
+        groupUsers: state.groupUsers
     }
 }
 
 export default connect(mapStateToProps, {
 //     checkEmail, gettingGroups, addGroup, getItems, getSingleGroup
-    gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems
+    gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems, getGroupItems
 })(GroupsPage);

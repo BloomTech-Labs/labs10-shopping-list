@@ -26,14 +26,22 @@ import {
 
   GET_USER_GROUPS,
   SAVE_USER_GROUPS,
+
+  GET_GROUP_ITEMS,
+  SAVE_GROUP_ITEMS,
+
+  CREATE_ITEM,
+  ITEM_CREATED
 } from "../actions";
 
 const initialState = {
   currentUser: null,
   userGroups: null,
+  groupItems: null,
+  needsNewItems: false,
 
 
-  
+
   currentGroup: null,
   groups: null,
   items: null,
@@ -41,7 +49,7 @@ const initialState = {
   groupUsers: null,
   groupUserProfiles: null,
   groupTotal: null,
-  needsNewItems: false,
+  
   userTotal: null,
   markedItems: null,
   needsRefresh: false,
@@ -66,6 +74,26 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         userGroups: action.payload
+      }
+
+    case GET_GROUP_ITEMS:
+      return state;
+
+    case SAVE_GROUP_ITEMS:
+      return {
+        ...state,
+        groupItems: action.payload.data,
+        needsNewItems: false,
+      }
+
+
+    case CREATE_ITEM:
+      return state;
+
+    case ITEM_CREATED:
+      return {
+        ...state,
+        needsNewItems: true
       }
 
     case ADDING_GROUPS_TO_STATE:

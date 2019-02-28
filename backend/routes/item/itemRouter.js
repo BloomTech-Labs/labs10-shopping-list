@@ -26,26 +26,20 @@ const checkUser = require('../../validators/checkUser');
  * ***********************************************/
 
 itemRouter.use(checkJwt);
-// itemRouter.use(checkUser);
 
 /** ADD ITEM
  * @TODO Add middleware to ensure user is logged in
  * **/
-itemRouter.post('/', checkUser, (req, res) => {
+itemRouter.post('/', (req, res) => {
     const item = req.body;
+    console.log('item', item);
 
     itemDb.add(item).then(id => {
         console.log('new item', id[0]);
         return res.status(200).json({message: `Item successfully added`, id: id[0]});
-    })
-        .catch(err => {
-            const error = {
-                message: `Internal Server Error - Adding Item`,
-                data: {
-                    err: err
-                },
-            }
-            return res.status(500).json(error);
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json(error);
         })
 })
 

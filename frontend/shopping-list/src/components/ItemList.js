@@ -2,86 +2,38 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Item from './Item';
-import {getItems, addItem,} from '../store/actions/rootActions';
+import {getItems, getGroupItems, addItem,} from '../store/actions/rootActions';
 import './Styles/ItemList.css';
 
 class ItemList extends React.Component{
-    async componentDidMount(){
-        if(this.state.groupId){
-            this.props.getItems(this.state.groupId);
+    componentWillMount(){
+        if(!this.props.groupItems){
+            this.props.getGroupItems(this.props.match.params.id);
         }
     }
-    
+
+    componentWillReceiveProps = newProps => {
+        if(newProps.needsNewItems === true){
+            this.props.getGroupItems(this.props.match.params.id);
+        }
+    }
+
     constructor(props){
         super(props);
 
         this.state = {
-            ...this.state,
             item: '',
-            quantity: 0,
-            measurement: '(none)',
-            groupID: this.props.match.params.id,
-            oldItem: '',
-            oldQuantity: '',
         }
     }
 
-    increase = event => {
+    
+    handleChange = event => {
         event.preventDefault();
-        let newQuantity = this.state.quantity += 1;
-        this.setState({
-            quantity: newQuantity,
+        this.setState ({
+            [event.target.name]: event.target.value,
         })
     }
 
-    decrease = event => {
-        event.preventDefault();
-        if((this.state.quantity - 1) >= 0 ){
-            console.log('quant', this.state.quantity);
-            let newQuantity = this.state.quantity -= 1;
-            this.setState({
-                quantity: newQuantity,
-            })
-        }
-        
-    }
-
-    clearInput = event => {
-        event.preventDefault();
-        document.addEventListener('mousedown', this.handleClickOutside);
-        if(event.target.name === 'quantity'){
-            let oldQuantity = this.state.quantity;
-            this.setState({
-                [event.target.name]: '',
-                oldQuantity: oldQuantity
-            })
-        }
-        // } else if(event.target.name === 'item'){
-        //     console.log('inside');
-        //     let oldItem = this.state.item;
-        //     this.setState({
-        //         [event.target.name]: '',
-        //         oldItem: oldItem
-        //     })
-        // }
-    }
-
-    handleInput = event => {
-        event.preventDefault();
-        if(event.target.name === 'quantity'){
-            if(event.target.value){
-                if(!isNaN(event.target.value)){
-                    this.setState({
-                        [event.target.name]: Number(event.target.value)
-                    })
-                }
-            }
-        } else {
-            this.setState({
-                [event.target.name]: event.target.value,
-            });
-        }
-    }
 
     handleClickOutside = event => {
         console.log('outside', this.state.oldItem);
@@ -104,12 +56,11 @@ class ItemList extends React.Component{
         if(this.state.item){
             let item = {
                 purchasedBy: null,
-                groupID: Number(this.state.groupID),
+                groupID: Number(this.props.match.params.id),
                 name: this.state.item,
-                quantity: this.state.quantity,
                 purchased: false,
-                price: parseFloat('0.00'),
-                measurement: this.state.measurement,
+                price: 0.00,
+                quantity: 1,
             }
 
             console.log('item', item);
@@ -119,9 +70,6 @@ class ItemList extends React.Component{
 
             this.setState({
                 item: '',
-                quantity: 0,
-                measurement: '(none)',
-                groupID: this.props.match.params.id,
             })
 
         } else {
@@ -131,65 +79,25 @@ class ItemList extends React.Component{
 
 
     render(){
-        let itemList = [];
-        if(this.props.items){
-            itemList = this.props.items.map(item => {
-                if(item.purchased === 0){
-                    return <Item item = {item} key = {item.id}/>
-                }
-                
-            })
-        } else {
-            itemList = <h2>No Items on the List</h2>
-        }
-
         return(
             <div className = 'item-list-container'>
             <h1>Shopping List</h1>
             <div className = 'item-list'>
-            {itemList}
+            
+            {this.props.groupItems !== null ? 
+                (
+                this.props.groupItems.map(item => 
+                    (
+                        <Item item = {item} key = {item.id} />
+                    )
+                )
+            ) : (<h2>No Items on the List</h2>)}
+
             </div>
             
             <div className = 'item-form'>
-
-            <div className = 'item-form-top'>
-            <span id = 'name'>
-            Name
-            </span>
-
-            <span id = 'quantity'>
-            Quantity
-            </span>
-
-            <span id = 'measurement'>
-            Measurement
-            </span>
-
-            <span id = 'submit'>
-            Submit
-            </span>
-
-            </div>
-
             <form onSubmit = {this.handleSubmit}>
-                <input type = 'text' name = 'item' placeholder = 'Add an item' value = {this.state.item} onClick = {this.clearInput} onChange = {this.handleInput}/>
-                
-                <div className = 'item-quantity'>
-                <button onClick = {this.decrease}>-</button>
-                <input type = 'text' name = 'quantity' placeholder = 'Quantity' onClick = {this.clearInput} onChange = {this.handleInput} value = {this.state.quantity} /> 
-                <button onClick = {this.increase}>+</button>
-                </div>
-                
-                <select name = 'measurement' onChange = {this.handleInput}>
-                    <option>(none)</option>
-                    <option>oz</option>
-                    <option>lb</option>
-                    <option>L</option>
-                    <option>gal</option>
-                    <option>dozen</option>
-                    <option>piece</option>
-                </select>
-
+                <input type = 'text' name = 'item' placeholder = 'Add an item' value = {this.state.item} onChange = {this.handleChange}/>
                 <button type = 'submit'>Add Item</button>
             </form>
 
@@ -205,18 +113,14 @@ const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
         //state items
-        userId: state.userId,
-        name: state.name,
-        email: state.email,
-        profilePicture: state.profilePicture,
-        groups: state.groups,
-        items: state.items,
+        groupItems: state.groupItems,
+        needsNewItems: state.needsNewItems
     }
 }
 
 export default withRouter(connect(mapStateToProps, {
     // actions
-    getItems,
+    getGroupItems,
     addItem,
 
 })(ItemList));
