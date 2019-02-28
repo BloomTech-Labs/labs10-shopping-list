@@ -27,6 +27,7 @@ class GroupsPage extends Component{
         total: 0.00,
         listToggle: true,
         histToggle: false,
+        totalToggle: true,
         groupHistory: null,
         members: null,
         totals: null,
@@ -133,6 +134,11 @@ class GroupsPage extends Component{
         this.setState({ histToggle: true, listToggle: false})
     }
 
+    toggleTotal = () => {
+        console.log("TOGGLE")
+        this.setState({ totalToggle: !this.state.totalToggle })
+    }
+
     /*
      * Creates an item object and send it to the action to add to the database
     */
@@ -200,7 +206,7 @@ class GroupsPage extends Component{
     }
 
     calculateTotal = () => {
-        console.log("HISTORY => ", this.state.groupHistory);
+        // console.log("HISTORY => ", this.state.groupHistory);
         const hists = this.state.groupHistory;
         const members = this.state.members;
 
@@ -241,7 +247,7 @@ class GroupsPage extends Component{
                 newSorted.push(grandTotal);
             })
 
-            console.log("NEW SORTED => ", newSorted);
+            // console.log("NEW SORTED => ", newSorted);
             return newSorted;
 
             // this.setState({totals: newSorted});
@@ -280,10 +286,10 @@ class GroupsPage extends Component{
             <div>
                 <div className={"group-profile-container"}>
                     <div className={"group-profile-header"}>
-                        <MDBBtn color="primary" onClick={() => {this.toggleListClass()}}>List</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleListClass()}} >List</MDBBtn>
                         <MDBBtn color="primary" onClick={() => {this.toggleHistClass()}} >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
-                        <MDBBtn color="primary" >Total</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleTotal()}} >Total</MDBBtn>
                     </div>
                     <div className={"group-profile-header-title"}><h3></h3></div>
                     <div className={"group-profile-columns"}>
@@ -344,7 +350,8 @@ class GroupsPage extends Component{
                         </div>
 
                         <div className={"group-profile-right-col"}>
-                            <div className={"group-profile-gross"}>
+                            {
+                                this.state.totalToggle === true ? <div className={"group-profile-gross"}>
                                 {
                                     this.props.groups !== null ? this.props.groups.map((elem, i) => (
                                         <div className={"group-profile-gross-members"}>
@@ -360,7 +367,7 @@ class GroupsPage extends Component{
                                                                 </div>
                                                             )) : <p>Calculating</p>
                                                         }
-                                                        <img src={el.pic} alt="Avatar" className="avatar" />
+                                                        <img src={el.profilePicture} alt="Avatar" className="avatar" />
                                                         <p>{el.name}</p>
                                                     </div>
                                                 )) : null
@@ -368,7 +375,8 @@ class GroupsPage extends Component{
                                         </div>
                                     )) : <p>Loading</p>
                                 }
-                            </div>
+                                </div> : <div className={"group-profile-gross"}> <p>NET</p></div>
+                            }
                             {this.state.listToggle === true ? <div className={"group-profile-bought"}>
                                 <h1>I BOUGHT</h1>
                                 <div className={"group-profile-bought-list"}>
