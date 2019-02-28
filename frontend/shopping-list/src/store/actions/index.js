@@ -41,4 +41,6 @@ export {
   FETCHING_USER_PROFILE,
   USER_PROFILE_FETCHED,
   GROUP_TOTAL_SUMMED,
+  MARK_ITEM,
+  UNMARK_ITEM,
 } from "./rootActions";

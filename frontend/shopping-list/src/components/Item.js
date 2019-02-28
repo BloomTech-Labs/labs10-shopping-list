@@ -1,5 +1,5 @@
 import React from 'react';
-import {purchaseItem, getItems} from '../store/actions/rootActions';
+import {purchaseItem, getItems, markItemForPurchase, unMarkItem} from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import moment from 'moment';
@@ -23,6 +23,7 @@ class Item extends React.Component {
             purchased: props.item.purchased,
             price: props.item.price,
             oldprice: null,
+            isMarked: false,
         }
     }
 
@@ -103,7 +104,31 @@ class Item extends React.Component {
 
     }
 
+    markItem = event => {
+        event.preventDefault();
+        this.props.markItemForPurchase(this.props.item);
+        this.setState({
+            isMarked: true,
+        })
+    }
+
+    unMarkItem = event => {
+        event.preventDefault();
+
+        this.props.unMarkItem(this.props.item);
+
+        this.setState({
+            isMarked: false,
+        })
+    }
+
     render(){
+        let markButton;
+        if(!this.state.isMarked){
+            markButton = <button onClick = {this.markItem}>Mark For Purchase</button>
+        } else if(this.state.isMarked){
+            markButton = <button onClick = {this.unMarkItem}>Unmark Item</button>
+        }
     
         return (
             <div className = 'item-container' key = {this.props.key}>
@@ -121,6 +146,7 @@ class Item extends React.Component {
                 $<input type = 'number' onMouseDown = {this.clearField} onChange = {this.handleChange} value = {this.state.price} placeholder = 'Enter price ($0.00)' min = '0' step = 'any' >
                 </input>
                 </div>
+                {markButton}
                 <button type = 'submit' onClick = {this.handlePurchase}>Purchase</button>
             </form>
             </div>
@@ -137,7 +163,8 @@ const mapStateToProps = state => {
         profilePicture: state.profilePicture,
         groups: state.groups,
         items: state.items,
-        purchaseDone: state.purchaseDone
+        purchaseDone: state.purchaseDone,
+        markedItems: state.markedItems,
     }
 }
 
@@ -145,4 +172,6 @@ export default withRouter(connect(mapStateToProps, {
     // actions
     purchaseItem,
     getItems,
+    markItemForPurchase,
+    unMarkItem,
 })(Item));

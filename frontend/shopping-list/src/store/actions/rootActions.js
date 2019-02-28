@@ -34,6 +34,8 @@ export const USER_GROUPS_FETCHED = 'USER_GROUPS_FETCHED';
 export const FETCHING_USER_PROFILE = 'FETCHING_USER_PROFILE';
 export const USER_PROFILE_FETCHED = 'USER_PROFILE_FETCHED';
 export const GROUP_TOTAL_SUMMED = 'GROUP_TOTAL_SUMMED';
+export const MARK_ITEM = 'MARK_ITEM';
+export const UNMARK_ITEM = 'UNMARK_ITEM';
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -362,41 +364,20 @@ export const getUserProfile = userId => {
   }
 }
 
+export const markItemForPurchase = item => {
+  console.log(item);
+  item.purchased = true;
+  item.purchasedBy = Number(localStorage.getItem('userId'));
+return dispatch => {
+  dispatch({type: MARK_ITEM, payload: item})
+}
+}
 
+export const unMarkItem = item => {
+  item.purchased = false;
+  item.purchasedBy = null;
 
-
-  // export const calculateGroupTotal = (items) => {
-  //   console.log('calc called', items);
-  //   let groupTotal = 0;
-  //       if(items){
-  //           items.map(item => {
-  //               return groupTotal += item.price;
-  //           })
-
-  //         console.log('group total', groupTotal)
-  //           return dispatch => {
-  //             dispatch({type: GROUP_TOTAL_SUMMED, payload: groupTotal})
-  //           }
-  //       }
-  // }
-
-
-
-// export const fetchGroupTotal = groupId => {
-//   let token = localStorage.getItem('jwt');
-//     let options = {
-//       headers: {
-//       Authorization: `Bearer ${token}`
-//     }
-//   }
-
-//   const fetchTotal = axios.get(`${backendURL}/api/item/group/${groupId}`, options);
-
-//   return dispatch => {
-//     dispatch({type: FETCHING_GROUP_TOTAL});
-
-//     fetchTotal.then(res => {
-//       console.log('group items', res.data);
-//     })
-//   }
-// }
+  return dispatch => {
+    dispatch({type: UNMARK_ITEM, payload: item})
+  }
+}

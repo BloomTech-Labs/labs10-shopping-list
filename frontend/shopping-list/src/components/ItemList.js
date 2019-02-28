@@ -28,7 +28,6 @@ class ItemList extends React.Component{
 
     increase = event => {
         event.preventDefault();
-        console.log('q', this.state.quantity);
         let newQuantity = this.state.quantity += 1;
         this.setState({
             quantity: newQuantity,
@@ -97,15 +96,6 @@ class ItemList extends React.Component{
                 })
             }   
         } 
-        
-        // if(!this.state.item){
-        //     console.log('old', this.state.oldItem);
-        //         this.setState({
-        //             item: this.state.oldItem
-        //         })
-        //     console.log('empty');
-            
-        // }
         document.removeEventListener('mousedown', this.handleClickOutside);
     }    
 

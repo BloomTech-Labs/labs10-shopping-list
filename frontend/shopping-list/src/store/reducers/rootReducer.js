@@ -21,6 +21,8 @@ import {
   USER_PROFILE_FETCHED,
   ADD_ITEM_START,
   ADD_ITEM_SUCCESS,
+  MARK_ITEM,
+  UNMARK_ITEM,
 } from "../actions";
 import { isBuffer } from "util";
 
@@ -39,6 +41,7 @@ const initialState = {
   groupTotal: null,
   needsNewItems: false,
   userTotal: null,
+  markedItems: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -169,6 +172,34 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         needsNewItems: true,
       }
+
+    case MARK_ITEM:
+      let itemArray;
+      if(state.markedItems){
+        itemArray = state.markedItems
+      } else {
+        itemArray = [];
+      }
+
+      itemArray.push(action.payload);
+      return {
+        ...state,
+        markedItems: itemArray
+        }
+
+    case UNMARK_ITEM:
+        let newArray;
+        if(state.markedItems){
+          newArray = state.markedItems;
+          newArray = newArray.filter(item => item.id !== action.payload.id);
+        } else {
+          newArray = [];
+        }
+        console.log(newArray, 'unmark');
+        return {
+          ...state,
+          markedItems: newArray
+        }
 
     default:
       return state;
