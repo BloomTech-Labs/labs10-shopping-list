@@ -101,7 +101,7 @@ class ItemList extends React.Component{
 
     handleSubmit = event => {
         event.preventDefault();
-        if(this.state.item && this.state.quantity > 0){
+        if(this.state.item){
             let item = {
                 purchasedBy: null,
                 groupID: Number(this.state.groupID),
@@ -125,7 +125,7 @@ class ItemList extends React.Component{
             })
 
         } else {
-            window.alert('Must include name and quantity.');
+            window.alert('Must include name.');
         }
     }
 
@@ -134,7 +134,10 @@ class ItemList extends React.Component{
         let itemList = [];
         if(this.props.items){
             itemList = this.props.items.map(item => {
-                return <Item item = {item} key = {item.id}/>
+                if(item.purchased === 0){
+                    return <Item item = {item} key = {item.id}/>
+                }
+                
             })
         } else {
             itemList = <h2>No Items on the List</h2>

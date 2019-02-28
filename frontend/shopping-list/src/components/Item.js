@@ -110,6 +110,7 @@ class Item extends React.Component {
         this.setState({
             isMarked: true,
         })
+        console.log('ismarked');
     }
 
     unMarkItem = event => {
@@ -129,7 +130,16 @@ class Item extends React.Component {
         } else if(this.state.isMarked){
             markButton = <button onClick = {this.unMarkItem}>Unmark Item</button>
         }
-    
+        
+        let purchasedBy;
+        if(this.props.groupUserProfiles){
+        for(let i = 0; i < this.props.groupUserProfiles.length; i++){
+            if(this.props.item.purchasedBy === this.props.groupUserProfiles[i].id){
+                purchasedBy = this.props.groupUserProfiles[i].name;
+            }
+        }
+    }
+
         return (
             <div className = 'item-container' key = {this.props.key}>
             
@@ -139,15 +149,15 @@ class Item extends React.Component {
                 <div className = 'item-list-quantity'>Quantity: {this.props.item.quantity}</div>
                 
                 {this.props.item.purchasedBy ? 
-                <div className = 'item-purchased-by'>Purchased By: {this.props.item.purchasedBy}</div>
+                <div className = 'item-purchased-by'>Purchased By: {purchasedBy}</div>
                 : <div className = 'item-purchased-by'>Not purchased</div>}
 
-                <div>
+                {/* <div>
                 $<input type = 'number' onMouseDown = {this.clearField} onChange = {this.handleChange} value = {this.state.price} placeholder = 'Enter price ($0.00)' min = '0' step = 'any' >
                 </input>
-                </div>
+                </div> */}
                 {markButton}
-                <button type = 'submit' onClick = {this.handlePurchase}>Purchase</button>
+                {/* <button type = 'submit' onClick = {this.handlePurchase}>Purchase</button> */}
             </form>
             </div>
         )
@@ -165,6 +175,7 @@ const mapStateToProps = state => {
         items: state.items,
         purchaseDone: state.purchaseDone,
         markedItems: state.markedItems,
+        groupUserProfiles: state.groupUserProfiles
     }
 }
 

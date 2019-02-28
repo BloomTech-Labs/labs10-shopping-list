@@ -5,6 +5,7 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getGroupUsers, getUserProfile} from '../store/actions/rootActions';
 import GroupUser from './GroupUser';
+import PurchaseBox from './PurchaseBox';
 
 class GroupUserList extends React.Component{
     componentDidMount(){
@@ -43,6 +44,7 @@ class GroupUserList extends React.Component{
                 GROUP USER LIST
                 {groupUserProfiles}
                 TOTAL EXPENDITURE: {this.props.groupTotal}
+                <PurchaseBox />
             </div>
         )
     }

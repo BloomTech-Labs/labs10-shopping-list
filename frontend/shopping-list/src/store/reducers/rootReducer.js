@@ -23,8 +23,8 @@ import {
   ADD_ITEM_SUCCESS,
   MARK_ITEM,
   UNMARK_ITEM,
+  START_MARK,
 } from "../actions";
-import { isBuffer } from "util";
 
 const initialState = {
   userId: null,
@@ -42,6 +42,7 @@ const initialState = {
   needsNewItems: false,
   userTotal: null,
   markedItems: null,
+  needsRefresh: false,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -173,32 +174,36 @@ export const rootReducer = (state = initialState, action) => {
         needsNewItems: true,
       }
 
+    case START_MARK:
+      return {
+        ...state,
+        needsRefresh: true,
+      }
+
     case MARK_ITEM:
-      let itemArray;
+      let itemArray = [];
       if(state.markedItems){
-        itemArray = state.markedItems
-      } else {
-        itemArray = [];
+        itemArray = state.markedItems;
       }
 
       itemArray.push(action.payload);
+      console.log(itemArray);
       return {
         ...state,
-        markedItems: itemArray
+        markedItems: itemArray,
+        needsRefresh: false,
         }
 
     case UNMARK_ITEM:
-        let newArray;
+        let newArray = [];
         if(state.markedItems){
           newArray = state.markedItems;
           newArray = newArray.filter(item => item.id !== action.payload.id);
-        } else {
-          newArray = [];
-        }
-        console.log(newArray, 'unmark');
+        } 
         return {
           ...state,
-          markedItems: newArray
+          markedItems: newArray,
+          needsRefresh: false,
         }
 
     default:

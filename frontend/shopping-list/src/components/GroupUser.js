@@ -13,11 +13,8 @@ class GroupUser extends React.Component{
 
 
         if(this.props.items){
-            console.log(this.props.items);
             for(let i = 0; i < this.props.items.length; i++){
                 if(this.props.items[i].purchasedBy === Number(this.props.profile.id)){
-                    console.log('match');
-                    console.log('price', this.props.items[i].price)
                     userTotal = userTotal + Number(this.props.items[i].price);
                 }
             }

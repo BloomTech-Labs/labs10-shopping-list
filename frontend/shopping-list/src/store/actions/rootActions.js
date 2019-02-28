@@ -36,6 +36,7 @@ export const USER_PROFILE_FETCHED = 'USER_PROFILE_FETCHED';
 export const GROUP_TOTAL_SUMMED = 'GROUP_TOTAL_SUMMED';
 export const MARK_ITEM = 'MARK_ITEM';
 export const UNMARK_ITEM = 'UNMARK_ITEM';
+export const START_MARK = 'START_MARK';
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -365,19 +366,23 @@ export const getUserProfile = userId => {
 }
 
 export const markItemForPurchase = item => {
-  console.log(item);
-  item.purchased = true;
-  item.purchasedBy = Number(localStorage.getItem('userId'));
-return dispatch => {
-  dispatch({type: MARK_ITEM, payload: item})
-}
+  return dispatch => {
+    console.log(item);
+    
+    dispatch({type: START_MARK});
+    item.purchased = true;
+    item.purchasedBy = Number(localStorage.getItem('userId'));
+    
+    dispatch({type: MARK_ITEM, payload: item})
+  }
 }
 
 export const unMarkItem = item => {
-  item.purchased = false;
-  item.purchasedBy = null;
-
   return dispatch => {
+    dispatch({type: START_MARK})
+
+    item.purchased = false;
+    item.purchasedBy = null;
     dispatch({type: UNMARK_ITEM, payload: item})
   }
 }
