@@ -3,6 +3,8 @@ import {
   ITEM_PURCHASED,
   USER_GROUPS_FETCHED,
   USER_PROFILE_FETCHED,
+  CHECKING_EMAIL,
+  EMAIL_CHECKED,
 
 
   GET_CURRENT_USER,
@@ -68,6 +70,16 @@ const initialState = {
 
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CHECKING_EMAIL:
+      return state;
+
+    case EMAIL_CHECKED:
+      return {
+        ...state,
+        currentUser: action.payload,
+      }
+
+
     case GET_CURRENT_USER:
       return state;
     case SAVE_CURRENT_USER:

@@ -9,13 +9,13 @@ import GroupsPage from "./components/GroupsPage";
 import GroupsProfile from "./components/GroupsProfile";
 import Navigation from './components/Navigation';
 import BillingPage from './components/BillingPage';
-import {getCurrentUser} from './store/actions/rootActions';
+import {getCurrentUser, checkEmail} from './store/actions/rootActions';
 
 class App extends Component {
 
   componentWillMount(){
     if(localStorage.getItem('email') && !this.props.currentUser){
-      this.props.getCurrentUser();
+      this.props.checkEmail();
     }
   }
 
@@ -48,5 +48,6 @@ const mapStateToProps = state => {
 
 export default withRouter(connect(mapStateToProps, {
   // actions
-  getCurrentUser
+  getCurrentUser,
+  checkEmail,
 })(App));

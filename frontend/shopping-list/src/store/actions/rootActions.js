@@ -410,6 +410,7 @@ export const getCurrentUser = () => {
     dispatch({type: GET_CURRENT_USER});
 
     endpoint.then(res => {
+      console.log(res.data, 'RES')
       dispatch({type: SAVE_CURRENT_USER, payload: res.data.profile});
     }).catch(err => {
       console.log(err);

@@ -1,6 +1,6 @@
 // collect user's total and net values
 import React, { useReducer } from 'react';
-import {getUserProfile, FETCHING_USER_PROFILE} from '../store/actions/rootActions';
+import {getUserProfile, checkEmail, FETCHING_USER_PROFILE} from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
@@ -46,4 +46,5 @@ const mapStateToProps = state => {
 export default withRouter(connect(mapStateToProps, {
     // actions
     getUserProfile,
+    checkEmail,
 })(GroupUser));
