@@ -11,7 +11,7 @@ import Popover
 
 var allGroups: [Group] = []
 var selectedGroup: Group? = nil
-var history: [History] = []
+var history: [Item] = []
 
 // MARK: - Popovers
 
