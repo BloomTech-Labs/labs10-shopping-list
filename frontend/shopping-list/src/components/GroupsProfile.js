@@ -28,6 +28,7 @@ class GroupsPage extends Component{
         listToggle: true,
         histToggle: false,
         totalToggle: true,
+        inviToggle: false,
         groupHistory: null,
         members: null,
         totals: null,
@@ -127,11 +128,15 @@ class GroupsPage extends Component{
     // Change between List and History views
     toggleListClass = () => {
 
-        this.setState({ histToggle: false, listToggle: true})
+        this.setState({ histToggle: false, listToggle: true, inviToggle: false})
     }
 
     toggleHistClass = () => {
-        this.setState({ histToggle: true, listToggle: false})
+        this.setState({ histToggle: true, listToggle: false, inviToggle: false})
+    }
+
+    toggleInviClass = () => {
+        this.setState({ inviToggle: true, histToggle: false, listToggle: false})
     }
 
     toggleTotal = () => {
@@ -260,7 +265,6 @@ class GroupsPage extends Component{
 
     }
 
-
     render(){
 //         console.log('current group', this.props.currentGroup);
 //         const purchased = this.props.items.filter(itm => itm.purchased === true);
@@ -336,7 +340,6 @@ class GroupsPage extends Component{
                                                 }
                                             </div>
                                         }
-
 
                                     </MDBContainer>
                                 </MDBContainer>
