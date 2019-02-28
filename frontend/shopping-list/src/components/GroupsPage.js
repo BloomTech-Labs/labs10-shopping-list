@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups, addGroup, clearCurrentGroup } from '../store/actions/rootActions';
+import {checkEmail, gettingGroups, addGroup, clearCurrentGroup,updateGroupName,removeGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
-    MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
+import {
+    MDBCard,
+    MDBCardBody,
+    MDBCardTitle,
+    MDBCardText,
+    MDBBtn,
+    MDBContainer,
+    MDBCardHeader,
+    MDBModal,
+    MDBModalBody,
+    MDBModalHeader,
+    MDBModalFooter,
+    MDBRow,
+    MDBInput,
+    MDBNavLink,
+    MDBIcon,
+    MDBBadge,
+} from "mdbreact";
 
 function makeid() {
     let text = "";
@@ -18,7 +34,11 @@ function makeid() {
 class GroupsPage extends Component{
     state = {
         modal14: false,
+        modal15: false,
+        modal16: false,
         groupName: "",
+        delete: "",
+        groupId: null,
     }
 
     componentDidMount(){
@@ -46,6 +66,14 @@ class GroupsPage extends Component{
         });
     }
 
+    saveGroupName = (id, name) => {
+        this.setState({groupId: id, groupName: name, modal15: true})
+    }
+
+    deleteGroup = (id, name) => {
+        this.setState({groupId: id, groupName: name, modal16: true})
+    }
+
     handleInput = e => {
         this.setState({
             [e.target.name]: e.target.value
@@ -54,7 +82,25 @@ class GroupsPage extends Component{
 
     handleAddGroup = () => {
         this.props.addGroup(this.state.groupName);
-        this.toggle(14);
+        this.setState({modal14: false})
+    }
+
+    handleUpdateGroupName = () => {
+        if (this.state.groupName !== '') {
+            const changes = {name: this.state.groupName};
+            this.props.updateGroupName(this.state.groupId, changes);
+
+            this.setState({modal15: false})
+        }
+
+
+    }
+
+    handleDeleteGroup = () => {
+        if (this.state.groupId !== null) {
+            this.props.removeGroup(this.state.groupId, localStorage.getItem("userId"));
+            this.setState({modal16: false})
+        }
     }
 
     render(){
@@ -73,17 +119,22 @@ class GroupsPage extends Component{
                         </MDBCard>
                         {this.props.groups !== null ? (
                             this.props.groups.map((g, i) => (
-                                <MDBNavLink key={makeid()} to={`/groups/${g.id}`}>
-                                    <MDBCard key={makeid()} border="primary" className="m-3" style={{ maxWidth: "18rem"}}>
-                                        <MDBCardHeader key={makeid()}>{g.name}</MDBCardHeader>
+
+                                    <MDBCard key={makeid()} border="primary" className="m-3" style={{ minWidth: "14rem", maxWidth: "18rem"}}>
+                                        <MDBCardHeader key={makeid()}>{g.name} <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => this.saveGroupName(g.id, g.name)} /> <MDBIcon icon="trash" onClick={() => this.deleteGroup(g.id, g.name)} style={{cursor: "pointer"}} /></MDBCardHeader>
                                         <MDBCardBody key={makeid()} className="text-primary">
-                                            <MDBCardTitle key={makeid()} tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
+                                            <MDBCardTitle key={makeid()} tag="h5" className={"align-center"}>{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
                                             <MDBCardText key={makeid()}>
-                                                Group members go here
+                                                {
+                                                    g.members.map((h, j) => (
+                                                        <img src={h.profilePicture} alt="Avatar" className="avatar-group" />
+                                                    ))
+                                                }
                                             </MDBCardText>
+                                            <MDBNavLink key={makeid()} to={`/groups/${g.id}`}><MDBBtn>ENTER</MDBBtn></MDBNavLink>
+
                                         </MDBCardBody>
                                     </MDBCard>
-                                </MDBNavLink>
                             ))
                         ) : null}
                     </MDBRow>
@@ -99,6 +150,29 @@ class GroupsPage extends Component{
                         <MDBModalFooter>
                             <MDBBtn color="secondary" onClick={this.toggle(14)}>Close</MDBBtn>
                             <MDBBtn color="primary" onClick={this.handleAddGroup}>Create</MDBBtn>
+                        </MDBModalFooter>
+                    </MDBModal>
+
+                    <MDBModal isOpen={this.state.modal15} toggle={this.toggle(15)} centered>
+                        <MDBModalHeader toggle={this.toggle(15)}>Update Group Name</MDBModalHeader>
+                        <MDBModalBody>
+                            <MDBInput label="Change Group Name" name={"groupName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
+                        </MDBModalBody>
+                        <MDBModalFooter>
+                            <MDBBtn color="secondary" onClick={this.toggle(15)}>Close</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.handleUpdateGroupName}>Update</MDBBtn>
+                        </MDBModalFooter>
+                    </MDBModal>
+
+                    <MDBModal isOpen={this.state.modal16} toggle={this.toggle(16)} centered>
+                        <MDBModalHeader toggle={this.toggle(16)}>Delete Group</MDBModalHeader>
+                        <MDBModalBody>
+                            <h6>Type the full name of the group to completely remove it.</h6>
+                            <MDBInput label="Group Name" name={"delete"} onChange={this.handleInput} defaultValue={this.state.delete}/>
+                        </MDBModalBody>
+                        <MDBModalFooter>
+                            <MDBBtn color="secondary" onClick={this.toggle(16)}>Close</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.handleDeleteGroup} disabled={this.state.groupName !== this.state.delete }>Delete</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
                 </MDBContainer>
@@ -120,5 +194,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    checkEmail, gettingGroups, addGroup, clearCurrentGroup,
+    checkEmail, gettingGroups, addGroup, clearCurrentGroup, updateGroupName,removeGroup
 })(GroupsPage);

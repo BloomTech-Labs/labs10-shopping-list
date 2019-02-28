@@ -5,7 +5,7 @@
 .billing{
     padding-left: 20px;
 }
-button{
+.billing-container button{
     padding: 30px;
     font-size: 20px;
     width: 300px;
