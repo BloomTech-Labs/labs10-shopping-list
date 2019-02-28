@@ -23,6 +23,7 @@ class GroupsPage extends Component{
         itemPrice: 0.00,
         itemQuantity: 1,
         itemMeasure: "",
+        email: "",
         itemPurchased: false,
         total: 0.00,
         listToggle: true,
@@ -345,7 +346,14 @@ class GroupsPage extends Component{
                                                 <MDBListGroup>
                                                     <MDBListGroupItem>
                                                         <form class="text-center border border-light p-5">
-                                                            <input type="email" id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="E-mail" />
+                                                            <MDBInput
+                                                                label="email"
+                                                                type="email"
+                                                                name="email"
+                                                            />
+                                                            <MDBBtn color="primary">
+                                                                Submit
+                                                            </MDBBtn>
                                                         </form>
                                                     </MDBListGroupItem>
                                                 </MDBListGroup>
@@ -360,12 +368,6 @@ class GroupsPage extends Component{
                                     <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
                                 </div> : null
                             }
-                            {
-                                this.state.inviToggle === true ? <div className={"invite-button"}>
-                                    <MDBBtn color="primary">Send Invite</MDBBtn>
-                                </div> : null
-                            }
-
                         </div>
 
                         <div className={"group-profile-right-col"}>
