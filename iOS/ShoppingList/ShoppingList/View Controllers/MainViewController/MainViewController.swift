@@ -29,9 +29,20 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
                     UI { self.updateViews() }
                 }
                 
+                // Testing history controller. Can be removed at any time
+                let historyCont = HistoryController()
+                historyCont.getHistory(completion: { (success) in
+                    
+                    if success {
+                        print(history.count)
+                    } else {
+                        print("No history retrieved from user")
+                    }
+                    
+                })
+                
             }
-            
-            
+
         }
     }
     
