@@ -5,7 +5,8 @@ const itemDb = require('../../helpers/itemModel');
 const userDb = require('../../helpers/userModel');
 
 const checkJwt = require('../../validators/checkJwt');
-// checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
+groupHistoryRouter.use(checkJwt);
+//checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
 
 /****************************************************************************************************/
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/grouphistory ENDPOINT **/
@@ -21,10 +22,12 @@ const checkJwt = require('../../validators/checkJwt');
  * **/
 groupHistoryRouter.post('/', (req, res) => {
     const groupHistory  = req.body;
+    console.log('history', groupHistory)
     if(!groupHistory.groupID || typeof(groupHistory.groupID) !== 'number') return res.status(404).json({message: `groupID does not exist or is invalid.`});
     if(!groupHistory.userID || typeof(groupHistory.userID) !== 'number') return res.status(404).json({message: `userID does not exist or is invalid.`});
     console.log("COR");
     groupHistoryDb.add(groupHistory).then(id => {
+        console.log(id, 'id');
         if(id >= 1){
             return res.status(200).json({message: `Group history added.`, id: id[0]});
         }
@@ -329,5 +332,17 @@ groupHistoryRouter.get('/user/:id', (req, res) => {
             return res.status(500).json(error);
         });
 });
+
+
+groupHistoryRouter.get('/total/group/:id', (req, res) => {
+    let groupID = req.params.id;
+
+    groupHistoryDb.getByGroup(groupID).then(data => {
+        return res.status(200).json({data})
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Internal server error.`})
+    })
+})
 
 module.exports = groupHistoryRouter;

@@ -90,26 +90,21 @@ userRouter.get('/:id', (req, res) => {
 
 /**************************************************/
 
-userRouter.get('/email/:email', checkUser, (req, res) => {
-    const email = req.params.email;
+userRouter.get('/check/email', (req, res) => {
+    const email = req.user.email;
 
-    userDb.getByEmail(email).then(user => {
-        if (user.length >= 1) {
-            return res.status(200).json(user[0]);
+    userDb.getProfileByEmail(email).then(user => {
+        if(user){
+            return res.status(200).json({profile: user[0]})
+        } else {
+            return res.status(404).json({error: `User not found.`})
         }
-
-        return res.status(404).json({message: "The requested user does not exist."})
+    }) .catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Internal server error.`})
     })
-        .catch(err => {
-            const error = {
-                message: `Internal Server Error`,
-                data: {
-                    err: err
-                },
-            }
-            return res.status(500).json(error);
-        })
 })
+        
 
 /**************************************************/
 /**
@@ -123,7 +118,7 @@ userRouter.put('/:id', checkUser, (req, res) => {
     const id = Number(req.params.id);
     const changes = req.body;
     userDb.update(id, changes).then(status => {
-        if(status.length >= 1 || !status){
+        if(status.length >= 1 || !status || status === 1){
             return res.status(200).json({message: `User ${id} successfully updated.`});
 
         } else {
@@ -153,7 +148,7 @@ userRouter.delete('/:id', checkUser, (req, res) => {
     const id = req.params.id;
 
     userDb.remove(id).then(status => {
-        if(status.length >= 1 || !status){
+        if(status.length >= 1 || !status || status === 1){
             return res.status(200).json({message: `User ${id} successfully deleted.`});
         } else {
             return res.status(404).json({error: `The requested user does not exist.`});
@@ -200,6 +195,7 @@ userRouter.get('/check/getid', (req, res) => {
     });
 
     userDb.getIdByEmail(email).then(id => {
+        console.log(id, 'ID res');
         if(!id || id.length === 0){
             // CREATE NEW USER ENTRY IF NO USER FOUND
             let newUser = {
@@ -226,16 +222,46 @@ userRouter.get('/check/getid', (req, res) => {
             });
             
             return userDb.add(newUser).then(id => {
-                console.log('newuserID', id[0]);
-                return res.status(201).json({message: `New user added to database with ID ${id}.`, id: id[0].id});
+                console.log('newuser', id[0])
+                return userDb.getById(id).then(profile => {
+                    console.log('profile', profile);
+                    return res.status(201).json({message: `New user added to database with ID ${id}.`, profile: profile[0]});
+                }).catch(err => {
+                    console.log(err);
+                    return res.status(404).json({error: `Error adding user/no user found.`})
+                })
             })
             .catch(err => {
                 console.log(err);
                 return res.status(500).json({error: `Error adding new user DB entry.`})
             })
         } else {
-            console.log('user found', id[0]);
-            return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
+            console.log('user found', id[0].id);
+          
+            userDb.getById(id[0].id).then(profile => {
+                return res.status(200).json({profile: profile[0]})
+            }).catch(err => { 
+                console.log(err);
+                return res.status(404).json({error: `Nothing there.`})
+            })
+
+            
+            let mailOptions = {
+                from: `${process.env.EMAIL_ADDRESS}`,
+                to: `${email}`,
+                subject: 'Signed into ShopTrak',
+                text: 'You have signed into ShopTrak.'
+            };
+            // send the email now
+            // transporter.sendMail(mailOptions, function(error, info){
+            //     if(error){
+            //         console.log(error);
+            //     }else{
+            //         console.log('Email sent: '+info.response);
+            //     }
+            // });
+            // console.log('user found', id[0]);
+            // return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
         }
     })
     .catch(err => {

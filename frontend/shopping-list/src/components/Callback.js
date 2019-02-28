@@ -1,14 +1,20 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
 import auth0Client from './Auth';
 import {Spinner} from 'reactstrap';
-// import {connect} from 'react-redux';
+import {checkEmail} from '../store/actions';
 
 class Callback extends Component {
   
   async componentDidMount() {
     await auth0Client.handleAuthentication();
-    this.props.history.replace('/profile');
+    this.props.history.replace('/groups'); //reroute into groups
+  }
+
+  componentWillUnmount(){
+    // see if we need to add new user to database
+    this.props.checkEmail();
   }
 
   /**
@@ -25,5 +31,15 @@ class Callback extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  state = state.rootReducer; // pull values from state root reducer
+  return {
+      //state items
+      currentUser: state.currentUser
+  }
+}
 
-export default withRouter(Callback);
+export default withRouter(connect(mapStateToProps, {
+  // actions
+  checkEmail,
+})(Callback));

@@ -26,25 +26,20 @@ const checkUser = require('../../validators/checkUser');
  * ***********************************************/
 
 itemRouter.use(checkJwt);
-// itemRouter.use(checkUser);
 
 /** ADD ITEM
  * @TODO Add middleware to ensure user is logged in
  * **/
 itemRouter.post('/', (req, res) => {
     const item = req.body;
+    console.log('item', item);
 
     itemDb.add(item).then(id => {
+        console.log('new item', id[0]);
         return res.status(200).json({message: `Item successfully added`, id: id[0]});
-    })
-        .catch(err => {
-            const error = {
-                message: `Internal Server Error - Adding Item`,
-                data: {
-                    err: err
-                },
-            }
-            return res.status(500).json(error);
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json(error);
         })
 })
 
@@ -138,10 +133,13 @@ itemRouter.get('/', (req, res) => {
 
 /**************************************************/
 itemRouter.put('/:id', (req, res) => {
-    const id = req.params.id;
-    const changes = req.body;
+    let id = req.params.id;
+    let changes = req.body;
+    // changes.price = parseFloat(changes.price);
+    console.log('changes', changes);
     itemDb.update(id, changes).then(status => {
-        if (status.length >= 1) {
+        console.log('status', status)
+        if (status.length >= 1 || status === 1) {
             return res.status(200).json({message: "Item updated successfully", id: status[0]})
         }
 
@@ -170,7 +168,7 @@ itemRouter.delete('/:id', (req, res) => {
     const id = req.params.id;
 
     itemDb.remove(id).then(status => {
-        if (status.length >= 1) {
+        if (status.length >= 1 || status === 1) {
             return res.status(200).json({message: "Item removed successfully", id: status[0]})
         }
 

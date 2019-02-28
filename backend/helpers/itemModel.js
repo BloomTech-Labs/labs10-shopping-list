@@ -46,7 +46,7 @@ function add(item) {
 
 function update(id, changes) {
   return db("items")
-      .returning("id")
+    .returning("id")
     .where({ id })
     .update(changes);
 }

@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups, addGroup, clearCurrentGroup,updateGroupName,removeGroup } from '../store/actions/rootActions';
+import {checkEmail, createGroup, getCurrentUser, getUserGroups, addGroup, clearCurrentGroup, gettingGroups, updateGroupName, removeGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
-import Navigation from "./Navigation";
-import {
-    MDBCard,
-    MDBCardBody,
-    MDBCardTitle,
-    MDBCardText,
-    MDBBtn,
-    MDBContainer,
-    MDBCardHeader,
-    MDBModal,
-    MDBModalBody,
-    MDBModalHeader,
-    MDBModalFooter,
-    MDBRow,
-    MDBInput,
-    MDBNavLink,
-    MDBIcon,
-    MDBBadge,
-} from "mdbreact";
+import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer, MDBCol,
+    MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
+import GroupCard from './GroupCard';
+
+// import {checkEmail, gettingGroups, addGroup, clearCurrentGroup,updateGroupName,removeGroup } from '../store/actions/rootActions';
+// import {connect} from 'react-redux';
+// import Navigation from "./Navigation";
+// import {
+//     MDBCard,
+//     MDBCardBody,
+//     MDBCardTitle,
+//     MDBCardText,
+//     MDBBtn,
+//     MDBContainer,
+//     MDBCardHeader,
+//     MDBModal,
+//     MDBModalBody,
+//     MDBModalHeader,
+//     MDBModalFooter,
+//     MDBRow,
+//     MDBInput,
+//     MDBNavLink,
+//     MDBIcon,
+//     MDBBadge,
+// } from "mdbreact";
+
 
 function makeid() {
     let text = "";
@@ -41,22 +48,14 @@ class GroupsPage extends Component{
         groupId: null,
     }
 
-    componentDidMount(){
-        console.log('cdm');
-        let email = localStorage.getItem('email');
+    componentWillMount(){
+        this.props.getCurrentUser();
+      }
 
-        if(email && !this.props.userId){
-            // if a user is logged in and no userID is found, retrieve their user ID from the database via their email and store in local storage
-            this.props.checkEmail(email, this.props.addUserToState);
-            // the second parameter is a callback that will execute once the email check is complete
-            // in this case it is populating state with the complete user profile: email, userId, profilePicture, and name
+    componentWillReceiveProps = newProps => {
+        if(newProps.currentUser && !this.props.userGroups){
+            this.props.getUserGroups(newProps.currentUser.id);
         }
-        console.log("GROUPS => ", this.props.groups);
-        this.props.gettingGroups();
-
-        this.setState({ groups: this.props.groups})
-
-        this.props.clearCurrentGroup();
     }
 
     toggle = nr => () => {
@@ -81,7 +80,11 @@ class GroupsPage extends Component{
     }
 
     handleAddGroup = () => {
-        this.props.addGroup(this.state.groupName);
+
+        this.props.createGroup(this.state.groupName, this.props.currentUser.id);
+        this.toggle(14);
+        this.props.getUserGroups(this.props.currentUser.id);
+//         this.props.addGroup(this.state.groupName);
         this.setState({modal14: false})
     }
 
@@ -108,7 +111,7 @@ class GroupsPage extends Component{
             <div className = 'groups-container'>
                 <MDBContainer>
                     <MDBRow center>
-                        <MDBCard className="text-center" style={{ width: "20rem", marginTop: "1rem" }}>
+                        <MDBCard className="text-center" style={{ width: "20rem", marginTop: "1.5rem", height: '15rem' }}>
                             <MDBCardBody>
                                 <MDBCardTitle>Create New Group</MDBCardTitle>
                                 <MDBCardText>
@@ -117,28 +120,39 @@ class GroupsPage extends Component{
                                 <MDBBtn color="primary" onClick={this.toggle(14)}>Create</MDBBtn>
                             </MDBCardBody>
                         </MDBCard>
-                        {this.props.groups !== null ? (
+
+                        {this.props.userGroups !== null ? (
+                            this.props.userGroups.map(group => 
+                                (
+                                    <GroupCard group = {group} key = {group.id}/>
+                                )
+                            )
+                          ) : null}
+                      
+                        </MDBRow>
+                </MDBContainer>
+ 
+                         {/* {this.props.groups !== null ? ( 
+
                             this.props.groups.map((g, i) => (
 
-                                    <MDBCard key={makeid()} border="primary" className="m-3" style={{ minWidth: "14rem", maxWidth: "18rem"}}>
-                                        <MDBCardHeader key={makeid()}>{g.name} <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => this.saveGroupName(g.id, g.name)} /> <MDBIcon icon="trash" onClick={() => this.deleteGroup(g.id, g.name)} style={{cursor: "pointer"}} /></MDBCardHeader>
-                                        <MDBCardBody key={makeid()} className="text-primary">
-                                            <MDBCardTitle key={makeid()} tag="h5" className={"align-center"}>{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
-                                            <MDBCardText key={makeid()}>
-                                                {
-                                                    g.members.map((h, j) => (
-                                                        <img src={h.profilePicture} alt="Avatar" className="avatar-group" />
-                                                    ))
-                                                }
-                                            </MDBCardText>
-                                            <MDBNavLink key={makeid()} to={`/groups/${g.id}`}><MDBBtn>ENTER</MDBBtn></MDBNavLink>
+                                     <MDBCard key={makeid()} border="primary" className="m-3" style={{ minWidth: "14rem", maxWidth: "18rem"}}>
+                                         <MDBCardHeader key={makeid()}>{g.name} <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => this.saveGroupName(g.id, g.name)} /> <MDBIcon icon="trash" onClick={() => this.deleteGroup(g.id, g.name)} style={{cursor: "pointer"}} /></MDBCardHeader>
+                                         <MDBCardBody key={makeid()} className="text-primary">
+                                             <MDBCardTitle key={makeid()} tag="h5" className={"align-center"}>{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
+                                             <MDBCardText key={makeid()}>
+                                                 {
+                                                     g.members.map((h, j) => (
+                                                         <img src={h.profilePicture} alt="Avatar" className="avatar-group" />
+                                                     ))
+                                                 }
+                                             </MDBCardText>
+                                             <MDBNavLink key={makeid()} to={`/groups/${g.id}`}><MDBBtn>ENTER</MDBBtn></MDBNavLink>
 
-                                        </MDBCardBody>
-                                    </MDBCard>
-                            ))
-                        ) : null}
-                    </MDBRow>
-                </MDBContainer>
+                                         </MDBCardBody>
+                                     </MDBCard>
+                             )) */}
+                         
 
 
                 <MDBContainer>
@@ -185,6 +199,9 @@ const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
         //state items
+        currentUser: state.currentUser,
+        userGroups: state.userGroups,
+
         userId: state.userId,
         name: state.name,
         email: state.email,
@@ -194,5 +211,13 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    checkEmail, gettingGroups, addGroup, clearCurrentGroup, updateGroupName,removeGroup
+    checkEmail, 
+    getUserGroups, 
+    addGroup, 
+    clearCurrentGroup,
+    createGroup,
+    getCurrentUser,
+    gettingGroups,
+    updateGroupName,
+    removeGroup
 })(GroupsPage);

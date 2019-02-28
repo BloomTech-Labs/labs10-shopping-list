@@ -62,6 +62,7 @@ class Auth {
         localStorage.setItem('email', authResult.idTokenPayload.email);
         localStorage.setItem('name', authResult.idTokenPayload.name);
         localStorage.setItem('img_url', authResult.idTokenPayload.picture);
+        localStorage.setItem('isLoggedIn', true);
     
         resolve();
       });
@@ -80,6 +81,7 @@ class Auth {
     localStorage.removeItem('jwt');
     localStorage.removeItem('img_url');
     localStorage.removeItem('userId');
+    localStorage.removeItem('isLoggedIn');
   }
 }
 

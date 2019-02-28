@@ -9,8 +9,17 @@ import GroupsPage from "./components/GroupsPage";
 import GroupsProfile from "./components/GroupsProfile";
 import Navigation from './components/Navigation';
 import BillingPage from './components/BillingPage';
+import {getCurrentUser} from './store/actions/rootActions';
 
 class App extends Component {
+
+  componentWillMount(){
+    if(localStorage.getItem('email') && !this.props.currentUser){
+      this.props.getCurrentUser();
+    }
+  }
+
+
   render() {
     return (
       <div className = 'App'>
@@ -19,9 +28,7 @@ class App extends Component {
         <Route exact path='/' component={Home} />
         <Route 
           path = '/profile' 
-          component={UserProfile} 
-          profilePicture={localStorage.getItem('img_url')}
-        />
+          component={UserProfile} />
         <Route path = '/callback' component = {Callback} />
         <Route exact path='/groups' component={GroupsPage} />
         <Route path='/groups/:id' render={props => <GroupsProfile {...props} />} />
@@ -31,14 +38,15 @@ class App extends Component {
     );
   }
 }
-
 const mapStateToProps = state => {
-  return{
-    //state
+  state = state.rootReducer; // pull values from state root reducer
+  return {
+      //state items
+      currentUser: state.currentUser
   }
 }
 
-
 export default withRouter(connect(mapStateToProps, {
-  //actions
+  // actions
+  getCurrentUser
 })(App));

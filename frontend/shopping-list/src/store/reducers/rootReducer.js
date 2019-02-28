@@ -1,102 +1,187 @@
 import {
-  TEST_START,
-  TEST_SUCCESS,
-  TEST_FAILURE,
-  CHECKING_EMAIL,
-  EMAIL_CHECKED,
-  ADDING_GROUPS_TO_STATE,
-  ADDING_GROUPS_TO_STATE_FAILED,
-  ADDING_USER_TO_STATE,
-  GETTING_ITEMS,
-  GETTING_ITEMS_SUCCESS,
-  GETTING_ITEMS_FAILED,
-  FETCHING_SINGLE_GROUP,
-  SINGLE_GROUP_FETCHED,
-  CLEARING_CURRENT_GROUP,
-  UPDATE_ITEM_PURCHASED_START
+  PURCHASING_ITEM,
+  ITEM_PURCHASED,
+  USER_GROUPS_FETCHED,
+  USER_PROFILE_FETCHED,
+
+
+  GET_CURRENT_USER,
+  SAVE_CURRENT_USER,
+
+  GET_USER_GROUPS,
+  SAVE_USER_GROUPS,
+
+  GET_GROUP_ITEMS,
+  SAVE_GROUP_ITEMS,
+
+  CREATE_ITEM,
+  ITEM_CREATED,
+
+  UPDATE_ITEM,
+  ITEM_UPDATED,
+
+  DELETE_ITEM,
+  ITEM_DELETED,
+
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+
+  BEGIN_CHECK_OUT,
+  CHECK_OUT_COMPLETE,
+
+  GET_GROUP_HISTORY,
+  SAVE_GROUP_HISTORY,
+
+  GET_GROUP_USERS,
+  SAVE_GROUP_USERS,
+  SAVE_USER_PROFILE,
+  GET_USER_PROFILE
+
+
 } from "../actions";
 
 const initialState = {
-  userId: null,
-  name: null,
-  email: null,
-  profilePicture: null,
+  currentUser: null,
+  userGroups: null,
+  groupItems: null,
+  needsNewItems: false,
+  needsNewHistory: false,
+  userCart: [],
+  groupHistory: [],
+  groupUsers: [],
+  groupUserProfiles: [],
+
+
+
   currentGroup: null,
   groups: null,
   items: null,
+  emailChecked: false,
+  
+  groupTotal: null,
+  
+  userTotal: null,
+  markedItems: null,
+  needsRefresh: false,
   itemPurchasedText: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TEST_START:
+    case GET_CURRENT_USER:
       return state;
-    case TEST_SUCCESS:
-      return state;
-    case TEST_FAILURE:
-      return state;
-
-    case CHECKING_EMAIL:
-      return state;
-
-    case EMAIL_CHECKED:
-      // console.log('emc payload', action.payload.id);
-      localStorage.setItem('userId', action.payload.id);
+    case SAVE_CURRENT_USER:
       return {
         ...state,
-        userId: action.payload.id
+        currentUser: action.payload
       }
 
-    case ADDING_USER_TO_STATE:
+    case GET_USER_GROUPS:
+      return state;
+    case SAVE_USER_GROUPS:
       return {
         ...state,
-        name: action.payload.name,
-        email: action.payload.email,
-        profilePicture: action.payload.profilePicture,
+        userGroups: action.payload
       }
-    case ADDING_GROUPS_TO_STATE:
+
+    case GET_GROUP_ITEMS:
+      return state;
+    case SAVE_GROUP_ITEMS:
       return {
         ...state,
-        groups: action.payload
+        groupItems: action.payload.data,
+        needsNewItems: false,
       }
-    case ADDING_GROUPS_TO_STATE_FAILED:
+
+
+    case CREATE_ITEM:
+      return state;
+    case ITEM_CREATED:
+      return {
+        ...state,
+        needsNewItems: true
+      }
+
+    case UPDATE_ITEM:
+      return state;
+    case ITEM_UPDATED:
+      return {
+        ...state,
+        needsNewItems: true
+      }
+
+    case DELETE_ITEM:
+      return state;
+    case ITEM_DELETED:
+      return {
+        ...state,
+        needsNewItems: true
+      }
+
+    case ADD_TO_CART:
+      let newCart = state.userCart;
+      newCart.push(action.payload);
+      return {
+        ...state,
+        userCart: newCart,
+        needsNewItems: true,
+      }
+    case REMOVE_FROM_CART:
+      let filterCart = state.userCart;
+      filterCart = filterCart.filter(item => item.id !== action.payload.id);
+      return {
+        ...state,
+        userCart: filterCart,
+        needsNewItems: true,
+      }
+
+    case BEGIN_CHECK_OUT:
+      return state;
+    case CHECK_OUT_COMPLETE:
+      return {
+        ...state,
+        needsNewItems: true,
+        needsNewHistory: true,
+      }
+
+    case GET_GROUP_HISTORY:
+      return state;
+    case SAVE_GROUP_HISTORY:
+      return {
+        ...state,
+        groupHistory: action.payload.data,
+        needsNewHistory: false
+      }
+
+    case GET_GROUP_USERS:
       return state;
 
-    case GETTING_ITEMS:
+
+    case SAVE_GROUP_USERS:
+      return{
+        ...state,
+        groupUsers: action.payload,
+      }
+
+    case GET_USER_PROFILE:
       return state;
 
-    case GETTING_ITEMS_SUCCESS:
-      return { ...state, items: action.payload}
-
-    case GETTING_ITEMS_FAILED:
-      return { ...state, items: null };
-
-      // Purchasing Items
-    case UPDATE_ITEM_PURCHASED_START:
-      let itms = state.items.map(itm => {
-        if (itm.id === action.payload) {
-          itm.purchased = !itm.purchased
+    case SAVE_USER_PROFILE:
+      let profileArray = [];
+      if(state.groupUserProfiles.length > 0){
+        profileArray = state.groupUserProfiles;
+        for(let i = 0; i < profileArray.length; i++){
+          if(profileArray[i].id !== action.payload.id){
+            profileArray.push(action.payload);
         }
-
-        return itm;
-      })
-      return { ...state, items: itms}
-
-    case FETCHING_SINGLE_GROUP:
-      return {
-        ...state,
       }
-
-    case SINGLE_GROUP_FETCHED:
+    } else if (state.groupUserProfiles.length === 0){
+      profileArray.push(action.payload);
+    }
+      
       return {
         ...state,
-        currentGroup: action.payload,
-      }
-
-    case CLEARING_CURRENT_GROUP:
-      return {
-        ...state,
-        currentGroup: null,
+        groupUserProfiles: profileArray,
       }
 
     default:
