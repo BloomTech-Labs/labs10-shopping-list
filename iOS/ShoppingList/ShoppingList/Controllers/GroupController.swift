@@ -59,6 +59,7 @@ class GroupController {
     
     
     
+
     private func groupToJSON(group: Group) -> [String: Any]? {
         
         guard let jsonData = try? JSONEncoder().encode(group) else {
@@ -73,6 +74,7 @@ class GroupController {
         }
     }
     
+  
     func newGroup(withName name: String, completion: @escaping (Group?) -> Void) {
         
         guard let accessToken = SessionManager.tokens?.idToken else {return}
@@ -126,7 +128,6 @@ class GroupController {
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
-        
         var myGroup = group
         
         if let name = name {
@@ -169,6 +170,7 @@ class GroupController {
     
     // Gets groups from server and updates the singleton. Optional success completion
     func getGroups(forUserID userID: Int, completion: @escaping (Bool) -> Void = { _ in }) {
+
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("user").appendingPathComponent(String(userID))

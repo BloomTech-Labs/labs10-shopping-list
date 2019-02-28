@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol GroupsPopoverViewDelegate: class {
-    func selectedGroupChanged()
+protocol PopoverViewDelegate: class {
+    func updatesNeeded()
 }
 
 class GroupsPopoverView: UIView, NibInstantiatable, UITableViewDelegate, UITableViewDataSource {
     
     static let nibName: NibName = "GroupsPopoverView"
-    weak var delegate: GroupsPopoverViewDelegate?
+    weak var delegate: PopoverViewDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -46,7 +46,7 @@ class GroupsPopoverView: UIView, NibInstantiatable, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         selectedGroup = allGroups[indexPath.row]
-        delegate?.selectedGroupChanged()
+        delegate?.updatesNeeded()
         popover.dismiss()
     }
     

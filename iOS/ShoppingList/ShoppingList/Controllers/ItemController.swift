@@ -20,7 +20,7 @@ class ItemController {
     private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
     
     
-    // MARK:- Load items
+    // MARK: - Load items
     
     // Loads items for the selected group
     func loadItems(completion: @escaping (Bool) -> Void = {_ in}) {

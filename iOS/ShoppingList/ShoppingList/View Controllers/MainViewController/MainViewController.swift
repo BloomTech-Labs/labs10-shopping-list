@@ -9,7 +9,7 @@
 import UIKit
 import Auth0
 
-class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopoverViewDelegate {
+class MainViewController: UIViewController, StoryboardInstantiatable, PopoverViewDelegate {
     
     static let storyboardName: StoryboardName = "MainViewController"
     @IBOutlet weak var groupName: UIButton!
@@ -52,7 +52,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
         }
     }
     
-    func selectedGroupChanged() {
+    func updatesNeeded() {
         updateViews()
     }
     
