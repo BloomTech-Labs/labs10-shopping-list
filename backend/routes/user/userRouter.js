@@ -85,6 +85,25 @@ userRouter.get('/:id', (req, res) => {
 
 /**************************************************/
 
+
+userRouter.get('/email/:email', (req, res) => {
+    const email = req.params.email;
+
+    userDb.getIdByEmail(email).then(user => {
+        if(user){
+            return res.status(200).json(user[0]);
+        } else {
+            return res.status(404).json({error: `User not found.`})
+        }
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Internal server error.`})
+    })
+})
+
+
+/**************************************************/
+
 // GET USER BY EMAIL
 /** @TODO This should be set to sysadmin privileges for user privacy **/
 
