@@ -329,7 +329,7 @@ export const invite = (groupID, email) => dispatch => {
     }
     const body = {
       email: `${email}`,
-      link: `${frontendURL}/group/invite/${response.data.id}:${groupID}`
+      link: `${frontendURL}/groups/invite/${response.data.id}:${groupID}`
     }
     axios.post(`${endpoint}`, body, options).then( response => {
       console.log(response.data);
