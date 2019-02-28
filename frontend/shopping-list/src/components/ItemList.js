@@ -22,6 +22,8 @@ class ItemList extends React.Component{
             quantity: 0,
             measurement: '(none)',
             groupID: this.props.match.params.id,
+            oldItem: '',
+            oldQuantity: '',
         }
     }
 
@@ -60,6 +62,14 @@ class ItemList extends React.Component{
                 oldQuantity: oldQuantity
             })
         }
+        // } else if(event.target.name === 'item'){
+        //     console.log('inside');
+        //     let oldItem = this.state.item;
+        //     this.setState({
+        //         [event.target.name]: '',
+        //         oldItem: oldItem
+        //     })
+        // }
     }
 
     handleInput = event => {
@@ -73,7 +83,6 @@ class ItemList extends React.Component{
                 }
             }
         } else {
-
             this.setState({
                 [event.target.name]: event.target.value,
             });
@@ -81,6 +90,7 @@ class ItemList extends React.Component{
     }
 
     handleClickOutside = event => {
+        console.log('outside', this.state.oldItem);
         if(!this.state.quantity){
             if(this.state.oldQuantity){
                 this.setState({
@@ -90,9 +100,17 @@ class ItemList extends React.Component{
                 this.setState({
                     quantity: 0,
                 })
-            }
+            }   
+        } 
+        
+        // if(!this.state.item){
+        //     console.log('old', this.state.oldItem);
+        //         this.setState({
+        //             item: this.state.oldItem
+        //         })
+        //     console.log('empty');
             
-        }
+        // }
         document.removeEventListener('mousedown', this.handleClickOutside);
     }    
 
@@ -134,7 +152,7 @@ class ItemList extends React.Component{
                 return <Item item = {item} key = {item.id}/>
             })
         } else {
-            return <h2>No Items on the List</h2>
+            itemList = <h2>No Items on the List</h2>
         }
 
         return(
@@ -166,7 +184,7 @@ class ItemList extends React.Component{
             </div>
 
             <form onSubmit = {this.handleSubmit}>
-                <input type = 'text' name = 'item' placeholder = 'Add an item' value = {this.state.item} onChange = {this.handleInput}/>
+                <input type = 'text' name = 'item' placeholder = 'Add an item' value = {this.state.item} onClick = {this.clearInput} onChange = {this.handleInput}/>
                 
                 <div className = 'item-quantity'>
                 <button onClick = {this.decrease}>-</button>

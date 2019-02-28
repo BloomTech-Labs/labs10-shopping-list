@@ -121,7 +121,7 @@ userRouter.put('/:id', checkUser, (req, res) => {
     const id = Number(req.params.id);
     const changes = req.body;
     userDb.update(id, changes).then(status => {
-        if(status.length >= 1 || !status){
+        if(status.length >= 1 || !status || status === 1){
             return res.status(200).json({message: `User ${id} successfully updated.`});
 
         } else {
@@ -151,7 +151,7 @@ userRouter.delete('/:id', checkUser, (req, res) => {
     const id = req.params.id;
 
     userDb.remove(id).then(status => {
-        if(status.length >= 1 || !status){
+        if(status.length >= 1 || !status || status === 1){
             return res.status(200).json({message: `User ${id} successfully deleted.`});
         } else {
             return res.status(404).json({error: `The requested user does not exist.`});

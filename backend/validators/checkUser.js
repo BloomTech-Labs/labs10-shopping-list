@@ -103,7 +103,7 @@ async function routeCheck(req, res, next, userId){
      * and CREATE requests should be open to anyone that logs in through Auth0)
      */
 
-     if(req.originalUrl === `/api/user/${req.params.id}`){
+     if(req.originalUrl === `/api/user/${req.params.id}` && (req.method === 'PUT' || 'DELETE')){
          let paramId = Number(req.params.id);
 
          userDb.getById(paramId).then(user => {

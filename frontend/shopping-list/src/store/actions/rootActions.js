@@ -29,7 +29,8 @@ export const SUBMIT_PAID_ITEMS_FAILED = 'SUBMIT_PAID_ITEMS_FAILED';
 export const USER_ADDED_TO_STATE = 'USER_ADDED_TO_STATE';
 export const PURCHASING_ITEM = 'PURCHASING_ITEM';
 export const ITEM_PURCHASED = 'ITEM_PURCHASED';
-
+export const FETCHING_GROUP_USERS = 'FETCHING_GROUP_USERS';
+export const USER_GROUPS_FETCHED = 'USER_GROUPS_FETCHED';
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -319,5 +320,25 @@ export const purchaseItem = (item, itemId) => {
     console.log(res.data);
     dispatch({type: ITEM_PURCHASED})
   })
+  }
+}
+
+export const getGroupUsers = (groupId) => {
+    let token = localStorage.getItem('jwt');
+    let options = {
+      headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const fetchGroupUsers = axios.get(`${backendURL}/api/groupmember/group/${groupId}`, options);
+
+  return dispatch => {
+    dispatch({type: FETCHING_GROUP_USERS});
+
+    fetchGroupUsers.then(res => {
+      dispatch({type: USER_GROUPS_FETCHED, payload: res.data})
+      console.log('res', res.data);
+    })
   }
 }

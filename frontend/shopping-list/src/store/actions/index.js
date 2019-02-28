@@ -36,5 +36,6 @@ export {
   purchaseItem,
   PURCHASING_ITEM,
   ITEM_PURCHASED,
-
+  FETCHING_GROUP_USERS,
+  USER_GROUPS_FETCHED,
 } from "./rootActions";

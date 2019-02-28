@@ -4,11 +4,11 @@
 }
 
 .item-list {
-    max-width: 50%;
+    width: 100%;
 }
 
 .item-form{
-    width: 50%;
+    width: 100%;
 }
 
 .item-form-top{

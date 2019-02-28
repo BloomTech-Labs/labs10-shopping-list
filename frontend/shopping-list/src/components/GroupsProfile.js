@@ -14,6 +14,7 @@ import {
     MDBTooltip,
 } from "mdbreact";
 import ItemList from './ItemList';
+import GroupUserList from './GroupUserList';
 
 class GroupsPage extends Component{
     state = {
@@ -158,16 +159,18 @@ class GroupsPage extends Component{
                 <div className={"group-profile-container"}>
                     <h1>{this.state.group !== null ? this.state.group.name : ""}</h1>
                 
-                    
-                 {/* <h1>{this.props.currentGroup !== null ? this.props.currentGroup.name : ""}</h1> // conditional if using single query */}                    <div className={"group-profile-header"}>
+                    <div className = 'item-group-container'>
+                 {/* <h1>{this.props.currentGroup !== null ? this.props.currentGroup.name : ""}</h1> // conditional if using single query                    
+                 <div className={"group-profile-header"}>
                         <MDBBtn color="primary" >List</MDBBtn>
                         <MDBBtn color="primary" >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" >Total</MDBBtn>
-                    </div>
+                    </div> */}
                     
                     <ItemList />
-                    
+                    <GroupUserList />
+                    </div>
                     {/* <div className={"group-profile-columns"}>
                         <div className={"group-profile-list"}>
                             <div className={"group-profile-list-container"}>

@@ -17,6 +17,7 @@ import {
   USER_ADDED_TO_STATE,
   PURCHASING_ITEM,
   ITEM_PURCHASED,
+  USER_GROUPS_FETCHED
 } from "../actions";
 
 const initialState = {
@@ -29,6 +30,7 @@ const initialState = {
   items: null,
   currentUser: null,
   emailChecked: false,
+  userGroups: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -106,6 +108,12 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         currentGroup: null,
+      }
+
+    case USER_GROUPS_FETCHED:
+      return{
+        ...state,
+        userGroups: action.payload,
       }
 
     default:

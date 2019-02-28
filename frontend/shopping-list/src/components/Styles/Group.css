@@ -2,6 +2,12 @@
     margin-top: 60px;
 }
 
+.item-group-container{
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+}
+
 .group-profile-header {
     display: flex;
     justify-content: flex-end;
