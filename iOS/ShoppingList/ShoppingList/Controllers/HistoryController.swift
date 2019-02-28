@@ -11,10 +11,11 @@ import Alamofire
 import SwiftKeychainWrapper
 import Auth0
 
- private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
+private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
 
-func getHistory(forGroupID groupID: Int, completion: @escaping (Bool) -> Void = { _ in }) {
-    guard let accessToken = SessionManager.tokens?.idToken else {return}
+func getHistory(completion: @escaping (Bool) -> Void = { _ in }) {
+    guard let accessToken = SessionManager.tokens?.idToken else {completion(false); return}
+    guard let groupID = selectedGroup?.groupID else { completion(false); return }
     
     let url = baseURL.appendingPathComponent("grouphistory").appendingPathComponent("group").appendingPathComponent(String(groupID))
     
@@ -33,9 +34,17 @@ func getHistory(forGroupID groupID: Int, completion: @escaping (Bool) -> Void = 
             do {
                 
                 let decoder = JSONDecoder()
-                let histories = try decoder.decode([HistoryList].self, from: value)
+                let histories = try decoder.decode(HistoryList.self, from: value)
                 
-               // history = histories.data
+                history = []
+                
+                for userList in histories.data {
+                    for item in userList {
+                        let historyItem = Item(name: item.name, purchased: true, price: item.total)
+                        history.append(historyItem)
+                    }
+                }
+                
                 
                 completion(true)
                 
