@@ -304,9 +304,27 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
  * Send email with invitation link to email address inputted by user
  * @param groupID - ID of group that the email recipient is getting invited to
  * @param email - email address that was inputted by user
+ * @param userID - userID of the recipient (not the user sending the invite)
  */
 export const invite = (groupID, email) => dispatch => {
   dispatch({type: SENDING_INVITE});
+  const endpoint = `${backendURL}/api/group/invite/email`;
+  const token = localStorage.getItem('jwt');
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  axios.get(`${backendURL}/api/user/email/${email}`, options).then( response => {
+    console.log(response.data);
+  }).catch(err => {
+    console.log("Error occurred when trying to get recipient's userID =>", err);
+    dispatch({type: ERROR});
+  })
+  const body = {
+    email: `${email}`,
+    link: `${backendURL}/group/invite/:${groupID}`
+  }
 }
 
 export const getGroupMembers = (groupID) => dispatch => {

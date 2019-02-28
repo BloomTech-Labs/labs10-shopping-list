@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
+import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems, invite } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import "./Styles/Group.css";
 import "./Styles/Scrollbar.css";
@@ -350,14 +350,17 @@ class GroupsPage extends Component{
                                             this.state.inviToggle === true ? <div className={"invitation"}>
                                                 <MDBListGroup>
                                                     <MDBListGroupItem>
-                                                        <form class="text-center border border-light p-5">
+                                                        <form className="text-center border border-light p-5">
                                                             <MDBInput
                                                                 label="email"
                                                                 type="email"
                                                                 name="email"
                                                                 onChange={this.handleInput}
                                                             />
-                                                            <MDBBtn color="primary">
+                                                            <MDBBtn
+                                                                color="primary"
+                                                                onClick={e => this.handleInvitation(e)}
+                                                            >
                                                                 Submit
                                                             </MDBBtn>
                                                         </form>
@@ -472,5 +475,5 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
 //     checkEmail, gettingGroups, addGroup, getItems, getSingleGroup
-    gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems
+    gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems, invite
 })(GroupsPage);

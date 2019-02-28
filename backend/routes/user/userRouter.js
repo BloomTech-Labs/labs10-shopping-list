@@ -90,10 +90,10 @@ userRouter.get('/:id', (req, res) => {
 
 /**************************************************/
 
-userRouter.get('/email/:email', checkUser, (req, res) => {
+userRouter.get('/email/:email', (req, res) => {
     const email = req.params.email;
 
-    userDb.getByEmail(email).then(user => {
+    userDb.getIdByEmail(email).then(user => {
         if (user.length >= 1) {
             return res.status(200).json(user[0]);
         }
