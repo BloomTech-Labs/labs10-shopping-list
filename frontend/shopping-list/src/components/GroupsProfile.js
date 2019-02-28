@@ -34,6 +34,7 @@ class GroupsPage extends Component{
         total: 0.00,
         listToggle: true,
         histToggle: false,
+        inviToggle: false,
         groupHistory: null,
     }
 
@@ -136,11 +137,15 @@ class GroupsPage extends Component{
     // Change between List and History views
     toggleListClass = () => {
 
-        this.setState({ histToggle: false, listToggle: true})
+        this.setState({ histToggle: false, listToggle: true, inviToggle: false})
     }
 
     toggleHistClass = () => {
-        this.setState({ histToggle: true, listToggle: false})
+        this.setState({ histToggle: true, listToggle: false, inviToggle: false})
+    }
+
+    toggleInviClass = () => {
+        this.setState({ inviToggle: true, histToggle: false, listToggle: false})
     }
 
     /*
@@ -189,7 +194,6 @@ class GroupsPage extends Component{
 
         return total;
     }
-
 
     render(){
 //         console.log('current group', this.props.currentGroup);
@@ -266,7 +270,6 @@ class GroupsPage extends Component{
                                                 }
                                             </div>
                                         }
-
 
                                     </MDBContainer>
                                 </MDBContainer>

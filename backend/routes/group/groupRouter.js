@@ -4,6 +4,8 @@ const groupDb = require('../../helpers/groupModel');
 const groupMembersDb = require('../../helpers/groupMembersModel');
 const groupMemDb = require('../../helpers/groupMembersModel');
 
+const nodemailer = require('nodemailer');
+
 const checkJwt = require('../../validators/checkJwt');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
 const checkUser = require('../../validators/checkUser');
@@ -285,5 +287,50 @@ groupRouter.get('/invite/:userId::groupId', (req, res) => {
         return res.status(500).json(error);
     });
 })
+
+/**************************************************/
+
+/** POST/email user the link
+ * **/
+
+/**************************************************/
+groupRouter.get('/invite/email', (req, res) => {
+    let email = req.body.email;
+    let link = req.body.link;
+
+    // setting up sender e-mail
+    let transporter = nodemailer.createTransport({
+        service: `${process.env.EMAIL_SERVICE}`,
+        auth:{
+            user: `${process.env.EMAIL_ADDRESS}`,
+            pass: `${process.env.EMAIL_PASSWORD}`
+        }
+    });
+
+    // create the email
+    let mailOptions = {
+        from: `${process.env.EMAIL_ADDRESS}`,
+        to: `${email}`,
+        subject: `You are invited to join a group on ShopTrak`,
+        text: `${link}`
+    };
+
+    //send the email
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            console.log(error);
+        }else{
+            console.log('Email send: '+info.response);
+        }
+    });
+
+    return res.status(200).json({
+        message: "invitation sent",
+        email: email,
+        link: link
+    });
+})
+
+/**************************************************/
 
 module.exports = groupRouter;
