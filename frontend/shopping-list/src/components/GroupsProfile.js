@@ -19,7 +19,7 @@ import GroupUserList from './GroupUserList';
 import UserCart from './UserCart';
 import axios from "axios";
 
-class GroupsPage extends Component{
+class GroupsProfile extends Component{
     state = {
         modal14: false,
         group: null,
@@ -56,11 +56,19 @@ class GroupsPage extends Component{
         if(!this.props.groupItems){
             this.props.getGroupItems(this.props.match.params.id);
         }
+
+        if(!this.props.groupHistory){
+            this.props.getGroupHistory(this.props.match.params.id);
+        }
     }
 
     componentWillReceiveProps = newProps => {
         if(newProps.needsNewItems){
             this.props.getGroupItems(this.props.match.params.id);
+        }
+
+        if(newProps.needsNewHistory){
+            this.props.getGroupHistory(this.props.match.params.id);
         }
     }
 
@@ -196,6 +204,18 @@ class GroupsPage extends Component{
 
                     <UserCart />
 
+                    <MDBContainer>
+                    <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
+                        <MDBModalHeader toggle={this.toggle(14)}>Create A New Group</MDBModalHeader>
+                        <MDBModalBody>
+                            <MDBInput label="Group Name" name={"groupName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
+                        </MDBModalBody>
+                        <MDBModalFooter>
+                            <MDBBtn color="secondary" onClick={this.toggle(14)}>Close</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.handleAddGroup}>Create</MDBBtn>
+                        </MDBModalFooter>
+                    </MDBModal>
+                </MDBContainer>
                 </div>
         )
     }
@@ -220,4 +240,4 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory
-})(GroupsPage);
+})(GroupsProfile);
