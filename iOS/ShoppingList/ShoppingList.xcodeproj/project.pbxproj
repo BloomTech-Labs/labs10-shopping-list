@@ -69,6 +69,8 @@
 		969A841D2215C99A0003BB37 /* Instantiatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FE2215C99A0003BB37 /* Instantiatable.swift */; };
 		969A841E2215C99A0003BB37 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83FF2215C99A0003BB37 /* Identifier.swift */; };
 		969A841F2215C99A0003BB37 /* ViewLoadBeforeInject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A84002215C99A0003BB37 /* ViewLoadBeforeInject.swift */; };
+		96CBFBEB22285A7700A6B41E /* NewGroupPopoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96CBFBEA22285A7700A6B41E /* NewGroupPopoverView.xib */; };
+		96CBFBED22285E7200A6B41E /* NewGroupPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CBFBEC22285E7200A6B41E /* NewGroupPopoverView.swift */; };
 		96DE302A221637EB00213C3E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE3029221637EA00213C3E /* Constants.swift */; };
 		96DE3032221637FE00213C3E /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96DE302D221637FE00213C3E /* MainViewController.storyboard */; };
 		96DE3033221637FE00213C3E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DE302E221637FE00213C3E /* MainViewController.swift */; };
@@ -160,6 +162,8 @@
 		969A83FE2215C99A0003BB37 /* Instantiatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instantiatable.swift; sourceTree = "<group>"; };
 		969A83FF2215C99A0003BB37 /* Identifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
 		969A84002215C99A0003BB37 /* ViewLoadBeforeInject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewLoadBeforeInject.swift; sourceTree = "<group>"; };
+		96CBFBEA22285A7700A6B41E /* NewGroupPopoverView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewGroupPopoverView.xib; sourceTree = "<group>"; };
+		96CBFBEC22285E7200A6B41E /* NewGroupPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupPopoverView.swift; sourceTree = "<group>"; };
 		96DE3029221637EA00213C3E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		96DE302D221637FE00213C3E /* MainViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
 		96DE302E221637FE00213C3E /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -270,6 +274,8 @@
 				960FBF6C221C427A0076C662 /* MessagePopoverView.swift */,
 				9691AB542225AEB600C1EE1E /* GroupsPopoverView.xib */,
 				9691AB562225B07600C1EE1E /* GroupsPopoverView.swift */,
+				96CBFBEA22285A7700A6B41E /* NewGroupPopoverView.xib */,
+				96CBFBEC22285E7200A6B41E /* NewGroupPopoverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -506,6 +512,7 @@
 			files = (
 				443C1B4E221B628D00220C28 /* Auth0.plist in Resources */,
 				96476B512215D41300E57EB9 /* LaunchScreen.storyboard in Resources */,
+				96CBFBEB22285A7700A6B41E /* NewGroupPopoverView.xib in Resources */,
 				96DE3035221637FE00213C3E /* LoginViewController.storyboard in Resources */,
 				96700E2E221C025E00F084B3 /* SettingsTableViewController.storyboard in Resources */,
 				9691AB552225AEB600C1EE1E /* GroupsPopoverView.xib in Resources */,
@@ -584,6 +591,7 @@
 				969A84042215C99A0003BB37 /* UIColor+Chameleon.m in Sources */,
 				969A840C2215C99A0003BB37 /* UIAppearance+Swift.m in Sources */,
 				11F5380D221F51EA0046BDFC /* HelperFile.swift in Sources */,
+				96CBFBED22285E7200A6B41E /* NewGroupPopoverView.swift in Sources */,
 				96E7BE60221DC149004EE9FF /* Helpers.swift in Sources */,
 				96700E31221C035600F084B3 /* SettingsTableViewController.swift in Sources */,
 				969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */,
