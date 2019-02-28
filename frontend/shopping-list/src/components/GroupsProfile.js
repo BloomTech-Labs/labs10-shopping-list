@@ -475,10 +475,5 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
 //     checkEmail, gettingGroups, addGroup, getItems, getSingleGroup
-<<<<<<< HEAD
     gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems, invite
 })(GroupsPage);
-=======
-    gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems
-})(GroupsPage);
->>>>>>> master

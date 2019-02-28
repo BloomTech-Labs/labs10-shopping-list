@@ -39,12 +39,7 @@ export {
   updateItemPurchesd,
   addUserToState,
   checkEmail,
-<<<<<<< HEAD
-    getGroupMembers,
-  SENDING_INVITE
-=======
   getGroupMembers,
   updateGroupName,
   removeGroup
->>>>>>> master
 } from "./rootActions";
