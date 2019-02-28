@@ -1,5 +1,5 @@
 import React from 'react';
-import {purchaseItem} from '../store/actions/rootActions';
+import {purchaseItem, getItems} from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import moment from 'moment';
@@ -9,6 +9,12 @@ class Item extends React.Component {
     componentDidMount(){
         this.makeFloat(); // parses all item prices to be 0.00 format, even with trailing zeroes
     }
+
+    // async componentWillReceiveProps(newProps){
+    //     if(newProps.purchaseDone === true && this.props.purchaseDone === false){
+    //         await this.props.getItems(this.props.match.params.id);
+    //     }
+    // }
 
     constructor(props){
         super(props);
@@ -131,11 +137,12 @@ const mapStateToProps = state => {
         profilePicture: state.profilePicture,
         groups: state.groups,
         items: state.items,
+        purchaseDone: state.purchaseDone
     }
 }
 
 export default withRouter(connect(mapStateToProps, {
     // actions
     purchaseItem,
-
+    getItems,
 })(Item));

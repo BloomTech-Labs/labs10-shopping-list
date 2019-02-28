@@ -3,8 +3,8 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getGroupUsers} from '../store/actions/rootActions';
-
+import {getGroupUsers, getUserProfile} from '../store/actions/rootActions';
+import GroupUser from './GroupUser';
 
 class GroupUserList extends React.Component{
     componentDidMount(){
@@ -13,10 +13,36 @@ class GroupUserList extends React.Component{
         }
     }
 
+    componentWillReceiveProps = newProps => {
+        if(newProps.groupUsers !== this.props.groupUsers){
+            if(newProps.groupUsers){
+                this.fetchUserProfiles(newProps.groupUsers);
+            }
+        }
+    }
+
+    fetchUserProfiles(groupUsers){
+        // collect all group user profiles into state
+        for(let i = 0; i < groupUsers.length; i++){
+            this.props.getUserProfile(groupUsers[i].userID);
+        }
+    }
+
     render(){
+        let groupUserProfiles = [];
+        if(this.props.groupUserProfiles){
+            let profiles = this.props.groupUserProfiles;
+
+            groupUserProfiles = profiles.map(profile => {
+                return <GroupUser profile = {profile} />
+            })
+        }
+
         return(
             <div>
                 GROUP USER LIST
+                {groupUserProfiles}
+                TOTAL EXPENDITURE: {this.props.groupTotal}
             </div>
         )
     }
@@ -33,11 +59,14 @@ const mapStateToProps = state => {
         profilePicture: state.profilePicture,
         groups: state.groups,
         items: state.items,
-        groupUsers: state.groupUsers
+        groupUsers: state.groupUsers,
+        groupUserProfiles: state.groupUserProfiles,
+        groupTotal: state.groupTotal
     }
 }
 
 export default withRouter(connect(mapStateToProps, {
     // actions
     getGroupUsers,
+    getUserProfile,
 })(GroupUserList));

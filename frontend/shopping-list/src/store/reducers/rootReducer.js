@@ -17,7 +17,10 @@ import {
   USER_ADDED_TO_STATE,
   PURCHASING_ITEM,
   ITEM_PURCHASED,
-  USER_GROUPS_FETCHED
+  USER_GROUPS_FETCHED,
+  USER_PROFILE_FETCHED,
+  ADD_ITEM_START,
+  ADD_ITEM_SUCCESS,
 } from "../actions";
 
 const initialState = {
@@ -30,7 +33,10 @@ const initialState = {
   items: null,
   currentUser: null,
   emailChecked: false,
-  userGroups: null,
+  groupUsers: null,
+  groupUserProfiles: null,
+  groupTotal: null,
+  needsNewItems: false,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -48,7 +54,6 @@ export const rootReducer = (state = initialState, action) => {
     case EMAIL_CHECKED:
       // console.log('emc payload', action.payload.id);
       localStorage.setItem('userId', action.payload.id);
-      console.log('REDUCER', action.payload)
       return {
         ...state,
         emailChecked: true,
@@ -73,14 +78,42 @@ export const rootReducer = (state = initialState, action) => {
     case ADDING_GROUPS_TO_STATE_FAILED:
       return state;
 
+    case ADD_ITEM_START:
+      return {
+        ...state,
+        needsNewItems: false
+      }
+
+    case ADD_ITEM_SUCCESS:
+      return{
+        ...state,
+        needsNewItems: true,
+      }
+
     case GETTING_ITEMS:
-      return state;
+      return {
+        ...state,
+        needsNewItems: false
+      }
 
     case GETTING_ITEMS_SUCCESS:
-      return { ...state, items: action.payload}
+      console.log('reducer items', action.payload);
+      let groupTotal = 0;
+      let items = action.payload;
+      if(items){
+          items.map(item => {
+              return groupTotal += item.price;
+          })
+        }
+      return { 
+        ...state, 
+        items: action.payload, 
+        groupTotal: groupTotal,
+        needsNewItems: false
+      }
 
     case GETTING_ITEMS_FAILED:
-      return { ...state, items: null };
+      return { ...state, items: null, purchaseDone: false };
 
       // Purchasing Items
     case UPDATE_ITEM_PURCHASED_START:
@@ -113,7 +146,26 @@ export const rootReducer = (state = initialState, action) => {
     case USER_GROUPS_FETCHED:
       return{
         ...state,
-        userGroups: action.payload,
+        groupUsers: action.payload,
+      }
+
+    case USER_PROFILE_FETCHED:
+      let profileArray = [];
+      profileArray.push(action.payload);
+      return {
+        ...state,
+        groupUserProfiles: profileArray,
+      }
+
+    case PURCHASING_ITEM:
+      return {
+        ...state,
+      }
+
+    case ITEM_PURCHASED:
+      return {
+        ...state,
+        needsNewItems: true,
       }
 
     default:

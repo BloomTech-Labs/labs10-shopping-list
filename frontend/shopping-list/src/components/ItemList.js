@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Item from './Item';
-import {getItems, addItem} from '../store/actions/rootActions';
+import {getItems, addItem,} from '../store/actions/rootActions';
 import './Styles/ItemList.css';
 
 class ItemList extends React.Component{
@@ -10,7 +10,6 @@ class ItemList extends React.Component{
         if(this.state.groupId){
             this.props.getItems(this.state.groupId);
         }
-        // this.props.getItems();
     }
     
     constructor(props){
@@ -25,10 +24,6 @@ class ItemList extends React.Component{
             oldItem: '',
             oldQuantity: '',
         }
-    }
-
-    fetchItems = id => {
-        this.props.getItems(id);
     }
 
     increase = event => {

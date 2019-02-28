@@ -31,6 +31,9 @@ export const PURCHASING_ITEM = 'PURCHASING_ITEM';
 export const ITEM_PURCHASED = 'ITEM_PURCHASED';
 export const FETCHING_GROUP_USERS = 'FETCHING_GROUP_USERS';
 export const USER_GROUPS_FETCHED = 'USER_GROUPS_FETCHED';
+export const FETCHING_USER_PROFILE = 'FETCHING_USER_PROFILE';
+export const USER_PROFILE_FETCHED = 'USER_PROFILE_FETCHED';
+export const GROUP_TOTAL_SUMMED = 'GROUP_TOTAL_SUMMED';
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -72,7 +75,6 @@ export const checkEmail = () => {
       dispatch({type: CHECKING_EMAIL});
 
     fetchUserId.then(res => {
-      console.log('check email', res.data);
       dispatch({type: EMAIL_CHECKED, payload: res.data});
 
     }).catch(err => {
@@ -96,7 +98,6 @@ export const addUserToState = (userID) => {
   return dispatch => {
     dispatch({type: ADDING_USER_TO_STATE})
     fetchUserProfile.then(res => {
-      console.log('fetch user profile', res.data);
       dispatch({type: USER_ADDED_TO_STATE, payload: res.data})
     }).catch(err => {
       console.log(err);
@@ -169,7 +170,6 @@ export const getItems = (id) => dispatch => {
 
   axios.get(endpoint, options)
       .then(response => {
-        console.log('get items', response.data);
         dispatch({ type: GETTING_ITEMS_SUCCESS, payload: response.data.data });
       })
       .catch(err => {
@@ -222,15 +222,10 @@ export const addItem = (item) => dispatch => {
       Authorization: `Bearer ${token}`,
     }
   };
-
   // Add items to the server and then get the items to update state
   axios.post(endpoint, item, options)
-      .then(() => {
-        // Retrieve the items
-        getItems(item.groupID)(dispatch)
-      })
       .then(response => {
-        dispatch({ type: ADD_ITEM_SUCCESS, payload: response.data.data });
+        dispatch({ type: ADD_ITEM_SUCCESS});
       })
       .catch(err => {
         console.log("ADDING ITEM ERR => ", err);
@@ -313,12 +308,15 @@ export const purchaseItem = (item, itemId) => {
 }
 
   const updateItem = axios.put(`${backendURL}/api/item/${itemId}`, item, options);
+
   return dispatch => {
     dispatch({type: PURCHASING_ITEM})
 
-  updateItem.then(res => {
-    console.log(res.data);
+  updateItem.then((res) => {
     dispatch({type: ITEM_PURCHASED})
+  }).catch(err => {
+    console.log(err);
+    dispatch({type: ERROR});
   })
   }
 }
@@ -338,7 +336,64 @@ export const getGroupUsers = (groupId) => {
 
     fetchGroupUsers.then(res => {
       dispatch({type: USER_GROUPS_FETCHED, payload: res.data})
-      console.log('res', res.data);
     })
   }
 }
+
+export const getUserProfile = userId => {
+  let token = localStorage.getItem('jwt');
+    let options = {
+      headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const fetchGroupProfile = axios.get(`${backendURL}/api/user/${userId}`, options);
+
+  return dispatch => {
+    dispatch({type: FETCHING_USER_PROFILE});
+
+    fetchGroupProfile.then(res => {
+      dispatch({type: USER_PROFILE_FETCHED, payload: res.data});
+    })
+  }
+}
+
+
+
+
+  // export const calculateGroupTotal = (items) => {
+  //   console.log('calc called', items);
+  //   let groupTotal = 0;
+  //       if(items){
+  //           items.map(item => {
+  //               return groupTotal += item.price;
+  //           })
+
+  //         console.log('group total', groupTotal)
+  //           return dispatch => {
+  //             dispatch({type: GROUP_TOTAL_SUMMED, payload: groupTotal})
+  //           }
+  //       }
+  // }
+
+
+
+// export const fetchGroupTotal = groupId => {
+//   let token = localStorage.getItem('jwt');
+//     let options = {
+//       headers: {
+//       Authorization: `Bearer ${token}`
+//     }
+//   }
+
+//   const fetchTotal = axios.get(`${backendURL}/api/item/group/${groupId}`, options);
+
+//   return dispatch => {
+//     dispatch({type: FETCHING_GROUP_TOTAL});
+
+//     fetchTotal.then(res => {
+//       console.log('group items', res.data);
+//     })
+//   }
+// }

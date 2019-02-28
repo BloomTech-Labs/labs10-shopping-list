@@ -56,6 +56,12 @@ class GroupsPage extends Component{
         }
     }
 
+    componentWillReceiveProps = newProps => {
+        if(newProps.needsNewItems){
+            this.props.getItems(this.props.match.params.id);
+        }
+    }
+
     // Toggles the modals
     toggle = nr => () => {
         let modalNumber = 'modal' + nr
@@ -267,6 +273,7 @@ const mapStateToProps = state => {
         groups: state.groups,
         items: state.items,
         currentGroup: state.currentGroup,
+        needsNewItems: state.needsNewItems
     }
 }
 
