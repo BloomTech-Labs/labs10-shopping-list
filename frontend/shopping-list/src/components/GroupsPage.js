@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {checkEmail, createGroup, getCurrentUser, getUserGroups, addGroup, clearCurrentGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
+import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer, MDBCol,
     MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
+import GroupCard from './GroupCard';
+
 
 function makeid() {
     let text = "";
@@ -54,7 +56,7 @@ class GroupsPage extends Component{
             <div className = 'groups-container'>
                 <MDBContainer>
                     <MDBRow center>
-                        <MDBCard className="text-center" style={{ width: "20rem", marginTop: "1rem" }}>
+                        <MDBCard className="text-center" style={{ width: "20rem", marginTop: "1.5rem", height: '15rem' }}>
                             <MDBCardBody>
                                 <MDBCardTitle>Create New Group</MDBCardTitle>
                                 <MDBCardText>
@@ -63,22 +65,16 @@ class GroupsPage extends Component{
                                 <MDBBtn color="primary" onClick={this.toggle(14)}>Create</MDBBtn>
                             </MDBCardBody>
                         </MDBCard>
+
                         {this.props.userGroups !== null ? (
-                            this.props.userGroups.map((g, i) => (
-                                <MDBNavLink key={makeid()} to={`/groups/${g.id}`}>
-                                    <MDBCard key={makeid()} border="primary" className="m-3" style={{ maxWidth: "18rem"}}>
-                                        <MDBCardHeader key={makeid()}>{g.name}</MDBCardHeader>
-                                        <MDBCardBody key={makeid()} className="text-primary">
-                                            <MDBCardTitle key={makeid()} tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
-                                            <MDBCardText key={makeid()}>
-                                                Group members go here
-                                            </MDBCardText>
-                                        </MDBCardBody>
-                                    </MDBCard>
-                                </MDBNavLink>
-                            ))
+                            this.props.userGroups.map(group => 
+                                (
+                                    <GroupCard group = {group} key = {group.id}/>
+                                )
+                            )
                         ) : null}
-                    </MDBRow>
+                        
+                        </MDBRow>
                 </MDBContainer>
 
 

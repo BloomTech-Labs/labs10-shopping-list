@@ -1,18 +1,23 @@
 import React from 'react';
-import {MDBCard, MDBCardBody, MDBCardTitle, MDBCol} from 'mdbreact';
+import {MDBCard, MDBCardBody, MDBCardText, MDBCardHeader, MDBNavLink, MDBCol} from 'mdbreact';
 import {withRouter} from 'react-router-dom';
 
 const GroupCard = props => {
+    console.log('group', props.group.groupMembers.length)
     return(
         <div className = 'group-card'>
-        <MDBCol>
-                <MDBCard style = {{width: "22rem"}}>
+        <MDBNavLink key = {props.key} to={`/groups/${props.group.id}`}>
+                <MDBCard style={{ width: "20rem", marginTop: "1rem", height: '15rem' }}>
                 <MDBCardBody>
-                    <MDBCardTitle>{props.name}</MDBCardTitle>
-                    {/* <MDBCardText>{email}</MDBCardText> */}
+                    <MDBCardHeader><h2>{props.group.name}</h2></MDBCardHeader>
+                    <MDBCardText>
+                    {props.group.groupMembers !== null ? (
+                        <span>{props.group.groupMembers.length} Members</span>
+                    ): null}
+                    </MDBCardText>
                 </MDBCardBody>
                 </MDBCard>
-            </MDBCol>
+            </MDBNavLink>
         </div>
 
     )
