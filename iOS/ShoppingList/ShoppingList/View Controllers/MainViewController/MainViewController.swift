@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Auth0
 
-class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopoverViewDelegate {
+class MainViewController: UIViewController, StoryboardInstantiatable, PopoverViewDelegate {
     
     static let storyboardName: StoryboardName = "MainViewController"
     @IBOutlet weak var groupName: UIButton!
@@ -18,32 +19,30 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GroupController.shared.getGroups(forUserID: 501) { (success) in
-            if allGroups.count > 0 {
-                let selected = allGroups[0]
-                selectedGroup = selected
-                
-                
-                
-                let usersCon = UserController()
-                usersCon.getUser(forID: 501) { (user) in
-                    if let users = user {
-                        /*Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
-                         print(users)
-                         */
-                        SaveItem.test()
-                    }
+        GroupController.shared.getUserID { (user) in
+            
+            guard let userID = user?.id else {return}
+            
+            GroupController.shared.getGroups(forUserID: userID) { (success) in
+                if allGroups.count > 0 {
+                    selectedGroup = allGroups[0]
+                    UI { self.updateViews() }
                 }
                 
-                GroupController.shared.getGroups(forUserID: 501, completion: { (success) in
+                // Testing history controller. Can be removed at any time
+                let historyCont = HistoryController()
+                historyCont.getHistory(completion: { (success) in
                     
                     if success {
-                        selectedGroup = allGroups[0]
-                        self.updateViews()
+                        print(history.count)
+                    } else {
+                        print("No history retrieved from user")
                     }
                     
                 })
+                
             }
+
         }
     }
     
@@ -53,7 +52,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
         }
     }
     
-    func selectedGroupChanged() {
+    func updatesNeeded() {
         updateViews()
     }
     

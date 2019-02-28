@@ -13,6 +13,7 @@
     * [Add Group](#Add-Group)
     * [Update Group](#Update-Group)
     * [Remove Group](#Remove-Group)
+    * [Add User to Group](#User-To-Group)
 * [Group Member Endpoints](#GroupMember-Endpoints)
     * [Get All Members](#Get-All-Group-Member)
     * [Get By Group ID](#Get-Group-Member-By-Group-ID)
@@ -485,6 +486,23 @@ None
 |------------------------|-----------------------------|----------|
 | userID                 | ID of user                  | Yes      |
 | groupID                | ID of group                 | Yes      |
+
+### Add User to Group
+Add a user by userId to a group by groupId
+* **URL**<br>
+/api/group/invite/:userId::groupId
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`id=[integer]`
+`groupId=[integer]`
+* **Data Params**<br>
+* **Success Response**<br>
+    * **Code:** 200<br>
+      **Content:** {message: "User added to group.", userId: 14, groupId: 7, id: 10}
+* **Error Response:**<br>
+    * **Code** 500<br>
+      **Content:** {message: "Error adding user to group."}
 
 [TOP](#Table-of-Contents)
 

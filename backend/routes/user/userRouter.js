@@ -191,12 +191,11 @@ userRouter.get('/check/getid', (req, res) => {
     let email = req.user.email; // use jwt's req.user instead of req.body which is vulnerable
 
     // setting up sender e-mail
-    let senderEmail = 'shoptraklab@gmail.com';
     let transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: `${process.env.EMAIL_SERVICE}`,
         auth:{
-            user: 'shoptraklab@gmail.com',
-            pass: 'PaperSpainDramatic'
+            user: `${process.env.EMAIL_ADDRESS}`,
+            pass: `${process.env.EMAIL_PASSWORD}`
         }
     });
 
@@ -212,7 +211,7 @@ userRouter.get('/check/getid', (req, res) => {
             // email new user with welcome e-mail
             // set up the email
             let mailOptions = {
-                from: `${senderEmail}`,
+                from: `${process.env.EMAIL_ADDRESS}`,
                 to: `${email}`,
                 subject: 'Signed up for ShopTrak',
                 text: 'Thank you for signing up with ShopTrak.'
@@ -222,7 +221,7 @@ userRouter.get('/check/getid', (req, res) => {
                 if(error){
                     console.log(error);
                 }else{
-                    console.log('Email send: '+info.response);
+                    console.log('Email sent: '+info.response);
                 }
             });
             
@@ -242,6 +241,7 @@ userRouter.get('/check/getid', (req, res) => {
             })
         } else {
             console.log('user found', id[0].id);
+          
             userDb.getById(id[0].id).then(profile => {
                 return res.status(200).json({profile: profile[0]})
             }).catch(err => { 
@@ -262,6 +262,8 @@ userRouter.get('/check/getid', (req, res) => {
             //         console.log('Email sent: '+info.response);
             //     }
             // });
+            console.log('user found', id[0]);
+            return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
         }
     })
     .catch(err => {

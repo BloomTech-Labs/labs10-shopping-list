@@ -3,7 +3,10 @@ const groupRouter = express.Router();
 const groupDb = require('../../helpers/groupModel');
 const groupMembersDb = require('../../helpers/groupMembersModel');
 const groupMemDb = require('../../helpers/groupMembersModel');
+
 const usersDb = require('../../helpers/userModel');
+const nodemailer = require('nodemailer');
+
 
 const checkJwt = require('../../validators/checkJwt');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
@@ -152,13 +155,98 @@ groupRouter.get('/user/:id', checkUser, (req, res) => {
                 console.log(err);
                 return res.status(500).json({error: `Internal server error.`})
             })
-        }
-    }).catch(err=>{
-        console.log(err);
-        return res.status(500).json({error: `Internal server error.`})
-    })
+=======
+// function contains(a, obj) {
+//     var i = a.length;
+//     while (i--) {
+//         if (a[i] === obj) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
 
-})
+// groupRouter.get('/user/:id', checkUser, async (req, res) => {
+//     const id = req.params.id;
+
+//     let groups = [];
+//     let members = [];
+
+//     const groupmembs = await groupMemDb.returnUserGroups(id);
+
+//     // console.log("GM => ", groupmembs);
+
+//     for (let i = 0; i < groupmembs.length; i++) {
+//         const grp = await groupDb.getById(groupmembs[i].groupID)
+//         groups.push(grp[0]);
+//     }
+
+//     let newGroups = [];
+
+//     try {
+
+//         // console.log("GRP => ", grp);
+//         for (let i = 0; i < groups.length; i++) {
+//             console.log(`GROUPS ${i}=> `, groups[i])
+
+//             let curMembs = []
+//             const groupMember = await groupMemDb.getByGroup(groups[i].id);
+
+
+//             // console.log(`GROUP MEMBER ${i} => `, groupMember);
+
+//             for (let j = 0; j < groupMember.length; j++) {
+//                 const user = await userDb.getById(groupMember[j].userID);
+//                 // console.log("USER => ", user);
+//                 if (!contains(curMembs, user[0])) {
+//                     curMembs.push(user[0]);
+//                 }
+
+//             }
+
+//             // console.log(`CUR MEMBS => `, curMembs)
+
+//             const data = {
+//                 id: groups[i].id,
+//                 userID: groups[i].userID,
+//                 name: groups[i].name,
+//                 token: groups[i].token,
+//                 createdAt: groups[i].createdAt,
+//                 updatedAt: groups[i].updatedAt,
+//                 memberAmount: groupMember.length,
+//                 members: curMembs,
+//             };
+
+//             newGroups.push(data);
+
+//             // for (let i = 0; i < member.length; i++) {
+//             //     const usr = await userDb.getById(member[i].userID);
+//             //     members.push({id: usr[0].id, name: usr[0].name, pic: usr[0].profilePicture});
+//             // }
+//             //
+//             // // console.log("MEMS => ", members);
+//             //
+//             // const data = {
+//             //     id: groups[i].id,
+//             //     userID: groups[i].userID,
+//             //     name: groups[i].name,
+//             //     token: groups[i].token,
+//             //     createdAt: groups[i].createdAt,
+//             //     updatedAt: groups[i].updatedAt,
+//             //     memberAmount: groupMember.length,
+//             //     members: members,
+//             // };
+//             //
+//             // newGroups.push(data);
+//         }
+//     }).catch(err=>{
+//         console.log(err);
+//         return res.status(500).json({error: `Internal server error.`})
+//     })
+
+// })
+
+//         return res.status(200).json({data: newGroups });
 
 
 
@@ -289,5 +377,76 @@ groupRouter.delete('/remove', (req, res) => {
 
 
 })
+
+/**************************************************/
+
+/** GET/ADD user to group by USER ID and GROUP ID
+ * **/
+
+/**************************************************/
+groupRouter.get('/invite/:userId::groupId', (req, res) => {
+    const user = req.params.userId;
+    const group = req.params.groupId;
+    const groupMem = {
+        userID: user,
+        groupID: group};
+
+    groupMemDb.add(groupMem).then(id => {
+        return res.status(200).json({message: `User added to group.`, userId: user, groupId: group, id: id[0]});
+    }).catch(err => {
+        const error = {
+            message: `Error adding user to group.`,
+            data: {
+                error: err
+            }
+        }
+        return res.status(500).json(error);
+    });
+})
+
+/**************************************************/
+
+/** POST/email user the link
+ * **/
+
+/**************************************************/
+groupRouter.get('/invite/email', (req, res) => {
+    let email = req.body.email;
+    let link = req.body.link;
+
+    // setting up sender e-mail
+    let transporter = nodemailer.createTransport({
+        service: `${process.env.EMAIL_SERVICE}`,
+        auth:{
+            user: `${process.env.EMAIL_ADDRESS}`,
+            pass: `${process.env.EMAIL_PASSWORD}`
+        }
+    });
+
+    // create the email
+    let mailOptions = {
+        from: `${process.env.EMAIL_ADDRESS}`,
+        to: `${email}`,
+        subject: `You are invited to join a group on ShopTrak`,
+        text: `${link}`
+    };
+
+    //send the email
+    transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+            console.log(error);
+        }else{
+            console.log('Email send: '+info.response);
+        }
+    });
+
+    return res.status(200).json({
+        message: "invitation sent",
+        email: email,
+        link: link
+    });
+})
+
+/**************************************************/
 
 module.exports = groupRouter;
