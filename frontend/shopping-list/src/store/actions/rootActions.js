@@ -29,6 +29,8 @@ export const SUBMIT_PAID_ITEMS_FAILED = 'SUBMIT_PAID_ITEMS_FAILED';
 export const GET_GROUPMEMBERS_START = 'GET_GROUPMEMBERS_START';
 export const CHANGE_GROUP_NAME_START = 'CHANGE_GROUP_NAME_START';
 export const CHANGE_GROUP_NAME_SUCCESS = 'CHANGE_GROUP_NAME_SUCCESS'
+export const REMOVE_GROUP_START = 'REMOVE_GROUP_START';
+export const REMOVE_GROUP_SUCCESS = 'REMOVE_GROUP_SUCCESS'
 
 
 let backendURL;
@@ -321,6 +323,33 @@ export const updateGroupName = (groupID, changes) => dispatch => {
   axios.put(endpoint, changes, options).then(res => {
     console.log("RES => ", res);
     dispatch({ type: CHANGE_GROUP_NAME_SUCCESS});
+  }).then(() => {
+    gettingGroups()(dispatch)
+  }).catch(err => {
+    console.log("ERR => ", err);
+  })
+}
+
+export const removeGroup = (groupID, userID) => dispatch => {
+  dispatch({type: REMOVE_GROUP_START});
+
+  const token = localStorage.getItem('jwt');
+  const endpoint = `${backendURL}/api/group/remove/${groupID}:${userID}`;
+
+  const data = {
+    groupID: groupID,
+    userID: userID
+  }
+
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  axios.delete(endpoint, options).then(res => {
+    console.log("RES => ", res);
+    dispatch({ type: REMOVE_GROUP_SUCCESS});
   }).then(() => {
     gettingGroups()(dispatch)
   }).catch(err => {

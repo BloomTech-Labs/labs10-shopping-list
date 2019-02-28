@@ -24,6 +24,8 @@ export {
   GET_GROUPMEMBERS_START,
   CHANGE_GROUP_NAME_START,
   CHANGE_GROUP_NAME_SUCCESS,
+  REMOVE_GROUP_START,
+  REMOVE_GROUP_SUCCESS,
   addItem,
   getItems,
   addGroup,
@@ -37,6 +39,7 @@ export {
   updateItemPurchesd,
   addUserToState,
   checkEmail,
-getGroupMembers,
-updateGroupName
+  getGroupMembers,
+  updateGroupName,
+  removeGroup
 } from "./rootActions";
