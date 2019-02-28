@@ -1,3 +1,5 @@
+import {CHANGE_GROUP_NAME_START, CHANGE_GROUP_NAME_SUCCESS} from "./rootActions";
+
 export {
   TEST_START,
   TEST_SUCCESS,
@@ -20,6 +22,10 @@ export {
   SUBMIT_PAID_ITEMS_SUCCESS,
   SUBMIT_PAID_ITEMS_FAILED,
   GET_GROUPMEMBERS_START,
+  CHANGE_GROUP_NAME_START,
+  CHANGE_GROUP_NAME_SUCCESS,
+  REMOVE_GROUP_START,
+  REMOVE_GROUP_SUCCESS,
   addItem,
   getItems,
   addGroup,
@@ -33,6 +39,12 @@ export {
   updateItemPurchesd,
   addUserToState,
   checkEmail,
+<<<<<<< HEAD
     getGroupMembers,
   SENDING_INVITE
+=======
+  getGroupMembers,
+  updateGroupName,
+  removeGroup
+>>>>>>> master
 } from "./rootActions";
