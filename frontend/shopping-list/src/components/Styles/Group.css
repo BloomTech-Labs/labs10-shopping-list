@@ -19,7 +19,7 @@
 }
 
 .group-profile-list {
-    width: 90%;
+    width: 60%;
     margin-left: 20%;
     height: 500px;
 }
@@ -44,7 +44,19 @@
 
 .group-profile-gross {
     display: flex;
+    flex-direction: row;
     padding: 1%;
+    flex-wrap: wrap;
+}
+
+.group-profile-gross-members {
+    display: flex;
+
+}
+
+.group-profile-gross-members-box {
+    margin-left: 10%;
+    text-align: center;
 }
 
 .group-profile-bought {
@@ -189,4 +201,11 @@ input[type="button"]::-moz-focus-inner {
 .history-items {
     font-size: 18px;
     font-weight: bold;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }

@@ -3,6 +3,7 @@ const groupRouter = express.Router();
 const groupDb = require('../../helpers/groupModel');
 const groupMembersDb = require('../../helpers/groupMembersModel');
 const groupMemDb = require('../../helpers/groupMembersModel');
+const userDb = require('../../helpers/userModel');
 
 const nodemailer = require('nodemailer');
 
@@ -130,32 +131,91 @@ function fetch_group_mem(id) {
     })
 }
 
+function contains(a, obj) {
+    var i = a.length;
+    while (i--) {
+        if (a[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
 groupRouter.get('/user/:id', checkUser, async (req, res) => {
     const id = req.params.id;
-    const groups = [];
+
+    let groups = [];
+    let members = [];
+
+    const groupmembs = await groupMemDb.returnUserGroups(id);
+
+    // console.log("GM => ", groupmembs);
+
+    for (let i = 0; i < groupmembs.length; i++) {
+        const grp = await groupDb.getById(groupmembs[i].groupID)
+        groups.push(grp[0]);
+    }
+
+    let newGroups = [];
 
     try {
-        const grp = await groupDb.getByUser(id);
 
         // console.log("GRP => ", grp);
-        for (let i = 0; i < grp.length; i++) {
-            const member = await groupMemDb.getByGroup(grp[i].id);
-            // console.log("MEMBER => ", member);
+        for (let i = 0; i < groups.length; i++) {
+            console.log(`GROUPS ${i}=> `, groups[i])
+
+            let curMembs = []
+            const groupMember = await groupMemDb.getByGroup(groups[i].id);
+
+
+            // console.log(`GROUP MEMBER ${i} => `, groupMember);
+
+            for (let j = 0; j < groupMember.length; j++) {
+                const user = await userDb.getById(groupMember[j].userID);
+                // console.log("USER => ", user);
+                if (!contains(curMembs, user[0])) {
+                    curMembs.push(user[0]);
+                }
+
+            }
+
+            // console.log(`CUR MEMBS => `, curMembs)
 
             const data = {
-                id: grp[i].id,
-                userID: grp[i].userID,
-                name: grp[i].name,
-                token: grp[i].token,
-                createdAt: grp[i].createdAt,
-                updatedAt: grp[i].updatedAt,
-                memberAmount: member.length,
+                id: groups[i].id,
+                userID: groups[i].userID,
+                name: groups[i].name,
+                token: groups[i].token,
+                createdAt: groups[i].createdAt,
+                updatedAt: groups[i].updatedAt,
+                memberAmount: groupMember.length,
+                members: curMembs,
             };
 
-            groups.push(data);
+            newGroups.push(data);
+
+            // for (let i = 0; i < member.length; i++) {
+            //     const usr = await userDb.getById(member[i].userID);
+            //     members.push({id: usr[0].id, name: usr[0].name, pic: usr[0].profilePicture});
+            // }
+            //
+            // // console.log("MEMS => ", members);
+            //
+            // const data = {
+            //     id: groups[i].id,
+            //     userID: groups[i].userID,
+            //     name: groups[i].name,
+            //     token: groups[i].token,
+            //     createdAt: groups[i].createdAt,
+            //     updatedAt: groups[i].updatedAt,
+            //     memberAmount: groupMember.length,
+            //     members: members,
+            // };
+            //
+            // newGroups.push(data);
         }
 
-        return res.status(200).json({data: groups });
+        return res.status(200).json({data: newGroups });
 
     } catch (e) {
         return res.status(500).json({message: "Internal Server Error", err: e})
