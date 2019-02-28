@@ -48,8 +48,6 @@ class GroupsPage extends Component{
             const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
             this.setState({ members: group[0].members})
         }
-
-
     }
 
     /*
@@ -140,7 +138,6 @@ class GroupsPage extends Component{
     }
 
     toggleTotal = () => {
-        console.log("TOGGLE")
         this.setState({ totalToggle: !this.state.totalToggle })
     }
 
@@ -191,6 +188,13 @@ class GroupsPage extends Component{
         return total;
     }
 
+
+
+    /*
+     * Groups the array by user and date
+     * @params array - Array to sort
+     * @params f - What to sort by
+     */
     groupBy = ( array , f ) => {
         // Set a new group object
         var groups = {};
@@ -210,39 +214,29 @@ class GroupsPage extends Component{
         })
     }
 
+    /*
+     * Calculates the total spending coming in from the groupHistory
+     * @TODO - Refactor to be more performant
+     */
     calculateTotal = () => {
-        // console.log("HISTORY => ", this.state.groupHistory);
         const hists = this.state.groupHistory;
-        const members = this.state.members;
-
         let newSorted = [];
-
         let arr = [];
 
         if (hists !== null) {
 
             hists.forEach((itm, i) => {
-                // console.log("ITM => ", itm);
 
                 itm.forEach((x, j) => {
                     if (x.grandTotal) {
-                        // console.log(x);
                         arr.push({user: itm[0].user, total: x.grandTotal});
                     }
                 })
             })
 
-            // console.log(arr);
-
             const ress = this.groupBy(arr, function(itm) {
                 return [itm.user]
             })
-
-            // console.log("RESS => ", ress);
-            //
-            // let newSorted = [];
-
-            // Calculate the total and send to te newSorted array
             ress.forEach((rs, i) => {
                 let total = this.totalItems(ress[i]);
                 const grandTotal = {
@@ -252,22 +246,60 @@ class GroupsPage extends Component{
                 newSorted.push(grandTotal);
             })
 
-            // console.log("NEW SORTED => ", newSorted);
             return newSorted;
+        }
+    }
 
-            // this.setState({totals: newSorted});
-
-
+    totalNet = (arr, total) => {
+        console.log("=======TOTAL=======")
+        let arr1 = [];
+        let usrTotal = 0;
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i + 1]) {
+                arr1.push(arr[i+1])
+            }
         }
 
-        // this.setState({totals: newSorted});
+
+
+        console.log(arr1);
+
+    }
+
+    calculateNet = (total) => {
+        console.log("=======NET=======")
+
+        console.log(total);
+
+        if (total !== null || total !== undefined) {
+            const arrLength = total.length;
+            this.totalNet(total, 0);
+
+
+            // let userTotal = 0;
+
+            // for (let i = 0; i < newSorted.length; i++) {
+            //     // console.log(`NEW SORTED ${i} `, newSorted[i]);
+            //     let total = 0;
+            //     if (newSorted[i + 1]) {
+            //         total = this.totalNet(newSorted[i], newSorted[i + 1]);
+            //     }
+            //
+            //     if (total !== null) {
+            //         userTotal = total;
+            //         // console.log(`TOTAL ${i} => `, {total: total, user: newSorted[i].user});
+            //     } else {
+            //         console.l0g("TOTAL IS NULL");
+            //     }
+            // }
+
+            return total;
+        }
 
 
     }
 
     render(){
-//         console.log('current group', this.props.currentGroup);
-//         const purchased = this.props.items.filter(itm => itm.purchased === true);
 
         // if(!this.props.currentGroup){ // tell user info is loading...
         //     /**
@@ -284,7 +316,10 @@ class GroupsPage extends Component{
         // Gather histories
         const histories = this.state.groupHistory;
         let total = this.calculateTotal();
-        console.log("TOTAL => ", total);
+        let net1 = 0;
+        if (total !== undefined) {net1 = this.calculateNet(total);}
+        let net = total;
+        // console.log("TOTAL => ", total);
 
         return (
             <div>
@@ -378,7 +413,31 @@ class GroupsPage extends Component{
                                         </div>
                                     )) : <p>Loading</p>
                                 }
-                                </div> : <div className={"group-profile-gross"}> <p>NET</p></div>
+                                </div> : <div className={"group-profile-gross"}>
+                                    {
+                                        this.props.groups !== null ? this.props.groups.map((elem, i) => (
+                                            <div className={"group-profile-gross-members"}>
+                                                {
+                                                    elem.id === Number(this.props.match.params.id) ? elem.members.map((el, id) => (
+                                                        <div className={"group-profile-gross-members-box"}>
+                                                            {
+                                                                net !== undefined ? net.map((item, j) => (
+                                                                    <div>
+                                                                        {
+                                                                            item.user === el.name ? <p>{item.grandTotal}</p> : null
+                                                                        }
+                                                                    </div>
+                                                                )) : <p>Calculating</p>
+                                                            }
+                                                            <img src={el.profilePicture} alt="Avatar" className="avatar" />
+                                                            <p>{el.name}</p>
+                                                        </div>
+                                                    )) : null
+                                                }
+                                            </div>
+                                        )) : <p>Loading</p>
+                                    }
+                                </div>
                             }
                             {this.state.listToggle === true ? <div className={"group-profile-bought"}>
                                 <h1>I BOUGHT</h1>
