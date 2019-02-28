@@ -67,6 +67,9 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const BEGIN_CHECK_OUT = 'BEGIN_CHECK_OUT';
 export const CHECK_OUT_COMPLETE = 'CHECK_OUT_COMPLETE';
 
+export const GET_GROUP_HISTORY = 'GET_GROUP_HISTORY';
+export const SAVE_GROUP_HISTORY = 'SAVE_GROUP_HISTORY';
+
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
   backendURL = `http://localhost:9000`
@@ -114,29 +117,6 @@ export const checkEmail = () => {
       dispatch({type: ERROR})
     })
   }
-}
-
-export const addUserToState = (userID) => {
-
-  const token = localStorage.getItem('jwt');
-  const options = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    }
-  }
-
-  const fetchUserProfile = axios.get(`${backendURL}/api/user/${userID}`, options);
-
-  return dispatch => {
-    dispatch({type: ADDING_USER_TO_STATE})
-    fetchUserProfile.then(res => {
-      dispatch({type: USER_ADDED_TO_STATE, payload: res.data})
-    }).catch(err => {
-      console.log(err);
-      dispatch({type: ERROR})
-    })
-  }
-  
 }
 
 export const addGroup = (groupName) => dispatch => {
@@ -633,5 +613,23 @@ export const checkOut = info => {
 }
 
 export const getGroupHistory = groupId => {
+  const token = localStorage.getItem('jwt');
+  const endpoint = `${backendURL}/api/grouphistory/group/${groupId}`;
 
+  const options = {
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+  };
+  return dispatch => {
+    dispatch({type: GET_GROUP_HISTORY});
+  
+    axios.get(endpoint, options).then(res => {
+        console.log('history', res.data);
+        dispatch({type: SAVE_GROUP_HISTORY, payload: res.data})
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+  }
 }

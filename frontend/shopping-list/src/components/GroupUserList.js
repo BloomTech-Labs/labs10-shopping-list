@@ -7,24 +7,10 @@ import {getGroupUsers, getUserProfile} from '../store/actions/rootActions';
 import GroupUser from './GroupUser';
 
 class GroupUserList extends React.Component{
-    componentDidMount(){
-        if(!this.props.groupUsers){
-            this.props.getGroupUsers(this.props.match.params.id);
-        }
-    }
-
-    componentWillReceiveProps = newProps => {
-        if(newProps.groupUsers !== this.props.groupUsers){
-            if(newProps.groupUsers){
-                this.fetchUserProfiles(newProps.groupUsers);
-            }
-        }
-    }
-
     fetchUserProfiles(groupUsers){
         // collect all group user profiles into state
         for(let i = 0; i < groupUsers.length; i++){
-            this.props.getUserProfile(groupUsers[i].userID);
+            this.props.getUserProfile(this.props);
         }
     }
 

@@ -31,7 +31,6 @@ export {
   CLEARING_CURRENT_GROUP,
   submitPaidItems,
   updateItemPurchased,
-  addUserToState,
   checkEmail,
   USER_ADDED_TO_STATE,
   purchaseItem,
@@ -71,4 +70,6 @@ export {
   BEGIN_CHECK_OUT,
   CHECK_OUT_COMPLETE,
 
+  GET_GROUP_HISTORY,
+  SAVE_GROUP_HISTORY
 } from "./rootActions";

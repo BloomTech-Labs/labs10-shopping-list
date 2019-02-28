@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
 
 import {connect} from 'react-redux';
-import {checkEmail, addUserToState} from '../store/actions/rootActions';
+import {checkEmail,} from '../store/actions/rootActions';
 import './Styles/Navigation.css';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
     MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem,
@@ -104,5 +104,4 @@ const mapStateToProps = state => {
 export default withRouter(connect(mapStateToProps, {
     // actions
     checkEmail,
-    addUserToState,
 })(Navigation));

@@ -32,6 +32,10 @@ class UserCart extends React.Component{
         if(this.state.amount > 0 && this.state.amount !== ''){
             this.props.checkOut(info);
         }
+
+        this.setState({
+            amount: '',
+        })
     }
 
     render(){

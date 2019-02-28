@@ -1,24 +1,8 @@
 import {
-  ADDING_GROUPS_TO_STATE,
-  ADDING_GROUPS_TO_STATE_FAILED,
-  ADDING_USER_TO_STATE,
-  GETTING_ITEMS,
-  GETTING_ITEMS_SUCCESS,
-  GETTING_ITEMS_FAILED,
-  FETCHING_SINGLE_GROUP,
-  SINGLE_GROUP_FETCHED,
-  CLEARING_CURRENT_GROUP,
-  UPDATE_ITEM_PURCHASED_START,
-  USER_ADDED_TO_STATE,
   PURCHASING_ITEM,
   ITEM_PURCHASED,
   USER_GROUPS_FETCHED,
   USER_PROFILE_FETCHED,
-  ADD_ITEM_START,
-  ADD_ITEM_SUCCESS,
-  MARK_ITEM,
-  UNMARK_ITEM,
-  START_MARK,
 
 
   GET_CURRENT_USER,
@@ -41,8 +25,13 @@ import {
 
   ADD_TO_CART,
   REMOVE_FROM_CART,
+
   BEGIN_CHECK_OUT,
-  CHECK_OUT_COMPLETE
+  CHECK_OUT_COMPLETE,
+
+  GET_GROUP_HISTORY,
+  SAVE_GROUP_HISTORY,
+
 
 } from "../actions";
 
@@ -51,7 +40,9 @@ const initialState = {
   userGroups: null,
   groupItems: null,
   needsNewItems: false,
+  needsNewHistory: false,
   userCart: [],
+  groupHistory: [],
 
 
 
@@ -73,7 +64,6 @@ export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_CURRENT_USER:
       return state;
-
     case SAVE_CURRENT_USER:
       return {
         ...state,
@@ -82,7 +72,6 @@ export const rootReducer = (state = initialState, action) => {
 
     case GET_USER_GROUPS:
       return state;
-
     case SAVE_USER_GROUPS:
       return {
         ...state,
@@ -91,7 +80,6 @@ export const rootReducer = (state = initialState, action) => {
 
     case GET_GROUP_ITEMS:
       return state;
-
     case SAVE_GROUP_ITEMS:
       return {
         ...state,
@@ -102,7 +90,6 @@ export const rootReducer = (state = initialState, action) => {
 
     case CREATE_ITEM:
       return state;
-
     case ITEM_CREATED:
       return {
         ...state,
@@ -111,7 +98,6 @@ export const rootReducer = (state = initialState, action) => {
 
     case UPDATE_ITEM:
       return state;
-
     case ITEM_UPDATED:
       return {
         ...state,
@@ -120,7 +106,6 @@ export const rootReducer = (state = initialState, action) => {
 
     case DELETE_ITEM:
       return state;
-
     case ITEM_DELETED:
       return {
         ...state,
@@ -135,7 +120,6 @@ export const rootReducer = (state = initialState, action) => {
         userCart: newCart,
         needsNewItems: true,
       }
-
     case REMOVE_FROM_CART:
       let filterCart = state.userCart;
       filterCart = filterCart.filter(item => item.id !== action.payload.id);
@@ -147,91 +131,24 @@ export const rootReducer = (state = initialState, action) => {
 
     case BEGIN_CHECK_OUT:
       return state;
-
     case CHECK_OUT_COMPLETE:
       return {
         ...state,
         needsNewItems: true,
+        needsNewHistory: true,
       }
 
-
-
-
-
-    case ADDING_GROUPS_TO_STATE:
-      return {
-        ...state,
-        groups: action.payload
-      }
-    case ADDING_GROUPS_TO_STATE_FAILED:
+    case GET_GROUP_HISTORY:
       return state;
-
-    case ADD_ITEM_START:
+    case SAVE_GROUP_HISTORY:
       return {
         ...state,
-        needsNewItems: false
+        groupHistory: action.payload,
+        needsNewHistory: false
       }
 
-    case ADD_ITEM_SUCCESS:
-      return{
-        ...state,
-        needsNewItems: true,
-      }
 
-    case GETTING_ITEMS:
-      return {
-        ...state,
-        needsNewItems: false
-      }
-
-    case GETTING_ITEMS_SUCCESS:
-      console.log('reducer items', action.payload);
-      let groupTotal = 0;
-      let items = action.payload;
-      if(items){
-          for(let i = 0; i < items.length; i++){
-            groupTotal += items[i].price;
-          }
-        }
-      return { 
-        ...state, 
-        items: action.payload, 
-        groupTotal: groupTotal,
-        needsNewItems: false
-      }
-
-    case GETTING_ITEMS_FAILED:
-      return { ...state, items: null, purchaseDone: false };
-
-      // Purchasing Items
-    case UPDATE_ITEM_PURCHASED_START:
-      let itms = state.items.map(itm => {
-        if (itm.id === action.payload) {
-          itm.purchased = !itm.purchased
-        }
-
-        return itm;
-      })
-      return { ...state, items: itms}
-
-    case FETCHING_SINGLE_GROUP:
-      return {
-        ...state,
-      }
-
-    case SINGLE_GROUP_FETCHED:
-      return {
-        ...state,
-        currentGroup: action.payload,
-      }
-
-    case CLEARING_CURRENT_GROUP:
-      return {
-        ...state,
-        currentGroup: null,
-      }
-
-    case USER_GROUPS_FETCHED:
+      case USER_GROUPS_FETCHED:
       return{
         ...state,
         groupUsers: action.payload,
@@ -244,49 +161,6 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         groupUserProfiles: profileArray,
       }
-
-    case PURCHASING_ITEM:
-      return {
-        ...state,
-      }
-
-    case ITEM_PURCHASED:
-      return {
-        ...state,
-        needsNewItems: true,
-      }
-
-    case START_MARK:
-      return {
-        ...state,
-        needsRefresh: true,
-      }
-
-    case MARK_ITEM:
-      let itemArray = [];
-      if(state.markedItems){
-        itemArray = state.markedItems;
-      }
-
-      itemArray.push(action.payload);
-      console.log(itemArray);
-      return {
-        ...state,
-        markedItems: itemArray,
-        needsRefresh: false,
-        }
-
-    case UNMARK_ITEM:
-        let newArray = [];
-        if(state.markedItems){
-          newArray = state.markedItems;
-          newArray = newArray.filter(item => item.id !== action.payload.id);
-        } 
-        return {
-          ...state,
-          markedItems: newArray,
-          needsRefresh: false,
-        }
 
     default:
       return state;
