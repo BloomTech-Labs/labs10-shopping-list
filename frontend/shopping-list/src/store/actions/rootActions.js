@@ -55,6 +55,9 @@ export const SAVE_GROUP_ITEMS = 'SAVE_GROUP_ITEMS';
 export const CREATE_ITEM = 'CREATE_ITEM';
 export const ITEM_CREATED = 'ITEM_CREATED';
 
+export const UPDATE_ITEM = 'UPDATE_ITEM';
+export const ITEM_UPDATED = 'ITEM_UPDATED';
+
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -509,6 +512,30 @@ export const getGroupItems = (groupId) => {
     dispatch({type: GET_GROUP_ITEMS})
     endpoint.then(res => {
       dispatch({type: SAVE_GROUP_ITEMS, payload: res.data});
+    })
+  }
+}
+
+export const updateItem = item => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.put(`${backendURL}/api/item/${item.id}`, item, options);
+
+  return dispatch => {
+    dispatch({type: UPDATE_ITEM});
+
+    endpoint.then(res => {
+      console.log(res.data);
+
+      dispatch({type: ITEM_UPDATED});
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
     })
   }
 }

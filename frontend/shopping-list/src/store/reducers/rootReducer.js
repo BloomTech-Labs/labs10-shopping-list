@@ -31,7 +31,10 @@ import {
   SAVE_GROUP_ITEMS,
 
   CREATE_ITEM,
-  ITEM_CREATED
+  ITEM_CREATED,
+
+  UPDATE_ITEM,
+  ITEM_UPDATED
 } from "../actions";
 
 const initialState = {
@@ -91,6 +94,15 @@ export const rootReducer = (state = initialState, action) => {
       return state;
 
     case ITEM_CREATED:
+      return {
+        ...state,
+        needsNewItems: true
+      }
+
+    case UPDATE_ITEM:
+      return state;
+
+    case ITEM_UPDATED:
       return {
         ...state,
         needsNewItems: true

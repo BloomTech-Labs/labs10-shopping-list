@@ -1,41 +1,15 @@
 .item-list-container {
-    border: 2px solid black;
     padding: 40px;
 }
 
 .item-list {
-    width: 100%;
+    width: 50%;
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 .item-form{
-    width: 100%;
-}
-
-.item-form-top{
-    display: flex;
-    flex-flow: row nowrap;
-    width: 100%;
-    justify-content: space-between;  
-}
-
-.item-form-top #name{
-    width: 60%;
-}
-
-.item-form h3{
-    font-size: 0.4rem;
-}
-
-.item-quantity{
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    width: fit-content;
-}
-
-
-.item-measurement{
-    margin: 0px 5px;
+    width: 50%;
 }
 
 .item-form form{
@@ -44,20 +18,11 @@
     flex-flow: row nowrap;
     justify-content: space-between;
 }
-/* 
-.item-form form input{
-    width: 100%;
-} */
 
 .item-form input[name='item']{
     width: 100%;
 }
 
-
-.item-form input[name='quantity']{
-    text-align: center;
-    width: 50px;
-}
 
 .item-list button {
     max-width: fit-content;

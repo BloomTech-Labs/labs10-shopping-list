@@ -57,6 +57,9 @@ export {
   SAVE_GROUP_ITEMS,
 
   CREATE_ITEM,
-  ITEM_CREATED
+  ITEM_CREATED,
+
+  UPDATE_ITEM,
+  ITEM_UPDATED
 
 } from "./rootActions";
