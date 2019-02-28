@@ -180,8 +180,7 @@ class GroupsPage extends Component{
         return total;
     }
 
-    groupBy = ( array , f ) =>
-    {
+    groupBy = ( array , f ) => {
         // Set a new group object
         var groups = {};
 
@@ -359,7 +358,7 @@ class GroupsPage extends Component{
                                                                         item.user === el.name ? <p>{item.grandTotal}</p> : null
                                                                     }
                                                                 </div>
-                                                            )) : <p>T NULL</p>
+                                                            )) : <p>Calculating</p>
                                                         }
                                                         <img src={el.pic} alt="Avatar" className="avatar" />
                                                         <p>{el.name}</p>
@@ -367,7 +366,7 @@ class GroupsPage extends Component{
                                                 )) : null
                                             }
                                         </div>
-                                    )) : <p>NULL</p>
+                                    )) : <p>Loading</p>
                                 }
                             </div>
                             {this.state.listToggle === true ? <div className={"group-profile-bought"}>
