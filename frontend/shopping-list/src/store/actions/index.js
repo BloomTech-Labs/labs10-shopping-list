@@ -48,5 +48,8 @@ export {
   getGroupMembers,
 
   GET_CURRENT_USER,
-  SAVE_CURRENT_USER
+  SAVE_CURRENT_USER,
+
+  GET_USER_GROUPS,
+  SAVE_USER_GROUPS,
 } from "./rootActions";

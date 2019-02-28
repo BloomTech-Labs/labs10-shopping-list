@@ -9,11 +9,11 @@ class Callback extends Component {
   
   async componentDidMount() {
     await auth0Client.handleAuthentication();
-    this.props.history.replace('/groups');
+    this.props.history.replace('/groups'); //reroute into groups
   }
 
   componentWillUnmount(){
-    // add new user to database
+    // see if we need to add new user to database
     this.props.checkEmail();
   }
 

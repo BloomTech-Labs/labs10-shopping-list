@@ -1,9 +1,4 @@
 import {
-  TEST_START,
-  TEST_SUCCESS,
-  TEST_FAILURE,
-  CHECKING_EMAIL,
-  EMAIL_CHECKED,
   ADDING_GROUPS_TO_STATE,
   ADDING_GROUPS_TO_STATE_FAILED,
   ADDING_USER_TO_STATE,
@@ -27,11 +22,18 @@ import {
 
 
   GET_CURRENT_USER,
-  SAVE_CURRENT_USER
+  SAVE_CURRENT_USER,
+
+  GET_USER_GROUPS,
+  SAVE_USER_GROUPS,
 } from "../actions";
 
 const initialState = {
   currentUser: null,
+  userGroups: null,
+
+
+  
   currentGroup: null,
   groups: null,
   items: null,
@@ -55,6 +57,15 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         currentUser: action.payload
+      }
+
+    case GET_USER_GROUPS:
+      return state;
+
+    case SAVE_USER_GROUPS:
+      return {
+        ...state,
+        userGroups: action.payload
       }
 
     case ADDING_GROUPS_TO_STATE:

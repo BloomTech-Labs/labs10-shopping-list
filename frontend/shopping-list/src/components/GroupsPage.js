@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups, addGroup, clearCurrentGroup } from '../store/actions/rootActions';
+import {checkEmail, createGroup, getCurrentUser, getUserGroups, addGroup, clearCurrentGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
     MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
@@ -20,21 +20,14 @@ class GroupsPage extends Component{
         groupName: "",
     }
 
-    componentDidMount(){
-        let email = localStorage.getItem('email');
+    componentWillMount(){
+        this.props.getCurrentUser(localStorage.getItem('email'));
+      }
 
-        if(email && !this.props.userId){
-            // if a user is logged in and no userID is found, retrieve their user ID from the database via their email and store in local storage
-            this.props.checkEmail(email, this.props.addUserToState);
-            // the second parameter is a callback that will execute once the email check is complete
-            // in this case it is populating state with the complete user profile: email, userId, profilePicture, and name
+    componentWillReceiveProps = newProps => {
+        if(newProps.currentUser && !this.props.userGroups){
+            this.props.getUserGroups(newProps.currentUser.id);
         }
-        console.log("GROUPS => ", this.props.groups);
-        this.props.gettingGroups();
-
-        this.setState({ groups: this.props.groups})
-
-        this.props.clearCurrentGroup();
     }
 
     toggle = nr => () => {
@@ -51,8 +44,9 @@ class GroupsPage extends Component{
     }
 
     handleAddGroup = () => {
-        this.props.addGroup(this.state.groupName);
+        this.props.createGroup(this.state.groupName, this.props.currentUser.id);
         this.toggle(14);
+        this.props.getUserGroups(this.props.currentUser.id);
     }
 
     render(){
@@ -69,8 +63,8 @@ class GroupsPage extends Component{
                                 <MDBBtn color="primary" onClick={this.toggle(14)}>Create</MDBBtn>
                             </MDBCardBody>
                         </MDBCard>
-                        {this.props.groups !== null ? (
-                            this.props.groups.map((g, i) => (
+                        {this.props.userGroups !== null ? (
+                            this.props.userGroups.map((g, i) => (
                                 <MDBNavLink key={makeid()} to={`/groups/${g.id}`}>
                                     <MDBCard key={makeid()} border="primary" className="m-3" style={{ maxWidth: "18rem"}}>
                                         <MDBCardHeader key={makeid()}>{g.name}</MDBCardHeader>
@@ -109,6 +103,9 @@ const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
         //state items
+        currentUser: state.currentUser,
+        userGroups: state.userGroups,
+
         userId: state.userId,
         name: state.name,
         email: state.email,
@@ -118,5 +115,7 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    checkEmail, gettingGroups, addGroup, clearCurrentGroup,
+    checkEmail, getUserGroups, addGroup, clearCurrentGroup,
+    createGroup,
+    getCurrentUser
 })(GroupsPage);

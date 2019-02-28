@@ -41,7 +41,7 @@ groupRouter.use(checkJwt);
 groupRouter.post('/', (req, res) => {
     let group = req.body;
     groupDb.add(group).then(groupId => {
-        console.log(groupId)
+        console.log(groupId);
         const member = {
             userID: group.userID,
             groupID: groupId[0],
@@ -120,6 +120,7 @@ groupRouter.get('/:id', checkUser, (req, res) => {
  * 
  * @NOTE @checkUser middleware ensures only users with permission can access
  * their own group information
+ * also sends all group members
  * **/
 
 /**************************************************/
@@ -130,39 +131,65 @@ function fetch_group_mem(id) {
     })
 }
 
-groupRouter.get('/user/:id', checkUser, async (req, res) => {
-    const id = req.params.id;
-    const groups = [];
-
-    try {
-        const grp = await groupDb.getByUser(id);
-
-        // console.log("GRP => ", grp);
-        for (let i = 0; i < grp.length; i++) {
-            const member = await groupMemDb.getByGroup(grp[i].id);
-            // console.log("MEMBER => ", member);
-
-            const data = {
-                id: grp[i].id,
-                userID: grp[i].userID,
-                name: grp[i].name,
-                token: grp[i].token,
-                createdAt: grp[i].createdAt,
-                updatedAt: grp[i].updatedAt,
-                memberAmount: member.length,
-            };
-
-            groups.push(data);
+groupRouter.get('/user/:id', checkUser, (req, res) => {
+    let userId = req.params.id;
+    
+    groupDb.getByUser(userId).then(groups => {
+        // console.log('groups', groups);
+        
+        for(let i = 0; i < groups.length; i++){
+            groupMembersDb.getByGroup(groups[i].id).then(members => {
+                // console.log('members', members);
+                groups[i].groupMembers = members;
+                // console.log('UG', userGroups);
+                // console.log('GI', groups[i]);
+                // console.log('GROUPS', groups);
+                if(i === groups.length - 1){
+                    return res.status(200).json({groups: groups}); // returns all groups with groupmembers appended
+                }
+            }).catch(err => {
+                console.log(err);
+                return res.status(500).json({error: `Internal server error.`})
+            })
         }
-
-        return res.status(200).json({data: groups });
-
-    } catch (e) {
-        return res.status(500).json({message: "Internal Server Error", err: e})
-    }
-
+    }).catch(err=>{
+        console.log(err);
+        return res.status(500).json({error: `Internal server error.`})
+    })
 
 })
+
+
+
+//     try {
+//         const grp = await groupDb.getByUser(id);
+
+//         // console.log("GRP => ", grp);
+//         for (let i = 0; i < grp.length; i++) {
+//             const member = await groupMemDb.getByGroup(grp[i].id);
+//             // console.log("MEMBER => ", member);
+
+//             const data = {
+//                 id: grp[i].id,
+//                 userID: grp[i].userID,
+//                 name: grp[i].name,
+//                 token: grp[i].token,
+//                 createdAt: grp[i].createdAt,
+//                 updatedAt: grp[i].updatedAt,
+//                 memberAmount: member.length,
+//             };
+
+//             groups.push(data);
+//         }
+
+//         return res.status(200).json({data: groups });
+
+//     } catch (e) {
+//         return res.status(500).json({message: "Internal Server Error", err: e})
+//     }
+
+
+// })
 
 /**************************************************/
 

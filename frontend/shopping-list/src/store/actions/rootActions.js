@@ -43,6 +43,12 @@ export const GET_GROUPMEMBERS_START = 'GET_GROUPMEMBERS_START';
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const SAVE_CURRENT_USER = 'SAVE_CURRENT_USER';
 
+export const GET_USER_GROUPS = 'GET_USER_GROUPS';
+export const SAVE_USER_GROUPS = 'SAVE_USER_GROUPS';
+
+export const CREATING_GROUP = 'CREATING_GROUP';
+export const GROUP_CREATED = 'GROUP_CREATED';
+
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -401,6 +407,13 @@ export const getGroupMembers = (groupID) => dispatch => {
 
 
 
+
+
+
+
+
+
+
 export const getCurrentUser = () => {
   let token = localStorage.getItem('jwt');
     let options = {
@@ -421,4 +434,56 @@ export const getCurrentUser = () => {
       dispatch({type: ERROR})
     })
   }
+}
+
+export const getUserGroups = (userId) => {
+  let token = localStorage.getItem('jwt');
+    let options = {
+      headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.get(`${backendURL}/api/group/user/${userId}`, options);
+  
+  return dispatch => {
+    dispatch({type: GET_USER_GROUPS})
+
+    endpoint.then(res => {
+      console.log('get groups', res.data);
+      dispatch({type: SAVE_USER_GROUPS, payload: res.data.groups})
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+
+  }
+}
+
+export const createGroup = (groupName, userId) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  let group = {
+    name: groupName,
+    userID: userId
+  }
+
+  const endpoint = axios.post(`${backendURL}/api/group`, group, options);
+  return dispatch => {
+    dispatch({type: CREATING_GROUP})
+
+    endpoint.then(res => {
+      dispatch({type: GROUP_CREATED})
+      console.log(res.data);
+  }).catch(err => {
+    console.log(err);
+    dispatch({type: ERROR})
+  })
+}
+
 }
