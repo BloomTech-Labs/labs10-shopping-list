@@ -6,10 +6,56 @@ import {connect} from 'react-redux';
 
 class GroupUser extends React.Component{
 
+    componentDidMount(){
+        if(this.props.profile){
+            this.getUserTotal(this.props.profile.userID);
+        }
+    }
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            userTotal: null,
+            userNet: null,
+
+        }
+    }
+    
+    getUserTotal = (userId) => {
+        let total = 0;
+        if(this.props.items){
+            this.props.items.map(item => {
+                if(item.userID === userId){
+                    return total += item.price
+                }
+            })
+
+            this.setState({
+                userTotal: total,
+            })
+
+            this.getUserNet(total);
+        }
+    }
+
+    getUserNet = (userTotal) => {
+        let net = 0;
+        if(this.props.groupTotal){
+            net = (this.props.groupTotal - userTotal);
+            console.log('net', net);
+            this.setState({
+                userNet: net,
+            })
+        }
+    }
+
     render(){
         return(
             <div>
                 USER: {this.props.profile.name}
+                USER TOTAL: {this.state.userTotal}
+                USER NET: {this.state.userNet}
             </div>
         )
     }
@@ -21,7 +67,9 @@ const mapStateToProps = state => {
     return {
         //state items
         userId: state.userId,
-        groupUsers: state.groupUsers
+        groupUsers: state.groupUsers,
+        items: state.items,
+        groupTotal: state.groupTotal
     }
 }
 
