@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
-import {checkEmail, gettingGroups, addGroup, clearCurrentGroup } from '../store/actions/rootActions';
+import {checkEmail, gettingGroups, addGroup, clearCurrentGroup,updateGroupName } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import Navigation from "./Navigation";
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer,
-    MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
+import {
+    MDBCard,
+    MDBCardBody,
+    MDBCardTitle,
+    MDBCardText,
+    MDBBtn,
+    MDBContainer,
+    MDBCardHeader,
+    MDBModal,
+    MDBModalBody,
+    MDBModalHeader,
+    MDBModalFooter,
+    MDBRow,
+    MDBInput,
+    MDBNavLink,
+    MDBIcon,
+    MDBBadge,
+} from "mdbreact";
 
 function makeid() {
     let text = "";
@@ -18,7 +34,9 @@ function makeid() {
 class GroupsPage extends Component{
     state = {
         modal14: false,
+        modal15: false,
         groupName: "",
+        groupId: null,
     }
 
     componentDidMount(){
@@ -46,6 +64,10 @@ class GroupsPage extends Component{
         });
     }
 
+    saveGroupName = (id, name) => {
+        this.setState({groupId: id, groupName: name, modal15: true})
+    }
+
     handleInput = e => {
         this.setState({
             [e.target.name]: e.target.value
@@ -55,6 +77,17 @@ class GroupsPage extends Component{
     handleAddGroup = () => {
         this.props.addGroup(this.state.groupName);
         this.toggle(14);
+    }
+
+    handleUpdateGroupName = () => {
+        if (this.state.groupName !== '') {
+            const changes = {name: this.state.groupName};
+            this.props.updateGroupName(this.state.groupId, changes);
+
+            this.setState({modal15: false})
+        }
+
+
     }
 
     render(){
@@ -73,17 +106,22 @@ class GroupsPage extends Component{
                         </MDBCard>
                         {this.props.groups !== null ? (
                             this.props.groups.map((g, i) => (
-                                <MDBNavLink key={makeid()} to={`/groups/${g.id}`}>
-                                    <MDBCard key={makeid()} border="primary" className="m-3" style={{ maxWidth: "18rem"}}>
-                                        <MDBCardHeader key={makeid()}>{g.name}</MDBCardHeader>
+
+                                    <MDBCard key={makeid()} border="primary" className="m-3" style={{ minWidth: "14rem", maxWidth: "18rem"}}>
+                                        <MDBCardHeader key={makeid()}>{g.name} <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => this.saveGroupName(g.id, g.name)} /> <MDBIcon icon="trash" /></MDBCardHeader>
                                         <MDBCardBody key={makeid()} className="text-primary">
-                                            <MDBCardTitle key={makeid()} tag="h5">{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
+                                            <MDBCardTitle key={makeid()} tag="h5" className={"align-center"}>{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
                                             <MDBCardText key={makeid()}>
-                                                Group members go here
+                                                {
+                                                    g.members.map((h, j) => (
+                                                        <img src={h.profilePicture} alt="Avatar" className="avatar-group" />
+                                                    ))
+                                                }
                                             </MDBCardText>
+                                            <MDBNavLink key={makeid()} to={`/groups/${g.id}`}><MDBBtn>ENTER</MDBBtn></MDBNavLink>
+
                                         </MDBCardBody>
                                     </MDBCard>
-                                </MDBNavLink>
                             ))
                         ) : null}
                     </MDBRow>
@@ -99,6 +137,17 @@ class GroupsPage extends Component{
                         <MDBModalFooter>
                             <MDBBtn color="secondary" onClick={this.toggle(14)}>Close</MDBBtn>
                             <MDBBtn color="primary" onClick={this.handleAddGroup}>Create</MDBBtn>
+                        </MDBModalFooter>
+                    </MDBModal>
+
+                    <MDBModal isOpen={this.state.modal15} toggle={this.toggle(15)} centered>
+                        <MDBModalHeader toggle={this.toggle(15)}>Update Group Name</MDBModalHeader>
+                        <MDBModalBody>
+                            <MDBInput label="Change Group Name" name={"groupName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
+                        </MDBModalBody>
+                        <MDBModalFooter>
+                            <MDBBtn color="secondary" onClick={this.toggle(15)}>Close</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.handleUpdateGroupName}>Update</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
                 </MDBContainer>
@@ -120,5 +169,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    checkEmail, gettingGroups, addGroup, clearCurrentGroup,
+    checkEmail, gettingGroups, addGroup, clearCurrentGroup, updateGroupName
 })(GroupsPage);

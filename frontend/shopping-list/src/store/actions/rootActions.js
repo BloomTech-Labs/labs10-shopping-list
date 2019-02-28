@@ -27,6 +27,8 @@ export const SUBMIT_PAID_ITEMS_START = 'SUBMIT_PAID_ITEMS_START';
 export const SUBMIT_PAID_ITEMS_SUCCESS = 'SUBMIT_PAID_ITEMS_SUCCESS';
 export const SUBMIT_PAID_ITEMS_FAILED = 'SUBMIT_PAID_ITEMS_FAILED';
 export const GET_GROUPMEMBERS_START = 'GET_GROUPMEMBERS_START';
+export const CHANGE_GROUP_NAME_START = 'CHANGE_GROUP_NAME_START';
+export const CHANGE_GROUP_NAME_SUCCESS = 'CHANGE_GROUP_NAME_SUCCESS'
 
 
 let backendURL;
@@ -302,4 +304,26 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
 
 export const getGroupMembers = (groupID) => dispatch => {
   dispatch({type: GET_GROUPMEMBERS_START});
+}
+
+export const updateGroupName = (groupID, changes) => dispatch => {
+  dispatch({type: CHANGE_GROUP_NAME_START});
+
+  const token = localStorage.getItem('jwt');
+  const endpoint = `${backendURL}/api/group/${groupID}`;
+
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  axios.put(endpoint, changes, options).then(res => {
+    console.log("RES => ", res);
+    dispatch({ type: CHANGE_GROUP_NAME_SUCCESS});
+  }).then(() => {
+    gettingGroups()(dispatch)
+  }).catch(err => {
+    console.log("ERR => ", err);
+  })
 }
