@@ -260,4 +260,30 @@ groupRouter.delete('/remove', (req, res) => {
 
 })
 
+/**************************************************/
+
+/** GET/ADD user to group by USER ID and GROUP ID
+ * **/
+
+/**************************************************/
+groupRouter.get('/invite/:userId::groupId', (req, res) => {
+    const user = req.params.userId;
+    const group = req.params.groupId;
+    const groupMem = {
+        userID: user,
+        groupID: group};
+
+    groupMemDb.add(groupMem).then(id => {
+        return res.status(200).json({message: `User added to group.`, userId: user, groupId: group, id: id[0]});
+    }).catch(err => {
+        const error = {
+            message: `Error adding user to group.`,
+            data: {
+                error: err
+            }
+        }
+        return res.status(500).json(error);
+    });
+})
+
 module.exports = groupRouter;
