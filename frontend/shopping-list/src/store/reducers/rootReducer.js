@@ -43,6 +43,7 @@ const initialState = {
   userTotal: null,
   markedItems: null,
   needsRefresh: false,
+  itemPurchasedText: null,
 };
 
 export const rootReducer = (state = initialState, action) => {

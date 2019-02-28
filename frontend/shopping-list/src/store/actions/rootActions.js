@@ -37,6 +37,8 @@ export const GROUP_TOTAL_SUMMED = 'GROUP_TOTAL_SUMMED';
 export const MARK_ITEM = 'MARK_ITEM';
 export const UNMARK_ITEM = 'UNMARK_ITEM';
 export const START_MARK = 'START_MARK';
+export const GET_GROUPMEMBERS_START = 'GET_GROUPMEMBERS_START';
+
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -74,8 +76,8 @@ export const checkEmail = () => {
 
   const fetchUserId = axios.get(`${backendURL}/api/user/check/getid`, options);
 
-    return (dispatch) => {
-      dispatch({type: CHECKING_EMAIL});
+  return (dispatch) => {
+    dispatch({type: CHECKING_EMAIL});
 
     fetchUserId.then(res => {
       dispatch({type: EMAIL_CHECKED, payload: res.data});
@@ -217,7 +219,7 @@ export const clearCurrentGroup = () => {
  * @param id - Group ID
  */
 export const addItem = (item) => dispatch => {
-  dispatch({ type: ADD_ITEM_START });
+  dispatch({type: ADD_ITEM_START});
 
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/item`;
@@ -234,7 +236,7 @@ export const addItem = (item) => dispatch => {
       })
       .catch(err => {
         console.log("ADDING ITEM ERR => ", err);
-        dispatch({ type: ADD_ITEM_FAILED, payload: err });
+        dispatch({type: ADD_ITEM_FAILED, payload: err});
       });
 }
 
@@ -253,14 +255,14 @@ export const updateItemPurchased = (id) => dispatch => {
  * @param total - Total amount the user paid for all items
  */
 export const submitPaidItems = (items, userID, total) => dispatch => {
-  dispatch({ type: SUBMIT_PAID_ITEMS_START });
+  dispatch({type: SUBMIT_PAID_ITEMS_START});
 
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/grouphistory/`;
 
   const options = {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     }
   };
 
@@ -288,17 +290,17 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
           // Update the item
           axios.put(itemEndpoint, item, options)
               .then(res1 => {
-                dispatch({ type: SUBMIT_PAID_ITEMS_SUCCESS });
+                dispatch({type: SUBMIT_PAID_ITEMS_SUCCESS});
               })
               .catch(errr => {
                 console.log("ADDING ITEM ERR => ", errr);
-                dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: errr });
+                dispatch({type: SUBMIT_PAID_ITEMS_FAILED, payload: errr});
               })
 
         })
-        .catch( err => {
+        .catch(err => {
           console.log("ADDING HISTORY ERR => ", err);
-          dispatch({ type: SUBMIT_PAID_ITEMS_FAILED, payload: err });
+          dispatch({type: SUBMIT_PAID_ITEMS_FAILED, payload: err});
         })
   })
 }
@@ -385,4 +387,8 @@ export const unMarkItem = item => {
     item.purchasedBy = null;
     dispatch({type: UNMARK_ITEM, payload: item})
   }
+  }
+  
+export const getGroupMembers = (groupID) => dispatch => {
+  dispatch({type: GET_GROUPMEMBERS_START});
 }

@@ -19,6 +19,7 @@ export {
   SUBMIT_PAID_ITEMS_START,
   SUBMIT_PAID_ITEMS_SUCCESS,
   SUBMIT_PAID_ITEMS_FAILED,
+  GET_GROUPMEMBERS_START,
   addItem,
   getItems,
   addGroup,
@@ -44,4 +45,5 @@ export {
   MARK_ITEM,
   UNMARK_ITEM,
   START_MARK,
+    getGroupMembers,
 } from "./rootActions";
