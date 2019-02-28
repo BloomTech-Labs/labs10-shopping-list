@@ -356,7 +356,7 @@ class GroupsPage extends Component{
                             }
                             {
                                 this.state.inviToggle === true ? <div className={"invite-button"}>
-                                    <MDBBtn color="primary">Invite</MDBBtn>
+                                    <MDBBtn color="primary">Send Invite</MDBBtn>
                                 </div> : null
                             }
 
