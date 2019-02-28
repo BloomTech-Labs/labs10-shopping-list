@@ -1,61 +1,33 @@
 // collect user's total and net values
-import React from 'react';
+import React, { useReducer } from 'react';
 import {getUserProfile} from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 class GroupUser extends React.Component{
 
-    componentDidMount(){
-        if(this.props.profile){
-            this.getUserTotal(this.props.profile.userID);
-        }
-    }
-
-    constructor(props){
-        super(props);
-
-        this.state = {
-            userTotal: null,
-            userNet: null,
-
-        }
-    }
-    
-    getUserTotal = (userId) => {
-        let total = 0;
-        if(this.props.items){
-            this.props.items.map(item => {
-                if(item.userID === userId){
-                    return total += item.price
-                }
-            })
-
-            this.setState({
-                userTotal: total,
-            })
-
-            this.getUserNet(total);
-        }
-    }
-
-    getUserNet = (userTotal) => {
-        let net = 0;
-        if(this.props.groupTotal){
-            net = (this.props.groupTotal - userTotal);
-            console.log('net', net);
-            this.setState({
-                userNet: net,
-            })
-        }
-    }
-
     render(){
+        
+        let userTotal = 0;
+        let userNet = 0;
+
+
+        if(this.props.items){
+            console.log(this.props.items);
+            for(let i = 0; i < this.props.items.length; i++){
+                if(this.props.items[i].purchasedBy === Number(this.props.profile.id)){
+                    console.log('match');
+                    console.log('price', this.props.items[i].price)
+                    userTotal = userTotal + Number(this.props.items[i].price);
+                }
+            }
+            userNet = this.props.groupTotal - userTotal;
+        }
         return(
             <div>
                 USER: {this.props.profile.name}
-                USER TOTAL: {this.state.userTotal}
-                USER NET: {this.state.userNet}
+                USER TOTAL: {userTotal}
+                USER NET: {userNet}
             </div>
         )
     }
@@ -69,7 +41,8 @@ const mapStateToProps = state => {
         userId: state.userId,
         groupUsers: state.groupUsers,
         items: state.items,
-        groupTotal: state.groupTotal
+        groupTotal: state.groupTotal,
+        needsNewItems: state.needsNewItems,
     }
 }
 

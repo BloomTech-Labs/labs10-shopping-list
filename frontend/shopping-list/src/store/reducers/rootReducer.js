@@ -22,6 +22,7 @@ import {
   ADD_ITEM_START,
   ADD_ITEM_SUCCESS,
 } from "../actions";
+import { isBuffer } from "util";
 
 const initialState = {
   userId: null,
@@ -37,6 +38,7 @@ const initialState = {
   groupUserProfiles: null,
   groupTotal: null,
   needsNewItems: false,
+  userTotal: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -101,9 +103,9 @@ export const rootReducer = (state = initialState, action) => {
       let groupTotal = 0;
       let items = action.payload;
       if(items){
-          items.map(item => {
-              return groupTotal += item.price;
-          })
+          for(let i = 0; i < items.length; i++){
+            groupTotal += items[i].price;
+          }
         }
       return { 
         ...state, 
