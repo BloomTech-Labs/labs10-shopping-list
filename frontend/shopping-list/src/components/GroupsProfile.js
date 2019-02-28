@@ -51,7 +51,7 @@ class GroupsProfile extends Component{
             this.props.getGroupItems(this.props.match.params.id);
         } 
         
-        if(!this.props.groupHistory){
+        if(!this.props.groupHistory || this.props.groupHistory.length === 0){
             console.log('\n GROUP HISTORY FETCH ==>')
             this.props.getGroupHistory(this.props.match.params.id);
         }
@@ -75,6 +75,7 @@ class GroupsProfile extends Component{
     componentWillReceiveProps = newProps => {
         if(newProps.needsNewItems){
             this.props.getGroupItems(this.props.match.params.id);
+            this.props.getGroupHistory(this.props.match.params.id);
         }
 
         if(newProps.needsNewHistory){

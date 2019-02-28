@@ -600,7 +600,7 @@ export const checkOut = info => {
 export const getGroupHistory = groupId => {
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/grouphistory/total/group/${groupId}`;
-
+  console.log('GET HISTORY')
   const options = {
       headers: {
           Authorization: `Bearer ${token}`
