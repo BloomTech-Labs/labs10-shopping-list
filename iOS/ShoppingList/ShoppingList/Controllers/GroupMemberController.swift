@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import Auth0
 
 
 class GroupMemberController {
