@@ -285,7 +285,7 @@ class GroupsPage extends Component{
         // Gather histories
         const histories = this.state.groupHistory;
         let total = this.calculateTotal();
-        console.log("TOTAL => ", total);
+        // console.log("TOTAL => ", total);
 
         return (
             <div>
@@ -350,6 +350,7 @@ class GroupsPage extends Component{
                                                                 label="email"
                                                                 type="email"
                                                                 name="email"
+                                                                onChange={this.handleInput}
                                                             />
                                                             <MDBBtn color="primary">
                                                                 Submit
