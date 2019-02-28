@@ -41,10 +41,10 @@ export {
   FETCHING_USER_PROFILE,
   USER_PROFILE_FETCHED,
   GROUP_TOTAL_SUMMED,
-  MARK_ITEM,
-  UNMARK_ITEM,
-  START_MARK,
-  getGroupMembers,
+  getGroupUsers,
+  getUserProfile,
+
+
 
   GET_CURRENT_USER,
   SAVE_CURRENT_USER,
@@ -74,5 +74,8 @@ export {
   SAVE_GROUP_HISTORY,
 
   GET_GROUP_USERS,
-  SAVE_GROUP_USERS
+  SAVE_GROUP_USERS,
+
+  GET_USER_PROFILE,
+  SAVE_USER_PROFILE,
 } from "./rootActions";

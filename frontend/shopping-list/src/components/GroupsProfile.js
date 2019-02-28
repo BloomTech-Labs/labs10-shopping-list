@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {checkEmail, getSingleGroup, addGroup, getGroupHistory, getGroupItems, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems } from '../store/actions/rootActions';
+import {checkEmail, getSingleGroup, addGroup, getUserProfile, getGroupUsers, getGroupHistory, getGroupItems, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import "./Styles/Group.css";
 import "./Styles/Scrollbar.css";
@@ -76,6 +76,13 @@ class GroupsProfile extends Component{
 
         if(newProps.needsNewHistory || this.props.groupHistory.length === 0){
             this.props.getGroupHistory(this.props.match.params.id);
+        }
+
+        if(newProps.groupUsers.length > 0 && this.props.groupUserProfiles){
+            console.log(newProps.groupUsers)
+            for(let i = 0; i < newProps.groupUsers.length; i++){
+                this.props.getUserProfile(newProps.groupUsers[i].userID);
+            }
         }
     }
 
@@ -232,19 +239,22 @@ class GroupsProfile extends Component{
 const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
-        //state items
-        currentGroup: state.currentGroup,
-
-
-
-        needsNewItems: state.needsNewItems,
-        groupItems: state.groupItems,
-        currentUser: state.currentUser,
+        // group state
+        groupUserProfiles: state.groupUserProfiles,
         groupUsers: state.groupUsers,
         groupHistory: state.groupHistory,
+
+        // item state
+        needsNewItems: state.needsNewItems,
+        groupItems: state.groupItems,
+
+        // current user state
+        currentUser: state.currentUser,
+        
+        
     }
 }
 
 export default connect(mapStateToProps, {
-    gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory
+    gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory, getGroupUsers, getUserProfile,
 })(GroupsProfile);

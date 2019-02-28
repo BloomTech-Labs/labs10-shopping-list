@@ -33,7 +33,9 @@ import {
   SAVE_GROUP_HISTORY,
 
   GET_GROUP_USERS,
-  SAVE_GROUP_USERS
+  SAVE_GROUP_USERS,
+  SAVE_USER_PROFILE,
+  GET_USER_PROFILE
 
 
 } from "../actions";
@@ -151,16 +153,27 @@ export const rootReducer = (state = initialState, action) => {
         needsNewHistory: false
       }
 
+    case GET_GROUP_USERS:
+      return state;
 
-      case USER_GROUPS_FETCHED:
+
+    case SAVE_GROUP_USERS:
       return{
         ...state,
         groupUsers: action.payload,
       }
 
-    case USER_PROFILE_FETCHED:
+    case GET_USER_PROFILE:
+      return state;
+
+    case SAVE_USER_PROFILE:
       let profileArray = [];
+      if(state.groupUserProfiles.length > 0){
+        profileArray = state.groupUserProfiles;
+      }
+
       profileArray.push(action.payload);
+      
       return {
         ...state,
         groupUserProfiles: profileArray,
