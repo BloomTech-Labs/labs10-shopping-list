@@ -227,15 +227,27 @@ userRouter.get('/check/getid', (req, res) => {
             });
             
             return userDb.add(newUser).then(id => {
-                console.log('newuserID', id[0]);
-                return res.status(201).json({message: `New user added to database with ID ${id}.`, id: id[0]});
+                console.log('newuser', id[0])
+                return userDb.getById(id).then(profile => {
+                    console.log('profile', profile);
+                    return res.status(201).json({message: `New user added to database with ID ${id}.`, profile: profile[0]});
+                }).catch(err => {
+                    console.log(err);
+                    res.status(404).json({error: `Error adding user/no user found.`})
+                })
             })
             .catch(err => {
                 console.log(err);
                 return res.status(500).json({error: `Error adding new user DB entry.`})
             })
         } else {
-            console.log('user found', id[0]);
+            console.log('user found', id[0].id);
+            userDb.getById(id[0].id).then(profile => {
+                return res.status(200).json({profile: profile[0]})
+            }).catch(err => { 
+                console.log(err);
+                res.status(404).json({error: `Nothing there.`})
+            })
             let mailOptions = {
                 from: `${senderEmail}`,
                 to: `${email}`,
@@ -250,7 +262,6 @@ userRouter.get('/check/getid', (req, res) => {
             //         console.log('Email sent: '+info.response);
             //     }
             // });
-            return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
         }
     })
     .catch(err => {

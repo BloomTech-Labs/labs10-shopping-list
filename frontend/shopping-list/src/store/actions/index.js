@@ -45,5 +45,8 @@ export {
   MARK_ITEM,
   UNMARK_ITEM,
   START_MARK,
-    getGroupMembers,
+  getGroupMembers,
+
+  GET_CURRENT_USER,
+  SAVE_CURRENT_USER
 } from "./rootActions";

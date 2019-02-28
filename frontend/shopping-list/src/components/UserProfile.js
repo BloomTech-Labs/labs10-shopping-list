@@ -1,26 +1,15 @@
 import React from 'react';
-import {checkEmail, addUserToState} from '../store/actions/rootActions';
+import {getCurrentUser} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import './Styles/UserProfile.css';
 
 class UserProfile extends React.Component{
-   async componentDidMount(){
-        if(localStorage.getItem('email') && this.props.userId === null){
-            // if a user is logged in and no userID is found, call the checkemail function
-            await this.props.checkEmail();
+   componentDidMount(){
+        if(!this.props.currentUser){
+            // find a user if none in state
+            this.props.getCurrentUser();
         }
-    }
-
-    componentWillReceiveProps = newProps => {
-        console.log('this vs new', this.props, newProps)
-        if(newProps.emailChecked !== this.props.emailChecked && newProps.userId){
-            this.handleProfileFetch(newProps.userId);
-        }
-    }
-
-    handleProfileFetch = id => {
-        this.props.addUserToState(id);
     }
 
     render(){
@@ -63,13 +52,10 @@ const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
         //state items
-        userId: state.userId,
         currentUser: state.currentUser,
-        emailChecked: state.emailChecked,
     }
 }
 
 export default connect(mapStateToProps, {
-    checkEmail,
-    addUserToState,
+    getCurrentUser,
 })(UserProfile);

@@ -88,6 +88,7 @@ class GroupsPage extends Component{
         };
 
         axios.get(endpoint, options).then(res => {
+            console.log('history', res.data);
             this.setState({ groupHistory: res.data.data})
         }).catch(err => console.log(err));
     }
@@ -250,7 +251,7 @@ class GroupsPage extends Component{
                                                             <MDBBadge color="primary"><MDBIcon icon="check" /> </MDBBadge>
                                                         </button>
                                                         <p className={"item-name"}>{item.name}</p>
-                                                        <button type="button" className="close" aria-label="Close">*/}
+                                                        <button type="button" className="close" aria-label="Close">
                                                             <span aria-hidden="true">×</span>
                                                         </button>
                                                         </MDBListGroupItem>

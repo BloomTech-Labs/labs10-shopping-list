@@ -17,19 +17,6 @@ class Navigation extends React.Component{
         activeTabClassname: "home"
     }
     
-    componentDidMount(){
-        // populate state with user information
-        if(!this.props.userId && localStorage.getItem('email')){
-            this.props.checkEmail();
-        }
-    }
-
-    componentWillReceiveProps = newProps => {
-        if(newProps.checkEmail !== this.props.checkEmail && this.props.userId){
-            this.props.addUserToState();
-        }
-    }
-    
     // Toggles dropdown menus for MDB
     toggleCollapse = collapseID => () =>
         this.setState(prevState => ({
@@ -43,9 +30,7 @@ class Navigation extends React.Component{
 
     render(){
         // Gather user id to determine if user is logged in or not
-        const id = localStorage.getItem("userId");
-        let isLogged = false;
-        if (id !== null) isLogged = true;
+        let isLoggedIn = localStorage.getItem("isLoggedIn");
 
         // Gather the url pathname to set active class to proper link
         const pathname = this.props.location.pathname;
@@ -65,7 +50,7 @@ class Navigation extends React.Component{
                         <MDBNavItem active={pathname === "/" ? "active" : null} >
                             <MDBNavLink to="/">Home</MDBNavLink>
                         </MDBNavItem>
-                        {isLogged ? (
+                        {isLoggedIn ? (
                             <MDBNavItem active={pathname === "/groups" ? "active" : null} >
                                 <MDBNavLink to="/groups">Groups</MDBNavLink>
                             </MDBNavItem>
@@ -75,7 +60,7 @@ class Navigation extends React.Component{
 
                     <MDBNavbarNav right>
                         <MDBNavItem>
-                            {isLogged ? (
+                            {isLoggedIn ? (
                                 <MDBDropdown>
                                     <MDBDropdownToggle className="dopdown-toggle" nav>
                                         <img src={localStorage.getItem("img_url")} className="rounded-circle z-depth-0"

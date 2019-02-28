@@ -81,6 +81,7 @@ class Auth {
     localStorage.removeItem('jwt');
     localStorage.removeItem('img_url');
     localStorage.removeItem('userId');
+    localStorage.removeItem('isLoggedIn');
   }
 }
 

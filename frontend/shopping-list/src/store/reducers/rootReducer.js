@@ -24,17 +24,17 @@ import {
   MARK_ITEM,
   UNMARK_ITEM,
   START_MARK,
+
+
+  GET_CURRENT_USER,
+  SAVE_CURRENT_USER
 } from "../actions";
 
 const initialState = {
-  userId: null,
-  name: null,
-  email: null,
-  profilePicture: null,
+  currentUser: null,
   currentGroup: null,
   groups: null,
   items: null,
-  currentUser: null,
   emailChecked: false,
   groupUsers: null,
   groupUserProfiles: null,
@@ -48,34 +48,14 @@ const initialState = {
 
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TEST_START:
-      return state;
-    case TEST_SUCCESS:
-      return state;
-    case TEST_FAILURE:
+    case GET_CURRENT_USER:
       return state;
 
-    case CHECKING_EMAIL:
-      return state;
-
-    case EMAIL_CHECKED:
-      // console.log('emc payload', action.payload.id);
-      localStorage.setItem('userId', action.payload.id);
+    case SAVE_CURRENT_USER:
       return {
         ...state,
-        emailChecked: true,
-        userId: action.payload.id
+        currentUser: action.payload
       }
-
-    case ADDING_USER_TO_STATE:
-      return state;
-
-    case USER_ADDED_TO_STATE:
-      return {
-        ...state,
-        currentUser: action.payload,
-      }
-
 
     case ADDING_GROUPS_TO_STATE:
       return {

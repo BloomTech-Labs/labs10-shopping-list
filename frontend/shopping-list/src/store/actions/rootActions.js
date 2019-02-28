@@ -40,6 +40,10 @@ export const START_MARK = 'START_MARK';
 export const GET_GROUPMEMBERS_START = 'GET_GROUPMEMBERS_START';
 
 
+export const GET_CURRENT_USER = 'GET_CURRENT_USER';
+export const SAVE_CURRENT_USER = 'SAVE_CURRENT_USER';
+
+
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
   backendURL = `http://localhost:9000`
@@ -391,4 +395,30 @@ export const unMarkItem = item => {
   
 export const getGroupMembers = (groupID) => dispatch => {
   dispatch({type: GET_GROUPMEMBERS_START});
+}
+
+
+
+
+
+export const getCurrentUser = () => {
+  let token = localStorage.getItem('jwt');
+    let options = {
+      headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.get(`${backendURL}/api/user/check/getid`, options);
+
+  return dispatch => {
+    dispatch({type: GET_CURRENT_USER});
+
+    endpoint.then(res => {
+      dispatch({type: SAVE_CURRENT_USER, payload: res.data.profile});
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+  }
 }
