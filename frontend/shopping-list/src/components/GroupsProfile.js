@@ -289,7 +289,7 @@ class GroupsPage extends Component{
                         <MDBBtn color="primary" onClick={() => {this.toggleListClass()}} >List</MDBBtn>
                         <MDBBtn color="primary" onClick={() => {this.toggleHistClass()}} >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
-                        <MDBBtn color="primary" onClick={() => {this.toggleTotal()}} >Total</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleTotal()}} >{this.state.totalToggle ? "TOTAL" : "NET"}</MDBBtn>
                     </div>
                     <div className={"group-profile-header-title"}><h3></h3></div>
                     <div className={"group-profile-columns"}>
