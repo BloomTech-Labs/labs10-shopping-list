@@ -559,15 +559,15 @@ export const checkOut = info => {
     itemIds.push(info.cartItems[i].id);
   }
 
-  itemIds = itemIds.toString(',');
+  // itemIds = itemIds.toString(',');
   console.log(itemIds, 'itemIds');
 
   let trip = {
     userID: Number(info.userId),
     groupID: Number(info.groupId),
-    itemID: itemIds,
-    total: info.amount,
-    purchasedOn: new Date(),
+    itemID: Number(itemIds[0]),
+    total: Number(info.amount),
+    purchasedOn: moment().format(),
   }
 
 
