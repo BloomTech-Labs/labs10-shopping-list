@@ -29,10 +29,11 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
                     UI{self.updateViews()}
                 }
                 
+                //GroupController.newGroup(withName: "Yvette's Group", byUserID: userID) { (success) in
+                
                 
                 let usersCon = UserController()
-                
-                
+
                 usersCon.getUser(forID: userID) { (user) in
                     if let users = user {
                         /*Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
@@ -43,8 +44,8 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
                 }
             }
         }
-    }
-    
+   // }
+}
     
     private func updateViews() {
         if let name = selectedGroup {

@@ -24,6 +24,8 @@
 		447BEE43221F473300FA1D82 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447BEE42221F473300FA1D82 /* SessionManager.swift */; };
 		44A167FF22264D5500227DFB /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A167FE22264D5500227DFB /* NavigationController.swift */; };
 		44A16801222746E600227DFB /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A16800222746E600227DFB /* ItemController.swift */; };
+		44A16803222766C600227DFB /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A16802222766C600227DFB /* History.swift */; };
+		44A1680522276F1000227DFB /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A1680422276F1000227DFB /* HistoryController.swift */; };
 		960FBF63221C26220076C662 /* ManageGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */; };
 		960FBF65221C27050076C662 /* AccountInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF64221C27050076C662 /* AccountInformationViewController.swift */; };
 		960FBF68221C31E60076C662 /* AboutShopTrakTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */; };
@@ -94,6 +96,8 @@
 		447BEE42221F473300FA1D82 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		44A167FE22264D5500227DFB /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		44A16800222746E600227DFB /* ItemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
+		44A16802222766C600227DFB /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		44A1680422276F1000227DFB /* HistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageGroupsTableViewController.swift; sourceTree = "<group>"; };
 		960FBF64221C27050076C662 /* AccountInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInformationViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +193,7 @@
 				44A16800222746E600227DFB /* ItemController.swift */,
 				118646DF221DCE9B00D0F04B /* UserController.swift */,
 				112430AF221631350081784C /* SaveItem.swift */,
+				44A1680422276F1000227DFB /* HistoryController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -239,6 +244,7 @@
 				118646D5221CA93900D0F04B /* Item.swift */,
 				118646D7221CA9D900D0F04B /* User.swift */,
 				118646DB221CAA5600D0F04B /* GroupMember.swift */,
+				44A16802222766C600227DFB /* History.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -591,6 +597,7 @@
 				969A840B2215C99A0003BB37 /* UIViewController+Chameleon.m in Sources */,
 				969A84182215C99A0003BB37 /* Nib+UIViewController.swift in Sources */,
 				96476B502215D41300E57EB9 /* ShoppingList.xcdatamodeld in Sources */,
+				44A16803222766C600227DFB /* History.swift in Sources */,
 				969A840E2215C99A0003BB37 /* Reusable+NSTableView.swift in Sources */,
 				9691AB572225B07600C1EE1E /* GroupsPopoverView.swift in Sources */,
 				969A84102215C99A0003BB37 /* Storyboard+NSViewController.swift in Sources */,
@@ -607,6 +614,7 @@
 				969A841F2215C99A0003BB37 /* ViewLoadBeforeInject.swift in Sources */,
 				969A84062215C99A0003BB37 /* UIView+ChameleonPrivate.m in Sources */,
 				969A84132215C99A0003BB37 /* Nib.swift in Sources */,
+				44A1680522276F1000227DFB /* HistoryController.swift in Sources */,
 				96DE3033221637FE00213C3E /* MainViewController.swift in Sources */,
 				119B303D2225ABC300DF93E6 /* GroupMemberController.swift in Sources */,
 				96DE3034221637FE00213C3E /* LoginViewController.swift in Sources */,
