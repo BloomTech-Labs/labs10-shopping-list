@@ -41,5 +41,6 @@ export {
   checkEmail,
   getGroupMembers,
   updateGroupName,
-  removeGroup
+  removeGroup,
+  SENDING_INVITE
 } from "./rootActions";

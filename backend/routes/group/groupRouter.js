@@ -354,7 +354,7 @@ groupRouter.get('/invite/:userId::groupId', (req, res) => {
  * **/
 
 /**************************************************/
-groupRouter.get('/invite/email', (req, res) => {
+groupRouter.post('/invite/email', (req, res) => {
     let email = req.body.email;
     let link = req.body.link;
 

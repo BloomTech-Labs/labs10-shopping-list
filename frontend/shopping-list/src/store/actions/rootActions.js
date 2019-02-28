@@ -321,14 +321,26 @@ export const invite = (groupID, email) => dispatch => {
   }
   axios.get(`${backendURL}/api/user/email/${email}`, options).then( response => {
     console.log(response.data);
+    let frontendURL;
+    if(process.env.NODE_ENV === 'development'){
+      frontendURL = 'http://localhost:3000';
+    }else{
+      frontendURL = 'https://labs10-shopping-list.netlify.com';
+    }
+    const body = {
+      email: `${email}`,
+      link: `${frontendURL}/group/invite/${response.data.id}:${groupID}`
+    }
+    axios.post(`${endpoint}`, body, options).then( response => {
+      console.log(response.data);
+    }).catch(err => {
+      console.log("Error occurred when trying to send invitation =>", err);
+      dispatch({type: ERROR});
+    })
   }).catch(err => {
     console.log("Error occurred when trying to get recipient's userID =>", err);
     dispatch({type: ERROR});
   })
-  const body = {
-    email: `${email}`,
-    link: `${backendURL}/group/invite/:${groupID}`
-  }
 }
 
 export const getGroupMembers = (groupID) => dispatch => {
