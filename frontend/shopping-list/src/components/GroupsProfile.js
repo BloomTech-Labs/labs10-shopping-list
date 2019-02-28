@@ -292,7 +292,7 @@ class GroupsPage extends Component{
                     <div className={"group-profile-header"}>
                         <MDBBtn color="primary" onClick={() => {this.toggleListClass()}} >List</MDBBtn>
                         <MDBBtn color="primary" onClick={() => {this.toggleHistClass()}} >History</MDBBtn>
-                        <MDBBtn color="primary" >Invite</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleInviClass()}} >Invite</MDBBtn>
                         <MDBBtn color="primary" onClick={() => {this.toggleTotal()}} >Total</MDBBtn>
                     </div>
                     <div className={"group-profile-header-title"}><h3></h3></div>
@@ -316,7 +316,10 @@ class GroupsPage extends Component{
                                                         </MDBListGroupItem>
                                                     )) : null
                                                 }
-                                            </MDBListGroup> : <div className={"history-list"}>
+                                            </MDBListGroup> : null
+                                        }
+                                        {
+                                            this.state.histToggle === true ?<div className={"history-list"}>
                                                 {
                                                     histories !== null ? histories.map((itm,i) => (
                                                         <div>
@@ -333,12 +336,14 @@ class GroupsPage extends Component{
                                                                 <br />
                                                             </MDBListGroup>
                                                         </div>
-
-
-
                                                     )) : <p>NULL</p>
                                                 }
-                                            </div>
+                                            </div> : null
+                                        }
+                                        {
+                                            this.state.inviToggle === true ? <div className={"invitation"}>
+                                                <h1>Invitation</h1>
+                                            </div> : null
                                         }
 
                                     </MDBContainer>
@@ -347,6 +352,11 @@ class GroupsPage extends Component{
                             {
                                 this.state.listToggle === true ? <div className={"group-profile-list-button"}>
                                     <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
+                                </div> : null
+                            }
+                            {
+                                this.state.inviToggle === true ? <div className={"invite-button"}>
+                                    <MDBBtn color="primary">Invite</MDBBtn>
                                 </div> : null
                             }
 
