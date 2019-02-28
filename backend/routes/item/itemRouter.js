@@ -168,7 +168,7 @@ itemRouter.delete('/:id', (req, res) => {
     const id = req.params.id;
 
     itemDb.remove(id).then(status => {
-        if (status.length >= 1) {
+        if (status.length >= 1 || status === 1) {
             return res.status(200).json({message: "Item removed successfully", id: status[0]})
         }
 

@@ -34,7 +34,9 @@ import {
   ITEM_CREATED,
 
   UPDATE_ITEM,
-  ITEM_UPDATED
+  ITEM_UPDATED,
+  DELETE_ITEM,
+  ITEM_DELETED
 } from "../actions";
 
 const initialState = {
@@ -103,6 +105,15 @@ export const rootReducer = (state = initialState, action) => {
       return state;
 
     case ITEM_UPDATED:
+      return {
+        ...state,
+        needsNewItems: true
+      }
+
+    case DELETE_ITEM:
+      return state;
+
+    case ITEM_DELETED:
       return {
         ...state,
         needsNewItems: true

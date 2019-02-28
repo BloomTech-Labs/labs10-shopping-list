@@ -58,6 +58,9 @@ export const ITEM_CREATED = 'ITEM_CREATED';
 export const UPDATE_ITEM = 'UPDATE_ITEM';
 export const ITEM_UPDATED = 'ITEM_UPDATED';
 
+export const DELETE_ITEM = 'DELETE_ITEM';
+export const ITEM_DELETED = 'ITEM_DELETED';
+
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -538,6 +541,34 @@ export const updateItem = item => {
       dispatch({type: ERROR})
     })
   }
+}
+
+export const deleteItem = item => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  let itemId = item.id;
+  console.log('itemid', item.id)
+
+  const endpoint = axios.delete(`${backendURL}/api/item/${itemId}`, options);
+
+  return dispatch => {
+    dispatch({type: DELETE_ITEM})
+    endpoint.then(res => {
+      console.log(res.data);
+      dispatch({type: ITEM_DELETED})
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+  }
+
+  
+
 }
 
 export const getGroupHistory = groupId => {

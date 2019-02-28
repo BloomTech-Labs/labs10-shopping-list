@@ -60,6 +60,9 @@ export {
   ITEM_CREATED,
 
   UPDATE_ITEM,
-  ITEM_UPDATED
+  ITEM_UPDATED,
+
+  DELETE_ITEM,
+  ITEM_DELETED,
 
 } from "./rootActions";

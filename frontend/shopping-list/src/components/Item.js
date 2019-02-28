@@ -1,5 +1,5 @@
 import React from 'react';
-import {purchaseItem, updateItem, getItems, markItemForPurchase, unMarkItem} from '../store/actions/rootActions';
+import {purchaseItem, updateItem, deleteItem, getItems, markItemForPurchase, unMarkItem} from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import moment from 'moment';
@@ -53,6 +53,11 @@ class Item extends React.Component {
         })
     }
 
+    handleDelete = event => {
+        event.preventDefault();
+        this.props.deleteItem(this.props.item);
+    }
+
     render(){
         if(this.props.item.purchased === 1){
             return null;
@@ -61,9 +66,9 @@ class Item extends React.Component {
                 <div className = 'item-container' onDoubleClick = {this.handleEdit} key = {this.props.key}>
                 {this.state.isEditing === false ? 
                 (
-                    <div className = 'item-row'><h2>{this.props.item.name}</h2><button>Add to Cart</button></div>
+                    <div className = 'item-row'><span><h2>{this.props.item.name}</h2></span><button onClick = {this.handleDelete}>Delete</button><button>Add to Cart</button></div>
                 ) : (<div>
-                    <form onSubmit = {this.handleClickOutside}><input type = 'text' name = 'item' value = {this.state.item} onChange = {this.handleChange}></input>
+                    <form className = 'edit-form' onSubmit = {this.handleClickOutside}><input type = 'text' name = 'item' value = {this.state.item} onChange = {this.handleChange}></input>
                     <button type = 'submit'>Submit Changes</button></form>
                     </div>)}
                 </div>
@@ -85,4 +90,5 @@ const mapStateToProps = state => {
 export default withRouter(connect(mapStateToProps, {
     // actions
     updateItem,
+    deleteItem,
 })(Item));
