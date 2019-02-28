@@ -21,9 +21,5 @@
 
 .item-form input[name='item']{
     width: 100%;
-}
-
-
-.item-list button {
-    max-width: fit-content;
+    padding: 5px;
 }

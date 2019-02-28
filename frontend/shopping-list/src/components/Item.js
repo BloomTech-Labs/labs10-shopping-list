@@ -26,7 +26,6 @@ class Item extends React.Component {
 
     handleClickOutside = event => {
         // event.preventDefault();
-        console.log(event);
         if(event.target.name === 'item'){
             return;
         } else {
@@ -62,10 +61,10 @@ class Item extends React.Component {
                 <div className = 'item-container' onDoubleClick = {this.handleEdit} key = {this.props.key}>
                 {this.state.isEditing === false ? 
                 (
-                    <h2>{this.props.item.name}</h2>
+                    <div className = 'item-row'><h2>{this.props.item.name}</h2><button>Add to Cart</button></div>
                 ) : (<div>
-                    <input type = 'text' name = 'item' value = {this.state.item} onChange = {this.handleChange} onSubmit = {this.handleClickOutside}></input>
-                    <button type = 'submit'>Submit Changes</button>
+                    <form onSubmit = {this.handleClickOutside}><input type = 'text' name = 'item' value = {this.state.item} onChange = {this.handleChange}></input>
+                    <button type = 'submit'>Submit Changes</button></form>
                     </div>)}
                 </div>
             )

@@ -98,7 +98,7 @@ class ItemList extends React.Component{
             <div className = 'item-form'>
             <form onSubmit = {this.handleSubmit}>
                 <input type = 'text' name = 'item' placeholder = 'Add an item' value = {this.state.item} onChange = {this.handleChange}/>
-                <button type = 'submit'>Add Item</button>
+                <button type = 'submit'>Add To List</button>
             </form>
 
             </div>
