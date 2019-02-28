@@ -49,7 +49,7 @@ class GroupsPage extends Component{
     }
 
     componentWillMount(){
-        this.props.getCurrentUser(localStorage.getItem('email'));
+        this.props.getCurrentUser();
       }
 
     componentWillReceiveProps = newProps => {

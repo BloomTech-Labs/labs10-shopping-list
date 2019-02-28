@@ -6,8 +6,9 @@ import './Styles/UserProfile.css';
 
 class UserProfile extends React.Component{
    componentDidMount(){
-        if(!this.props.currentUser){
+        if(!this.props.currentUser && localStorage.getItem('isLoggedIn')){
             // find a user if none in state
+            console.log('profile mount');
             this.props.getCurrentUser();
         }
     }

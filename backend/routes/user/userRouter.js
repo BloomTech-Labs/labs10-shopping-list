@@ -90,26 +90,21 @@ userRouter.get('/:id', (req, res) => {
 
 /**************************************************/
 
-userRouter.get('/email/:email', (req, res) => {
-    const email = req.params.email;
+userRouter.get('/check/email', (req, res) => {
+    const email = req.user.email;
 
-    userDb.getIdByEmail(email).then(user => {
-        if (user.length >= 1) {
-            return res.status(200).json(user[0]);
+    userDb.getProfileByEmail(email).then(user => {
+        if(user){
+            return res.status(200).json({profile: user[0]})
+        } else {
+            return res.status(404).json({error: `User not found.`})
         }
-
-        return res.status(404).json({message: "The requested user does not exist."})
+    }) .catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Internal server error.`})
     })
-        .catch(err => {
-            const error = {
-                message: `Internal Server Error`,
-                data: {
-                    err: err
-                },
-            }
-            return res.status(500).json(error);
-        })
 })
+        
 
 /**************************************************/
 /**
@@ -200,6 +195,7 @@ userRouter.get('/check/getid', (req, res) => {
     });
 
     userDb.getIdByEmail(email).then(id => {
+        console.log(id, 'ID res');
         if(!id || id.length === 0){
             // CREATE NEW USER ENTRY IF NO USER FOUND
             let newUser = {
@@ -232,7 +228,7 @@ userRouter.get('/check/getid', (req, res) => {
                     return res.status(201).json({message: `New user added to database with ID ${id}.`, profile: profile[0]});
                 }).catch(err => {
                     console.log(err);
-                    res.status(404).json({error: `Error adding user/no user found.`})
+                    return res.status(404).json({error: `Error adding user/no user found.`})
                 })
             })
             .catch(err => {
@@ -246,10 +242,12 @@ userRouter.get('/check/getid', (req, res) => {
                 return res.status(200).json({profile: profile[0]})
             }).catch(err => { 
                 console.log(err);
-                res.status(404).json({error: `Nothing there.`})
+                return res.status(404).json({error: `Nothing there.`})
             })
+
+            
             let mailOptions = {
-                from: `${senderEmail}`,
+                from: `${process.env.EMAIL_ADDRESS}`,
                 to: `${email}`,
                 subject: 'Signed into ShopTrak',
                 text: 'You have signed into ShopTrak.'
@@ -262,8 +260,8 @@ userRouter.get('/check/getid', (req, res) => {
             //         console.log('Email sent: '+info.response);
             //     }
             // });
-            console.log('user found', id[0]);
-            return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
+            // console.log('user found', id[0]);
+            // return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
         }
     })
     .catch(err => {

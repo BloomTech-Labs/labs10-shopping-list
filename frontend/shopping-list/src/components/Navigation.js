@@ -67,7 +67,7 @@ class Navigation extends React.Component{
                                              style={{ height: "35px", padding: 0 }} alt="" />
                                     </MDBDropdownToggle>
                                     <MDBDropdownMenu className="dropdown-default" right>
-                                        <MDBDropdownItem href="/profile">My account</MDBDropdownItem>
+                                        <MDBDropdownItem><MDBNavLink to = '/profile'>My account</MDBNavLink></MDBDropdownItem>
                                         <MDBDropdownItem href="#!" onClick={this.signOut}>Log out</MDBDropdownItem>
                                     </MDBDropdownMenu>
                                 </MDBDropdown>
@@ -98,6 +98,7 @@ const mapStateToProps = state => {
         name: state.name,
         email: state.email,
         profilePicture: state.profilePicture,
+        currentUser: state.currentUser,
     }
 }
 

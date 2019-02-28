@@ -8,7 +8,8 @@ module.exports = {
   getById,
   get,
   update,
-  getIdByEmail
+  getIdByEmail,
+  getProfileByEmail,
 }
 
 /**
@@ -36,9 +37,9 @@ function getById(id) {
  *
  */
 
-function getIdByEmail(email){
+function getProfileByEmail(email){
   return db
-      .select("id")
+      .select("*")
       .from("users")
       .where({email});
 }

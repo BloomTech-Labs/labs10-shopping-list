@@ -404,7 +404,7 @@ export const getCurrentUser = () => {
     }
   }
 
-  const endpoint = axios.get(`${backendURL}/api/user/check/getid`, options);
+  const endpoint = axios.get(`${backendURL}/api/user/check/email`, options);
 
   return dispatch => {
     dispatch({type: GET_CURRENT_USER});

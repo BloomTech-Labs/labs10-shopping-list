@@ -14,7 +14,9 @@ import {getCurrentUser} from './store/actions/rootActions';
 class App extends Component {
 
   componentWillMount(){
-    this.props.getCurrentUser(localStorage.getItem('email'));
+    if(localStorage.getItem('email') && !this.props.currentUser){
+      this.props.getCurrentUser();
+    }
   }
 
 
