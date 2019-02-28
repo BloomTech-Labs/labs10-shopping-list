@@ -170,9 +170,14 @@ export const rootReducer = (state = initialState, action) => {
       let profileArray = [];
       if(state.groupUserProfiles.length > 0){
         profileArray = state.groupUserProfiles;
+        for(let i = 0; i < profileArray.length; i++){
+          if(profileArray[i].id !== action.payload.id){
+            profileArray.push(action.payload);
+        }
       }
-
+    } else if (state.groupUserProfiles.length === 0){
       profileArray.push(action.payload);
+    }
       
       return {
         ...state,

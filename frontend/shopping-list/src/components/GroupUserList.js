@@ -7,39 +7,25 @@ import {getGroupUsers, getUserProfile} from '../store/actions/rootActions';
 import GroupUser from './GroupUser';
 
 class GroupUserList extends React.Component{
-    
-
-    // componentWillReceiveProps = newProps => {
-    //     console.log('willreceivs');
-    //     if(newProps.groupUsers){
-    //         for(let i = 0; i < newProps.groupUsers.length; i++){
-    //             this.props.getUserProfile(newProps.groupUsers[i].id);
-    //             console.log('userid', newProps.groupUsers.id);
-    //         }
-    //     }
-    // }
-   
-    fetchUserProfiles(groupUsers){
-        // collect all group user profiles into state
-        for(let i = 0; i < groupUsers.length; i++){
-            this.props.getUserProfile(this.props);
-        }
-    }
 
     render(){
-        let groupUserProfiles = [];
-        if(this.props.groupUserProfiles){
-            let profiles = this.props.groupUserProfiles;
-
-            groupUserProfiles = profiles.map(profile => {
-                return <GroupUser profile = {profile} />
-            })
+        let groupTotal = 0;
+        if(this.props.groupHistory){
+            for(let i = 0; i < this.props.groupHistory.length; i++){
+                if(this.props.groupHistory[i].groupID === Number(this.props.match.params.id)){
+                    groupTotal += this.props.groupHistory[i].total;
+                }
+            }
         }
 
         return(
             <div>
-                GROUP USER LIST
-                {groupUserProfiles}
+                <h1>Total Expenditures: {groupTotal}</h1>
+                {this.props.groupUserProfiles !== [] ? (
+                    this.props.groupUserProfiles.map(profile => (
+                        <GroupUser profile = {profile} groupTotal = {groupTotal}/>
+                    ))
+                ) : (<h2>No Group Members</h2>)}
             </div>
         )
     }
@@ -58,7 +44,8 @@ const mapStateToProps = state => {
         items: state.items,
         groupUsers: state.groupUsers,
         groupUserProfiles: state.groupUserProfiles,
-        groupTotal: state.groupTotal
+        groupTotal: state.groupTotal,
+        groupHistory: state.groupHistory,
     }
 }
 

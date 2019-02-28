@@ -1,27 +1,25 @@
 // collect user's total and net values
 import React, { useReducer } from 'react';
-import {getUserProfile} from '../store/actions/rootActions';
+import {getUserProfile, FETCHING_USER_PROFILE} from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 class GroupUser extends React.Component{
-    componentWillMount(){
-        this.props.getUserProfile(this.props.match.params.id);
-    }
-
     render(){
         
         let userTotal = 0;
         let userNet = 0;
 
-
-        if(this.props.groupItems){
-            for(let i = 0; i < this.props.items.length; i++){
-                if(this.props.items[i].purchasedBy === Number(this.props.currentUser.id)){
-                    userTotal = userTotal + Number(this.props.items[i].price);
+        if(this.props.groupHistory){
+            for(let i = 0; i < this.props.groupHistory.length; i++){
+                if(this.props.groupHistory[i].groupID === Number(this.props.match.params.id)){
+                    if(this.props.groupHistory[i].userID === Number(this.props.profile.id)){
+                        userTotal += this.props.groupHistory[i].total
+                    }
                 }
             }
             userNet = this.props.groupTotal - userTotal;
+            console.log(`net ${userNet}, total ${userTotal}, grouptotal: ${this.props.groupTotal}`)
         }
         return(
             <div>
@@ -38,13 +36,8 @@ const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
         //state items
-        userId: state.userId,
-        groupUsers: state.groupUsers,
-        items: state.items,
-        groupTotal: state.groupTotal,
         needsNewItems: state.needsNewItems,
-
-
+        groupHistory: state.groupHistory,
         currentUser: state.currentUser,
         groupUserProfiles: state.groupUserProfiles
     }
