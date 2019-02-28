@@ -26,26 +26,12 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
             GroupController.getGroups(forUserID: userID) { (success) in
                 if allGroups.count > 0 {
                     selectedGroup = allGroups[0]
-                    UI{self.updateViews()}
+                    UI { self.updateViews() }
                 }
                 
-                //GroupController.newGroup(withName: "Yvette's Group", byUserID: userID) { (success) in
-                
-                
-                let usersCon = UserController()
-
-                usersCon.getUser(forID: userID) { (user) in
-                    if let users = user {
-                        /*Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
-                         print(users)
-                         */
-                        SaveItem.test()
-                    }
-                }
             }
         }
-   // }
-}
+    }
     
     private func updateViews() {
         if let name = selectedGroup {
