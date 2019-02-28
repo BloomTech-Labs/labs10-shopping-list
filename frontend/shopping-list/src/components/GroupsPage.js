@@ -121,7 +121,7 @@ class GroupsPage extends Component{
                             this.props.groups.map((g, i) => (
 
                                     <MDBCard key={makeid()} border="primary" className="m-3" style={{ minWidth: "14rem", maxWidth: "18rem"}}>
-                                        <MDBCardHeader key={makeid()}>{g.name} <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => this.saveGroupName(g.id, g.name)} /> <MDBIcon icon="trash" onClick={() => this.deleteGroup(g.id, g.name)} /></MDBCardHeader>
+                                        <MDBCardHeader key={makeid()}>{g.name} <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => this.saveGroupName(g.id, g.name)} /> <MDBIcon icon="trash" onClick={() => this.deleteGroup(g.id, g.name)} style={{cursor: "pointer"}} /></MDBCardHeader>
                                         <MDBCardBody key={makeid()} className="text-primary">
                                             <MDBCardTitle key={makeid()} tag="h5" className={"align-center"}>{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
                                             <MDBCardText key={makeid()}>

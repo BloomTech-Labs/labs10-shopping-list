@@ -287,7 +287,11 @@ groupRouter.delete('/remove/:groupID::userID', async (req, res) => {
                 const membs = await groupMemDb.getByGroup(groupID);
                 console.log("MEMBS => ", membs);
 
-                if (membs.length >= 1) members.push(membs[0]);
+                if (membs.length >= 1) {
+                    membs.forEach(elem => {
+                        members.push(elem);
+                    })
+                }
 
             }
 
