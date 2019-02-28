@@ -9,7 +9,7 @@
 import UIKit
 import Auth0
 
-class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopoverViewDelegate {
+class MainViewController: UIViewController, StoryboardInstantiatable, PopoverViewDelegate {
     
     static let storyboardName: StoryboardName = "MainViewController"
     @IBOutlet weak var groupName: UIButton!
@@ -19,11 +19,11 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GroupController.getUserID { (user) in
+        GroupController.shared.getUserID { (user) in
             
             guard let userID = user?.id else {return}
             
-            GroupController.getGroups(forUserID: userID) { (success) in
+            GroupController.shared.getGroups(forUserID: userID) { (success) in
                 if allGroups.count > 0 {
                     selectedGroup = allGroups[0]
                     UI { self.updateViews() }
@@ -39,7 +39,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
         }
     }
     
-    func selectedGroupChanged() {
+    func updatesNeeded() {
         updateViews()
     }
     
