@@ -27,6 +27,7 @@ export const SUBMIT_PAID_ITEMS_START = 'SUBMIT_PAID_ITEMS_START';
 export const SUBMIT_PAID_ITEMS_SUCCESS = 'SUBMIT_PAID_ITEMS_SUCCESS';
 export const SUBMIT_PAID_ITEMS_FAILED = 'SUBMIT_PAID_ITEMS_FAILED';
 export const GET_GROUPMEMBERS_START = 'GET_GROUPMEMBERS_START';
+export const SENDING_INVITE = 'SENDING_INVITE';
 
 
 let backendURL;
@@ -298,6 +299,14 @@ export const submitPaidItems = (items, userID, total) => dispatch => {
   });
   getItems(items[0].groupID)(dispatch);
 
+}
+/*
+ * Send email with invitation link to email address inputted by user
+ * @param groupID - ID of group that the email recipient is getting invited to
+ * @param email - email address that was inputted by user
+ */
+export const invite = (groupID, email) => dispatch => {
+  dispatch({type: SENDING_INVITE});
 }
 
 export const getGroupMembers = (groupID) => dispatch => {

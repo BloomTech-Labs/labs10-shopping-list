@@ -177,7 +177,12 @@ class GroupsPage extends Component{
             this.props.addItem(item);
             this.setState({modal14: false});
         }
+    }
 
+    handleInvitation = (e) => {
+        e.preventDefault(); 
+        const groupID = Number(this.props.match.params.id);
+        this.props.invite(groupID, this.state.email);
     }
 
     /*

@@ -34,4 +34,5 @@ export {
   addUserToState,
   checkEmail,
     getGroupMembers,
+  SENDING_INVITE
 } from "./rootActions";

@@ -13,7 +13,8 @@ import {
   FETCHING_SINGLE_GROUP,
   SINGLE_GROUP_FETCHED,
   CLEARING_CURRENT_GROUP,
-  UPDATE_ITEM_PURCHASED_START
+  UPDATE_ITEM_PURCHASED_START,
+  SENDING_INVITE
 } from "../actions";
 
 const initialState = {
@@ -97,6 +98,11 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         currentGroup: null,
+      }
+
+    case SENDING_INVITE:
+      return {
+        ...state
       }
 
     default:
