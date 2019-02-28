@@ -51,7 +51,7 @@ class GroupsProfile extends Component{
             this.props.getGroupItems(this.props.match.params.id);
         } 
         
-        if(this.props.groupHistory.length === 0){
+        if(!this.props.groupHistory || this.props.groupHistory.length === 0){
             console.log('\n GROUP HISTORY FETCH ==>')
             this.props.getGroupHistory(this.props.match.params.id);
         }
@@ -59,6 +59,10 @@ class GroupsProfile extends Component{
         if(this.props.groupUsers.length === 0){
             console.log('GET GROUP USERS ===>')
             this.props.getGroupUsers(this.props.match.params.id);
+
+        if(!this.props.currentUser){
+            this.props.checkEmail();
+        }
 
 //         if (this.props.groups !== null) {
 //             const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
@@ -71,10 +75,15 @@ class GroupsProfile extends Component{
     componentWillReceiveProps = newProps => {
         if(newProps.needsNewItems){
             this.props.getGroupItems(this.props.match.params.id);
+            this.props.getGroupHistory(this.props.match.params.id);
         }
 
-        if(newProps.needsNewHistory || this.props.groupHistory.length === 0){
+        if(newProps.needsNewHistory){
             this.props.getGroupHistory(this.props.match.params.id);
+        }
+
+        if(!newProps.currentUser){
+            this.props.checkEmail();
         }
 
         if(newProps.groupUsers.length > 0 && this.props.groupUserProfiles){
@@ -465,5 +474,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory, getGroupUsers, getUserProfile,
+    gettingGroups, addItem, getItems, checkEmail, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory, getGroupUsers, getUserProfile,
 })(GroupsProfile);

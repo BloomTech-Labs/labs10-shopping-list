@@ -76,7 +76,7 @@ class Item extends React.Component {
     }
 
     render(){
-        if(this.props.item.purchased === 1){
+        if(this.props.item.purchased === true){
             return null;
         } else {
             return (

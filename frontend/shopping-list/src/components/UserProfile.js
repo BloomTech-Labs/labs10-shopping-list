@@ -1,5 +1,5 @@
 import React from 'react';
-import {getCurrentUser} from '../store/actions/rootActions';
+import {getCurrentUser, checkEmail} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
 import './Styles/UserProfile.css';
@@ -9,7 +9,7 @@ class UserProfile extends React.Component{
         if(!this.props.currentUser && localStorage.getItem('isLoggedIn')){
             // find a user if none in state
             console.log('profile mount');
-            this.props.getCurrentUser();
+            this.props.checkEmail();
         }
     }
 
@@ -59,4 +59,5 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps, {
     getCurrentUser,
+    checkEmail,
 })(UserProfile);

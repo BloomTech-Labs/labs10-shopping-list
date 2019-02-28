@@ -410,6 +410,7 @@ export const getCurrentUser = () => {
     dispatch({type: GET_CURRENT_USER});
 
     endpoint.then(res => {
+      console.log(res.data, 'RES')
       dispatch({type: SAVE_CURRENT_USER, payload: res.data.profile});
     }).catch(err => {
       console.log(err);
@@ -558,15 +559,15 @@ export const checkOut = info => {
     itemIds.push(info.cartItems[i].id);
   }
 
-  itemIds = itemIds.toString(',');
+  // itemIds = itemIds.toString(',');
   console.log(itemIds, 'itemIds');
 
   let trip = {
     userID: Number(info.userId),
     groupID: Number(info.groupId),
-    itemID: itemIds,
-    total: info.amount,
-    purchasedOn: new Date(),
+    itemID: Number(itemIds[0]),
+    total: Number(info.amount),
+    purchasedOn: moment().format(),
   }
 
 
@@ -599,7 +600,7 @@ export const checkOut = info => {
 export const getGroupHistory = groupId => {
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/grouphistory/total/group/${groupId}`;
-
+  console.log('GET HISTORY')
   const options = {
       headers: {
           Authorization: `Bearer ${token}`
