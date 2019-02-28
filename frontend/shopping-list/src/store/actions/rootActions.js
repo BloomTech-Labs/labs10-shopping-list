@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import auth0Client from '../../components/Auth';
 import moment from 'moment';
 
 export const TEST_START = "TEST_START";
@@ -617,6 +616,7 @@ export const getGroupHistory = groupId => {
       dispatch({type: ERROR})
     })
   }
+}
 
 export const getGroupMembers = (groupID) => dispatch => {
   dispatch({type: GET_GROUPMEMBERS_START});

@@ -317,113 +317,113 @@ class GroupsProfile extends Component{
                     <ItemList items = {this.props.groupItems} />
                     
                     <GroupUserList users = {this.props.groupUsers} />
-// =======
-//                     <div className={"group-profile-header-title"}><h3></h3></div>
-//                     <div className={"group-profile-columns"}>
-//                         <div className={"group-profile-list"}>
-//                             <div className={"group-profile-list-container scrollbar"}>
-//                                 <MDBContainer>
-//                                     <MDBContainer >
-//                                         {
-//                                             this.state.listToggle === true ? <MDBListGroup>
-//                                                 {
-//                                                     this.props.items !== null ? this.props.items.map((item, i) => (
-//                                                         <MDBListGroupItem key={i} className="d-flex justify-content-evenly align-items-center">
-//                                                             <button type="button" onClick={() => this.check(item.id)} className={item.purchased ? "close1 item-purchased close" : "close close1"} aria-label="Close">
-//                                                                 <MDBBadge color="primary"><MDBIcon icon="check" /> </MDBBadge>
-//                                                             </button>
-//                                                             <p className={"item-name"}>{item.name}</p>
-//                                                             {/*<button type="button" className="close" aria-label="Close">*/}
-//                                                                 {/*<span aria-hidden="true">×</span>*/}
-//                                                             {/*</button>*/}
-//                                                         </MDBListGroupItem>
-//                                                     )) : null
-//                                                 }
-//                                             </MDBListGroup> : <div className={"history-list"}>
-//                                                 {
-//                                                     histories !== null ? histories.map((itm,i) => (
-//                                                         <div>
-//                                                             <MDBListGroup>
-//                                                                 <MDBListGroupItem>
-//                                                                 <h3>{histories[i][0].user}</h3>
-//                                                                 {
-//                                                                     histories[i].map((it, ii) => (
-//                                                                         <p className={"history-items"}>{it.name}</p>
-//                                                                     ))
-//                                                                 }
-//                                                                 <h4>{histories[i][0].date} | Total: $ {histories[i][histories[i].length - 1].grandTotal}</h4>
-//                                                                 </MDBListGroupItem>
-//                                                                 <br />
-//                                                             </MDBListGroup>
-//                                                         </div>
+
+                {/* <div className={"group-profile-header-title"}><h3></h3></div>
+                     <div className={"group-profile-columns"}>
+                         <div className={"group-profile-list"}>
+                             <div className={"group-profile-list-container scrollbar"}>
+                                 <MDBContainer>
+                                     <MDBContainer >
+                                         {
+                                             this.state.listToggle === true ? <MDBListGroup>
+                                                 {
+                                                     this.props.items !== null ? this.props.items.map((item, i) => (
+                                                         <MDBListGroupItem key={i} className="d-flex justify-content-evenly align-items-center">
+                                                             <button type="button" onClick={() => this.check(item.id)} className={item.purchased ? "close1 item-purchased close" : "close close1"} aria-label="Close">
+                                                                 <MDBBadge color="primary"><MDBIcon icon="check" /> </MDBBadge>
+                                                             </button>
+                                                             <p className={"item-name"}>{item.name}</p>
+                                                             <button type="button" className="close" aria-label="Close">
+                                                                 <span aria-hidden="true">×</span>
+                                                             </button>
+                                                         </MDBListGroupItem>
+                                                     )) : null
+                                                 }
+                                             </MDBListGroup> : <div className={"history-list"}>
+                                                 {
+                                                     histories !== null ? histories.map((itm,i) => (
+                                                         <div>
+                                                             <MDBListGroup>
+                                                                 <MDBListGroupItem>
+                                                                 <h3>{histories[i][0].user}</h3>
+                                                                 {
+                                                                     histories[i].map((it, ii) => (
+                                                                         <p className={"history-items"}>{it.name}</p>
+                                                                     ))
+                                                                 }
+                                                                 <h4>{histories[i][0].date} | Total: $ {histories[i][histories[i].length - 1].grandTotal}</h4>
+                                                                 </MDBListGroupItem>
+                                                                 <br />
+                                                             </MDBListGroup>
+                                                         </div>
 
 
 
-//                                                     )) : <p>NULL</p>
-//                                                 }
-//                                             </div>
-//                                         }
+                                                     )) : <p>NULL</p>
+                                                 }
+                                             </div>
+                                         }
 
-//                                     </MDBContainer>
-//                                 </MDBContainer>
-//                             </div>
-//                             {
-//                                 this.state.listToggle === true ? <div className={"group-profile-list-button"}>
-//                                     <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
-//                                 </div> : null
-//                             }
+                                     </MDBContainer>
+                                 </MDBContainer>
+                             </div>
+                             {
+                                 this.state.listToggle === true ? <div className={"group-profile-list-button"}>
+                                     <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
+                                 </div> : null
+                             }
 
-//                         </div>
+                         </div>
 
-//                         <div className={"group-profile-right-col"}>
-//                             {
-//                                 this.state.totalToggle === true ? <div className={"group-profile-gross"}>
-//                                 {
-//                                     this.props.groups !== null ? this.props.groups.map((elem, i) => (
-//                                         <div className={"group-profile-gross-members"}>
-//                                             {
-//                                                 elem.id === Number(this.props.match.params.id) ? elem.members.map((el, id) => (
-//                                                     <div className={"group-profile-gross-members-box"}>
-//                                                         {
-//                                                             total !== undefined ? total.map((item, j) => (
-//                                                                 <div>
-//                                                                     {
-//                                                                         item.user === el.name ? <p>{item.grandTotal}</p> : null
-//                                                                     }
-//                                                                 </div>
-//                                                             )) : <p>Calculating</p>
-//                                                         }
-//                                                         <img src={el.profilePicture} alt="Avatar" className="avatar" />
-//                                                         <p>{el.name}</p>
-//                                                     </div>
-//                                                 )) : null
-//                                             }
-//                                         </div>
-//                                     )) : <p>Loading</p>
-//                                 }
-//                                 </div> : <div className={"group-profile-gross"}> <p>NET</p></div>
-//                             }
-//                             {this.state.listToggle === true ? <div className={"group-profile-bought"}>
-//                                 <h1>I BOUGHT</h1>
-//                                 <div className={"group-profile-bought-list"}>
-//                                     {
-//                                         purchased !== null ?
-//                                             purchased.map(itm => (
-//                                                 <p>{itm.name}, </p>
-//                                             )) : null
-//                                     }
-//                                 </div>
-//                                 <div className={"group-profile-bought-input"}>
-//                                     <h1>$</h1><MDBInput label="I Paid" type={"number"} step={0.01} name={"total"}
-//                                                         onChange={this.handleInput} defaultValue={this.state.total}/>
-//                                 </div>
-//                                 <div className={"group-profile-bought-button"}>
-//                                     <MDBBtn color="primary" onClick={e => this.handleSubmitItems(e)}>Submit</MDBBtn>
-//                                 </div>
-//                             </div> : null
-//                             }
-//                         </div>
-//                     </div>
+                         <div className={"group-profile-right-col"}>
+                             {
+                                 this.state.totalToggle === true ? <div className={"group-profile-gross"}>
+                                 {
+                                     this.props.groups !== null ? this.props.groups.map((elem, i) => (
+                                         <div className={"group-profile-gross-members"}>
+                                             {
+                                                 elem.id === Number(this.props.match.params.id) ? elem.members.map((el, id) => (
+                                                     <div className={"group-profile-gross-members-box"}>
+                                                         {
+                                                             total !== undefined ? total.map((item, j) => (
+                                                                 <div>
+                                                                     {
+                                                                         item.user === el.name ? <p>{item.grandTotal}</p> : null
+                                                                     }
+                                                                 </div>
+                                                             )) : <p>Calculating</p>
+                                                         }
+                                                         <img src={el.profilePicture} alt="Avatar" className="avatar" />
+                                                         <p>{el.name}</p>
+                                                     </div>
+                                                 )) : null
+                                             }
+                                         </div>
+                                     )) : <p>Loading</p>
+                                 }
+                                 </div> : <div className={"group-profile-gross"}> <p>NET</p></div>
+                             }
+                             {this.state.listToggle === true ? <div className={"group-profile-bought"}>
+                                 <h1>I BOUGHT</h1>
+                                 <div className={"group-profile-bought-list"}>
+                                     {
+                                         purchased !== null ?
+                                             purchased.map(itm => (
+                                                 <p>{itm.name}, </p>
+                                             )) : null
+                                     }
+                                 </div>
+                                 <div className={"group-profile-bought-input"}>
+                                     <h1>$</h1><MDBInput label="I Paid" type={"number"} step={0.01} name={"total"}
+                                                         onChange={this.handleInput} defaultValue={this.state.total}/>
+                                 </div>
+                                 <div className={"group-profile-bought-button"}>
+                                     <MDBBtn color="primary" onClick={e => this.handleSubmitItems(e)}>Submit</MDBBtn>
+                                 </div>
+                             </div> : null
+                             }
+                         </div>
+                     </div>  */}
 
                     <UserCart />
 
