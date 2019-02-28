@@ -342,7 +342,13 @@ class GroupsPage extends Component{
                                         }
                                         {
                                             this.state.inviToggle === true ? <div className={"invitation"}>
-                                                <h1>Invitation</h1>
+                                                <MDBListGroup>
+                                                    <MDBListGroupItem>
+                                                        <form class="text-center border border-light p-5">
+                                                            <input type="email" id="defaultSubscriptionFormEmail" class="form-control mb-4" placeholder="E-mail" />
+                                                        </form>
+                                                    </MDBListGroupItem>
+                                                </MDBListGroup>
                                             </div> : null
                                         }
 
