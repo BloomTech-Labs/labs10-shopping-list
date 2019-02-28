@@ -14,7 +14,8 @@ import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNav
 class Navigation extends React.Component{
     state = {
         collapseID: "",
-        activeTabClassname: "home"
+        activeTabClassname: "home",
+        isOpen: false,
     }
     
     componentDidMount(){
@@ -25,10 +26,14 @@ class Navigation extends React.Component{
     }
     
     // Toggles dropdown menus for MDB
-    toggleCollapse = collapseID => () =>
-        this.setState(prevState => ({
-            collapseID: prevState.collapseID !== collapseID ? collapseID : ""
-        }));
+    // toggleCollapse = collapseID => () =>
+    //     this.setState(prevState => ({
+    //         collapseID: prevState.collapseID !== collapseID ? collapseID : ""
+    //     }));
+
+    toggleCollapse = () => {
+        this.setState({ isOpen: !this.state.isOpen });
+    }
 
     signOut = () => { // logs out the current user and redirects to the homepage
         auth0Client.signOut();
