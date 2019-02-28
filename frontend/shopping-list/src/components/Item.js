@@ -1,5 +1,5 @@
 import React from 'react';
-import {purchaseItem, updateItem, deleteItem, getItems, markItemForPurchase, unMarkItem} from '../store/actions/rootActions';
+import {purchaseItem, addToCart, removeFromCart, updateItem, deleteItem, getItems, markItemForPurchase, unMarkItem} from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import moment from 'moment';
@@ -14,6 +14,7 @@ class Item extends React.Component {
         this.state = {
             item: this.props.item.name,
             isEditing: false,
+            inCart: false,
         }
     }
 
@@ -58,6 +59,22 @@ class Item extends React.Component {
         this.props.deleteItem(this.props.item);
     }
 
+    addToCart = event => {
+        event.preventDefault();
+        this.setState ({
+            inCart: true,
+        })
+        this.props.addToCart(this.props.item);
+    }
+
+    removeFromCart = event => {
+        event.preventDefault();
+        this.setState({
+            inCart: false,
+        })
+        this.props.removeFromCart(this.props.item);
+    }
+
     render(){
         if(this.props.item.purchased === 1){
             return null;
@@ -66,7 +83,16 @@ class Item extends React.Component {
                 <div className = 'item-container' onDoubleClick = {this.handleEdit} key = {this.props.key}>
                 {this.state.isEditing === false ? 
                 (
-                    <div className = 'item-row'><span><h2>{this.props.item.name}</h2></span><button onClick = {this.handleDelete}>Delete</button><button>Add to Cart</button></div>
+                    <div className = 'item-row'><span><h2>{this.props.item.name}</h2></span><button onClick = {this.handleDelete}>Delete</button>
+
+                    {this.state.inCart !== true ? (
+                        <button onClick = {this.addToCart}>Add to Cart</button>
+
+                    ) : <button onClick = {this.removeFromCart}>Remove from Cart</button>}
+
+                    </div>
+
+
                 ) : (<div>
                     <form className = 'edit-form' onSubmit = {this.handleClickOutside}><input type = 'text' name = 'item' value = {this.state.item} onChange = {this.handleChange}></input>
                     <button type = 'submit'>Submit Changes</button></form>
@@ -83,7 +109,8 @@ const mapStateToProps = state => {
         currentUser: state.currentUser,
         groupItems: state.groupItems,
         groupUsers: state.groupItems,
-        needsNewItems: state.needsNewItems
+        needsNewItems: state.needsNewItems,
+        userCart: state.userCart
     }
 }
 
@@ -91,4 +118,6 @@ export default withRouter(connect(mapStateToProps, {
     // actions
     updateItem,
     deleteItem,
+    addToCart,
+    removeFromCart
 })(Item));

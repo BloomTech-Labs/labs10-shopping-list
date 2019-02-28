@@ -35,8 +35,15 @@ import {
 
   UPDATE_ITEM,
   ITEM_UPDATED,
+
   DELETE_ITEM,
-  ITEM_DELETED
+  ITEM_DELETED,
+
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  BEGIN_CHECK_OUT,
+  CHECK_OUT_COMPLETE
+
 } from "../actions";
 
 const initialState = {
@@ -44,6 +51,7 @@ const initialState = {
   userGroups: null,
   groupItems: null,
   needsNewItems: false,
+  userCart: [],
 
 
 
@@ -118,6 +126,37 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         needsNewItems: true
       }
+
+    case ADD_TO_CART:
+      let newCart = state.userCart;
+      newCart.push(action.payload);
+      return {
+        ...state,
+        userCart: newCart,
+        needsNewItems: true,
+      }
+
+    case REMOVE_FROM_CART:
+      let filterCart = state.userCart;
+      filterCart = filterCart.filter(item => item.id !== action.payload.id);
+      return {
+        ...state,
+        userCart: filterCart,
+        needsNewItems: true,
+      }
+
+    case BEGIN_CHECK_OUT:
+      return state;
+
+    case CHECK_OUT_COMPLETE:
+      return {
+        ...state,
+        needsNewItems: true,
+      }
+
+
+
+
 
     case ADDING_GROUPS_TO_STATE:
       return {

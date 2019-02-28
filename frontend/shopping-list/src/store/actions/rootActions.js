@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import auth0Client from '../../components/Auth';
-
+import moment from 'moment';
 
 export const TEST_START = "TEST_START";
 export const TEST_SUCCESS = "TEST_SUCCESS";
@@ -61,6 +61,11 @@ export const ITEM_UPDATED = 'ITEM_UPDATED';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const ITEM_DELETED = 'ITEM_DELETED';
 
+export const ADD_TO_CART = 'ADD_TO_CART';
+export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+
+export const BEGIN_CHECK_OUT = 'BEGIN_CHECK_OUT';
+export const CHECK_OUT_COMPLETE = 'CHECK_OUT_COMPLETE';
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -533,8 +538,6 @@ export const updateItem = item => {
     dispatch({type: UPDATE_ITEM});
 
     endpoint.then(res => {
-      console.log(res.data);
-
       dispatch({type: ITEM_UPDATED});
     }).catch(err => {
       console.log(err);
@@ -552,23 +555,81 @@ export const deleteItem = item => {
   }
 
   let itemId = item.id;
-  console.log('itemid', item.id)
 
   const endpoint = axios.delete(`${backendURL}/api/item/${itemId}`, options);
 
   return dispatch => {
     dispatch({type: DELETE_ITEM})
     endpoint.then(res => {
-      console.log(res.data);
       dispatch({type: ITEM_DELETED})
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})
     })
   }
+}
 
+export const addToCart = item => {
+  return dispatch => {
+    dispatch({type: ADD_TO_CART, payload: item})
+  }
+}
+
+export const removeFromCart = item => {
+  return dispatch => {
+    dispatch({type: REMOVE_FROM_CART, payload: item})
+  }
+}
+
+export const checkOut = info => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  let itemIds = [];
+  for(let i = 0; i < info.cartItems.length; i++){
+    itemIds.push(info.cartItems[i].id);
+  }
+
+  itemIds = itemIds.toString(',');
+  console.log(itemIds, 'itemIds');
+
+  let trip = {
+    userID: Number(info.userId),
+    groupID: Number(info.groupId),
+    itemID: itemIds,
+    total: info.amount,
+    purchasedOn: new Date(),
+  }
+
+
+  let items = info.cartItems;
+  for(let i = 0; i < items.length; i++){
+    items[i].purchased = 1;
+    items[i].purchasedBy = Number(info.userId);
+    items[i].purchasedOn = moment().format();
+    
+    // console.log('items[i]', items[i]);
+    axios.put(`${backendURL}/api/item/${items[i].id}`, items[i], options).then(res => {
+      console.log('res update item loop', res.data);
+    })
+  }
+
+  console.log(trip, 'trip');
+  // const updateItems = axiot.put(`${backendURL}/api/item/${itemId}`, changes, options);
   
-
+  const endpoint = axios.post(`${backendURL}/api/grouphistory`, trip, options);
+  
+  return dispatch => {
+    dispatch({type: BEGIN_CHECK_OUT, payload: info.cartItems});
+    endpoint.then(res => {
+      console.log(res);
+      dispatch({type: CHECK_OUT_COMPLETE});
+    })
+  }
 }
 
 export const getGroupHistory = groupId => {

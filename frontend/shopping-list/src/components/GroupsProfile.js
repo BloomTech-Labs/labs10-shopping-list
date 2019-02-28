@@ -16,6 +16,7 @@ import {
 } from "mdbreact";
 import ItemList from './ItemList';
 import GroupUserList from './GroupUserList';
+import UserCart from './UserCart';
 import axios from "axios";
 
 class GroupsPage extends Component{
@@ -197,6 +198,7 @@ class GroupsPage extends Component{
 
 
     render(){
+        console.log(this.props.userCart);
         // Filter items by which has been purchased - used for the `I Bought` form
         let purchased = [];
         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
@@ -217,6 +219,8 @@ class GroupsPage extends Component{
                     <ItemList items = {this.props.groupItems} />
                     
                     <GroupUserList users = {this.props.groupUsers} />
+
+                    <UserCart />
                     
                 <div className={"group-profile-columns"}>
                 
