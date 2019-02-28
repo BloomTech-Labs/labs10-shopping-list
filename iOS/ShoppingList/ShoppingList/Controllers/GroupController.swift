@@ -79,11 +79,7 @@ class GroupController {
     let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         let url = baseURL.appendingPathComponent("group")
         
-        //guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
-        
-      //  let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
-        
-        // TODO: Generate unique token
+    
         let token = "12345"
         
         let parameters: Parameters = ["userID": userID, "name": name, "token": token]
@@ -120,7 +116,11 @@ class GroupController {
     
     // Updates the group and downloads all groups from server. Optional success completion.
    static func updateGroup(group: Group, name: String?, userID: Int?, completion: @escaping (Bool) -> Void = {_ in }) {
-        
+    
+    guard let accessToken = SessionManager.tokens?.idToken else {return}
+    let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+    
+    
         var myGroup = group
         
         if let name = name {
@@ -137,7 +137,7 @@ class GroupController {
         
         guard let groupJSON = groupToJSON(group: myGroup) else { return }
         
-        Alamofire.request(url, method: .put, parameters: groupJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .put, parameters: groupJSON, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
 
             switch response.result {
             case .success(_):
@@ -203,12 +203,15 @@ class GroupController {
     }
     
     static func delete(group: Group, userID: Int,  completion: @escaping (Bool) -> Void) {
+        guard let accessToken = SessionManager.tokens?.idToken else {return}
+        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+        
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("remove")
         
         let parameters: Parameters = ["userID": userID, "groupID": group.groupID]
         
-        Alamofire.request(url, parameters: parameters).validate().response { (response) in
+        Alamofire.request(url, parameters: parameters, headers: headers).validate().response { (response) in
             
             if let error = response.error {
                 print(error.localizedDescription)
