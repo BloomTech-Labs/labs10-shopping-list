@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import "./Styles/Group.css";
@@ -321,7 +321,7 @@ class GroupsPage extends Component{
                                                                 }
                                                                 <h4>{histories[i][0].date} | Total: $ {histories[i][histories[i].length - 1].grandTotal}</h4>
                                                                 </MDBListGroupItem>
-                                                                <br></br>
+                                                                <br />
                                                             </MDBListGroup>
                                                         </div>
 
@@ -348,10 +348,10 @@ class GroupsPage extends Component{
                             <div className={"group-profile-gross"}>
                                 {
                                     this.props.groups !== null ? this.props.groups.map((elem, i) => (
-                                        <div>
+                                        <div className={"group-profile-gross-members"}>
                                             {
                                                 elem.id === Number(this.props.match.params.id) ? elem.members.map((el, id) => (
-                                                    <div>
+                                                    <div className={"group-profile-gross-members-box"}>
                                                         {
                                                             total !== undefined ? total.map((item, j) => (
                                                                 <div>
