@@ -41,6 +41,7 @@ groupRouter.use(checkJwt);
 groupRouter.post('/', (req, res) => {
     let group = req.body;
     groupDb.add(group).then(groupId => {
+        console.log(groupId)
         const member = {
             userID: group.userID,
             groupID: groupId[0],
