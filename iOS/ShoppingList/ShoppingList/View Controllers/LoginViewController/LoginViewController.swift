@@ -11,7 +11,6 @@ import Auth0
 import SwiftKeychainWrapper
 import SimpleKeychain
 
-
 class LoginViewController: UIViewController, StoryboardInstantiatable {
     
     static let storyboardName: StoryboardName = "LoginViewController"
@@ -24,11 +23,6 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
     @IBAction func loginButtonPressed(_ sender: Any) {
         checkAccessToken()
     }
-    
-    
-    
-    
-    
     
 
     func showLogin() {

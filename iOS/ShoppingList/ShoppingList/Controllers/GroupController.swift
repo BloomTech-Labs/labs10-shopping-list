@@ -33,7 +33,7 @@ class GroupController {
         
         let url = baseURL.appendingPathComponent("group")
         
-        //guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
+        // guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
         
       //  let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
