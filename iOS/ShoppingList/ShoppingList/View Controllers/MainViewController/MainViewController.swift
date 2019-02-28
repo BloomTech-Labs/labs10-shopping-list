@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import Auth0
 
 class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopoverViewDelegate {
-
+    
     static let storyboardName: StoryboardName = "MainViewController"
     @IBOutlet weak var groupName: UIButton!
     
@@ -18,32 +19,33 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-
-        let usersCon = UserController()
-        usersCon.getUser(forID: 501) { (user) in
-            if let users = user {
-                /*Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
-               print(users)
-              */
-                SaveItem.test()
-            }
-        }
-        
-
-        let groupCon = GroupController()
-        groupCon.getGroupWith(userID: 501) { (groups) in
+        GroupController.getUserID { (user) in
             
+            guard let userID = user?.id else {return}
+            
+            GroupController.getGroups(forUserID: userID) { (success) in
+                if allGroups.count > 0 {
+                    selectedGroup = allGroups[0]
+                    UI{self.updateViews()}
+                }
+                
+                //GroupController.newGroup(withName: "Yvette's Group", byUserID: userID) { (success) in
+                
+                
+                let usersCon = UserController()
 
-        GroupController.shared.getGroupWith(userID: 501) { (groups) in
-
-            if let groups = groups {
-                allGroups = groups
-                selectedGroup = groups[0]
-                self.updateViews()
+                usersCon.getUser(forID: userID) { (user) in
+                    if let users = user {
+                        /*Popovers.triggerMessagePopover(with: "From restricted user list: \(users.email)" + " " + "\(users.name)" + "\n " + "\(users.profilePicture)")
+                         print(users)
+                         */
+                        SaveItem.test()
+                    }
+                }
             }
         }
-    }
+   // }
+}
     
     private func updateViews() {
         if let name = selectedGroup {
@@ -71,6 +73,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
         present(settingsVC, animated: true, completion: nil)
     }
 }
+
 
 
 

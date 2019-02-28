@@ -9,13 +9,57 @@
 import Foundation
 import Alamofire
 import SwiftKeychainWrapper
+import Auth0
 
 class GroupController {
     
-    static let shared = GroupController()
-    private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
+    struct UserID: Codable {
+        let id: Int
+    }
     
-    private func groupToJSON(group: Group) -> [String: Any]? {
+    static let shared = GroupController()
+   static private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
+    
+    static func getUserID(completion: @escaping (UserID?) -> Void) {
+        guard let accessToken = SessionManager.tokens?.idToken else {return}
+        let url = baseURL.appendingPathComponent("user").appendingPathComponent("check").appendingPathComponent("getid")
+        var request = URLRequest(url: url)
+        
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        Alamofire.request(request).validate().responseData { (response) in
+            
+            print(url)
+            switch response.result {
+            case .success(let value):
+                
+                let string = String(data: value, encoding: .utf8)
+                print("Data String: \(string!)")
+                
+ 
+                do {
+                    let decoder = JSONDecoder()
+                    let user = try decoder.decode(UserID.self, from: value)
+                    completion(user)
+                    
+                } catch {
+                    print("Could not turn json into user")
+                    completion(nil)
+                    return
+                }
+                
+            case .failure(let error):
+                NSLog("getUser: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+        }
+        
+    }
+    
+    
+    
+   static private func groupToJSON(group: Group) -> [String: Any]? {
         
         guard let jsonData = try? JSONEncoder().encode(group) else {
             return nil
@@ -29,20 +73,18 @@ class GroupController {
         }
     }
     
-    func newGroup(withName name: String, byUserID userID: Int, completion: @escaping (Group?) -> Void) {
-        
+   static func newGroup(withName name: String, byUserID userID: Int, completion: @escaping (Group?) -> Void) {
+    
+    guard let accessToken = SessionManager.tokens?.idToken else {return}
+    let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         let url = baseURL.appendingPathComponent("group")
         
-        //guard let accessToken =  KeychainWrapper.standard.string(forKey: "accessToken") else {return}
-        
-      //  let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
-        
-        // TODO: Generate unique token
+    
         let token = "12345"
         
         let parameters: Parameters = ["userID": userID, "name": name, "token": token]
         
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+    Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
 
             
             switch response.result {
@@ -72,9 +114,13 @@ class GroupController {
     }
     
     
+    // Updates the group and downloads all groups from server. Optional success completion.
+   static func updateGroup(group: Group, name: String?, userID: Int?, completion: @escaping (Bool) -> Void = {_ in }) {
     
-    func updateGroup(group: Group, name: String?, userID: Int?, completion: @escaping (Group) -> Void) {
-        
+    guard let accessToken = SessionManager.tokens?.idToken else {return}
+    let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+    
+    
         var myGroup = group
         
         if let name = name {
@@ -91,58 +137,81 @@ class GroupController {
         
         guard let groupJSON = groupToJSON(group: myGroup) else { return }
         
-        Alamofire.request(url, method: .put, parameters: groupJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .put, parameters: groupJSON, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
 
             switch response.result {
             case .success(_):
-                completion(myGroup)
+                
+                // This downloads allGroups from server so we have fresh data
+                //TODO: Need current userID here
+                self.getGroups(forUserID: userID! /* XXX: is this right? */, completion: { (success) in
+                    if success {
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                })
                 return
                 
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(myGroup)
+                completion(false)
                 return
             }
         }
     }
     
-    
-    func getGroupWith(userID: Int, completion: @escaping ([Group]?) -> Void = { _ in }) {
+    // Gets groups from server and updates the singleton. Optional success completion
+    static func getGroups(forUserID userID: Int, completion: @escaping (Bool) -> Void = { _ in }) {
+       guard let accessToken = SessionManager.tokens?.idToken else {return}
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("user").appendingPathComponent(String(userID))
         
-        Alamofire.request(url).validate().responseData { (response) in
+        
+        var request = URLRequest(url: url)
+        
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        print(request)
+        
+        Alamofire.request(request).validate().responseData { (response) in
             switch response.result {
             case .success(let value):
+                let string = String(data: value, encoding: .utf8)
+                print("Data String: \(string!)")
                 
                 do {
                     
                     let decoder = JSONDecoder()
                     let groups = try decoder.decode(GroupsList.self, from: value)
                     
-                    completion(groups.data)
+                    allGroups = groups.data
+                    
+                    completion(true)
                     
                 } catch {
-                    print("Error getting groups from API response")
-                    completion(nil)
+                    print("Error getting groups from API response\(response)")
+                    completion(false)
                     return
                 }
                 
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(nil)
+                completion(false)
                 return
             }
         }
     }
     
-    func delete(userID: Int, group: Group, completion: @escaping (Bool) -> Void) {
+    static func delete(group: Group, userID: Int,  completion: @escaping (Bool) -> Void) {
+        guard let accessToken = SessionManager.tokens?.idToken else {return}
+        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+        
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("remove")
         
         let parameters: Parameters = ["userID": userID, "groupID": group.groupID]
         
-        Alamofire.request(url, parameters: parameters).validate().response { (response) in
+        Alamofire.request(url, parameters: parameters, headers: headers).validate().response { (response) in
             
             if let error = response.error {
                 print(error.localizedDescription)

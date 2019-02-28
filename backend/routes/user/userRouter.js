@@ -2,6 +2,8 @@ const express = require('express');
 const userRouter = express.Router({mergeParams: true});
 const userDb = require('../../helpers/userModel');
 
+const nodemailer = require('nodemailer');
+
 const checkJwt = require('../../validators/checkJwt'); 
 const checkUser = require('../../validators/checkUser');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
@@ -188,6 +190,15 @@ userRouter.delete('/:id', checkUser, (req, res) => {
 userRouter.get('/check/getid', (req, res) => {
     let email = req.user.email; // use jwt's req.user instead of req.body which is vulnerable
 
+    // setting up sender e-mail
+    let transporter = nodemailer.createTransport({
+        service: `${process.env.EMAIL_SERVICE}`,
+        auth:{
+            user: `${process.env.EMAIL_ADDRESS}`,
+            pass: `${process.env.EMAIL_PASSWORD}`
+        }
+    });
+
     userDb.getIdByEmail(email).then(id => {
         if(!id || id.length === 0){
             // CREATE NEW USER ENTRY IF NO USER FOUND
@@ -196,6 +207,23 @@ userRouter.get('/check/getid', (req, res) => {
                 email: req.user.email,
                 profilePicture: req.user.picture,
             }
+
+            // email new user with welcome e-mail
+            // set up the email
+            let mailOptions = {
+                from: `${process.env.EMAIL_ADDRESS}`,
+                to: `${email}`,
+                subject: 'Signed up for ShopTrak',
+                text: 'Thank you for signing up with ShopTrak.'
+            };
+            // send the email now
+            transporter.sendMail(mailOptions, function(error, info){
+                if(error){
+                    console.log(error);
+                }else{
+                    console.log('Email sent: '+info.response);
+                }
+            });
             
             return userDb.add(newUser).then(id => {
                 console.log('newuserID', id[0]);
