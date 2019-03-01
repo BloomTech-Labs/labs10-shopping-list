@@ -5,7 +5,7 @@ import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, 
 import './Styles/UserProfile.css';
 
 class UserProfile extends React.Component{
-   componentDidMount(){
+   componentWillMount(){
         if(!this.props.currentUser && localStorage.getItem('isLoggedIn')){
             // find a user if none in state
             console.log('profile mount');
@@ -17,9 +17,9 @@ class UserProfile extends React.Component{
         let name, email, profilePicture = '';
 
         if(this.props.currentUser){
-            name = this.props.currentUser.profile.name;
-            email = this.props.currentUser.profile.email;
-            profilePicture = this.props.currentUser.profile.profilePicture;
+            name = this.props.currentUser.name;
+            email = this.props.currentUser.email;
+            profilePicture = this.props.currentUser.profilePicture;
         }
         return (
             <div className = 'user-profile-container'>
