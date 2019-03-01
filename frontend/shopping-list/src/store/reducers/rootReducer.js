@@ -155,6 +155,7 @@ export const rootReducer = (state = initialState, action) => {
     case CHECK_OUT_COMPLETE:
       return {
         ...state,
+        userCart: null,
         needsNewItems: true,
         needsNewHistory: true,
       }
