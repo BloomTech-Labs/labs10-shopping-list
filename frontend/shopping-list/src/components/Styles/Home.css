@@ -100,3 +100,26 @@ section {
 .button{
     color: #362023
 }
+
+
+@media only screen and (max-width: 767px){
+    .home-banner-overlay h1{
+        font-size: 4rem !important;
+    }
+
+    .home-banner-overlay h2{
+        font-size: 2rem !important;
+    }
+
+    .content-tiles{
+        flex-flow: column nowrap;
+    }
+
+    .tile-img{
+        width: 100%;
+    }
+
+    .tile-text{
+        width: 100%;
+    }
+}
