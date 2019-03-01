@@ -21,7 +21,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         
         GroupController.shared.getUserID { (user) in
             
-            guard let userID = user?.id else {return}
+            guard let userID = user?.profile.id else {return}
             
             GroupController.shared.getGroups(forUserID: userID) { (success) in
                 if allGroups.count > 0 {

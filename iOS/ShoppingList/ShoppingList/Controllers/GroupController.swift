@@ -13,6 +13,10 @@ import Auth0
 
 class GroupController {
     
+    struct Profile: Codable {
+        let profile: UserID
+    }
+    
     struct UserID: Codable {
         let id: Int
     }
@@ -20,7 +24,7 @@ class GroupController {
     static let shared = GroupController()
     private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
     
-    func getUserID(completion: @escaping (UserID?) -> Void) {
+    func getUserID(completion: @escaping (Profile?) -> Void) {
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let url = baseURL.appendingPathComponent("user").appendingPathComponent("check").appendingPathComponent("getid")
         var request = URLRequest(url: url)
@@ -39,7 +43,7 @@ class GroupController {
                 
                 do {
                     let decoder = JSONDecoder()
-                    let user = try decoder.decode(UserID.self, from: value)
+                    let user = try decoder.decode(Profile.self, from: value)
                     completion(user)
                     
                 } catch {
@@ -81,7 +85,7 @@ class GroupController {
         
         self.getUserID { (id) in
             
-            guard let userID = id?.id else { completion(nil); return }
+            guard let userID = id?.profile.id else { completion(nil); return }
             
             let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
             let url = self.baseURL.appendingPathComponent("group")
@@ -192,7 +196,7 @@ class GroupController {
                     let decoder = JSONDecoder()
                     let groups = try decoder.decode(GroupsList.self, from: value)
                     
-                    allGroups = groups.data
+                    allGroups = groups.groups
                     
                     completion(true)
                     

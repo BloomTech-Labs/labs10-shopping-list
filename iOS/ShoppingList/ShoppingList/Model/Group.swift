@@ -9,7 +9,7 @@
 import Foundation
 
 struct GroupsList: Codable {
-    let data: [Group]
+    let groups: [Group]
 }
 
 
@@ -23,9 +23,9 @@ struct Group: Codable, Equatable {
     var createdAt: String
     var updatedAt: String
     
-    var memberAmount: Int
+    var memberAmount: Int?
     
-    var members: [GroupMember]?
+    var groupMembers: [GroupMember]?
     var trips: [Trip]?
     var items: [Item]?
     
