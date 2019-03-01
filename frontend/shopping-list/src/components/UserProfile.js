@@ -17,9 +17,9 @@ class UserProfile extends React.Component{
         let name, email, profilePicture = '';
 
         if(this.props.currentUser){
-            name = this.props.currentUser.name;
-            email = this.props.currentUser.email;
-            profilePicture = this.props.currentUser.profilePicture;
+            name = this.props.currentUser.profile.name;
+            email = this.props.currentUser.profile.email;
+            profilePicture = this.props.currentUser.profile.profilePicture;
         }
         return (
             <div className = 'user-profile-container'>
