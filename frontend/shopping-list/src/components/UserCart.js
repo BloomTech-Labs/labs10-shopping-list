@@ -1,7 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {checkOut} from '../store/actions/rootActions';
+import {checkOut, removeFromCart} from '../store/actions/rootActions';
 import './Styles/UserCart.css'
 
 class UserCart extends React.Component{
@@ -38,23 +38,24 @@ class UserCart extends React.Component{
             amount: '',
         })
     }
-
     render(){
         return(
             <div className = 'user-cart-container'>
             <h2>Shopping Cart</h2>
 
+            <div className = 'cart-items'>
             {this.props.userCart !== null ? (
                 this.props.userCart.map(item => (
-                    <div className = 'cart-item' key = {item.id}>{item.name}</div>
+                    /** @TODO break these divs into components */
+                    <div className = 'cart-item' key = {item.id}><button>X</button>{item.name}</div>
                 ))
             ) : <h4>No Items in Cart</h4>}
+            </div>
 
-
-                
-                This Trip I Paid:
-                    <input type = 'text' name = 'amount' value = {this.state.amount} placeholder = '$' onChange = {this.handleChange}></input><button onClick = {this.handleCheckout}>Check Out</button>
-            
+                <div className = 'checkout-container'>
+                <input type = 'text' name = 'amount' value = {this.state.amount} placeholder = 'Total $ Spent' onChange = {this.handleChange}></input>
+                <button onClick = {this.handleCheckout}>Check Out</button>
+                </div>
             </div>
         )
     }
@@ -72,4 +73,5 @@ const mapStateToProps = state => {
 export default withRouter(connect(mapStateToProps, {
     // actions
     checkOut,
+    removeFromCart,
 })(UserCart));

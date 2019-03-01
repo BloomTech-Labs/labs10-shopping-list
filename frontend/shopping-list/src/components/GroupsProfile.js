@@ -47,7 +47,6 @@ class GroupsProfile extends Component{
      * Retrieve a list of items from state
     */
     componentWillMount() {
-        console.log('CWMOUNT')
         if(!this.props.groupItems){
             this.props.getGroupItems(this.props.match.params.id);
         } 

@@ -48,8 +48,8 @@ const initialState = {
   groupItems: null,
   needsNewItems: false,
   needsNewHistory: false,
-  userCart: [],
-  groupHistory: [],
+  userCart: null,
+  groupHistory: null,
   groupUsers: [],
   groupUserProfiles: [],
 
@@ -131,7 +131,10 @@ export const rootReducer = (state = initialState, action) => {
       }
 
     case ADD_TO_CART:
-      let newCart = state.userCart;
+    let newCart = [];
+    if(state.userCart && state.userCart.length > 0){
+      newCart = state.userCart;
+    }
       newCart.push(action.payload);
       return {
         ...state,
