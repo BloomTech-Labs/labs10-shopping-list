@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import SwiftKeychainWrapper
 import SimpleKeychain
+import Auth0
 
 class UserController {
     
@@ -36,12 +37,10 @@ class UserController {
         
         guard let userJSON = userToJSON(user: newUser) else { return }
         
-       guard let accessToken = A0SimpleKeychain(service: "Auth0").string(forKey:"access_token") else {return}
-        
-        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+       
         
         
-        Alamofire.request(url, method: .post, parameters: userJSON, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
+        Alamofire.request(url, method: .post, parameters: userJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(let value):
@@ -104,7 +103,7 @@ class UserController {
         }
     }
     func getUser(forID id: Int, completion: @escaping (User?) -> Void) {
-        guard let accessToken =  A0SimpleKeychain(service: "Auth0").string(forKey: "id_token") else {return}
+        guard let accessToken = SessionManager.tokens?.idToken else {return}
         let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(id))
          var request = URLRequest(url: url)
        
@@ -131,10 +130,8 @@ class UserController {
                     return
                 }
                 
-                
-                
             case .failure(let error):
-                print(error.localizedDescription)
+                NSLog("getUser: \(error.localizedDescription)")
                 completion(nil)
                 return
             }

@@ -40,8 +40,10 @@ class HistoryController {
                     
                     for userList in histories.data {
                         for item in userList {
+
                             guard let selectedGroup = selectedGroup else { return }
                             let historyItem = Item(name: item.name, purchased: true, price: item.total, group: selectedGroup)
+                          
                             history.append(historyItem)
                         }
                     }

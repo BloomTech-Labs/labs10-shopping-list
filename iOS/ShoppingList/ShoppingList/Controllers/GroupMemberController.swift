@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import Auth0
 
 
 class GroupMemberController {
@@ -19,9 +20,17 @@ class GroupMemberController {
     
     func getGroupMembers(forGroup group: Group, completion: @escaping (Group?) -> Void) {
         
-         let url = baseURL.appendingPathComponent("groupMember").appendingPathComponent("group").appendingPathComponent(String(group.groupID))
+        let url = baseURL.appendingPathComponent("groupMember").appendingPathComponent("group").appendingPathComponent(String(group.groupID))
         
-        Alamofire.request(url).validate().response { (response) in
+        
+        guard let accessToken = SessionManager.tokens?.idToken else {return}
+        var request = URLRequest(url: url)
+        
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        print(request)
+        
+        
+        Alamofire.request(request).validate().response { (response) in
             
             if let error = response.error {
                 print(error.localizedDescription)

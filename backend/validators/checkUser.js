@@ -73,7 +73,8 @@ async function routeCheck(req, res, next, userId){
      * Protect Group Profiles
      * Ensures that only members of a group can see that group's profile information
      */
-    if(req.originalUrl === `/api/group/${req.params.id}`){
+
+    if(req.originalUrl === `/api/group/${req.params.id}` && req.method === 'GET'){
         
         // // query the db for all users in that group
         let paramId = Number(req.params.id);
@@ -103,7 +104,8 @@ async function routeCheck(req, res, next, userId){
      * and CREATE requests should be open to anyone that logs in through Auth0)
      */
 
-     if(req.originalUrl === `/api/user/${req.params.id}`){
+     if(req.originalUrl === `/api/user/${req.params.id}` && (req.method === 'PUT' || 'DELETE')){
+
          let paramId = Number(req.params.id);
 
          userDb.getById(paramId).then(user => {
@@ -151,7 +153,33 @@ async function routeCheck(req, res, next, userId){
        * Ensures only moderators and self-same members can delete a given user from the group
        */
       
+  
+       /**
+        * Add Item to Group
+        * Ensures member adding item is a member of the group
+        */
 
+        if(req.originalUrl === `/api/item` && req.method === 'POST'){
+            let groupId = req.body.groupID;
+
+            groupMembersDb.getByGroup(groupId).then(res => {
+                let member = res.map(m => {
+                    if(m.userID === userId){
+                        return m;
+                    }
+                })
+
+                if(member.length === 0){
+                    return res.status(403).json({warning: `You do not have permission to do that.`})
+                } else {
+                    return next();
+                }
+
+            }).catch(err => {
+                console.log(err);
+                return res.status(500).json({error: `Internal server error.`})
+            })
+        }
 
 }
     

@@ -20,7 +20,7 @@ class NewGroupPopoverView: UIView, NibInstantiatable {
     
     @IBAction func addGroup(_ sender: Any) {
         guard let groupName = groupNameTextField.text else { return }
-        
+
         GroupController.shared.newGroup(withName: groupName) { (group) in
             guard let group = group else { return }
             allGroups.append(group)

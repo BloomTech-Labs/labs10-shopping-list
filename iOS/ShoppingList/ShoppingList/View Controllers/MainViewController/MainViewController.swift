@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import Auth0
 
-class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopoverViewDelegate {
-
+class MainViewController: UIViewController, StoryboardInstantiatable, PopoverViewDelegate {
+    
     static let storyboardName: StoryboardName = "MainViewController"
     @IBOutlet weak var groupName: UIButton!
     
@@ -18,12 +19,30 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        GroupController.shared.getGroupWith(userID: 501) { (groups) in
-            if let groups = groups {
-                allGroups = groups
-                selectedGroup = groups[0]
-                self.updateViews()
+        GroupController.shared.getUserID { (user) in
+            
+            guard let userID = user?.id else {return}
+            
+            GroupController.shared.getGroups(forUserID: userID) { (success) in
+                if allGroups.count > 0 {
+                    selectedGroup = allGroups[0]
+                    UI { self.updateViews() }
+                }
+                
+                // Testing history controller. Can be removed at any time
+                let historyCont = HistoryController()
+                historyCont.getHistory(completion: { (success) in
+                    
+                    if success {
+                        print(history.count)
+                    } else {
+                        print("No history retrieved from user")
+                    }
+                    
+                })
+                
             }
+
         }
     }
     
@@ -33,7 +52,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
         }
     }
     
-    func selectedGroupChanged() {
+    func updatesNeeded() {
         updateViews()
     }
     
@@ -52,7 +71,8 @@ class MainViewController: UIViewController, StoryboardInstantiatable, GroupsPopo
         let settingsVC = storyboard.instantiateInitialViewController() ?? SettingsTableViewController.instantiate()
         present(settingsVC, animated: true, completion: nil)
     }
-
 }
+
+
 
 

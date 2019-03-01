@@ -36,7 +36,8 @@ bower_components
 node_modules/
 jspm_packages/
 package-lock.json
-# yarn.lock
+/node_modules
+yarn.lock
 
 # IntelliJ IDEA directories
 .idea
@@ -73,5 +74,10 @@ typings/
 # misc
 .DS_Store
 package-lock.json
-# yarn.lock
+yarn.lock
+<<<<<<< HEAD
+yarn.error.log
+=======
+>>>>>>> e0c08a5b695c514c77115cfae84e6fe6f003060a
+yarn
 

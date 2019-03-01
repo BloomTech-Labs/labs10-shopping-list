@@ -1,8 +1,11 @@
 const express = require('express');
-const userRouter = express.Router();
+const userRouter = express.Router({mergeParams: true});
 const userDb = require('../../helpers/userModel');
 
+const nodemailer = require('nodemailer');
+
 const checkJwt = require('../../validators/checkJwt'); 
+const checkUser = require('../../validators/checkUser');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
 
 /****************************************************************************************************/
@@ -32,10 +35,8 @@ const checkJwt = require('../../validators/checkJwt');
 userRouter.use(checkJwt);
 
 userRouter.post('/', (req, res) => {
-    console.log(req.body);
     let user = req.body;
     userDb.add(user).then(id => {
-        console.log(id);
         return res.status(200).json({message: `User adder to database with ID ${id[0]}`, id: id[0]});
     })
     .catch(err => {
@@ -60,7 +61,6 @@ userRouter.get('/:id', (req, res) => {
     const id = req.params.id;
 
     userDb.getById(id).then(user => {
-        console.log(user);
         if (user.length >= 1) {
             return res.status(200).json(user[0]);
         }
@@ -85,46 +85,59 @@ userRouter.get('/:id', (req, res) => {
 
 /**************************************************/
 
+
+userRouter.get('/email/:email', (req, res) => {
+    const email = req.params.email;
+
+    userDb.getIdByEmail(email).then(user => {
+        if(user){
+            return res.status(200).json(user[0]);
+        } else {
+            return res.status(404).json({error: `User not found.`})
+        }
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Internal server error.`})
+    })
+})
+
+
+/**************************************************/
+
 // GET USER BY EMAIL
 /** @TODO This should be set to sysadmin privileges for user privacy **/
 
 /**************************************************/
 
-userRouter.get('/email/:email', (req, res) => {
-    const email = req.params.email;
+userRouter.get('/check/email', (req, res) => {
+    const email = req.user.email;
 
-    userDb.getByEmail(email).then(user => {
-        if (user.length >= 1) {
-            return res.status(200).json(user[0]);
+    userDb.getProfileByEmail(email).then(user => {
+        if(user){
+            return res.status(200).json({profile: user[0]})
+        } else {
+            return res.status(404).json({error: `User not found.`})
         }
-
-        return res.status(404).json({message: "The requested user does not exist."})
+    }) .catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Internal server error.`})
     })
-        .catch(err => {
-            const error = {
-                message: `Internal Server Error`,
-                data: {
-                    err: err
-                },
-            }
-            return res.status(500).json(error);
-        })
 })
-
-userRouter.get('/')
+        
 
 /**************************************************/
 /**
  * UPDATE USER
- * @TODO Add middleware to ensure users can only change their own information
+ * @NOTE @checkUser middleware ensures only self-same users can update their profile
+ * information
  */
 
 /**************************************************/
-userRouter.put('/:id', (req, res) => {
+userRouter.put('/:id', checkUser, (req, res) => {
     const id = Number(req.params.id);
     const changes = req.body;
     userDb.update(id, changes).then(status => {
-        if(status.length >= 1 || !status){
+        if(status.length >= 1 || !status || status === 1){
             return res.status(200).json({message: `User ${id} successfully updated.`});
 
         } else {
@@ -145,18 +158,17 @@ userRouter.put('/:id', (req, res) => {
 /**************************************************/
 
 /** DELETE USER
- * @TODO Add middleware to prevent unauthorized deletions 
+ * @NOTE @checkUser middleware prevents unauthorized deletions by other users
  * **/
 
 /**************************************************/
 
-userRouter.delete('/:id', (req, res) => {
+userRouter.delete('/:id', checkUser, (req, res) => {
     const id = req.params.id;
 
     userDb.remove(id).then(status => {
-        if(status.length >= 1 || !status){
+        if(status.length >= 1 || !status || status === 1){
             return res.status(200).json({message: `User ${id} successfully deleted.`});
-
         } else {
             return res.status(404).json({error: `The requested user does not exist.`});
         }
@@ -176,42 +188,60 @@ userRouter.delete('/:id', (req, res) => {
 /**************************************************/
 
 /** GET USER ID
- * This will query the database for the user ID that matches the passed in email address
+ * This will query the database for the user ID that matches the passed in email address in the JWT
  * if no user is found, a new entry will be created
+ * @NOTE @checkUser is unneccessary here since the values are passing from the token, which will
+ * only show information specific to the token bearer. @checkJwt middleware gives us the information we need
+ * in @param req.user rather than the old method of posting the email address.
+ * 
+ * The address must be changed to 'GET /check/getid', since 'GET /getid' hits the GET /:id endpoint on accident.
+ * 
+ * Generating the user information from the token rather than a POST email is much more secure.
  * **/
 
 /**************************************************/
+userRouter.get('/check/getid', (req, res) => {
+    let email = req.user.email;
 
-userRouter.post('/getid', (req, res) => {
-    console.log('req body', req.body);
-    let email = req.body.email;
     userDb.getIdByEmail(email).then(id => {
-        console.log('email id', id[0]);
+        console.log(id, 'id response /check/getid');
         if(!id || id.length === 0){
-            console.log('no user found');
-            // CREATE NEW USER ENTRY
+            //create new user
             let newUser = {
-                name: req.body.name,
-                email: req.body.email,
-                profilePicture: req.body.img_url,
+                name: req.user.name,
+                email: req.user.email,
+                profilePicture: req.user.picture,
             }
-            userDb.add(newUser).then(id => {
-                console.log('newuserID', id[0]);
-                return res.status(201).json({message: `New user added to database with ID ${id}.`, id: id[0].id});
-            })
-            .catch(err => {
+
+            return userDb.add(newUser).then(id => {
+                console.log('newuser', id[0]);
+                return userDb.getById(id).then(profile => {
+                    console.log('profile', profile[0], 'id', id[0])
+                    return res.status(201).json({message: `New user added with ID ${id}.`, profile: profile[0], id:id[0]})
+                }).catch(err => {
+                    console.log(err);
+                    return res.status(404).json({error: `Error addind user/no user found.`})
+                })
+            }).catch(err => {
                 console.log(err);
-                return res.status(500).json({error: `Error adding new user DB entry.`})
+                return res.status(404).json({error: `Error adding user/no user found.`})
             })
         } else {
-            console.log('user found', id[0]);
-            return res.status(200).json({message: `Found ID for user with email ${email}.`, id: id[0].id});
+            console.log('user found', id[0].id);
+
+            userDb.getById(id[0].id).then(profile => {
+                return res.status(200).json({profile: profile[0], id: id[0].id})
+            }).catch(err => {
+                console.log(err);
+                return res.status(404).json({error: `Nothing here.`})
+            })
         }
-    })
-    .catch(err => {
+    }).catch(err => {
         console.log(err);
         return res.status(500).json({error: `Error retrieving user ID.`})
     })
 })
+
+
 
 module.exports = userRouter;

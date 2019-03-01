@@ -7,11 +7,13 @@
     * [Add User](#Add-User)
     * [Update User](#Update-User)
     * [Remove User](#Remove-User)
+    * [Get User ID](#Get-User-ID)
 * [Group Endpoints](#Group-Endpoints)
     * [Get Group](#Get-Group)
     * [Add Group](#Add-Group)
     * [Update Group](#Update-Group)
     * [Remove Group](#Remove-Group)
+    * [Add User to Group](#User-To-Group)
 * [Group Member Endpoints](#GroupMember-Endpoints)
     * [Get All Members](#Get-All-Group-Member)
     * [Get By Group ID](#Get-Group-Member-By-Group-ID)
@@ -135,6 +137,40 @@ None
   ```javascript
     $.ajax({
       url: "/api/user/email/annam45@gmail.com",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+### Get User ID
+Returns the user ID of the user with the email embedded in the JWT.
+If no user in the database matches the token, a new database entry will be created, and return the new user ID.
+* **URL**<br>
+/api/user/check/getid
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`None`
+* **Data Params**<br>
+`JavaScript Web Token in Authorization Header`
+* **Success Response:**<br>
+    * **Code:** 200 or 201 if new user<br>
+      **Content:** { id: 12 }
+* **Error Response:**<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** {error: "Error retrieving user ID."}
+      * **Code:** 500 INTERNAL SERVER ERROR<br>
+      **Content:** {error: "Error adding new user DB entry."}
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/user/check/getid",
       dataType: "json",
       type : "GET",
       success : function(r) {
@@ -450,6 +486,23 @@ None
 |------------------------|-----------------------------|----------|
 | userID                 | ID of user                  | Yes      |
 | groupID                | ID of group                 | Yes      |
+
+### Add User to Group
+Add a user by userId to a group by groupId
+* **URL**<br>
+/api/group/invite/:userId::groupId
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`id=[integer]`
+`groupId=[integer]`
+* **Data Params**<br>
+* **Success Response**<br>
+    * **Code:** 200<br>
+      **Content:** {message: "User added to group.", userId: 14, groupId: 7, id: 10}
+* **Error Response:**<br>
+    * **Code** 500<br>
+      **Content:** {message: "Error adding user to group."}
 
 [TOP](#Table-of-Contents)
 

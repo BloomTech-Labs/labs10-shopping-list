@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import {gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
+import {checkEmail, getSingleGroup, addGroup, getUserProfile, getGroupUsers, getGroupHistory, getGroupItems, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems } from '../store/actions/rootActions';
+
+// import React, { Component, Fragment } from 'react';
+// import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
+
 import {connect} from 'react-redux';
-import Navigation from "./Navigation";
 import "./Styles/Group.css";
+import "./Styles/Scrollbar.css";
 import {
     MDBListGroup,
     MDBListGroupItem,
@@ -12,24 +16,29 @@ import {
     MDBBadge,
     MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
     MDBTooltip,
+    MDBScrollbar,
 } from "mdbreact";
+import ItemList from './ItemList';
+import GroupUserList from './GroupUserList';
+import UserCart from './UserCart';
+import axios from "axios";
 
-class GroupsPage extends Component{
+class GroupsProfile extends Component{
     state = {
         modal14: false,
-        group: null,
-        items: [
-            {
-                name: "milk",
-                purchased: true,
-            }
-        ],
         itemName: "",
         itemPrice: 0.00,
         itemQuantity: 1,
         itemMeasure: "",
         itemPurchased: false,
-        total: 0.00
+        total: 0.00,
+        listToggle: true,
+        histToggle: false,
+        totalToggle: true,
+        inviToggle: false,
+        groupHistory: null,
+        members: null,
+        totals: null,
     }
 
     /*
@@ -37,13 +46,61 @@ class GroupsPage extends Component{
      * Retrieve a list of items from state
     */
     componentWillMount() {
-        this.props.gettingGroups();
-        this.props.getItems(Number(this.props.match.params.id));
-
-        if (this.props.groups !== null) {
-            const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
-            this.setState({ group: group[0]})
+        console.log('CWMOUNT')
+        if(!this.props.groupItems){
+            this.props.getGroupItems(this.props.match.params.id);
+        } 
+        
+        if(!this.props.groupHistory || this.props.groupHistory.length === 0){
+            console.log('\n GROUP HISTORY FETCH ==>')
+            this.props.getGroupHistory(this.props.match.params.id);
         }
+
+        if(this.props.groupUsers.length === 0){
+            console.log('GET GROUP USERS ===>')
+            this.props.getGroupUsers(this.props.match.params.id);
+
+        if(!this.props.currentUser){
+            this.props.checkEmail();
+        }
+
+//         if (this.props.groups !== null) {
+//             const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
+//             this.setState({ members: group[0].members})
+        }
+
+
+    }
+
+    componentWillReceiveProps = newProps => {
+        if(newProps.needsNewItems){
+            this.props.getGroupItems(this.props.match.params.id);
+            this.props.getGroupHistory(this.props.match.params.id);
+        }
+
+        if(newProps.needsNewHistory){
+            this.props.getGroupHistory(this.props.match.params.id);
+        }
+
+        if(!newProps.currentUser){
+            this.props.checkEmail();
+        }
+
+        if(newProps.groupUsers.length > 0 && this.props.groupUserProfiles){
+            console.log(newProps.groupUsers)
+            for(let i = 0; i < newProps.groupUsers.length; i++){
+                this.props.getUserProfile(newProps.groupUsers[i].userID);
+            }
+        }
+    }
+
+    /*
+     * Retrieve the group history and save to component state
+    */
+    getGroupHistory = (groupId) => {
+
+        this.props.getGroupHistory(groupId);
+
     }
 
     // Toggles the modals
@@ -59,6 +116,7 @@ class GroupsPage extends Component{
      * @param e - Event
      */
     handleInput = e => {
+        e.preventDefault();
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -81,7 +139,7 @@ class GroupsPage extends Component{
 
         // Only check to box if the item hasn't been purchased
         if (item[0].purchasedBy === null) {
-            this.props.updateItemPurchesd(e);
+            this.props.updateItemPurchased(e);
         }
     }
 
@@ -91,6 +149,26 @@ class GroupsPage extends Component{
         // Filter to make sure we are not sending in previous bought items
         const purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null);
         this.props.submitPaidItems(purchased, Number(localStorage.getItem("userId")), Number(this.state.total));
+        this.props.getItems(Number(this.props.match.params.id));
+    }
+
+    // Change between List and History views
+    toggleListClass = () => {
+
+        this.setState({ histToggle: false, listToggle: true, inviToggle: false})
+    }
+
+    toggleHistClass = () => {
+        this.setState({ histToggle: true, listToggle: false, inviToggle: false})
+    }
+
+    toggleInviClass = () => {
+        this.setState({ inviToggle: true, histToggle: false, listToggle: false})
+    }
+
+    toggleTotal = () => {
+        console.log("TOGGLE")
+        this.setState({ totalToggle: !this.state.totalToggle })
     }
 
     /*
@@ -128,117 +206,273 @@ class GroupsPage extends Component{
 
     }
 
+    /*
+     * Calculate the total amount the member has spent
+     * @params items - Array of items to tally
+     */
+    totalItems = (items) => {
+        const total = items.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.total;
+        }, 0);
+
+        return total;
+    }
+
+    groupBy = ( array , f ) => {
+        // Set a new group object
+        var groups = {};
+
+        // Loop through the array and start sorting based on the f inputs
+        array.forEach( function( o )
+        {
+            var group = JSON.stringify( f(o) );
+            groups[group] = groups[group] || [];
+            groups[group].push( o );
+        });
+
+        // Return a new array of groups
+        return Object.keys(groups).map( function( group )
+        {
+            return groups[group];
+        })
+    }
+
+    calculateTotal = () => {
+        // console.log("HISTORY => ", this.state.groupHistory);
+        const hists = this.state.groupHistory;
+        const members = this.state.members;
+
+        let newSorted = [];
+
+        let arr = [];
+
+        if (hists !== null) {
+
+            hists.forEach((itm, i) => {
+                // console.log("ITM => ", itm);
+
+                itm.forEach((x, j) => {
+                    if (x.grandTotal) {
+                        // console.log(x);
+                        arr.push({user: itm[0].user, total: x.grandTotal});
+                    }
+                })
+            })
+
+            // console.log(arr);
+
+            const ress = this.groupBy(arr, function(itm) {
+                return [itm.user]
+            })
+
+            // console.log("RESS => ", ress);
+            //
+            // let newSorted = [];
+
+            // Calculate the total and send to te newSorted array
+            ress.forEach((rs, i) => {
+                let total = this.totalItems(ress[i]);
+                const grandTotal = {
+                    grandTotal: total,
+                    user: rs[0].user,
+                }
+                newSorted.push(grandTotal);
+            })
+
+            // console.log("NEW SORTED => ", newSorted);
+            return newSorted;
+
+            // this.setState({totals: newSorted});
+
+
+        }
+
+        // this.setState({totals: newSorted});
+
+
+    }
+
     render(){
-        // Filter items by which has been purchased - used for the `I Bought` form
-        let purchased = [];
-        this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
+
+// //         console.log('current group', this.props.currentGroup);
+// //         const purchased = this.props.items.filter(itm => itm.purchased === true);
+
+//         // if(!this.props.currentGroup){ // tell user info is loading...
+//         //     /**
+//         //      * @TODO Create a loading component that can render during data queries
+//         //      */
+//         //     return (
+//         //         <div>Fetching group information...</div>
+//         //     )
+//         // } else {
+
+//         // Filter items by which has been purchased - used for the `I Bought` form
+//         let purchased = [];
+//         this.props.items !== null ? purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null) : purchased = [];
+//         // Gather histories
+//         const histories = this.state.groupHistory;
+//         let total = this.calculateTotal();
+//         console.log("TOTAL => ", total);
+
         return (
-            <div>
                 <div className={"group-profile-container"}>
                     <div className={"group-profile-header"}>
-                        <MDBBtn color="primary" >List</MDBBtn>
-                        <MDBBtn color="primary" >History</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleListClass()}} >List</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleHistClass()}} >History</MDBBtn>
                         <MDBBtn color="primary" >Invite</MDBBtn>
-                        <MDBBtn color="primary" >Total</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleTotal()}} >Total</MDBBtn>
                     </div>
-                    <div className={"group-profile-header-title"}><h3>{this.state.group !== null ? this.state.group.name : ""}</h3></div>
-                    <div className={"group-profile-columns"}>
-                        <div className={"group-profile-list"}>
-                            <div className={"group-profile-list-container"}>
-                                <MDBContainer>
-                                    <MDBContainer>
-                                        <MDBListGroup style={{ width: "22rem" }}>
-                                            {
-                                                this.props.items !== null ? this.props.items.map((item, i) => (
-                                                        <MDBListGroupItem key={i} className="d-flex justify-content-between align-items-center">
-                                                            <button type="button" onClick={() => this.check(item.id)} className={item.purchased ? "close1 item-purchased close" : "close close1"} aria-label="Close">
-                                                                <MDBBadge color="primary"><MDBIcon icon="check" /> </MDBBadge>
-                                                            </button>
-                                                            <p className={"item-name"}>{item.name}</p>
-                                                            <button type="button" className="close" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                        </MDBListGroupItem>
-                                                    )) : null
-                                            }
+                    
+                    <ItemList items = {this.props.groupItems} />
+                    
+                    <GroupUserList users = {this.props.groupUsers} />
 
-                                        </MDBListGroup>
-                                    </MDBContainer>
-                                </MDBContainer>
-                            </div>
-                            <div className={"group-profile-list-button"}>
-                                <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
-                            </div>
-                        </div>
+                {/* <div className={"group-profile-header-title"}><h3></h3></div>
+                     <div className={"group-profile-columns"}>
+                         <div className={"group-profile-list"}>
+                             <div className={"group-profile-list-container scrollbar"}>
+                                 <MDBContainer>
+                                     <MDBContainer >
+                                         {
+                                             this.state.listToggle === true ? <MDBListGroup>
+                                                 {
+                                                     this.props.items !== null ? this.props.items.map((item, i) => (
+                                                         <MDBListGroupItem key={i} className="d-flex justify-content-evenly align-items-center">
+                                                             <button type="button" onClick={() => this.check(item.id)} className={item.purchased ? "close1 item-purchased close" : "close close1"} aria-label="Close">
+                                                                 <MDBBadge color="primary"><MDBIcon icon="check" /> </MDBBadge>
+                                                             </button>
+                                                             <p className={"item-name"}>{item.name}</p>
+                                                             <button type="button" className="close" aria-label="Close">
+                                                                 <span aria-hidden="true">×</span>
+                                                             </button>
+                                                         </MDBListGroupItem>
+                                                     )) : null
+                                                 }
+                                             </MDBListGroup> : <div className={"history-list"}>
+                                                 {
+                                                     histories !== null ? histories.map((itm,i) => (
+                                                         <div>
+                                                             <MDBListGroup>
+                                                                 <MDBListGroupItem>
+                                                                 <h3>{histories[i][0].user}</h3>
+                                                                 {
+                                                                     histories[i].map((it, ii) => (
+                                                                         <p className={"history-items"}>{it.name}</p>
+                                                                     ))
+                                                                 }
+                                                                 <h4>{histories[i][0].date} | Total: $ {histories[i][histories[i].length - 1].grandTotal}</h4>
+                                                                 </MDBListGroupItem>
+                                                                 <br />
+                                                             </MDBListGroup>
+                                                         </div>
 
-                        <div className={"group-profile-right-col"}>
-                            <div className={"group-profile-gross"}>
-                                <p>MEM 1</p>
-                                <p>MEM 2</p>
-                            </div>
-                            <div className={"group-profile-bought"}>
-                                <h1>I BOUGHT</h1>
-                                <div className={"group-profile-bought-list"}>
-                                    {
-                                        purchased !== null ?
-                                        purchased.map(itm => (
-                                            <p>{itm.name}, </p>
-                                        )) : null
-                                    }
-                                </div>
-                                <div className={"group-profile-bought-input"}>
-                                    <h1>$</h1><MDBInput label="I Paid" type={"number"} step={0.01} name={"total"} onChange={this.handleInput} defaultValue={this.state.total} />
-                                </div>
-                                <div className={"group-profile-bought-button"}>
-                                    <MDBBtn color="primary" onClick={e => this.handleSubmitItems(e)} >Submit</MDBBtn>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <MDBContainer>
+
+                                                     )) : <p>NULL</p>
+                                                 }
+                                             </div>
+                                         }
+
+                                     </MDBContainer>
+                                 </MDBContainer>
+                             </div>
+                             {
+                                 this.state.listToggle === true ? <div className={"group-profile-list-button"}>
+                                     <MDBBtn color="primary" onClick={this.toggle(14)} >ADD</MDBBtn>
+                                 </div> : null
+                             }
+
+                         </div>
+
+                         <div className={"group-profile-right-col"}>
+                             {
+                                 this.state.totalToggle === true ? <div className={"group-profile-gross"}>
+                                 {
+                                     this.props.groups !== null ? this.props.groups.map((elem, i) => (
+                                         <div className={"group-profile-gross-members"}>
+                                             {
+                                                 elem.id === Number(this.props.match.params.id) ? elem.members.map((el, id) => (
+                                                     <div className={"group-profile-gross-members-box"}>
+                                                         {
+                                                             total !== undefined ? total.map((item, j) => (
+                                                                 <div>
+                                                                     {
+                                                                         item.user === el.name ? <p>{item.grandTotal}</p> : null
+                                                                     }
+                                                                 </div>
+                                                             )) : <p>Calculating</p>
+                                                         }
+                                                         <img src={el.profilePicture} alt="Avatar" className="avatar" />
+                                                         <p>{el.name}</p>
+                                                     </div>
+                                                 )) : null
+                                             }
+                                         </div>
+                                     )) : <p>Loading</p>
+                                 }
+                                 </div> : <div className={"group-profile-gross"}> <p>NET</p></div>
+                             }
+                             {this.state.listToggle === true ? <div className={"group-profile-bought"}>
+                                 <h1>I BOUGHT</h1>
+                                 <div className={"group-profile-bought-list"}>
+                                     {
+                                         purchased !== null ?
+                                             purchased.map(itm => (
+                                                 <p>{itm.name}, </p>
+                                             )) : null
+                                     }
+                                 </div>
+                                 <div className={"group-profile-bought-input"}>
+                                     <h1>$</h1><MDBInput label="I Paid" type={"number"} step={0.01} name={"total"}
+                                                         onChange={this.handleInput} defaultValue={this.state.total}/>
+                                 </div>
+                                 <div className={"group-profile-bought-button"}>
+                                     <MDBBtn color="primary" onClick={e => this.handleSubmitItems(e)}>Submit</MDBBtn>
+                                 </div>
+                             </div> : null
+                             }
+                         </div>
+                     </div>  */}
+
+                    <UserCart />
+
+                    <MDBContainer>
                     <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
-                        <MDBModalHeader toggle={this.toggle(14)}>Add New Item</MDBModalHeader>
+                        <MDBModalHeader toggle={this.toggle(14)}>Create A New Group</MDBModalHeader>
                         <MDBModalBody>
-                            <form className="needs-validation" onSubmit={this.handleAddItem}>
-                                <MDBInput className={"form-control"} required label="Item Name *" type={"text"} name={"itemName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
-                                <MDBInput required label="Item Price *" type={"number"} step={0.01} name={"itemPrice"} onChange={this.handleInput} defaultValue={this.state.itemPrice}/>
-                                <MDBInput required label="Item Quantity *" type={"number"} name={"itemQuantity"} onChange={this.handleInput} defaultValue={this.state.itemQuantity}/>
-                                <MDBInput label="Item Measurement" type={"text"} name={"itemMeasure"} onChange={this.handleInput} defaultValue={this.state.itemMeasure}/>
-                                <MDBTooltip
-                                    placement="top"
-                                    tag="div"
-                                    tooltipContent="Item will be added to bought list. Does not save until you submit all purchased items.">
-                                    <div style={{ textAlign: "center" }}>
-                                        <div className="md-checkbox md-checkbox-inline">
-                                            <input id="i2" type="checkbox" defaultChecked={this.state.itemPurchased} onClick={this.itmPurchased} />
-                                            <label htmlFor="i2">Purchased</label>
-                                        </div>
-                                    </div>
-                                </MDBTooltip>
-                            </form>
+                            <MDBInput label="Group Name" name={"groupName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
                         </MDBModalBody>
                         <MDBModalFooter>
                             <MDBBtn color="secondary" onClick={this.toggle(14)}>Close</MDBBtn>
-                            <MDBBtn color="primary" onClick={e => this.handleAddItem(e)}>Create</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.handleAddGroup}>Create</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
                 </MDBContainer>
-            </div>
+                </div>
         )
     }
 }
 
+
 const mapStateToProps = state => {
     state = state.rootReducer; // pull values from state root reducer
     return {
-        //state items
-        groups: state.groups,
-        items: state.items,
+        // group state
+        groupUserProfiles: state.groupUserProfiles,
+        groupUsers: state.groupUsers,
+        groupHistory: state.groupHistory,
+
+        // item state
+        needsNewItems: state.needsNewItems,
+        groupItems: state.groupItems,
+
+        // current user state
+        currentUser: state.currentUser,
+        
+        
     }
 }
 
 export default connect(mapStateToProps, {
-    gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems
-})(GroupsPage);
+    gettingGroups, addItem, getItems, checkEmail, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory, getGroupUsers, getUserProfile,
+})(GroupsProfile);

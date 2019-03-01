@@ -9,32 +9,36 @@
 import Foundation
 
 
+struct ItemList: Codable {
+    let data: [Item]
+}
+
 struct Item: Codable {
     
-    var createdAt: String
-    var measurement: String
+    var createdAt: String?
+    var measurement: String?
     var name: String
-    var purchasedBy: String
     var price: Double
-    var quantity: Int
-    var updatedAt: String
+    var quantity: Int?
+    var updatedAt: String?
     var purchased: Bool
-    var category: String
-    var groupID: [Group]?
+    // var category: String
+    var groupID: Int?
+    var id: Int?
+    var purchasedOn: String
     
-    
-    init(name: String, measurement: String, purchased: Bool, purchasedBy: String, category: String, price: Double, quantity: Int ) {
-     //  self.groupID = groupID
+    init(name: String, measurement: String? = nil, purchased: Bool, /*category: String,*/ price: Double, quantity: Int? = nil, groupID: Int? = nil) {
+        //  self.groupID = groupIDs
         self.name = name
         self.measurement = measurement
         self.purchased = purchased
-        self.purchasedBy = purchasedBy
-        self.category = category
+        //   self.category = category
         self.createdAt = Date().dateToString()
         self.updatedAt = Date().dateToString()
+        self.purchasedOn = Date().dateToString()
         self.price = price
         self.quantity = quantity
+        self.id = nil
+        self.groupID = groupID
     }
-    
-    
 }

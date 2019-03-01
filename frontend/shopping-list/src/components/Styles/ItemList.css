@@ -1,0 +1,25 @@
+.item-list-container {
+    padding: 40px;
+}
+
+.item-list {
+    width: 50%;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.item-form{
+    width: 50%;
+}
+
+.item-form form{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.item-form input[name='item']{
+    width: 100%;
+    padding: 5px;
+}

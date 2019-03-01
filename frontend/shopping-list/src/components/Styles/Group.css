@@ -1,5 +1,11 @@
 .group-profile-container {
-    margin-top: 60px;
+    margin-top: 65px;
+}
+
+.item-group-container{
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
 }
 
 .group-profile-header {
@@ -19,13 +25,15 @@
 }
 
 .group-profile-list {
-    margin-left: 10%;
+    width: 60%;
+    margin-left: 20%;
     height: 500px;
 }
 
 .group-profile-list-container {
     height: 400px;
-    margin-left: 7%;
+    /*width: 100%;*/
+    /*margin-left: 7%;*/
     overflow: auto;
 }
 
@@ -42,7 +50,19 @@
 
 .group-profile-gross {
     display: flex;
+    flex-direction: row;
     padding: 1%;
+    flex-wrap: wrap;
+}
+
+.group-profile-gross-members {
+    display: flex;
+
+}
+
+.group-profile-gross-members-box {
+    margin-left: 10%;
+    text-align: center;
 }
 
 .group-profile-bought {
@@ -93,13 +113,14 @@
 }
 
 .item-name {
-    margin-left: -60%;
+    margin-left: 40%;
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .item-purchased {
     opacity: 1 !important;
+
 }
 
 input[type="button"]{
@@ -178,4 +199,31 @@ input[type="button"]::-moz-focus-inner {
 
 *, *:before, *:after {
     box-sizing: border-box;
+}
+
+.history-list {
+}
+
+.history-items {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.avatar-group {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 2%;
+}
+
+.align-center {
+    text-align: center;
 }

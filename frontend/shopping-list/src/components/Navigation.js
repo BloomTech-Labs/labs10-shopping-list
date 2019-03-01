@@ -1,32 +1,32 @@
 import React from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 // import {Link, withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
 
 import {connect} from 'react-redux';
-import {checkEmail, addUserToState} from '../store/actions/rootActions';
+import {checkEmail,} from '../store/actions/rootActions';
 import './Styles/Navigation.css';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
-    MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon, MDBFormInline, MDBBtn } from "mdbreact";
+    MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem,
+    // MDBIcon, MDBFormInline, 
+    MDBBtn } from "mdbreact";
 
 class Navigation extends React.Component{
     state = {
         collapseID: "",
-        activeTabClassname: "home"
-    }
-    
-    componentDidMount(){
-        // populate state with user information
-        if(!this.props.userId && localStorage.getItem('email')){
-            this.props.checkEmail(localStorage.getItem('email'), this.props.addUserToState)
-        }
+        activeTabClassname: "home",
+        isOpen: false,
     }
     
     // Toggles dropdown menus for MDB
-    toggleCollapse = collapseID => () =>
-        this.setState(prevState => ({
-            collapseID: prevState.collapseID !== collapseID ? collapseID : ""
-        }));
+    // toggleCollapse = collapseID => () =>
+    //     this.setState(prevState => ({
+    //         collapseID: prevState.collapseID !== collapseID ? collapseID : ""
+    //     }));
+
+    toggleCollapse = () => {
+        this.setState({ isOpen: !this.state.isOpen });
+    }
 
     signOut = () => { // logs out the current user and redirects to the homepage
         auth0Client.signOut();
@@ -35,9 +35,7 @@ class Navigation extends React.Component{
 
     render(){
         // Gather user id to determine if user is logged in or not
-        const id = localStorage.getItem("userId");
-        let isLogged = false;
-        if (id !== null) isLogged = true;
+        let isLoggedIn = localStorage.getItem("isLoggedIn");
 
         // Gather the url pathname to set active class to proper link
         const pathname = this.props.location.pathname;
@@ -57,7 +55,7 @@ class Navigation extends React.Component{
                         <MDBNavItem active={pathname === "/" ? "active" : null} >
                             <MDBNavLink to="/">Home</MDBNavLink>
                         </MDBNavItem>
-                        {isLogged ? (
+                        {isLoggedIn ? (
                             <MDBNavItem active={pathname === "/groups" ? "active" : null} >
                                 <MDBNavLink to="/groups">Groups</MDBNavLink>
                             </MDBNavItem>
@@ -67,14 +65,14 @@ class Navigation extends React.Component{
 
                     <MDBNavbarNav right>
                         <MDBNavItem>
-                            {isLogged ? (
+                            {isLoggedIn ? (
                                 <MDBDropdown>
                                     <MDBDropdownToggle className="dopdown-toggle" nav>
                                         <img src={localStorage.getItem("img_url")} className="rounded-circle z-depth-0"
                                              style={{ height: "35px", padding: 0 }} alt="" />
                                     </MDBDropdownToggle>
                                     <MDBDropdownMenu className="dropdown-default" right>
-                                        <MDBDropdownItem href="/profile">My account</MDBDropdownItem>
+                                        <MDBDropdownItem><MDBNavLink to = '/profile'>My account</MDBNavLink></MDBDropdownItem>
                                         <MDBDropdownItem href="#!" onClick={this.signOut}>Log out</MDBDropdownItem>
                                     </MDBDropdownMenu>
                                 </MDBDropdown>
@@ -105,11 +103,11 @@ const mapStateToProps = state => {
         name: state.name,
         email: state.email,
         profilePicture: state.profilePicture,
+        currentUser: state.currentUser,
     }
 }
 
 export default withRouter(connect(mapStateToProps, {
     // actions
     checkEmail,
-    addUserToState,
 })(Navigation));
