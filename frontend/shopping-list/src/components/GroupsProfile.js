@@ -7,6 +7,7 @@ import {checkEmail, getSingleGroup, addGroup, getUserProfile, getGroupUsers, get
 import {connect} from 'react-redux';
 import "./Styles/Group.css";
 import "./Styles/Scrollbar.css";
+import "./Styles/GroupProfile.css";
 import {
     MDBListGroup,
     MDBListGroupItem,
@@ -46,17 +47,16 @@ class GroupsProfile extends Component{
      * Retrieve a list of items from state
     */
     componentWillMount() {
-        console.log('CWMOUNT')
         if(!this.props.groupItems){
             this.props.getGroupItems(this.props.match.params.id);
         } 
         
-        if(!this.props.groupHistory || this.props.groupHistory.length === 0){
+        if(!this.props.groupHistory){
             console.log('\n GROUP HISTORY FETCH ==>')
             this.props.getGroupHistory(this.props.match.params.id);
         }
 
-        if(this.props.groupUsers.length === 0){
+        if(!this.props.groupUsers){
             console.log('GET GROUP USERS ===>')
             this.props.getGroupUsers(this.props.match.params.id);
 
@@ -86,8 +86,8 @@ class GroupsProfile extends Component{
             this.props.checkEmail();
         }
 
-        if(newProps.groupUsers.length > 0 && this.props.groupUserProfiles){
-            console.log(newProps.groupUsers)
+        if(newProps.groupUsers && !this.props.groupUserProfiles){
+            console.log('groupusers',  newProps.groupUsers)
             for(let i = 0; i < newProps.groupUsers.length; i++){
                 this.props.getUserProfile(newProps.groupUsers[i].userID);
             }
@@ -322,11 +322,20 @@ class GroupsProfile extends Component{
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" onClick={() => {this.toggleTotal()}} >Total</MDBBtn>
                     </div>
+
+                    <div className = 'group-profile-columns'>
+
+                    <div className = 'group-profile-left'>
                     
                     <ItemList items = {this.props.groupItems} />
+                    </div>
+
+                    <div className = 'group-profile-right'>
                     
                     <GroupUserList users = {this.props.groupUsers} />
-
+                    <UserCart />
+                    </div>
+                    </div>
                 {/* <div className={"group-profile-header-title"}><h3></h3></div>
                      <div className={"group-profile-columns"}>
                          <div className={"group-profile-list"}>
@@ -434,7 +443,6 @@ class GroupsProfile extends Component{
                          </div>
                      </div>  */}
 
-                    <UserCart />
 
                     <MDBContainer>
                     <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>

@@ -49,7 +49,7 @@ class GroupsPage extends Component{
     }
 
     componentWillMount(){
-        this.props.getCurrentUser();
+        this.props.checkEmail();
       }
 
     componentWillReceiveProps = newProps => {

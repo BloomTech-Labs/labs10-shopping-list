@@ -1,0 +1,9 @@
+.group-user-list-container {
+    padding: 40px;
+}
+
+
+.group-user-list-profiles {
+    display: flex;
+    flex-flow: row wrap;
+}

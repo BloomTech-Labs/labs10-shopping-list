@@ -67,13 +67,13 @@ class Navigation extends React.Component{
                         <MDBNavItem>
                             {isLoggedIn ? (
                                 <MDBDropdown>
-                                    <MDBDropdownToggle className="dopdown-toggle" nav>
+                                    <MDBDropdownToggle className="dropdown-toggle" nav>
                                         <img src={localStorage.getItem("img_url")} className="rounded-circle z-depth-0"
                                              style={{ height: "35px", padding: 0 }} alt="" />
                                     </MDBDropdownToggle>
-                                    <MDBDropdownMenu className="dropdown-default" right>
-                                        <MDBDropdownItem><MDBNavLink to = '/profile'>My account</MDBNavLink></MDBDropdownItem>
-                                        <MDBDropdownItem href="#!" onClick={this.signOut}>Log out</MDBDropdownItem>
+                                    <MDBDropdownMenu className="dropdown-default" center>
+                                        <MDBNavLink to = '/profile'>My account</MDBNavLink>
+                                        <MDBNavLink to = '/' onClick={this.signOut}>Log out</MDBNavLink>
                                     </MDBDropdownMenu>
                                 </MDBDropdown>
                             ) : (

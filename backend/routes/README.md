@@ -148,8 +148,10 @@ None
 [TOP](#Table-of-Contents)
 
 ### Get User ID
-Returns the user ID of the user with the email embedded in the JWT.
-If no user in the database matches the token, a new database entry will be created, and return the new user ID.
+Returns the user ID and a userProfile of the user with the email embedded in the JWT.
+If no user in the database matches the token, a new database entry will be created, and return the new user ID/profile.
+The ID can be accessed from the res.data.id parameter or from the res.data.profile.userID parameter.
+The profile contains all of the user's database information, including their user ID.
 * **URL**<br>
 /api/user/check/getid
 * **Method:**<br>
@@ -160,7 +162,7 @@ If no user in the database matches the token, a new database entry will be creat
 `JavaScript Web Token in Authorization Header`
 * **Success Response:**<br>
     * **Code:** 200 or 201 if new user<br>
-      **Content:** { id: 12 }
+      **Content:** { profile: {profile}, id: 12 }
 * **Error Response:**<br>
     * **Code:** 500 INTERNAL SERVER ERROR<br>
         **Content:** {error: "Error retrieving user ID."}

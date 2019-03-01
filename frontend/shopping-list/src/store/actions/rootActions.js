@@ -119,7 +119,8 @@ export const checkEmail = () => {
     dispatch({type: CHECKING_EMAIL});
 
     fetchUserId.then(res => {
-      dispatch({type: EMAIL_CHECKED, payload: res.data});
+      dispatch({type: EMAIL_CHECKED, payload: res.data.profile});
+      localStorage.setItem('userId', res.data.id);
 
     }).catch(err => {
       console.log(err);

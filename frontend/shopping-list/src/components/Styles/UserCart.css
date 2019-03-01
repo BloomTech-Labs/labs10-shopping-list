@@ -1,0 +1,43 @@
+.user-cart-container {
+    padding: 40px;
+}
+
+.cart-items {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.cart-item {
+    margin: 5px;
+    background: white;
+    padding: 5px;
+    border-radius: 5px; 
+}
+
+.checkout-container {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.checkout-container input {
+    padding: 10px 5px;
+    border: none;
+    margin: 0px 5px;
+    font-size: 1.5rem;
+}
+
+@media only screen and (max-width: 767px){
+    .checkout-container{
+        display: flex;
+        flex-flow: column nowrap;
+    }
+
+    .checkout-container input {
+        width: 100%;
+    }
+
+    .checkout-container button{
+        width: 100%;
+    }
+}

@@ -48,10 +48,10 @@ const initialState = {
   groupItems: null,
   needsNewItems: false,
   needsNewHistory: false,
-  userCart: [],
-  groupHistory: [],
-  groupUsers: [],
-  groupUserProfiles: [],
+  userCart: null,
+  groupHistory: null,
+  groupUsers: null,
+  groupUserProfiles: null,
 
 
 
@@ -131,7 +131,10 @@ export const rootReducer = (state = initialState, action) => {
       }
 
     case ADD_TO_CART:
-      let newCart = state.userCart;
+    let newCart = [];
+    if(state.userCart && state.userCart.length > 0){
+      newCart = state.userCart;
+    }
       newCart.push(action.payload);
       return {
         ...state,
@@ -152,6 +155,7 @@ export const rootReducer = (state = initialState, action) => {
     case CHECK_OUT_COMPLETE:
       return {
         ...state,
+        userCart: null,
         needsNewItems: true,
         needsNewHistory: true,
       }
@@ -180,14 +184,15 @@ export const rootReducer = (state = initialState, action) => {
 
     case SAVE_USER_PROFILE:
       let profileArray = [];
-      if(state.groupUserProfiles.length > 0){
+      // if an array of profiles exists, ensure we don't add duplicates
+      if(state.groupUserProfiles && state.groupUserProfiles.length > 0){
         profileArray = state.groupUserProfiles;
         for(let i = 0; i < profileArray.length; i++){
           if(profileArray[i].id !== action.payload.id){
             profileArray.push(action.payload);
         }
       }
-    } else if (state.groupUserProfiles.length === 0){
+    } else if (!state.groupUserProfiles){
       profileArray.push(action.payload);
     }
       

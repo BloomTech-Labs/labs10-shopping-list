@@ -3,6 +3,7 @@ import React, { useReducer } from 'react';
 import {getUserProfile, checkEmail, FETCHING_USER_PROFILE} from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
+import './Styles/GroupUser.css';
 
 class GroupUser extends React.Component{
     render(){
@@ -22,10 +23,15 @@ class GroupUser extends React.Component{
             console.log(`net ${userNet}, total ${userTotal}, grouptotal: ${this.props.groupTotal}`)
         }
         return(
-            <div>
-                USER: {this.props.profile.name}
-                USER TOTAL: {userTotal}
-                USER NET: {userNet}
+            <div className = 'group-user-container'>
+                <div className = 'group-user-image'><img src = {this.props.profile.profilePicture} alt = 'group user image'></img></div>
+                <h3>{this.props.profile.name}</h3>
+                <div className = 'group-user-stats'>
+                
+                <div>Total: ${userTotal}</div>
+
+                <div>Net: ${userNet}</div>
+                </div>
             </div>
         )
     }
