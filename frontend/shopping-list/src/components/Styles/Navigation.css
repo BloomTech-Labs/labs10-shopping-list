@@ -7,6 +7,34 @@
     z-index: 3;
 }
 
+@media (max-width: 767px){
+    .navigation-container {
+        height: 60px;
+        width: 100vw;
+    }
+
+    .navbar{
+        height: 60px;
+    }
+
+    .dropdown-menu {
+        background: #00cc00;
+    }
+
+    .dropdown-default{
+        background: #00cc00;
+    }
+
+    .nav-link {
+        background: #00cc00;
+    }
+
+    .navbar-nav{
+        background: #00cc00;
+    }
+
+}
+
 .nav-links{
     width: 100%;
     display: flex;
