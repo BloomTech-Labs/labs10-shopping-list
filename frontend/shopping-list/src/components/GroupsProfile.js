@@ -51,12 +51,12 @@ class GroupsProfile extends Component{
             this.props.getGroupItems(this.props.match.params.id);
         } 
         
-        if(!this.props.groupHistory || this.props.groupHistory.length === 0){
+        if(!this.props.groupHistory){
             console.log('\n GROUP HISTORY FETCH ==>')
             this.props.getGroupHistory(this.props.match.params.id);
         }
 
-        if(this.props.groupUsers.length === 0){
+        if(!this.props.groupUsers){
             console.log('GET GROUP USERS ===>')
             this.props.getGroupUsers(this.props.match.params.id);
 
@@ -86,8 +86,8 @@ class GroupsProfile extends Component{
             this.props.checkEmail();
         }
 
-        if(newProps.groupUsers.length > 0 && this.props.groupUserProfiles){
-            console.log(newProps.groupUsers)
+        if(newProps.groupUsers && !this.props.groupUserProfiles){
+            console.log('groupusers',  newProps.groupUsers)
             for(let i = 0; i < newProps.groupUsers.length; i++){
                 this.props.getUserProfile(newProps.groupUsers[i].userID);
             }
