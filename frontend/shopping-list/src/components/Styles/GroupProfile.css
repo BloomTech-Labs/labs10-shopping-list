@@ -1,0 +1,33 @@
+.group-profile-columns {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+@media only screen and (max-width: 767px){
+    .group-profile-columns {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+}
+
+.group-profile-left{
+    width: 50%;
+    border: 1px solid black;
+}
+
+@media only screen and (max-width: 767px){
+    .group-profile-left{
+        width: 100%;
+    }
+}
+
+.group-profile-right{
+    width: 50%;
+    border: 1px solid red;
+}
+
+@media only screen and (max-width: 767px){
+    .group-profile-right{
+        width: 100%;
+    }
+}

@@ -7,6 +7,7 @@ import {checkEmail, getSingleGroup, addGroup, getUserProfile, getGroupUsers, get
 import {connect} from 'react-redux';
 import "./Styles/Group.css";
 import "./Styles/Scrollbar.css";
+import "./Styles/GroupProfile.css";
 import {
     MDBListGroup,
     MDBListGroupItem,
@@ -322,11 +323,20 @@ class GroupsProfile extends Component{
                         <MDBBtn color="primary" >Invite</MDBBtn>
                         <MDBBtn color="primary" onClick={() => {this.toggleTotal()}} >Total</MDBBtn>
                     </div>
+
+                    <div className = 'group-profile-columns'>
+
+                    <div className = 'group-profile-left'>
                     
                     <ItemList items = {this.props.groupItems} />
+                    </div>
+
+                    <div className = 'group-profile-right'>
                     
                     <GroupUserList users = {this.props.groupUsers} />
-
+                    <UserCart />
+                    </div>
+                    </div>
                 {/* <div className={"group-profile-header-title"}><h3></h3></div>
                      <div className={"group-profile-columns"}>
                          <div className={"group-profile-list"}>
@@ -434,7 +444,6 @@ class GroupsProfile extends Component{
                          </div>
                      </div>  */}
 
-                    <UserCart />
 
                     <MDBContainer>
                     <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>

@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {checkOut} from '../store/actions/rootActions';
+import './Styles/UserCart.css'
 
 class UserCart extends React.Component{
     constructor(props){

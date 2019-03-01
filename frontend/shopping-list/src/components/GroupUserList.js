@@ -5,6 +5,7 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getGroupUsers, getUserProfile} from '../store/actions/rootActions';
 import GroupUser from './GroupUser';
+import './Styles/GroupUserList.css';
 
 class GroupUserList extends React.Component{
 
@@ -19,13 +20,15 @@ class GroupUserList extends React.Component{
         }
 
         return(
-            <div>
-                <h1>Total Expenditures: {groupTotal}</h1>
+            <div className = 'group-user-list-container'>
+                <h1>Total Expenditures: ${groupTotal}</h1>
+                <div className = 'group-user-list-profiles'>
                 {this.props.groupUserProfiles !== [] ? (
                     this.props.groupUserProfiles.map(profile => (
                         <GroupUser profile = {profile} groupTotal = {groupTotal}/>
                     ))
                 ) : (<h2>No Group Members</h2>)}
+                </div>
             </div>
         )
     }
