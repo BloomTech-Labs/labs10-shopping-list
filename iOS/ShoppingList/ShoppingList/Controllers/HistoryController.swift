@@ -30,8 +30,6 @@ class HistoryController {
         Alamofire.request(request).validate().responseData { (response) in
             switch response.result {
             case .success(let value):
-                let string = String(data: value, encoding: .utf8)
-                print("Data String: \(string!)")
                 
                 do {
                     
@@ -42,7 +40,10 @@ class HistoryController {
                     
                     for userList in histories.data {
                         for item in userList {
-                            let historyItem = Item(name: item.name, purchased: true, price: item.total)
+
+                            guard let selectedGroup = selectedGroup else { return }
+                            let historyItem = Item(name: item.name, purchased: true, price: item.total, group: selectedGroup)
+                          
                             history.append(historyItem)
                         }
                     }

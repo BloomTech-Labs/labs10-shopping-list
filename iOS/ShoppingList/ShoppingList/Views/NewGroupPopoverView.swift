@@ -15,13 +15,19 @@ class NewGroupPopoverView: UIView, NibInstantiatable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        groupNameTextField.becomeFirstResponder()
     }
     
     @IBAction func addGroup(_ sender: Any) {
         guard let groupName = groupNameTextField.text else { return }
-        
-        
+
+        GroupController.shared.newGroup(withName: groupName) { (group) in
+            guard let group = group else { return }
+            allGroups.append(group)
+            selectedGroup = group
+            self.delegate?.updatesNeeded()
+            popover.dismiss()
+        }
     }
     
     @IBOutlet weak var groupNameTextField: UITextField!

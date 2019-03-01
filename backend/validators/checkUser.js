@@ -73,6 +73,7 @@ async function routeCheck(req, res, next, userId){
      * Protect Group Profiles
      * Ensures that only members of a group can see that group's profile information
      */
+
     if(req.originalUrl === `/api/group/${req.params.id}` && req.method === 'GET'){
         
         // // query the db for all users in that group
@@ -104,6 +105,7 @@ async function routeCheck(req, res, next, userId){
      */
 
      if(req.originalUrl === `/api/user/${req.params.id}` && (req.method === 'PUT' || 'DELETE')){
+
          let paramId = Number(req.params.id);
 
          userDb.getById(paramId).then(user => {
@@ -151,7 +153,7 @@ async function routeCheck(req, res, next, userId){
        * Ensures only moderators and self-same members can delete a given user from the group
        */
       
-
+  
        /**
         * Add Item to Group
         * Ensures member adding item is a member of the group
@@ -178,7 +180,6 @@ async function routeCheck(req, res, next, userId){
                 return res.status(500).json({error: `Internal server error.`})
             })
         }
-
 
 }
     

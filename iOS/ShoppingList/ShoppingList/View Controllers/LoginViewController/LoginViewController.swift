@@ -11,7 +11,6 @@ import Auth0
 import SwiftKeychainWrapper
 import SimpleKeychain
 
-
 class LoginViewController: UIViewController, StoryboardInstantiatable {
     
     static let storyboardName: StoryboardName = "LoginViewController"
