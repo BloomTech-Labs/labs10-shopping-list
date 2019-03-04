@@ -39,9 +39,7 @@ class HistoryList extends React.Component{
                                     <History grpHistory = {hist} key = {hist.id} />
                                 )
                             )
-                        ) : (<div className="spinner-border text-success" role="status">
-                            <span className="sr-only">Loading...</span>
-                        </div>)}
+                        ) : (<div>Loading History....</div>)}
 
                 </div>
             </div>
