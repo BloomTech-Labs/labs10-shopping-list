@@ -6,6 +6,8 @@ import {
   CHECKING_EMAIL,
   EMAIL_CHECKED,
 
+  GEN_GROUP_INVITE,
+  SAVE_GROUP_INVITE,
 
   GET_CURRENT_USER,
   SAVE_CURRENT_USER,
@@ -53,6 +55,7 @@ const initialState = {
   groupUsers: null,
   groupUserProfiles: null,
 
+  invites: null,
 
 
   currentGroup: null,
@@ -79,6 +82,15 @@ export const rootReducer = (state = initialState, action) => {
         currentUser: action.payload,
       }
 
+    case GEN_GROUP_INVITE:
+      return state;
+    case SAVE_GROUP_INVITE:
+      return {
+        ...state,
+        invites: {
+          [action.payload.groupId]: action.payload.inviteUrl
+        }
+      }
 
     case GET_CURRENT_USER:
       return state;
