@@ -27,7 +27,6 @@ class HistoryList extends React.Component{
 
 
     render(){
-        // console.log("GRP => ", this.props.groupHistoryList)
         return(
             <div className = 'item-list-container'>
                 <h1>Shopping List History</h1>
@@ -40,18 +39,11 @@ class HistoryList extends React.Component{
                                     <History grpHistory = {hist} key = {hist.id} />
                                 )
                             )
-                        ) : (<h2>No Items on the List</h2>)}
+                        ) : (<div className="spinner-border text-success" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div>)}
 
                 </div>
-
-                <div className = 'item-form'>
-                    <form onSubmit = {this.handleSubmit}>
-                        <input type = 'text' name = 'item' placeholder = 'Add an item' value = {this.state.item} onChange = {this.handleChange}/>
-                        <button type = 'submit'>Add To List</button>
-                    </form>
-
-                </div>
-
             </div>
         )
     }

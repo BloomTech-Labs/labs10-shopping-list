@@ -4,6 +4,17 @@ import {withRouter} from 'react-router-dom';
 import Item from './Item';
 import {getItems, getGroupItems, addItem,} from '../store/actions/rootActions';
 import './Styles/ItemList.css';
+import {
+    MDBListGroup,
+    MDBListGroupItem,
+    MDBContainer,
+    MDBBtn,
+    MDBIcon,
+    MDBBadge,
+    MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
+    MDBTooltip,
+    MDBScrollbar,
+} from "mdbreact";
 
 class ItemList extends React.Component{
     componentWillMount(){
@@ -94,11 +105,11 @@ class ItemList extends React.Component{
             ) : (<h2>No Items on the List</h2>)}
 
             </div>
-            
-            <div className = 'item-form'>
+
+                <div className="form-group">
             <form onSubmit = {this.handleSubmit}>
-                <input type = 'text' name = 'item' placeholder = 'Add an item' value = {this.state.item} onChange = {this.handleChange}/>
-                <button type = 'submit'>Add To List</button>
+                <MDBInput size="md"  label="Add an Item" type = 'text' name = 'item' valueDefault= {this.state.item} onChange = {this.handleChange}></MDBInput>
+                <MDBBtn color="success" type = 'submit' >Add to List</MDBBtn>
             </form>
 
             </div>

@@ -3,6 +3,17 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {checkOut, removeFromCart} from '../store/actions/rootActions';
 import './Styles/UserCart.css'
+import {
+    MDBListGroup,
+    MDBListGroupItem,
+    MDBContainer,
+    MDBBtn,
+    MDBIcon,
+    MDBBadge,
+    MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
+    MDBTooltip,
+    MDBScrollbar,
+} from "mdbreact";
 
 class UserCart extends React.Component{
     constructor(props){
@@ -47,14 +58,19 @@ class UserCart extends React.Component{
             {this.props.userCart !== null ? (
                 this.props.userCart.map(item => (
                     /** @TODO break these divs into components */
-                    <div className = 'cart-item' key = {item.id}><button>X</button>{item.name}</div>
+                    <div className = 'cart-item' key = {item.id}>
+                        <button type="button" className="close" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        {item.name}
+                    </div>
                 ))
             ) : <h4>No Items in Cart</h4>}
             </div>
 
                 <div className = 'checkout-container'>
-                <input type = 'text' name = 'amount' value = {this.state.amount} placeholder = 'Total $ Spent' onChange = {this.handleChange}></input>
-                <button onClick = {this.handleCheckout}>Check Out</button>
+                    <MDBInput size="lg"  label="Total $ Spent" type = 'text' name = 'amount' valueDefault= {this.state.amount} onChange = {this.handleChange}></MDBInput>
+                    <MDBBtn color="success" onClick = {this.handleCheckout} >Checkout</MDBBtn>
                 </div>
             </div>
         )

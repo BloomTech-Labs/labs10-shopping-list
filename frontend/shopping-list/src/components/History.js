@@ -7,7 +7,13 @@ import { stat } from 'fs';
 import {
     MDBListGroup,
     MDBListGroupItem,
+    MDBCard,
+    MDBCardTitle,
+    MDBCardText,
+    MDBContainer,
+    MDBCardBody,
 } from "mdbreact";
+import "./Styles/History.css";
 
 class History extends React.Component {
 
@@ -22,21 +28,24 @@ class History extends React.Component {
     }
 
     render(){
-        console.log("HISTORY => ", this.props.grpHistory)
         return (
-            <div className = 'item-container' key = {this.props.key}>
-                <h1>{this.props.grpHistory[0].user}</h1>
-                <MDBListGroup>
-                    {
-                        this.props.grpHistory.map((current, index, arr) => (
-                            <MDBListGroupItem>
-                                {index === arr.length - 1 ? null : current.name}
-                            </MDBListGroupItem>
-                        ))
-                    }
-
-                </MDBListGroup>
-                <h1>{this.props.grpHistory[0].date} | {this.props.grpHistory[this.props.grpHistory.length - 1].grandTotal}</h1>
+            <div className="history-items" key = {this.props.key}>
+                <MDBCard>
+                    <MDBCardBody>
+                        <div className="d-flex w-100 justify-content-between">
+                            <h5 className="mb-1">{this.props.grpHistory[0].user}</h5>
+                            <small className="text-muted">{this.props.grpHistory[0].date}</small>
+                        </div>
+                        <MDBListGroup>
+                            {
+                                this.props.grpHistory.map((current, index, arr) => (
+                                    <p className="mb-1 history-item">{current.name}</p>
+                                ))
+                            }
+                            <h5 className="mb-1">Total: ${this.props.grpHistory[this.props.grpHistory.length - 1].grandTotal}</h5>
+                        </MDBListGroup>
+                    </MDBCardBody>
+                </MDBCard>
             </div>
         )
     }
