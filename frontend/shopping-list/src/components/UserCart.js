@@ -49,6 +49,7 @@ class UserCart extends React.Component{
             amount: '',
         })
     }
+
     render(){
         return(
             <div className = 'user-cart-container'>
