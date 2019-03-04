@@ -5,6 +5,17 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import './Styles/Item.css';
 import { stat } from 'fs';
+import {
+    MDBListGroup,
+    MDBListGroupItem,
+    MDBContainer,
+    MDBBtn,
+    MDBIcon,
+    MDBBadge,
+    MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
+    MDBTooltip,
+    MDBScrollbar, MDBCardBody, MDBCard,
+} from "mdbreact";
 
 class Item extends React.Component {
 
@@ -81,22 +92,30 @@ class Item extends React.Component {
         } else {
             return (
                 <div className = 'item-container' onDoubleClick = {this.handleEdit} key = {this.props.key}>
-                {this.state.isEditing === false ? 
-                (
-                    <div className = 'item-row'><span><h2>{this.props.item.name}</h2></span><button onClick = {this.handleDelete}>Delete</button>
+                    <MDBCard>
+                        <MDBCardBody>
+                            <MDBListGroup>
+                                {this.state.isEditing === false ?
+                                    (
+                                        <div className = 'item-row'><span><h2>{this.props.item.name}</h2></span><MDBBtn color="danger" onClick = {this.handleDelete}>Delete</MDBBtn>
 
-                    {this.state.inCart !== true ? (
-                        <button onClick = {this.addToCart}>Add to Cart</button>
+                                            {this.state.inCart !== true ? (
+                                                <MDBBtn color="success" onClick = {this.addToCart} >Add to Cart</MDBBtn>
 
-                    ) : <button onClick = {this.removeFromCart}>Remove from Cart</button>}
+                                            ) : <MDBBtn color="success" onClick = {this.removeFromCart} >Remove to Cart</MDBBtn>}
 
-                    </div>
+                                        </div>
 
 
-                ) : (<div>
-                    <form className = 'edit-form' onSubmit = {this.handleClickOutside}><input type = 'text' name = 'item' value = {this.state.item} onChange = {this.handleChange}></input>
-                    <button type = 'submit'>Submit Changes</button></form>
-                    </div>)}
+                                    ) : (<div>
+                                        <form className="form-group" onSubmit = {this.handleClickOutside}>
+                                            <MDBInput size="lg"  label="Change Item Name" type = 'text' name = 'item' valueDefault= {this.state.item} onChange = {this.handleChange}></MDBInput>
+                                            <MDBBtn color="success" type = 'submit' >Submit Changes</MDBBtn>
+                                        </form>
+                                    </div>)}
+                            </MDBListGroup>
+                        </MDBCardBody>
+                    </MDBCard>
                 </div>
             )
         }

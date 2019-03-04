@@ -82,6 +82,9 @@ export const SAVE_GROUP_USERS = 'SAVE_GROUP_USERS';
 export const GET_USER_PROFILE = 'GET_USER_PROFILE';
 export const SAVE_USER_PROFILE = 'SAVE_USER_PROFILE';
 
+export const GET_GROUP_HISTORY_LIST = 'GET_GROUP_HISTORY_LIST';
+export const SAVE_GROUP_HISTORY_LIST = 'SAVE_GROUP_HISTORY_LIST';
+
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
   backendURL = `http://localhost:9000`
@@ -390,16 +393,6 @@ export const getUserProfile = userId => {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
 export const getCurrentUser = () => {
   let token = localStorage.getItem('jwt');
     let options = {
@@ -422,6 +415,7 @@ export const getCurrentUser = () => {
     })
   }
 }
+
 
 export const generateGroupInviteUrl = (userId, groupId) => {
   let token = localStorage.getItem('jwt');
@@ -450,7 +444,6 @@ export const generateGroupInviteUrl = (userId, groupId) => {
 
   }
 }
-
 
 export const getUserGroups = (userId) => {
   let token = localStorage.getItem('jwt');
@@ -644,6 +637,28 @@ export const getGroupHistory = groupId => {
     axios.get(endpoint, options).then(res => {
         console.log('history', res.data);
         dispatch({type: SAVE_GROUP_HISTORY, payload: res.data})
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+  }
+}
+
+export const getGroupHistoryList = groupId => {
+  const token = localStorage.getItem('jwt');
+  const endpoint = `${backendURL}/api/grouphistory/group/${groupId}`;
+  console.log('GET HISTORY')
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+  return dispatch => {
+    dispatch({type: GET_GROUP_HISTORY_LIST});
+
+    axios.get(endpoint, options).then(res => {
+      console.log('history', res.data);
+      dispatch({type: SAVE_GROUP_HISTORY_LIST, payload: res.data})
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})

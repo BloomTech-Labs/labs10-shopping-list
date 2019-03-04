@@ -39,7 +39,9 @@ import {
   GET_GROUP_USERS,
   SAVE_GROUP_USERS,
   SAVE_USER_PROFILE,
-  GET_USER_PROFILE
+  GET_USER_PROFILE,
+  GET_GROUP_HISTORY_LIST,
+  SAVE_GROUP_HISTORY_LIST
 
 
 } from "../actions";
@@ -52,6 +54,7 @@ const initialState = {
   needsNewHistory: false,
   userCart: null,
   groupHistory: null,
+  groupHistoryList: null,
   groupUsers: null,
   groupUserProfiles: null,
 
@@ -180,6 +183,16 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         groupHistory: action.payload.data,
+        needsNewHistory: false
+      }
+
+    case GET_GROUP_HISTORY_LIST:
+      return state;
+
+    case SAVE_GROUP_HISTORY_LIST:
+      return {
+        ...state,
+        groupHistoryList: action.payload.data,
         needsNewHistory: false
       }
 
