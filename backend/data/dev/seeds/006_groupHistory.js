@@ -10,4 +10,8 @@ exports.seed = function(knex, Promise) {
     //     {id: 3, colName: 'rowValue3'}
     //   ]);
     // });
+
+    .then(function(){
+      return knex('groupHistory');
+    })
 };

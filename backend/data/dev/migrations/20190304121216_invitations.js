@@ -13,7 +13,7 @@ exports.up = function(knex, Promise) {
 
         tbl.string('userName').notNullable(); // the name of the user sending the invitation
 
-        tbl.date('expiration').defaultTo(knex.fn.now() + (60 * 60 * 24 * 7)); // set expiration in 1 week
+        tbl.datetime('expiration').notNullable(); // pass invite expiration upon creation
 
         tbl.boolean('usedBefore').defaultTo(false); // checks if the code has been visited before
 
