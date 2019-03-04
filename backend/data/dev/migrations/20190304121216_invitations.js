@@ -7,11 +7,9 @@ exports.up = function(knex, Promise) {
 
         tbl.integer('groupID').references('id').inTable('groups').notNullable(); // the id of the group the invitation is to
 
-        tbl.string('groupName').notNullable(); // the group name being invited to
-
         tbl.integer('userID').references('id').inTable('users').notNullable(); // the id of the user who made the invitation
 
-        tbl.string('userName').notNullable(); // the name of the user sending the invitation
+        tbl.string('invitee').notNullable(); // the email of the person receiving the invitation
 
         tbl.datetime('expiration').notNullable(); // pass invite expiration upon creation
 

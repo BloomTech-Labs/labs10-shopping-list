@@ -2,6 +2,7 @@ const express = require('express');
 const inviteRouter = express.Router();
 const groupMembersDb = require('../../helpers/groupMembersModel');
 const usersDb = require('../../helpers/userModel');
+const groupDb = require('../../helpers/groupModel');
 
 const inviteDb = require('../../helpers/invitationsModel');
 
@@ -53,14 +54,36 @@ inviteRouter.post('/create', (req, res) => {
 })
 
 inviteRouter.get('/:code', (req, res) => {
-    console.log(req.params.code);
     let inviteCode = req.params.code;
     inviteDb.getByCode(inviteCode).then(info => {
-        console.log('invite info', info[0]);
+        // console.log('invite info', info[0]);
         if(info){
-            res.status(200).json(info[0]);
+            // console.log(info[0].groupID)
+             groupDb.getById(info[0].groupID).then(group => {
+                console.log('invite group query', group);
+                info[0].groupName = group[0].name; // add group name to info
+                 usersDb.getById(info[0].userID).then(user => {
+                    // console.log(user[0]);
+                    info[0].userName = user[0].name;
+                    console.log('final info', info[0]);
+                    return res.status(200).json(info[0]);
+                }).catch(err => {
+                    console.log(err);
+                    return res.status(500).json({error: `Could not find a user with the specified ID.`})
+                })
+            }).catch(err => {
+                console.log(err);
+                return res.status(500).json({error: `Could not find a group with the specified ID.`})
+            })
+        } else {
+            return res.status(404).json({error: `No invite matches that code.`})
         }
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Could not find an invitation that matches that invite code.`})
     })
 })
+
+
 
 module.exports = inviteRouter;
