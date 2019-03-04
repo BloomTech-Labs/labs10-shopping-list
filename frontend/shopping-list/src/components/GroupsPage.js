@@ -48,9 +48,16 @@ class GroupsPage extends Component{
         groupId: null,
     }
 
-    componentWillMount(){
-        this.props.checkEmail();
-      }
+    // let App.js handle this
+    // componentWillMount(){
+    //     this.props.checkEmail();
+    //   } 
+
+    componentDidMount(){
+        if(!this.props.userGroups && this.props.currentUser){
+            this.props.getUserGroups(this.props.currentUser.id);
+        }
+    }
 
     componentWillReceiveProps = newProps => {
         if(newProps.currentUser && !this.props.userGroups){

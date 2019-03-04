@@ -59,17 +59,16 @@ class GroupsProfile extends Component{
         if(!this.props.groupUsers){
             console.log('GET GROUP USERS ===>')
             this.props.getGroupUsers(this.props.match.params.id);
-
-        if(!this.props.currentUser){
-            this.props.checkEmail();
         }
+
+        // let App.js handle this
+        // if(!this.props.currentUser){
+        //     this.props.checkEmail();
+        // }
 
 //         if (this.props.groups !== null) {
 //             const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
 //             this.setState({ members: group[0].members})
-        }
-
-
     }
 
     componentWillReceiveProps = newProps => {

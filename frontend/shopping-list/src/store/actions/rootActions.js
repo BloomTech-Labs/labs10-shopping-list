@@ -86,6 +86,8 @@ if(process.env.NODE_ENV === 'development'){
   backendURL = `https://shoptrak-backend.herokuapp.com`
 }
 
+console.log('backendURL', backendURL);
+
 /**
  * Test function
  * @param  {} dispatch
@@ -422,6 +424,7 @@ export const getCurrentUser = () => {
 
 
 export const getUserGroups = (userId) => {
+  console.log('backendURL', backendURL);
   let token = localStorage.getItem('jwt');
     let options = {
       headers: {
