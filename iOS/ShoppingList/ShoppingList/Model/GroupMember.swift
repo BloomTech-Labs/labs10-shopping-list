@@ -37,5 +37,5 @@ struct GroupMember: Codable {
 }
 
 struct GroupMemberList: Codable {
-    var members: [GroupMember]
+    var groupMembers: [GroupMember]
 }
