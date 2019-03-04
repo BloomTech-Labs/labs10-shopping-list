@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import {checkEmail, getSingleGroup, addGroup, getUserProfile, getGroupUsers, getGroupHistory, getGroupItems, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems } from '../store/actions/rootActions';
-
+import {checkEmail, getSingleGroup, addGroup, getUserProfile, getGroupUsers, getGroupHistory, getGroupItems, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems, generateGroupInviteUrl } from '../store/actions/rootActions';
 // import React, { Component, Fragment } from 'react';
 // import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
 
@@ -40,6 +39,9 @@ class GroupsProfile extends Component{
         groupHistory: null,
         members: null,
         totals: null,
+        invites:{
+            [this.props.match.params.id]: 'https://shoptrak.com/i/cUsToM_InViTe_LiNk'
+        }
     }
 
     /*
@@ -104,11 +106,14 @@ class GroupsProfile extends Component{
     }
 
     // Toggles the modals
-    toggle = nr => () => {
-        let modalNumber = 'modal' + nr
+    toggle = viewToToggle => () => {
         this.setState({
-            [modalNumber]: !this.state[modalNumber]
+            [viewToToggle]: !this.state[viewToToggle]
         });
+    }
+
+    copyInviteToClipboard = () => {
+        console.log('add code to copy url to users clipboard');
     }
 
     /*
@@ -154,7 +159,6 @@ class GroupsProfile extends Component{
 
     // Change between List and History views
     toggleListClass = () => {
-
         this.setState({ histToggle: false, listToggle: true, inviToggle: false})
     }
 
@@ -164,6 +168,7 @@ class GroupsProfile extends Component{
 
     toggleInviClass = () => {
         this.setState({ inviToggle: true, histToggle: false, listToggle: false})
+        this.setState({ inviteUrl: this.props.generateGroupInviteUrl(localStorage.getItem("userId"), this.props.match.params.id)})
     }
 
     toggleTotal = () => {
@@ -319,7 +324,7 @@ class GroupsProfile extends Component{
                     <div className={"group-profile-header"}>
                         <MDBBtn color="primary" onClick={() => {this.toggleListClass()}} >List</MDBBtn>
                         <MDBBtn color="primary" onClick={() => {this.toggleHistClass()}} >History</MDBBtn>
-                        <MDBBtn color="primary" >Invite</MDBBtn>
+                        <MDBBtn color="primary" onClick={() => {this.toggleInviClass()}} >Invite</MDBBtn>
                         <MDBBtn color="primary" onClick={() => {this.toggleTotal()}} >Total</MDBBtn>
                     </div>
 
@@ -445,14 +450,14 @@ class GroupsProfile extends Component{
 
 
                     <MDBContainer>
-                    <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
-                        <MDBModalHeader toggle={this.toggle(14)}>Create A New Group</MDBModalHeader>
+                    <MDBModal isOpen={this.state.inviToggle} toggle={this.toggle('inviToggle')} centered>
+                        <MDBModalHeader toggle={this.toggle('inviToggle')}>Group Invitation</MDBModalHeader>
                         <MDBModalBody>
-                            <MDBInput label="Group Name" name={"groupName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
+                            <p className="text-left">{this.state.invites[this.props.match.params.id]}</p>
                         </MDBModalBody>
                         <MDBModalFooter>
-                            <MDBBtn color="secondary" onClick={this.toggle(14)}>Close</MDBBtn>
-                            <MDBBtn color="primary" onClick={this.handleAddGroup}>Create</MDBBtn>
+                            <MDBBtn color="secondary" onClick={this.toggle('inviToggle')}>Close</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.copyInviteToClipboard()} >Copy to clipboard</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
                 </MDBContainer>
@@ -482,5 +487,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    gettingGroups, addItem, getItems, checkEmail, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory, getGroupUsers, getUserProfile,
+    gettingGroups, addItem, getItems, checkEmail, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory, getGroupUsers, getUserProfile, generateGroupInviteUrl
 })(GroupsProfile);
