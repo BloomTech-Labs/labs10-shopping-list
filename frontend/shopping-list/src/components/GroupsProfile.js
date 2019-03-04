@@ -23,6 +23,7 @@ import ItemList from './ItemList';
 import GroupUserList from './GroupUserList';
 import UserCart from './UserCart';
 import axios from "axios";
+import HistoryList from "./HistoryList";
 
 class GroupsProfile extends Component{
     state = {
@@ -326,8 +327,10 @@ class GroupsProfile extends Component{
                     <div className = 'group-profile-columns'>
 
                     <div className = 'group-profile-left'>
-                    
-                    <ItemList items = {this.props.groupItems} />
+
+                    {this.state.listToggle ? <ItemList items = {this.props.groupItems} /> : null}
+
+                    {this.state.histToggle ? <HistoryList history = {this.props.groupHistoryList}/> : null}
                     </div>
 
                     <div className = 'group-profile-right'>
@@ -469,6 +472,7 @@ const mapStateToProps = state => {
         groupUserProfiles: state.groupUserProfiles,
         groupUsers: state.groupUsers,
         groupHistory: state.groupHistory,
+        groupHistoryList: state.groupHistoryList,
 
         // item state
         needsNewItems: state.needsNewItems,

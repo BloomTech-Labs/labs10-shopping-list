@@ -86,7 +86,11 @@ export {
   GET_USER_PROFILE,
   SAVE_USER_PROFILE,
 
+  GET_GROUP_HISTORY_LIST,
+  SAVE_GROUP_HISTORY_LIST,
+
   getGroupMembers,
   updateGroupName,
-  removeGroup
+  removeGroup,
+  getGroupHistoryList
 } from "./rootActions";
