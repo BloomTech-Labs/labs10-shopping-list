@@ -1,7 +1,7 @@
 .item-container {
     width: 100%;
-    background: white;
-    margin: 10px 0px;
+    /*background: white;*/
+    margin: 2px 0px;
     padding: 5px;
 }
 
@@ -23,9 +23,9 @@
 
 
 .item-container form {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
+    /*display: flex;*/
+    /*flex-flow: row nowrap;*/
+    /*justify-content: space-between;*/
 }
 
 .item-container button {
@@ -39,4 +39,8 @@
 
 .edit-form input {
     width: 100%;
+}
+
+.item-remove {
+    cursor: pointer;
 }

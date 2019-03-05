@@ -1,6 +1,7 @@
 .group-user-image img{
     width: 60px;
     border-radius: 60px;
+    padding-bottom: 10px;
 }
 
 .group-user-image {
@@ -14,7 +15,5 @@
 }
 
 .group-user-container {
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 5px;
 }

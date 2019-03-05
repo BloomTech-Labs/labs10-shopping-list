@@ -45,7 +45,7 @@ class GroupMemberController {
                 let groupMembers = try JSONDecoder().decode([GroupMember].self, from: data)
                 
                 var newGroup = group
-                newGroup.members = groupMembers
+                newGroup.groupMembers = groupMembers
                 completion(newGroup)
                 
             } catch {

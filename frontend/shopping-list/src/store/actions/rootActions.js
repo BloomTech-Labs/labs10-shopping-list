@@ -38,10 +38,13 @@ export const UNMARK_ITEM = 'UNMARK_ITEM';
 export const START_MARK = 'START_MARK';
 export const GET_GROUPMEMBERS_START = 'GET_GROUPMEMBERS_START';
 export const CHANGE_GROUP_NAME_START = 'CHANGE_GROUP_NAME_START';
-export const CHANGE_GROUP_NAME_SUCCESS = 'CHANGE_GROUP_NAME_SUCCESS'
+export const CHANGE_GROUP_NAME_SUCCESS = 'CHANGE_GROUP_NAME_SUCCESS';
 export const REMOVE_GROUP_START = 'REMOVE_GROUP_START';
-export const REMOVE_GROUP_SUCCESS = 'REMOVE_GROUP_SUCCESS'
+export const REMOVE_GROUP_SUCCESS = 'REMOVE_GROUP_SUCCESS';
 
+
+export const GEN_GROUP_INVITE = 'GEN_GROUP_INVITE';
+export const SAVE_GROUP_INVITE = 'SAVE_GROUP_INVITE';
 
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const SAVE_CURRENT_USER = 'SAVE_CURRENT_USER';
@@ -81,6 +84,9 @@ export const SAVE_USER_PROFILE = 'SAVE_USER_PROFILE';
 
 export const CLEAR_ITEMS = 'CLEAR_ITEMS';
 export const CLEAR_GROUP_USERS = 'CLEAR_GROUP_USERS';
+
+export const GET_GROUP_HISTORY_LIST = 'GET_GROUP_HISTORY_LIST';
+export const SAVE_GROUP_HISTORY_LIST = 'SAVE_GROUP_HISTORY_LIST';
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -392,16 +398,6 @@ export const getUserProfile = userId => {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
 export const getCurrentUser = () => {
   let token = localStorage.getItem('jwt');
     let options = {
@@ -425,6 +421,34 @@ export const getCurrentUser = () => {
   }
 }
 
+
+export const generateGroupInviteUrl = (userId, groupId) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    body: {
+      userId: userId,
+      groupId: groupId
+    }
+  }
+
+  const endpoint = axios.post(`${backendURL}/api/group/invite/`, options);
+  
+  return dispatch => {
+    dispatch({type: GEN_GROUP_INVITE})
+
+    endpoint.then(res => {
+      console.log('generate invite ', res.data);
+      dispatch({type: SAVE_GROUP_INVITE, payload: res.data.invites})
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+
+  }
+}
 
 export const getUserGroups = (userId) => {
   console.log('backendURL', backendURL);
@@ -619,6 +643,28 @@ export const getGroupHistory = groupId => {
     axios.get(endpoint, options).then(res => {
         console.log('history', res.data);
         dispatch({type: SAVE_GROUP_HISTORY, payload: res.data})
+    }).catch(err => {
+      console.log(err);
+      dispatch({type: ERROR})
+    })
+  }
+}
+
+export const getGroupHistoryList = groupId => {
+  const token = localStorage.getItem('jwt');
+  const endpoint = `${backendURL}/api/grouphistory/group/${groupId}`;
+  console.log('GET HISTORY')
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+  return dispatch => {
+    dispatch({type: GET_GROUP_HISTORY_LIST});
+
+    axios.get(endpoint, options).then(res => {
+      console.log('history', res.data);
+      dispatch({type: SAVE_GROUP_HISTORY_LIST, payload: res.data})
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})

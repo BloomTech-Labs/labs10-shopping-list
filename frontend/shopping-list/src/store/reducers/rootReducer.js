@@ -6,6 +6,8 @@ import {
   CHECKING_EMAIL,
   EMAIL_CHECKED,
 
+  GEN_GROUP_INVITE,
+  SAVE_GROUP_INVITE,
 
   GET_CURRENT_USER,
   SAVE_CURRENT_USER,
@@ -40,8 +42,10 @@ import {
   GET_USER_PROFILE,
 
   CLEAR_ITEMS,
-  CLEAR_GROUP_USERS
+  CLEAR_GROUP_USERS,
 
+  GET_GROUP_HISTORY_LIST,
+  SAVE_GROUP_HISTORY_LIST,
 
 } from "../actions";
 
@@ -53,9 +57,11 @@ const initialState = {
   needsNewHistory: false,
   userCart: null,
   groupHistory: null,
+  groupHistoryList: null,
   groupUsers: null,
   groupUserProfiles: null,
 
+  invites: null,
 
 
   currentGroup: null,
@@ -82,6 +88,15 @@ export const rootReducer = (state = initialState, action) => {
         currentUser: action.payload,
       }
 
+    case GEN_GROUP_INVITE:
+      return state;
+    case SAVE_GROUP_INVITE:
+      return {
+        ...state,
+        invites: {
+          [action.payload.groupId]: action.payload.inviteUrl
+        }
+      }
 
     case GET_CURRENT_USER:
       return state;
@@ -173,6 +188,16 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         groupHistory: action.payload.data,
+        needsNewHistory: false
+      }
+
+    case GET_GROUP_HISTORY_LIST:
+      return state;
+
+    case SAVE_GROUP_HISTORY_LIST:
+      return {
+        ...state,
+        groupHistoryList: action.payload.data,
         needsNewHistory: false
       }
 

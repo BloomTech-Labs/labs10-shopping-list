@@ -8,7 +8,7 @@
 import Foundation
 
 struct UserList: Codable {
-    let data: [User]
+    let profile: [User]
 }
 
 struct User: Codable {

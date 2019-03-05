@@ -5,39 +5,15 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import './Styles/GroupUser.css';
 import axios from 'axios';
+import { MDBContainer, MDBCard, MDBCardBody} from "mdbreact";
 
 class GroupUser extends React.Component{
 
     componentWillMount(){
         if(this.props.user){
             console.log('USER', this.props.user);
-            this.getLocalUser(this.props.user.userID)
-
-            // this.props.getUserProfile(this.props.user.userID); // add user profiles to state
-        }
+            this.getLocalUser(this.props.user.userID)        }
     }
-    
-    // componentWillReceiveProps = newProps => {
-    //     if(newProps.groupUserProfiles !== null){
-    //         if(newProps.groupUserProfiles.length === this.props.groupUsers.length){
-    //         console.log('NEW PROFILES ===>');
-    //         console.log(newProps.groupUserProfiles);
-
-    //         let targetUser;
-    //         for(let i = 0; i < newProps.groupUserProfiles.length; i++){
-    //             console.log('LENGTH', newProps.groupUserProfiles.length);
-    //             if(newProps.groupUserProfiles[i].id === this.props.user.userID){
-    //                 console.log("MATCH FOUND")
-    //                 targetUser = newProps.groupUserProfiles[i];
-                    
-    //                 this.setState({
-    //                     targetUser: targetUser,
-    //                 })
-    //             }
-    //         }
-    //     }
-    //     }
-    // }
 
     constructor(props){
         super(props);
@@ -84,25 +60,27 @@ class GroupUser extends React.Component{
                 }
             }
             userNet = this.props.groupTotal - userTotal;
-            console.log(`net ${userNet}, total ${userTotal}, grouptotal: ${this.props.groupTotal}`)
-
+            console.log(`net ${userNet}, total ${userTotal.toFixed(2)}, grouptotal: ${this.props.groupTotal.toFixed(2)}`)
         }
         return(
             <div className = 'group-user-container'>
-                
-                <div className = 'group-user-stats'>
+            <MDBContainer>
+                <MDBCard>
+                    <MDBCardBody>
 
-                {this.state.targetUser !== null ? (
+                        {this.state.targetUser !== null ? (
                     <div className = 'group-user-image'>
                     <h3>{this.state.targetUser.name}</h3>
                     <img src = {this.state.targetUser.profilePicture} alt = 'user profile image'></img>
                     </div>
-                ): (<h3>No users</h3>)}
-                
-                <div>Total: ${userTotal}</div>
 
-                <div>Net: -${userNet}</div>
-                </div>
+                        <div className = 'group-user-stats'>
+                            <div>Total: ${userTotal.toFixed(2)}</div>
+                            <div>Net: ${userNet.toFixed(2)}</div>
+                        </div>
+                    </MDBCardBody>
+                </MDBCard>
+            </MDBContainer>
             </div>
         )
     }
