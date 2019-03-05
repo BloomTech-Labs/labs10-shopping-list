@@ -79,6 +79,9 @@ export const SAVE_GROUP_USERS = 'SAVE_GROUP_USERS';
 export const GET_USER_PROFILE = 'GET_USER_PROFILE';
 export const SAVE_USER_PROFILE = 'SAVE_USER_PROFILE';
 
+export const CLEAR_ITEMS = 'CLEAR_ITEMS';
+export const CLEAR_GROUP_USERS = 'CLEAR_GROUP_USERS';
+
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
   backendURL = `http://localhost:9000`
@@ -674,4 +677,16 @@ export const removeGroup = (groupID, userID) => dispatch => {
   }).catch(err => {
     console.log("ERR => ", err);
   })
+}
+
+export const clearItems = () => {
+  return dispatch => {
+    dispatch({type: CLEAR_ITEMS});
+  }
+}
+
+export const clearGroupUsers = () => {
+  return dispatch => {
+    dispatch({type: CLEAR_GROUP_USERS});
+  }
 }

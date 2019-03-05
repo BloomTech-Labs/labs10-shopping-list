@@ -37,7 +37,10 @@ import {
   GET_GROUP_USERS,
   SAVE_GROUP_USERS,
   SAVE_USER_PROFILE,
-  GET_USER_PROFILE
+  GET_USER_PROFILE,
+
+  CLEAR_ITEMS,
+  CLEAR_GROUP_USERS
 
 
 } from "../actions";
@@ -199,11 +202,24 @@ export const rootReducer = (state = initialState, action) => {
     } else if (!state.groupUserProfiles){
       profileArray.push(action.payload);
     }
-      
       return {
         ...state,
         groupUserProfiles: profileArray,
       }
+
+    case CLEAR_ITEMS:
+      return {
+        ...state,
+        groupItems: null
+      }
+
+    case CLEAR_GROUP_USERS:
+      return {
+        ...state,
+        groupUsers: null,
+        groupUserProfiles: null,
+      }
+
 
     default:
       return state;

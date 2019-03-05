@@ -88,5 +88,9 @@ export {
 
   getGroupMembers,
   updateGroupName,
-  removeGroup
+  removeGroup,
+  clearItems,
+  clearGroupUsers,
+  CLEAR_ITEMS,
+  CLEAR_GROUP_USERS,
 } from "./rootActions";

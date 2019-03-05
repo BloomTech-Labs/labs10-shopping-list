@@ -23,10 +23,10 @@ class GroupUserList extends React.Component{
             <div className = 'group-user-list-container'>
                 <h1>Total Expenditures: ${groupTotal}</h1>
                 <div className = 'group-user-list-profiles'>
-                {this.props.groupUserProfiles ? (
-                    this.props.groupUserProfiles.map(profile => (
-                        <GroupUser profile = {profile} groupTotal = {groupTotal} />
-                    ))
+                {this.props.groupUsers ? (
+                    this.props.groupUsers.map(user => {
+                       return <GroupUser user = {user} groupTotal = {groupTotal} />
+                    })
                 ) : (<h2>No Group Members</h2>)}
                 </div>
             </div>

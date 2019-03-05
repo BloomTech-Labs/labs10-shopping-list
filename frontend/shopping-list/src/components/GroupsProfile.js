@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {checkEmail, getSingleGroup, addGroup, getUserProfile, getGroupUsers, getGroupHistory, getGroupItems, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems } from '../store/actions/rootActions';
+import {checkEmail, getSingleGroup, addGroup, clearItems, clearGroupUsers, getUserProfile, getGroupUsers, getGroupHistory, getGroupItems, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems } from '../store/actions/rootActions';
 
 // import React, { Component, Fragment } from 'react';
 // import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
@@ -46,6 +46,8 @@ class GroupsProfile extends Component{
      * Triggers before the component mounts.
      * Retrieve a list of items from state
     */
+
+
     componentWillMount() {
         if(!this.props.groupItems){
             this.props.getGroupItems(this.props.match.params.id);
@@ -85,12 +87,19 @@ class GroupsProfile extends Component{
             this.props.checkEmail();
         }
 
-        if(newProps.groupUsers && !this.props.groupUserProfiles){
-            console.log('groupusers',  newProps.groupUsers)
-            for(let i = 0; i < newProps.groupUsers.length; i++){
-                this.props.getUserProfile(newProps.groupUsers[i].userID);
-            }
-        }
+        // if(newProps.groupUsers && !this.props.groupUserProfiles){
+        //     console.log('groupusers',  newProps.groupUsers);
+        //     for(let i = 0; i < newProps.groupUsers.length; i++){
+        //         console.log('\n USER ID \n', newProps.groupUsers[i].userID);
+        //         this.props.getUserProfile(newProps.groupUsers[i].userID);
+        //         console.log('current profiles', this.props.groupUserProfiles);
+        //     }
+        // }
+    }
+
+    componentWillUnmount(){
+        this.props.clearItems();
+        this.props.clearGroupUsers();
     }
 
     /*
@@ -481,5 +490,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    gettingGroups, addItem, getItems, checkEmail, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory, getGroupUsers, getUserProfile,
+    gettingGroups, clearItems, clearGroupUsers, addItem, getItems, checkEmail, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory, getGroupUsers, getUserProfile,
 })(GroupsProfile);

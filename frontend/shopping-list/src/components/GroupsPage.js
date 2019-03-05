@@ -93,6 +93,9 @@ class GroupsPage extends Component{
         this.props.getUserGroups(this.props.currentUser.id);
 //         this.props.addGroup(this.state.groupName);
         this.setState({modal14: false})
+        if(!this.props.userGroups){
+            this.props.getUserGroups(this.props.currentUser.id);
+        }
     }
 
     handleUpdateGroupName = () => {
@@ -102,8 +105,6 @@ class GroupsPage extends Component{
 
             this.setState({modal15: false})
         }
-
-
     }
 
     handleDeleteGroup = () => {

@@ -99,19 +99,26 @@ inviteRouter.post('/join', (req, res) => { // req.body must contain the invitati
                 changes.usedBefore = true; // mark the invitation as having been visited
                 inviteDb.update(invite[0].id, changes).then(status => {
                     // console.log(status);
-
-                    /** @TODO we need a way to make sure multiple groupUser entries are not created **/
-                    
                     // add the new user into the database as a member of the given group ID
-                    groupMembersDb.add(newMember).then(newId => {
-                        console.log('success', newId);
-                        return res.status(201).json({message: `New group member added with ID ${newId[0]}.`});
+
+                    groupMembersDb.getById(newMember.groupID, newMember.userID).then(response => {
+                        if(response.length > 0){ // ensure that the user is not already a member of the group
+                            return res.status(400).json({message: `User is already a member of that group.`})
+                        } else {
+                            groupMembersDb.add(newMember).then(newId => {
+                                console.log('success', newId);
+                                return res.status(201).json({message: `New group member added with ID ${newId[0]}.`});
+                            })
+                        }
                     })
                 })
             } else {
                 return res.status(400).json({error: `That invitation is no longer valid.`});
             }
         })
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Internal server error.`})
     })
 })
 
