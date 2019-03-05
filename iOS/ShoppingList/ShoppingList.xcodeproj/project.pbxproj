@@ -35,6 +35,8 @@
 		96476B522215D41300E57EB9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 96476B4F2215D41300E57EB9 /* Assets.xcassets */; };
 		96700E2E221C025E00F084B3 /* SettingsTableViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96700E2D221C025E00F084B3 /* SettingsTableViewController.storyboard */; };
 		96700E31221C035600F084B3 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96700E30221C035600F084B3 /* SettingsTableViewController.swift */; };
+		968D512C222EBA5900179241 /* NewItemPopoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 968D512A222EBA5800179241 /* NewItemPopoverView.xib */; };
+		968D512D222EBA5900179241 /* NewItemPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968D512B222EBA5800179241 /* NewItemPopoverView.swift */; };
 		9691AB552225AEB600C1EE1E /* GroupsPopoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9691AB542225AEB600C1EE1E /* GroupsPopoverView.xib */; };
 		9691AB572225B07600C1EE1E /* GroupsPopoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9691AB562225B07600C1EE1E /* GroupsPopoverView.swift */; };
 		969A83C82215C9840003BB37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969A83C52215C9840003BB37 /* AppDelegate.swift */; };
@@ -111,6 +113,8 @@
 		96476B4F2215D41300E57EB9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		96700E2D221C025E00F084B3 /* SettingsTableViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsTableViewController.storyboard; sourceTree = "<group>"; };
 		96700E30221C035600F084B3 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		968D512A222EBA5800179241 /* NewItemPopoverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewItemPopoverView.xib; sourceTree = "<group>"; };
+		968D512B222EBA5800179241 /* NewItemPopoverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewItemPopoverView.swift; sourceTree = "<group>"; };
 		9691AB542225AEB600C1EE1E /* GroupsPopoverView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupsPopoverView.xib; sourceTree = "<group>"; };
 		9691AB562225B07600C1EE1E /* GroupsPopoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsPopoverView.swift; sourceTree = "<group>"; };
 		969A83C52215C9840003BB37 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -276,6 +280,8 @@
 				9691AB562225B07600C1EE1E /* GroupsPopoverView.swift */,
 				96CBFBEA22285A7700A6B41E /* NewGroupPopoverView.xib */,
 				96CBFBEC22285E7200A6B41E /* NewGroupPopoverView.swift */,
+				968D512B222EBA5800179241 /* NewItemPopoverView.swift */,
+				968D512A222EBA5800179241 /* NewItemPopoverView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -518,6 +524,7 @@
 				9691AB552225AEB600C1EE1E /* GroupsPopoverView.xib in Resources */,
 				96DE3032221637FE00213C3E /* MainViewController.storyboard in Resources */,
 				96476B522215D41300E57EB9 /* Assets.xcassets in Resources */,
+				968D512C222EBA5900179241 /* NewItemPopoverView.xib in Resources */,
 				960FBF6B221C41570076C662 /* MessagePopoverView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -586,6 +593,7 @@
 				969A84112215C99A0003BB37 /* Reusable+NSCollectionView.swift in Sources */,
 				969A84092215C99A0003BB37 /* UINavigationController+Chameleon.m in Sources */,
 				118646E0221DCE9B00D0F04B /* UserController.swift in Sources */,
+				968D512D222EBA5900179241 /* NewItemPopoverView.swift in Sources */,
 				969A84122215C99A0003BB37 /* Nib+NSView.swift in Sources */,
 				118646D6221CA93900D0F04B /* Item.swift in Sources */,
 				969A84042215C99A0003BB37 /* UIColor+Chameleon.m in Sources */,

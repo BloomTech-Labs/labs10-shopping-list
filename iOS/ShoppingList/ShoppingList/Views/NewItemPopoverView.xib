@@ -44,7 +44,7 @@
                             <color key="tintColor" name="Theme"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                         </textField>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Amount" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hfh-vn-MwO">
                             <rect key="frame" x="0.0" y="65" width="351" height="57"/>

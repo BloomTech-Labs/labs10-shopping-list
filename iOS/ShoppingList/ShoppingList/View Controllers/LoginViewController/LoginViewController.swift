@@ -32,7 +32,7 @@ class LoginViewController: UIViewController, StoryboardInstantiatable {
             .start {
                 switch $0 {
                 case .failure(let error):
-                    print("showLogin: \(error)")
+                    print("Error showing login: \(error)")
                 case .success(let credentials):
                     guard let accessToken = credentials.accessToken, let idToken = credentials.idToken else { return }
                     SessionManager.tokens = Tokens(accessToken: accessToken, idToken: idToken)
