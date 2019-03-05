@@ -43,6 +43,7 @@ class NewItemPopoverView: UIView, NibInstantiatable {
         let newItem = Item(name: name, measurement: nil, purchased: isPurchased, price: Double(Int(price) ?? 0), quantity: Int(amount) ?? 0, group: selectedGroup)
         ItemController.shared.saveItem(item: newItem) { (_, _) in
             self.delegate?.updatesNeeded()
+            popover.dismiss()
         }
     }
     

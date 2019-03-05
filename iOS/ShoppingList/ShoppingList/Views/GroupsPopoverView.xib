@@ -32,6 +32,9 @@
                             <integer key="value" value="8"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="newGroupButtonPressed:" destination="21x-cQ-fKT" eventType="touchUpInside" id="ROw-f9-Ra0"/>
+                    </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cbz-IA-4YO">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>

@@ -13,7 +13,7 @@ struct GroupsList: Codable {
 }
 
 
-struct Group: Codable, Equatable {
+class Group: Codable, Equatable {
     
     var name: String
     var groupID: Int

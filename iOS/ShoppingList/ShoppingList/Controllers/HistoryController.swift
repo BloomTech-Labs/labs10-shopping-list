@@ -25,7 +25,6 @@ class HistoryController {
         var request = URLRequest(url: url)
         
         request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        print(request)
         
         Alamofire.request(request).validate().responseData { (response) in
             switch response.result {
@@ -40,9 +39,10 @@ class HistoryController {
                     
                     for userList in histories.data {
                         for item in userList {
+                            
+                            guard let selectedGroup = selectedGroup else { return }
 
-                            guard let selectedGroup = selectedGroup?.groupID else { return }
-                            let historyItem = Item(name: item.name, purchased: true, price: item.total, groupID: selectedGroup)
+                            let historyItem = Item(name: item.name ?? "No Item", purchased: true, price: item.total ?? 0.00, group: selectedGroup)
                           
                             history.append(historyItem)
                         }
@@ -52,7 +52,7 @@ class HistoryController {
                     completion(true)
                     
                 } catch {
-                    print("Error getting groups from API response\(response)")
+                    print("Error getting history from API response\(error)")
                     completion(false)
                     return
                 }
