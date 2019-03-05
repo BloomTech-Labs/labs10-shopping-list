@@ -88,6 +88,12 @@ export const CLEAR_GROUP_USERS = 'CLEAR_GROUP_USERS';
 export const GET_GROUP_HISTORY_LIST = 'GET_GROUP_HISTORY_LIST';
 export const SAVE_GROUP_HISTORY_LIST = 'SAVE_GROUP_HISTORY_LIST';
 
+export const GET_INVITE_INFO = 'GET_INVITE_INFO';
+export const SAVE_INVITE_INFO = 'SAVE_INVITE_INFO';
+
+export const ACCEPTING_INVITE = 'ACCEPTING_INVITE';
+export const INVITE_ACCEPTED = 'INVITE_ACCEPTED';
+
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
   backendURL = `http://localhost:9000`
@@ -734,5 +740,49 @@ export const clearItems = () => {
 export const clearGroupUsers = () => {
   return dispatch => {
     dispatch({type: CLEAR_GROUP_USERS});
+  }
+}
+
+export const getInviteInfo = inviteCode => {
+  let token = localStorage.getItem('jwt');
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+
+  const endpoint = axios.get(`${backendURL}/api/invite/${inviteCode}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_INVITE_INFO});
+
+    endpoint.then(response => {
+      dispatch({type: SAVE_INVITE_INFO, payload: response.data});
+    })
+  }
+}
+
+export const acceptInvite = inviteCode => {
+  let token = localStorage.getItem('jwt');
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  let body = {
+    inviteCode: inviteCode,
+  }
+
+  const endpoint = axios.post(`${backendURL}/api/invite/join`, body, options);
+
+  return dispatch => {
+    dispatch({type: ACCEPTING_INVITE});
+
+    endpoint.then(response => {
+      console.log('invite response', response);
+      dispatch({type: INVITE_ACCEPTED});
+    })
   }
 }

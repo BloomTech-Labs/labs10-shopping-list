@@ -59,7 +59,7 @@ groupMemberRouter.post('/', (req, res) => {
  * **/
 
 /**************************************************/
-groupMemberRouter.get('/group/:id', (req, res) => {
+groupMemberRouter.get('/group/:id', checkUser, (req, res) => {
     const id = req.params.id;
 
     groupMemDb.getByGroup(id).then(mem => {
