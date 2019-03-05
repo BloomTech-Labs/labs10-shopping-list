@@ -93,7 +93,7 @@ class GroupUser extends React.Component{
                 <div className = 'group-user-stats'>
 
                 {this.state.targetUser !== null ? (
-                    <div>
+                    <div className = 'group-user-image'>
                     <h3>{this.state.targetUser.name}</h3>
                     <img src = {this.state.targetUser.profilePicture} alt = 'user profile image'></img>
                     </div>

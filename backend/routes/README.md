@@ -37,6 +37,10 @@
     * [Get Notification By ID](#Get-Notification-By-ID)
     * [Update Notification](#Update-Notification)
     * [Remove Notification](#Remove-Notification)
+* [Invitation Endpoints](#Invitation-Endpoints)
+    * [Create Invitation](#Create-Invitation)
+    * [Get Invitation Information](#Get-Invitation-Information)
+    * [Join Group with Code](#Join-Group-with-Code)
 
 # API Endpoints
 ## Auth Endpoints
@@ -1659,3 +1663,133 @@ None
   ```
 
 [TOP](#Table-of-Contents)
+
+## Invitation Endpoints
+
+### Create Invitation
+Returns the generated invitation code (28-character alphanumerical via 14 digit hex).
+* **URL**<br>
+/api/invite/create
+* **Method:**<br>
+`POST`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+JWT Bearer token in Authorization header
+`userID=[integer]`
+`groupID=[integer]`
+`invitee=[email@domain.com]`
+* **Success Response:**<br>
+    * **Code:** 201<br>
+      **Content:** { "message": "New invitation created with code 123456789abcdefghi1234567890.",
+    "inviteCode": "123456789abcdefghi1234567890"}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content** {error: "Could not create invitation."}
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** {message: "Internal Server Error", data: { err: "Error details" } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/invite/create",
+      dataType: "json",
+      type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+### Get Invitation Information
+Returns the information about the passed invitation code
+* **URL**<br>
+/api/invite/:code
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`code=[string]`
+* **Data Params**<br>
+JWT Bearer token in Authorization header
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** {
+    "id": 2,
+    "inviteCode": "123456789abcdefghi1234567890",
+    "groupID": 2,
+    "userID": 51,
+    "invitee": "email@domain.com,
+    "expiration": "2019-03-11T18:03:04-07:00",
+    "usedBefore": 0,
+    "createdAt": "2019-03-05 02:03:04",
+    "updatedAt": "2019-03-05 02:03:04",
+    "groupName": "BBQ Party",
+    "userName": "John Doe"
+}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content** {error: "Could not find a user with the specified ID."}<br>
+        **Content** {error: "Could not find a group with the specified ID."}<br>
+        **Content** {error: "No invite matches that code."}<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** {message: "Internal Server Error", data: { err: "Error details" } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/invite/123456789abcdefghi1234567890",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+### Join Group with Code
+Adds the user to the invited group
+* **URL**<br>
+/api/invite/join
+* **Method:**<br>
+`POST`
+* **URL Params**<br>
+`inviteCode=[string]`
+* **Data Params**<br>
+JWT Bearer token in Authorization header
+* **Success Response:**<br>
+    * **Code:** 201<br>
+      **Content:** {message: "New group member added with ID 3.", id: 3}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 400 INVALID<br>
+        **Content** {message: "User is already a member of that group."}
+        **Content** {error: "That invitation is no longer valid."}<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** {message: "Internal Server Error", data: { err: "Error details" } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/invite/join",
+      dataType: "json",
+      type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```

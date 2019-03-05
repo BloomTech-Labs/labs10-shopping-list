@@ -49,7 +49,7 @@ inviteRouter.post('/create', (req, res) => {
         }
     }).catch(err => {
         console.log(err);
-        return res.status(500).json(err);
+        return res.status(500).json({message: "Internal server error", data: err});
     })
 })
 
@@ -69,18 +69,18 @@ inviteRouter.get('/:code', (req, res) => {
                     return res.status(200).json(info[0]);
                 }).catch(err => {
                     console.log(err);
-                    return res.status(500).json({error: `Could not find a user with the specified ID.`})
+                    return res.status(404).json({error: `Could not find a user with the specified ID.`})
                 })
             }).catch(err => {
                 console.log(err);
-                return res.status(500).json({error: `Could not find a group with the specified ID.`})
+                return res.status(404).json({error: `Could not find a group with the specified ID.`})
             })
         } else {
             return res.status(404).json({error: `No invite matches that code.`})
         }
     }).catch(err => {
         console.log(err);
-        return res.status(500).json({error: `Could not find an invitation that matches that invite code.`})
+        return res.status(500).json({error: `Internal server error.`})
     })
 })
 
@@ -107,7 +107,7 @@ inviteRouter.post('/join', (req, res) => { // req.body must contain the invitati
                         } else {
                             groupMembersDb.add(newMember).then(newId => {
                                 console.log('success', newId);
-                                return res.status(201).json({message: `New group member added with ID ${newId[0]}.`});
+                                return res.status(201).json({message: `New group member added with ID ${newId[0]}.`, id: id[0]});
                             })
                         }
                     })
@@ -118,7 +118,7 @@ inviteRouter.post('/join', (req, res) => { // req.body must contain the invitati
         })
     }).catch(err => {
         console.log(err);
-        return res.status(500).json({error: `Internal server error.`})
+        return res.status(500).json({error: `Internal server error.`, data: err})
     })
 })
 
