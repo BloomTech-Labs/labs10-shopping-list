@@ -135,12 +135,15 @@ function fetch_group_mem(id) {
     })
 }
 
-
-groupRouter.get('/user/:id', checkUser, (req, res) => {
+// get all groups with user ID
+groupRouter.get('/user/:id', (req, res) => {
     let userId = req.params.id;
   
     groupDb.getByUser(userId).then(groups => {
-        // console.log('groups', groups);
+        console.log('get groups by user id', groups);
+        if(groups.length === 0){
+            res.status(404).json({error: `No groups found for that userID.`})
+        }
         
         for(let i = 0; i < groups.length; i++){
             groupMembersDb.getByGroup(groups[i].id).then(members => {
@@ -157,6 +160,9 @@ groupRouter.get('/user/:id', checkUser, (req, res) => {
                 return res.status(500).json({error: `Internal server error.`})
             })
         }
+    }).catch(err => {
+        console.log(err);
+        res.status(500).json({error: `Error retrieving groups.`})
     })
 })
 

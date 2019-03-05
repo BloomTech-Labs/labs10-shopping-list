@@ -40,9 +40,12 @@ import {
   SAVE_GROUP_USERS,
   SAVE_USER_PROFILE,
   GET_USER_PROFILE,
-  GET_GROUP_HISTORY_LIST,
-  SAVE_GROUP_HISTORY_LIST
 
+  CLEAR_ITEMS,
+  CLEAR_GROUP_USERS,
+
+  GET_GROUP_HISTORY_LIST,
+  SAVE_GROUP_HISTORY_LIST,
 
 } from "../actions";
 
@@ -114,9 +117,11 @@ export const rootReducer = (state = initialState, action) => {
     case GET_GROUP_ITEMS:
       return state;
     case SAVE_GROUP_ITEMS:
+      let unpurchased = action.payload.data;
+      unpurchased = unpurchased.filter(item => item.purchased === 0);
       return {
         ...state,
-        groupItems: action.payload.data,
+        groupItems: unpurchased,
         needsNewItems: false,
       }
 
@@ -224,11 +229,24 @@ export const rootReducer = (state = initialState, action) => {
     } else if (!state.groupUserProfiles){
       profileArray.push(action.payload);
     }
-      
       return {
         ...state,
         groupUserProfiles: profileArray,
       }
+
+    case CLEAR_ITEMS:
+      return {
+        ...state,
+        groupItems: null
+      }
+
+    case CLEAR_GROUP_USERS:
+      return {
+        ...state,
+        groupUsers: null,
+        groupUserProfiles: null,
+      }
+
 
     default:
       return state;

@@ -4,9 +4,48 @@ import {getUserProfile, checkEmail, FETCHING_USER_PROFILE} from '../store/action
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import './Styles/GroupUser.css';
+import axios from 'axios';
 import { MDBContainer, MDBCard, MDBCardBody} from "mdbreact";
 
 class GroupUser extends React.Component{
+
+    componentWillMount(){
+        if(this.props.user){
+            console.log('USER', this.props.user);
+            this.getLocalUser(this.props.user.userID)        }
+    }
+
+    constructor(props){
+        super(props);
+        this.state = {
+            targetUser: null
+        }
+    }
+
+    getLocalUser = id => {
+        let backendURL;
+        if(process.env.NODE_ENV === 'development'){
+        backendURL = `http://localhost:9000`
+        } else {
+        backendURL = `https://shoptrak-backend.herokuapp.com`
+        }
+        
+        let token = localStorage.getItem('jwt');
+        let options = {
+            headers: {
+            Authorization: `Bearer ${token}`
+            }
+        }
+
+        axios.get(`${backendURL}/api/user/${id}`, options).then(response => {
+            console.log('localuser', response);
+            this.setState({
+                targetUser: response.data
+            })
+        })
+    }
+
+
     render(){
         
         let userTotal = 0;
@@ -15,7 +54,7 @@ class GroupUser extends React.Component{
         if(this.props.groupHistory){
             for(let i = 0; i < this.props.groupHistory.length; i++){
                 if(this.props.groupHistory[i].groupID === Number(this.props.match.params.id)){
-                    if(this.props.groupHistory[i].userID === Number(this.props.profile.id)){
+                    if(this.props.groupHistory[i].userID === Number(this.props.user.userID)){
                         userTotal += this.props.groupHistory[i].total
                     }
                 }
@@ -28,14 +67,15 @@ class GroupUser extends React.Component{
             <MDBContainer>
                 <MDBCard>
                     <MDBCardBody>
-                        <div className="group-user-image">
-                            <img src = {this.props.profile.profilePicture} alt = 'group user image'></img>
-                        </div>
-                        <h3>{this.props.profile.name}</h3>
+
+                        {this.state.targetUser !== null ? (
+                    <div className = 'group-user-image'>
+                    <h3>{this.state.targetUser.name}</h3>
+                    <img src = {this.state.targetUser.profilePicture} alt = 'user profile image'></img>
+                        </div>) : <h3>No User</h3> }
+
                         <div className = 'group-user-stats'>
-
                             <div>Total: ${userTotal.toFixed(2)}</div>
-
                             <div>Net: ${userNet.toFixed(2)}</div>
                         </div>
                     </MDBCardBody>
@@ -54,7 +94,8 @@ const mapStateToProps = state => {
         needsNewItems: state.needsNewItems,
         groupHistory: state.groupHistory,
         currentUser: state.currentUser,
-        groupUserProfiles: state.groupUserProfiles
+        groupUserProfiles: state.groupUserProfiles,
+        groupUsers: state.groupUsers,
     }
 }
 
