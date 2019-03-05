@@ -84,6 +84,35 @@ inviteRouter.get('/:code', (req, res) => {
     })
 })
 
+// if invitation is accepted, add new user to groupMembers db
 
+inviteRouter.post('/join', (req, res) => { // req.body must contain the invitation code
+    usersDb.getIdByEmail(req.user.email).then(id => {
+        let newMember = {};
+        newMember.userID = id[0].id; // start constructing the newMember
+        inviteDb.getByCode(req.body.inviteCode).then(invite => {
+            // console.log(invite[0].usedBefore);
+            if(invite[0].usedBefore === 0){
+                newMember.groupID = invite[0].groupID; // the group ID that is in the invitation
+                // console.log('newmemebr', newMember);
+                let changes = invite[0];
+                changes.usedBefore = true; // mark the invitation as having been visited
+                inviteDb.update(invite[0].id, changes).then(status => {
+                    // console.log(status);
+
+                    /** @TODO we need a way to make sure multiple groupUser entries are not created **/
+                    
+                    // add the new user into the database as a member of the given group ID
+                    groupMembersDb.add(newMember).then(newId => {
+                        console.log('success', newId);
+                        return res.status(201).json({message: `New group member added with ID ${newId[0]}.`});
+                    })
+                })
+            } else {
+                return res.status(400).json({error: `That invitation is no longer valid.`});
+            }
+        })
+    })
+})
 
 module.exports = inviteRouter;
