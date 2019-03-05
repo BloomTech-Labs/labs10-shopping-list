@@ -47,6 +47,12 @@ import {
   GET_GROUP_HISTORY_LIST,
   SAVE_GROUP_HISTORY_LIST,
 
+  GET_INVITE_INFO,
+  SAVE_INVITE_INFO,
+
+  ACCEPTING_INVITE,
+  INVITE_ACCEPTED,
+
 } from "../actions";
 
 const initialState = {
@@ -55,6 +61,7 @@ const initialState = {
   groupItems: null,
   needsNewItems: false,
   needsNewHistory: false,
+  needsNewGroups: false,
   needsNewHistoryList: false,
   userCart: null,
   groupHistory: null,
@@ -76,6 +83,8 @@ const initialState = {
   markedItems: null,
   needsRefresh: false,
   itemPurchasedText: null,
+
+  inviteInfo: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -112,6 +121,7 @@ export const rootReducer = (state = initialState, action) => {
     case SAVE_USER_GROUPS:
       return {
         ...state,
+        needsNewGroups: false,
         userGroups: action.payload
       }
 
@@ -247,6 +257,24 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         groupUsers: null,
         groupUserProfiles: null,
+      }
+
+    case GET_INVITE_INFO:
+      return state;
+
+    case SAVE_INVITE_INFO:
+      return {
+        ...state,
+        inviteInfo: action.payload
+      }
+
+    case ACCEPTING_INVITE:
+      return state;
+
+    case INVITE_ACCEPTED:
+      return {
+        ...state,
+        needsNewGroups: true,
       }
 
 
