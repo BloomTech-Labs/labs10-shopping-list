@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import auth0Client from './Auth';
 import {getInviteInfo} from '../store/actions/index';
 import {MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText} from 'mdbreact';
@@ -26,8 +26,6 @@ class Invite extends React.Component {
     render(){
         return (
             <div className = 'invite-container'>
-
-                INVITE PAGE DUDE
             {this.props.inviteInfo ? (
                 <div className = 'invite-present'>
                 <MDBCol>
@@ -39,8 +37,9 @@ class Invite extends React.Component {
                     </MDBCardTitle>
                     <MDBCardText>
                     <h2>{this.props.inviteInfo.userName} invited you to join the "{this.props.inviteInfo.groupName}" group!</h2>
-                    <h3>Login or Sign Up below!</h3>
-                    <MDBBtn onClick = {this.handleSignIn}>Login/Sign Up</MDBBtn>
+                    <Link to = '/'><MDBBtn color = 'danger' >Cancel</MDBBtn></Link>
+                    <MDBBtn onClick = {this.handleSignIn}>Accept</MDBBtn>
+                    <p>Click "Accept" to log in and join the group.</p>
                     </MDBCardText>
                         
                 </MDBCardBody>
@@ -52,7 +51,8 @@ class Invite extends React.Component {
                 </div>
             ) : (
                 <div className = 'invite-absent'>
-                <h1>Hmm... that doesn't seem to be a valid invitation.</h1>
+                <h1>Loading invite information...</h1>
+                <h4>If this doesn't load or takes too long, <Link to = '/'>click here.</Link></h4>
                 </div>
             )}
             
