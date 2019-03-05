@@ -188,7 +188,7 @@ class GroupsProfile extends Component{
     }
 
     toggleInviClass = () => {
-        this.setState({ inviToggle: true, histToggle: false, listToggle: false})
+        this.setState({ inviToggle: true})
         this.props.generateGroupInviteUrl(localStorage.getItem("userId"), this.props.match.params.id)
         console.log(this.state.invites[1])
     }
