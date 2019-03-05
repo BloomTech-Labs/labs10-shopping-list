@@ -72,7 +72,7 @@ class GroupUser extends React.Component{
                     <div className = 'group-user-image'>
                     <h3>{this.state.targetUser.name}</h3>
                     <img src = {this.state.targetUser.profilePicture} alt = 'user profile image'></img>
-                    </div>
+                        </div>) : <h3>No User</h3> }
 
                         <div className = 'group-user-stats'>
                             <div>Total: ${userTotal.toFixed(2)}</div>
