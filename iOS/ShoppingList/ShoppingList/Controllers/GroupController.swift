@@ -201,7 +201,7 @@ class GroupController {
                     completion(true)
                     
                 } catch {
-                    print("Error getting groups from API response\(response)")
+                    print("Error getting groups from API response\(error)")
                     completion(false)
                     return
                 }

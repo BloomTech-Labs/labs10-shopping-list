@@ -30,6 +30,8 @@ class HistoryController {
         Alamofire.request(request).validate().responseData { (response) in
             switch response.result {
             case .success(let value):
+                let string = String(data: value, encoding: .utf8)
+                print("Data String History: \(string!)")
                 
                 do {
                     
@@ -42,17 +44,16 @@ class HistoryController {
                         for item in userList {
 
                             guard let selectedGroup = selectedGroup?.groupID else { return }
-                            let historyItem = Item(name: item.name, purchased: true, price: item.total, groupID: selectedGroup)
+                            let historyItem = Item(name: item.name ?? "No Item", purchased: true, price: item.total ?? 0.00, groupID: selectedGroup)
                           
                             history.append(historyItem)
                         }
                     }
-                    
-                    
+                
                     completion(true)
                     
                 } catch {
-                    print("Error getting groups from API response\(response)")
+                    print("Error getting history from API response \(error)")
                     completion(false)
                     return
                 }

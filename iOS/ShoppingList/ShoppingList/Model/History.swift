@@ -13,9 +13,10 @@ struct HistoryList: Codable {
 }
 
 struct History: Codable {
-    let total: Double
-    let item: HistoryItem
-    let name, user, date: String
+    let total: Double?
+    let item: HistoryItem?
+    let name, user, date: String?
+    let grandTotal: Double?
 }
 
 struct HistoryItem: Codable {
