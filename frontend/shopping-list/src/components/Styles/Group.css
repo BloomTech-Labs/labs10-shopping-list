@@ -227,3 +227,7 @@ input[type="button"]::-moz-focus-inner {
 .align-center {
     text-align: center;
 }
+
+.delete-text {
+    color: red;
+}

@@ -692,7 +692,7 @@ export const updateGroupName = (groupID, changes) => dispatch => {
     console.log("RES => ", res);
     dispatch({ type: CHANGE_GROUP_NAME_SUCCESS});
   }).then(() => {
-    gettingGroups()(dispatch)
+    getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
   }).catch(err => {
     console.log("ERR => ", err);
   })
@@ -719,7 +719,7 @@ export const removeGroup = (groupID, userID) => dispatch => {
     console.log("RES => ", res);
     dispatch({ type: REMOVE_GROUP_SUCCESS});
   }).then(() => {
-    gettingGroups()(dispatch)
+    getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
   }).catch(err => {
     console.log("ERR => ", err);
   })
