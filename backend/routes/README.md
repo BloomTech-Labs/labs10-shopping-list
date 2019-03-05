@@ -1675,10 +1675,10 @@ Returns the generated invitation code (28-character alphanumerical via 14 digit 
 * **URL Params**<br>
 None
 * **Data Params**<br>
-JWT Bearer token in Authorization header
-`userID=[integer]`
-`groupID=[integer]`
-`invitee=[email@domain.com]`
+JWT Bearer token in Authorization header<br>
+`userID=[integer]`<br>
+`groupID=[integer]`<br>
+`invitee=[email@domain.com]`<br>
 * **Success Response:**<br>
     * **Code:** 201<br>
       **Content:** { "message": "New invitation created with code 123456789abcdefghi1234567890.",
@@ -1688,7 +1688,7 @@ JWT Bearer token in Authorization header
         **Content:** { error: "You are unauthorized to make this request." }<br>
     OR<br>
     * **Code:** 404 NOT FOUND<br>
-        **Content** {error: "Could not create invitation."}
+        **Content** {error: "Could not create invitation."}<br>
     OR<br>
     * **Code:** 500 INTERNAL SERVER ERROR<br>
         **Content:** {message: "Internal Server Error", data: { err: "Error details" } }
@@ -1770,13 +1770,13 @@ Adds the user to the invited group
 JWT Bearer token in Authorization header
 * **Success Response:**<br>
     * **Code:** 201<br>
-      **Content:** {message: "New group member added with ID 3.", id: 3}
+      **Content:** {message: "New group member added with ID 3.", id: 3}<br>
 * **Error Response:**<br>
     * **Code:** 401 UNAUTHORIZED<br>
         **Content:** { error: "You are unauthorized to make this request." }<br>
     OR<br>
     * **Code:** 400 INVALID<br>
-        **Content** {message: "User is already a member of that group."}
+        **Content** {message: "User is already a member of that group."}<br>
         **Content** {error: "That invitation is no longer valid."}<br>
     OR<br>
     * **Code:** 500 INTERNAL SERVER ERROR<br>
