@@ -42,7 +42,7 @@ class HistoryController {
                             
                             guard let selectedGroup = selectedGroup else { return }
 
-                            let historyItem = Item(name: item.name, purchased: true, price: item.total, group: selectedGroup)
+                            let historyItem = Item(name: item.name ?? "No Item", purchased: true, price: item.total ?? 0.00, group: selectedGroup)
                           
                             history.append(historyItem)
                         }
@@ -52,7 +52,7 @@ class HistoryController {
                     completion(true)
                     
                 } catch {
-                    print("Error getting groups from API response\(response)")
+                    print("Error getting history from API response\(error)")
                     completion(false)
                     return
                 }
