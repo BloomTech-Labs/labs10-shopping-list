@@ -74,7 +74,7 @@ class ItemList extends React.Component{
                 quantity: 1,
             }
 
-            console.log('item', item);
+            console.log('ITEMLIST ITEM =>', item);
             
             // send item to db
             this.props.addItem(item);

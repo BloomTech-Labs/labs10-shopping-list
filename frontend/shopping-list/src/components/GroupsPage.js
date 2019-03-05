@@ -132,7 +132,7 @@ class GroupsPage extends Component{
                         {this.props.userGroups !== null ? (
                             this.props.userGroups.map(group => 
                                 (
-                                    <GroupCard group = {group} key = {group.id}/>
+                                    <GroupCard group = {group} key = {group.id} updateGroup={this.saveGroupName} removeGroup={this.deleteGroup} />
                                 )
                             )
                           ) : null}
@@ -191,6 +191,7 @@ class GroupsPage extends Component{
                         <MDBModalBody>
                             <h6>Type the full name of the group to completely remove it.</h6>
                             <MDBInput label="Group Name" name={"delete"} onChange={this.handleInput} defaultValue={this.state.delete}/>
+                            <small className="delete-text" >{this.state.groupName}</small>
                         </MDBModalBody>
                         <MDBModalFooter>
                             <MDBBtn color="secondary" onClick={this.toggle(16)}>Close</MDBBtn>
