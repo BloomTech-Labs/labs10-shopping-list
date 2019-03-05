@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {checkEmail, getSingleGroup, addGroup, clearItems, clearGroupUsers, getUserProfile, getGroupUsers, getGroupHistory, getGroupItems, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems } from '../store/actions/rootActions';
+import {getGroupHistoryList, checkEmail, getSingleGroup, addGroup, clearItems, clearGroupUsers, getUserProfile, getGroupUsers, getGroupHistory, getGroupItems, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems } from '../store/actions/rootActions';
 
 // import React, { Component, Fragment } from 'react';
 // import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
@@ -62,6 +62,8 @@ class GroupsProfile extends Component{
             this.props.getGroupHistory(this.props.match.params.id);
         }
 
+        this.props.getGroupHistoryList(this.props.match.params.id);
+
         if(!this.props.groupUsers){
             console.log('GET GROUP USERS ===>')
             this.props.getGroupUsers(this.props.match.params.id);
@@ -85,6 +87,10 @@ class GroupsProfile extends Component{
 
         if(newProps.needsNewHistory){
             this.props.getGroupHistory(this.props.match.params.id);
+        }
+
+        if(newProps.needsNewHistoryList){
+            this.props.getGroupHistoryList(this.props.match.params.id);
         }
 
         if(!newProps.currentUser){
@@ -342,7 +348,10 @@ class GroupsProfile extends Component{
                         <UserCart />
                     </div>
 
-                    <MDBContainer>
+
+                </div>
+
+                <MDBContainer>
                     <MDBModal isOpen={this.state.inviToggle} toggle={this.toggle('inviToggle')} centered>
                         <MDBModalHeader toggle={this.toggle('inviToggle')}>Group Invitation</MDBModalHeader>
                         <MDBModalBody>
@@ -354,7 +363,6 @@ class GroupsProfile extends Component{
                         </MDBModalFooter>
                     </MDBModal>
                 </MDBContainer>
-                </div>
 
                 <MDBContainer>
                 <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
@@ -382,6 +390,7 @@ const mapStateToProps = state => {
         groupUsers: state.groupUsers,
         groupHistory: state.groupHistory,
         groupHistoryList: state.groupHistoryList,
+        needsNewHistoryList: state.needsNewHistoryList,
 
         // item state
         needsNewItems: state.needsNewItems,
@@ -394,5 +403,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-    gettingGroups, clearItems, clearGroupUsers, addItem, getItems, checkEmail, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory, getGroupUsers, getUserProfile,
+    getGroupHistoryList, gettingGroups, clearItems, clearGroupUsers, addItem, getItems, checkEmail, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory, getGroupUsers, getUserProfile,
 })(GroupsProfile);

@@ -26,6 +26,7 @@ class UserCart extends React.Component{
 
     handleChange = event => {
         event.preventDefault();
+        console.log(event.target.value);
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -33,7 +34,7 @@ class UserCart extends React.Component{
 
     handleCheckout = event => {
         event.preventDefault();
-        console.log('checkout');
+        // console.log('checkout');
 
         let info = {
             userId: this.props.currentUser.id,
@@ -41,6 +42,7 @@ class UserCart extends React.Component{
             cartItems: this.props.userCart,
             amount: this.state.amount
         }
+
         if(this.state.amount > 0 && this.state.amount !== ''){
             this.props.checkOut(info);
         }
@@ -48,6 +50,7 @@ class UserCart extends React.Component{
         this.setState({
             amount: '',
         })
+
     }
 
     render(){

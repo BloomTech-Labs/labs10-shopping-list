@@ -12,9 +12,9 @@ class HistoryList extends React.Component{
     }
 
     componentWillReceiveProps = newProps => {
-        // if(newProps.needsNewHistory === true){
-        //     this.props.getGroupHistoryList(this.props.match.params.id);
-        // }
+        if(newProps.needsNewHistoryList === true){
+            this.props.getGroupHistoryList(this.props.match.params.id);
+        }
     }
 
     constructor(props){
@@ -53,7 +53,8 @@ const mapStateToProps = state => {
     return {
         //state items
         groupHistoryList: state.groupHistoryList,
-        needsNewHistory: state.needsNewHistory
+        needsNewHistory: state.needsNewHistory,
+        needsNewHistoryList: state.needsNewHistoryList
     }
 }
 
