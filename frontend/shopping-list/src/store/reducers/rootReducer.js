@@ -55,6 +55,7 @@ const initialState = {
   groupItems: null,
   needsNewItems: false,
   needsNewHistory: false,
+  needsNewHistoryList: false,
   userCart: null,
   groupHistory: null,
   groupHistoryList: null,
@@ -118,7 +119,7 @@ export const rootReducer = (state = initialState, action) => {
       return state;
     case SAVE_GROUP_ITEMS:
       let unpurchased = action.payload.data;
-      unpurchased = unpurchased.filter(item => item.purchased === 0);
+      unpurchased = unpurchased.filter(item => item.purchased === false);
       return {
         ...state,
         groupItems: unpurchased,
@@ -180,6 +181,7 @@ export const rootReducer = (state = initialState, action) => {
         userCart: null,
         needsNewItems: true,
         needsNewHistory: true,
+        needsNewHistoryList: true
       }
 
     case GET_GROUP_HISTORY:
@@ -198,7 +200,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         groupHistoryList: action.payload.data,
-        needsNewHistory: false
+        needsNewHistoryList: false
       }
 
     case GET_GROUP_USERS:

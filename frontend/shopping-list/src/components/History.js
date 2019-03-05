@@ -42,7 +42,7 @@ class History extends React.Component {
                                     <p className="mb-1 history-item">{current.name}</p>
                                 ))
                             }
-                            <h5 className="mb-1">Total: ${this.props.grpHistory[this.props.grpHistory.length - 1].grandTotal}</h5>
+                            <h5 className="mb-1">Total: ${this.props.grpHistory[this.props.grpHistory.length - 1].grandTotal.toFixed(2)}</h5>
                         </MDBListGroup>
                     </MDBCardBody>
                 </MDBCard>
