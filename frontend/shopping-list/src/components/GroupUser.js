@@ -101,7 +101,7 @@ class GroupUser extends React.Component{
                 
                 <div>Total: ${userTotal}</div>
 
-                <div>Net: ${userNet}</div>
+                <div>Net: -${userNet}</div>
                 </div>
             </div>
         )
