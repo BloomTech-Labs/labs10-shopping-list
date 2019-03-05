@@ -27,7 +27,6 @@ class GroupMemberController {
         var request = URLRequest(url: url)
         
         request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        print(request)
         
         
         Alamofire.request(request).validate().response { (response) in
@@ -44,7 +43,7 @@ class GroupMemberController {
                 
                 let groupMembers = try JSONDecoder().decode([GroupMember].self, from: data)
                 
-                var newGroup = group
+                let newGroup = group
                 newGroup.groupMembers = groupMembers
                 completion(newGroup)
                 

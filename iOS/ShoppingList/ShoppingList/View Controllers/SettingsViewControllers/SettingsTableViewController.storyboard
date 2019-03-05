@@ -66,7 +66,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="341" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Example user profile picture" translatesAutoresizingMaskIntoConstraints="NO" id="XAP-Mk-xLc">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XAP-Mk-xLc">
                                                     <rect key="frame" x="16" y="12.666666666666664" width="50" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="50" id="1ZW-ak-dNT"/>
@@ -76,8 +76,8 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="wNy-Ef-UPD" userLabel="Username and subtitle stack">
                                                     <rect key="frame" x="82" y="16.000000000000004" width="243" height="43.333333333333343"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jason Modisett" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWl-da-U5e">
-                                                            <rect key="frame" x="0.0" y="0.0" width="148" height="25.333333333333332"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWl-da-U5e">
+                                                            <rect key="frame" x="0.0" y="0.0" width="95.333333333333329" height="25.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
                                                             <color key="textColor" red="0.35649984137055835" green="0.35649984137055835" blue="0.35649984137055835" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
@@ -639,7 +639,6 @@
         <image name="About" width="38" height="32"/>
         <image name="Account Information" width="38" height="32"/>
         <image name="Billing" width="38" height="32"/>
-        <image name="Example user profile picture" width="326" height="327"/>
         <image name="Help and Support" width="38" height="32"/>
         <image name="Link" width="38" height="32"/>
         <image name="Logout" width="38" height="32"/>

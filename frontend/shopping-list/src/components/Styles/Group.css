@@ -1,3 +1,6 @@
+.group-card {
+    margin: 1%;
+}
 .group-profile-container {
     margin-top: 65px;
 }
@@ -226,4 +229,8 @@ input[type="button"]::-moz-focus-inner {
 
 .align-center {
     text-align: center;
+}
+
+.delete-text {
+    color: red;
 }

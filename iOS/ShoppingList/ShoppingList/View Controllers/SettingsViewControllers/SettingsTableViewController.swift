@@ -11,7 +11,6 @@ import Kingfisher
 import Auth0
 
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
- 
     
     static let storyboardName: StoryboardName = "SettingsTableViewController"
     
@@ -29,7 +28,7 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         update()
     }
     
-    func update() {
+    private func update() {
         profilePictureImageView.kf.setImage(with: userProfile?.picture)
         profileNameLabel.text = userProfile?.name
     }

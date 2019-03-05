@@ -27,6 +27,11 @@ class GroupsPopoverView: UIView, NibInstantiatable, UITableViewDelegate, UITable
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ReuseIdentifier")
     }
     
+    @IBAction func newGroupButtonPressed(_ sender: Any) {
+        guard let delegate = delegate else { return }
+        Popovers.triggerNewGroupPopover(delegate)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allGroups.count
     }

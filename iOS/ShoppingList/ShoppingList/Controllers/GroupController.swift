@@ -33,13 +33,8 @@ class GroupController {
         
         Alamofire.request(request).validate().responseData { (response) in
             
-            print(url)
             switch response.result {
             case .success(let value):
-                
-                let string = String(data: value, encoding: .utf8)
-                print("Data String: \(string!)")
-                
                 
                 do {
                     let decoder = JSONDecoder()
@@ -113,7 +108,6 @@ class GroupController {
                     
                     let newGroup = Group(name: name, userID: userID, token: token, groupID: groupID)
                     
-                    //                newGroup.groupID = groupID
                     completion(newGroup)
                     
                 case .failure(let error):
@@ -132,7 +126,7 @@ class GroupController {
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
-        var myGroup = group
+        let myGroup = group
         
         if let name = name {
             myGroup.name = name
@@ -183,13 +177,10 @@ class GroupController {
         var request = URLRequest(url: url)
         
         request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        print(request)
         
         Alamofire.request(request).validate().responseData { (response) in
             switch response.result {
             case .success(let value):
-                let string = String(data: value, encoding: .utf8)
-                print("Data String: \(string!)")
                 
                 do {
                     
@@ -201,7 +192,7 @@ class GroupController {
                     completion(true)
                     
                 } catch {
-                    print("Error getting groups from API response\(response)")
+                    print("Error getting groups from API response\(error)")
                     completion(false)
                     return
                 }
@@ -230,9 +221,6 @@ class GroupController {
                 completion(false)
                 return
             }
-            
-            print("reponse.reponse: \(String(describing: response.response))")
-            print("reponse.request: \(String(describing: response.request))")
             
             completion(true)
         }

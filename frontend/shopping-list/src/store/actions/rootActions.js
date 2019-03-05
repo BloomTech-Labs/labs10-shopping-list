@@ -261,6 +261,8 @@ export const addItem = (item) => {
     }
   };
 
+  console.log("ITEM => ", item);
+
   const endpoint = axios.post(`${backendURL}/api/item`, item, options);
 
   return dispatch => {
@@ -270,7 +272,8 @@ export const addItem = (item) => {
       console.log(res.data, 'new item');
 
       dispatch({type: ITEM_CREATED})
-    }).catch(err => {
+    })
+        .catch(err => {
       console.log(err);
       dispatch({type: ERROR})
     })
@@ -433,26 +436,22 @@ export const generateGroupInviteUrl = (userId, groupId) => {
   let options = {
     headers: {
       Authorization: `Bearer ${token}`
-    },
-    body: {
-      userId: userId,
-      groupId: groupId
     }
   }
-
-  const endpoint = axios.post(`${backendURL}/api/group/invite/`, options);
-  
+  let data = {
+    userID: userId,
+    groupID: groupId,
+    invitee: 'default@dummy.com'
+  }
+  const endpoint = axios.post(`${backendURL}/api/invite/create`, data, options);
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})
-
     endpoint.then(res => {
-      console.log('generate invite ', res.data);
-      dispatch({type: SAVE_GROUP_INVITE, payload: res.data.invites})
+      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: backendURL + '/i/' + res.data.inviteCode} })
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})
     })
-
   }
 }
 
@@ -501,7 +500,9 @@ export const createGroup = (groupName, userId) => {
     endpoint.then(res => {
       dispatch({type: GROUP_CREATED})
       console.log(res.data);
-  }).catch(err => {
+  }).then(() => {
+      getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
+    }).catch(err => {
     console.log(err);
     dispatch({type: ERROR})
   })
@@ -516,11 +517,14 @@ export const getGroupItems = (groupId) => {
     }
   }
 
+  console.log("GETTING GROUP ITEMS => ", groupId);
+
   const endpoint = axios.get(`${backendURL}/api/item/group/${groupId}`, options);
 
   return dispatch => {
     dispatch({type: GET_GROUP_ITEMS})
     endpoint.then(res => {
+      console.log("GETTING GROUP ITEMS DATA => ", res.data);
       dispatch({type: SAVE_GROUP_ITEMS, payload: res.data});
     })
   }
@@ -698,7 +702,7 @@ export const updateGroupName = (groupID, changes) => dispatch => {
     console.log("RES => ", res);
     dispatch({ type: CHANGE_GROUP_NAME_SUCCESS});
   }).then(() => {
-    gettingGroups()(dispatch)
+    getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
   }).catch(err => {
     console.log("ERR => ", err);
   })
@@ -725,7 +729,7 @@ export const removeGroup = (groupID, userID) => dispatch => {
     console.log("RES => ", res);
     dispatch({ type: REMOVE_GROUP_SUCCESS});
   }).then(() => {
-    gettingGroups()(dispatch)
+    getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
   }).catch(err => {
     console.log("ERR => ", err);
   })
