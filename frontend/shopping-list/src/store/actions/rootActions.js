@@ -427,26 +427,22 @@ export const generateGroupInviteUrl = (userId, groupId) => {
   let options = {
     headers: {
       Authorization: `Bearer ${token}`
-    },
-    body: {
-      userId: userId,
-      groupId: groupId
     }
   }
-
-  const endpoint = axios.post(`${backendURL}/api/group/invite/`, options);
-  
+  let data = {
+    userID: userId,
+    groupID: groupId,
+    invitee: 'default@dummy.com'
+  }
+  const endpoint = axios.post(`${backendURL}/api/invite/create`, data, options);
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})
-
     endpoint.then(res => {
-      console.log('generate invite ', res.data);
-      dispatch({type: SAVE_GROUP_INVITE, payload: res.data.invites})
+      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: backendURL + '/i/' + res.data.inviteCode} })
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})
     })
-
   }
 }
 
