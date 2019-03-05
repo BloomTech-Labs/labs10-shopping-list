@@ -42,7 +42,7 @@ class GroupsProfile extends Component{
         members: null,
         totals: null,
         invites:{
-            [this.props.match.params.id]: 'https://shoptrak.com/i/cUsToM_InViTe_LiNk'
+            [this.props.match.params.id]: ''
         }
     }
 
@@ -121,11 +121,16 @@ class GroupsProfile extends Component{
             [viewToToggle]: !this.state[viewToToggle]
         });
     }
-
-    copyInviteToClipboard = () => {
-        console.log('add code to copy url to users clipboard');
+    
+    copyInviteToClipboard = (text) => {
+        var dummy = document.createElement("input");
+        document.body.appendChild(dummy);
+        dummy.setAttribute('value', `${text}`);
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
     }
-
+    
     /*
      * Handles all text/number inputs
      * @param e - Event
@@ -352,7 +357,7 @@ class GroupsProfile extends Component{
                         </MDBModalBody>
                         <MDBModalFooter>
                             <MDBBtn color="secondary" onClick={this.toggle('inviToggle')}>Close</MDBBtn>
-                            <MDBBtn color="primary" onClick={this.copyInviteToClipboard()} >Copy to clipboard</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.copyInviteToClipboard(this.props.invites !== null ? this.props.invites[this.props.match.params.id] : '')} >Copy to clipboard</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
                 </MDBContainer>
