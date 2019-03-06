@@ -129,7 +129,10 @@ export const rootReducer = (state = initialState, action) => {
       return state;
     case SAVE_GROUP_ITEMS:
       let unpurchased = action.payload.data;
-      unpurchased = unpurchased.filter(item => item.purchased === false);
+      unpurchased = unpurchased.filter(item => item.purchased === 0);
+      if(unpurchased && unpurchased.length === 0){
+        unpurchased = null;
+      }
       return {
         ...state,
         groupItems: unpurchased,
