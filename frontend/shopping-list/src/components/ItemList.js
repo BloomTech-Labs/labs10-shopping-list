@@ -85,7 +85,7 @@ class ItemList extends React.Component{
             this.setState({
                 item: '',
             })
-
+            
         } else {
             window.alert('Must include name.');
         }
@@ -112,7 +112,7 @@ class ItemList extends React.Component{
 
                 <div className="form-group">
             <form onSubmit = {this.handleSubmit}>
-                <MDBInput size="md"  label="Add an Item" type = 'text' name = 'item' valueDefault= {this.state.item} onChange = {this.handleChange}></MDBInput>
+                <MDBInput size="md"  label="Add an Item" type = 'text' name = 'item' valueDefault= {this.state.item} onChange = {this.handleChange} value={this.state.item}></MDBInput>
                 <MDBBtn className="btn-dark-green" type = 'submit' >Add to List</MDBBtn>
             </form>
 
