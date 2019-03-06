@@ -2,16 +2,26 @@ PODS:
   - Alamofire (4.8.1)
   - Auth0 (1.14.1):
     - SimpleKeychain
+  - CryptoSwift (0.9.0)
   - Kingfisher (5.1.1)
   - Popover (1.2.2)
+  - PusherSwift (6.1.0):
+    - CryptoSwift (~> 0.9.0)
+    - ReachabilitySwift (~> 4.1.0)
+    - Starscream (~> 3.0.5)
+    - TaskQueue (~> 1.1.1)
+  - ReachabilitySwift (4.1.0)
   - SimpleKeychain (0.8.1)
+  - Starscream (3.0.6)
   - SwiftKeychainWrapper (3.2.0)
+  - TaskQueue (1.1.1)
 
 DEPENDENCIES:
   - Alamofire
   - Auth0
   - Kingfisher
   - Popover
+  - PusherSwift
   - SimpleKeychain
   - SwiftKeychainWrapper
 
@@ -19,19 +29,29 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Auth0
+    - CryptoSwift
     - Kingfisher
     - Popover
+    - PusherSwift
+    - ReachabilitySwift
     - SimpleKeychain
+    - Starscream
     - SwiftKeychainWrapper
+    - TaskQueue
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   Auth0: 064dc115cd99eec7334d1cab565f4d974eecac4d
+  CryptoSwift: bca8c5b653dcc2d9734409242a070ff53bafac86
   Kingfisher: 2558186963e5be42d98c5b110ccb3130148b77e4
   Popover: 21e357f86d45c8d9e29a41a4adbca3664d6e511f
+  PusherSwift: 6f2535d616cf0d6867a58bee501999995ad37999
+  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   SimpleKeychain: e2485c28d82fcece35e9e41faeac42ebfe614815
+  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwiftKeychainWrapper: 82c4c02cdc36f9a24f7edfcaab3e336401caa1a1
+  TaskQueue: 53a3cdaf817d9ce3cd50837ff6610aeb7b968997
 
-PODFILE CHECKSUM: 9cd2dbf9b3b3d7708113bacbbb670f1a30e45532
+PODFILE CHECKSUM: 50a5f3f7aa92f9848862f83c6421a2da7f10c7f5
 
 COCOAPODS: 1.6.0

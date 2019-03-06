@@ -13,5 +13,6 @@ pod 'SwiftKeychainWrapper'
 pod 'Alamofire'
 pod 'SimpleKeychain'
 pod 'Kingfisher'
+pod 'PusherSwift'
 
 end
