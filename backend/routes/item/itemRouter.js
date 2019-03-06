@@ -1,11 +1,23 @@
 const express = require('express');
 const itemRouter = express.Router();
 const itemDb = require('../../helpers/itemModel');
+const notificationDb = require('../../helpers/notificationsModel');
+const groupDb = require('../../helpers/groupModel');
+const userDb = require('../../helpers/userModel');
 
 const checkJwt = require('../../validators/checkJwt');
 const checkUser = require('../../validators/checkUser');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
 
+var Pusher = require('pusher');
+
+var pusher = new Pusher({
+    appId: process.env.PUSHER_APP_ID,
+    key: process.env.PUSHER_KEY,
+    secret: process.env.PUSHER_SECRET,
+    cluster: process.env.PUSHER_CLUSTER,
+    encrypted: true
+  });
 /****************************************************************************************************/
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/item ENDPOINT **/
 /****************************************************************************************************/
@@ -29,14 +41,46 @@ itemRouter.use(checkJwt);
 
 /** ADD ITEM
  * @TODO Add middleware to ensure user is logged in
- * **/
+ * /** Each time an item is added to a group, a notification should fire for that group's channel
+         * Additionally, the event should be stored into the notifications table for future review
+         * The notifications table will need to contain a record of the:
+         *      userID
+         *      groupID
+         *      time of action
+         *      type of action
+         *      
+         */
 itemRouter.post('/', (req, res) => {
     const item = req.body;
-    console.log('item', item);
+    let groupID = item.groupID;
 
     itemDb.add(item).then(id => {
-        console.log('new item', id[0]);
-        return res.status(200).json({message: `Item successfully added`, id: id[0]});
+        // get group and user information for notification
+        // we can assume the user in req.user is performing this action via checkJwt
+        let notification = {};
+        // can we abstract this into a function?
+        userDb.getProfileByEmail(req.user.email).then(user => {
+            notification.userID = user[0].id;
+            notification.userName = user[0].name;
+
+            groupDb.getById(groupID).then(group => {
+                notification.groupID = group[0].id;
+                notification.groupName = group[0].name;
+                notification.action = 'add-item';
+                notification.content = `${notification.userName} added ${item.name} to the ${notification.groupName} shopping list.`
+
+                pusher.trigger(`group-${groupID}`, 'add-item', {
+                    "message": `${notification.userName} added ${item.name} to the ${notification.groupName} shopping list.`
+                })
+
+                console.log('NOTIFICATION\n\n', notification);
+
+                notificationDb.add(notification).then(response => {
+                    console.log('notification added', response);
+                    return res.status(200).json({message: `Item successfully added`, id: id[0]});
+                })
+            })
+        })        
     }).catch(err => {
         console.log(err);
         return res.status(500).json(err);
@@ -138,7 +182,11 @@ itemRouter.put('/:id', (req, res) => {
     // changes.price = parseFloat(changes.price);
     console.log('changes', changes);
     itemDb.update(id, changes).then(status => {
-        console.log('status', status)
+        
+        if(changes.purchased === 1){
+            console.log('new item purchased');
+        }
+
         if (status.length >= 1 || status === 1) {
             return res.status(200).json({message: "Item updated successfully", id: status[0]})
         }
