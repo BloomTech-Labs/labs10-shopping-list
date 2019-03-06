@@ -15,11 +15,9 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    var currentViewIsList = true {
-        didSet {
-            self.tableView.reloadData()
-        }
-    }
+    enum GroupView { case list, history }
+    
+    var currentView: GroupView = .list { didSet { updatesNeeded() }}
     
     // MARK: - Lifecycle methods
     
@@ -44,9 +42,10 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         }
     }
     
-    @IBAction func segmentControlSwitched(_ sender: Any) {
-        currentViewIsList.toggle()
+    @IBAction func segmentControlSwitched(_ sender: UISegmentedControl) {
+        currentView = sender.selectedSegmentIndex == 0 ? .list : .history
     }
+
     
     
     func updatesNeeded() {
