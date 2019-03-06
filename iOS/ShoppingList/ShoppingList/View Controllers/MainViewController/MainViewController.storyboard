@@ -23,15 +23,19 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="146"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="SQB-cp-EOJ">
-                                        <rect key="frame" x="87.666666666666686" y="102" width="200" height="29"/>
+                                        <rect key="frame" x="62.666666666666657" y="102" width="249.99999999999997" height="29"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="jhV-1t-dLN"/>
+                                            <constraint firstAttribute="width" constant="250" id="jhV-1t-dLN"/>
                                         </constraints>
                                         <segments>
                                             <segment title="List"/>
                                             <segment title="History"/>
+                                            <segment title="Stats"/>
                                         </segments>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <action selector="segmentControlSwitched:" destination="WgK-Rm-0lC" eventType="valueChanged" id="679-l2-gUV"/>
+                                        </connections>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0hW-fc-I8X">
                                         <rect key="frame" x="321" y="40" width="46" height="60"/>
