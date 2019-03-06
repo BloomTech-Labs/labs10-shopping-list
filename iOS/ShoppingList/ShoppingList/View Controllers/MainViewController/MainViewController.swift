@@ -15,6 +15,12 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    var currentViewIsList = true {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
+    
     // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
@@ -37,6 +43,11 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
             
         }
     }
+    
+    @IBAction func segmentControlSwitched(_ sender: Any) {
+        currentViewIsList.toggle()
+    }
+    
     
     func updatesNeeded() {
         guard let selectedGroup = selectedGroup else { return }
