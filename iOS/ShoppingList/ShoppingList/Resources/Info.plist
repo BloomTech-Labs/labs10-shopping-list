@@ -24,10 +24,10 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>LambdaSchool.ShoppingList</string>
+			<string>com.netlify.labs10-shopping-list-2</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>LambdaSchool.ShoppingList</string>
+				<string>com.netlify.labs10-shopping-list-2</string>
 			</array>
 		</dict>
 	</array>

@@ -12,6 +12,7 @@ import SwiftKeychainWrapper
 import Auth0
 
 class HistoryController {
+    static let shared = HistoryController()
     
     private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
     
@@ -29,6 +30,8 @@ class HistoryController {
         Alamofire.request(request).validate().responseData { (response) in
             switch response.result {
             case .success(let value):
+                let string = String(data: value, encoding: .utf8)
+                print("Data String History: \(string!)")
                 
                 do {
                     
@@ -42,17 +45,22 @@ class HistoryController {
                             
                             guard let selectedGroup = selectedGroup else { return }
 
+
+
                             let historyItem = Item(name: item.name ?? "No Item", purchased: true, price: item.total ?? 0.00, group: selectedGroup)
+
                           
                             history.append(historyItem)
                         }
                     }
-                    
-                    
+                
                     completion(true)
                     
                 } catch {
-                    print("Error getting history from API response\(error)")
+
+                    print("Error getting history from API response \(error)")
+
+
                     completion(false)
                     return
                 }

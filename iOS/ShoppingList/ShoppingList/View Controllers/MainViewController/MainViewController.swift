@@ -157,4 +157,36 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     
+    private func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        
+        let delete = deleteAction(at: indexPath)
+        
+        return UISwipeActionsConfiguration(actions: [delete]) as UISwipeActionsConfiguration
+    }
+    
+    
+    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+        
+        let action = UIContextualAction(style: .destructive, title: "delete") { (action, view, completion) in
+        
+            guard let selectedGroup = selectedGroup else { return }
+                 guard let item = selectedGroup.items?[indexPath.row] else { return }
+            ItemController.shared.deleteItem(id: item.id!) {(_) in
+           
+        }
+         completion(true)
+        }
+        action.backgroundColor = .red
+        action.title = "Delete"
+        
+        return action
+    }
+    
+    
+
 }
