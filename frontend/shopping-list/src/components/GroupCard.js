@@ -1,23 +1,38 @@
 import React from 'react';
-import {MDBCard, MDBCardBody, MDBCardText, MDBCardHeader, MDBNavLink, MDBCol} from 'mdbreact';
+import {MDBCard, MDBCardBody, MDBCardText, MDBCardHeader, MDBNavLink, MDBCardFooter, MDBIcon, MDBCardTitle, MDBBtn} from 'mdbreact';
 import {withRouter} from 'react-router-dom';
+import "./Styles/Group.css";
 
 const GroupCard = props => {
     // console.log('group', props.group.groupMembers)
+    console.log("GROUP => ", props.group);
+    {/*<MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => props.updateGroup(props.group.id, props.group.name)} /> <MDBIcon icon="trash" onClick={() => props.removeGroup(props.group.id, props.group.name)} style={{cursor: "pointer"}} />*/}
     return(
         <div className = 'group-card'>
-        <MDBNavLink key = {props.key} to={`/groups/${props.group.id}`}>
-                <MDBCard style={{ width: "20rem", marginTop: "1rem", height: '15rem' }}>
+            <MDBCard style={{ width: "22rem", marginTop: "1rem" }} className="text-center">
+                <MDBCardHeader color="primary-color" tag="h3">
+                    {props.group.name}
+                </MDBCardHeader>
                 <MDBCardBody>
-                    <MDBCardHeader><h2>{props.group.name}</h2></MDBCardHeader>
+                    <MDBCardTitle></MDBCardTitle>
                     <MDBCardText>
-                    {/* {props.group.groupMembers !== null || props.group.groupMembers.length > 0 ? (
-                        <span> Members</span>
-                    ): <div>No members</div>} */}
+                        {
+                            props.group.members !== undefined ? props.group.members.map(usr => (
+                                <p>{usr.name}</p>
+                            )) : null
+                        }
                     </MDBCardText>
+                    <MDBNavLink key = {props.key} to={`/groups/${props.group.id}`}>
+                        <MDBBtn color="success">Enter</MDBBtn>
+                    </MDBNavLink>
                 </MDBCardBody>
-                </MDBCard>
-            </MDBNavLink>
+                <MDBCardFooter color="success-color">
+                    <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => props.updateGroup(props.group.id, props.group.name)} >
+                        &nbsp;Update Name</MDBIcon> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <MDBIcon icon="trash" onClick={() => props.removeGroup(props.group.id, props.group.name)} style={{cursor: "pointer"}} >
+                    &nbsp;Delete Group</MDBIcon>
+                </MDBCardFooter>
+            </MDBCard>
         </div>
 
     )

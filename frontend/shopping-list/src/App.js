@@ -9,6 +9,7 @@ import GroupsPage from "./components/GroupsPage";
 import GroupsProfile from "./components/GroupsProfile";
 import Navigation from './components/Navigation';
 import BillingPage from './components/BillingPage';
+import Invite from './components/Invite';
 import {getCurrentUser, checkEmail} from './store/actions/rootActions';
 
 class App extends Component {
@@ -21,7 +22,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className = 'App'>
+      <div>
       <Navigation />
       <Switch>
         <Route exact path='/' component={Home} />
@@ -32,6 +33,7 @@ class App extends Component {
         <Route exact path='/groups' component={GroupsPage} />
         <Route path='/groups/:id' render={props => <GroupsProfile {...props} />} />
         <Route path = '/billing' component = {BillingPage} />
+        <Route path = '/invite' component = {Invite} />
       </Switch>
       </div>
     );

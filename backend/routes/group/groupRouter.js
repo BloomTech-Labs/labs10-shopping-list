@@ -152,9 +152,26 @@ groupRouter.get('/user/:id', (req, res) => {
                 // console.log('UG', userGroups);
                 // console.log('GI', groups[i]);
                 // console.log('GROUPS', groups);
-                if(i === groups.length - 1){
-                    return res.status(200).json({groups: groups}); // returns all groups with groupmembers appended
-                 }
+
+                let usrs = [];
+                for (let j = 0; j < members.length; j++) {
+                    usersDb.getById(members[j].userID).then(usr => {
+                        console.log("USER => ", usr[0].name);
+                        usrs.push(usr[0]);
+
+
+
+                    }).then(() => {
+                        groups[i].members = usrs;
+                        console.log("GROUP => ", groups);
+
+                        if(i === groups.length - 1){
+                            return res.status(200).json({groups: groups}); // returns all groups with groupmembers appended
+                        }
+                    })
+                }
+
+
             }).catch(err => {
                 console.log(err);
                 return res.status(500).json({error: `Internal server error.`})

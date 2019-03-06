@@ -17,3 +17,7 @@
 .group-user-container {
     padding: 5px;
 }
+
+.group-user-stats {
+    text-align: center;
+}

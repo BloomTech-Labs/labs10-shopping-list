@@ -1765,9 +1765,10 @@ Adds the user to the invited group
 * **Method:**<br>
 `POST`
 * **URL Params**<br>
-`inviteCode=[string]`
+None
 * **Data Params**<br>
-JWT Bearer token in Authorization header
+JWT Bearer token in Authorization header<br>
+`inviteCode=[string]`
 * **Success Response:**<br>
     * **Code:** 201<br>
       **Content:** {message: "New group member added with ID 3.", id: 3}<br>

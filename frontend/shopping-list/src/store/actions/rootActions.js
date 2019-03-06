@@ -88,6 +88,12 @@ export const CLEAR_GROUP_USERS = 'CLEAR_GROUP_USERS';
 export const GET_GROUP_HISTORY_LIST = 'GET_GROUP_HISTORY_LIST';
 export const SAVE_GROUP_HISTORY_LIST = 'SAVE_GROUP_HISTORY_LIST';
 
+export const GET_INVITE_INFO = 'GET_INVITE_INFO';
+export const SAVE_INVITE_INFO = 'SAVE_INVITE_INFO';
+
+export const ACCEPTING_INVITE = 'ACCEPTING_INVITE';
+export const INVITE_ACCEPTED = 'INVITE_ACCEPTED';
+
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
   backendURL = `http://localhost:9000`
@@ -255,6 +261,8 @@ export const addItem = (item) => {
     }
   };
 
+  console.log("ITEM => ", item);
+
   const endpoint = axios.post(`${backendURL}/api/item`, item, options);
 
   return dispatch => {
@@ -264,7 +272,8 @@ export const addItem = (item) => {
       console.log(res.data, 'new item');
 
       dispatch({type: ITEM_CREATED})
-    }).catch(err => {
+    })
+        .catch(err => {
       console.log(err);
       dispatch({type: ERROR})
     })
@@ -427,26 +436,22 @@ export const generateGroupInviteUrl = (userId, groupId) => {
   let options = {
     headers: {
       Authorization: `Bearer ${token}`
-    },
-    body: {
-      userId: userId,
-      groupId: groupId
     }
   }
-
-  const endpoint = axios.post(`${backendURL}/api/group/invite/`, options);
-  
+  let data = {
+    userID: userId,
+    groupID: groupId,
+    invitee: 'default@dummy.com'
+  }
+  const endpoint = axios.post(`${backendURL}/api/invite/create`, data, options);
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})
-
     endpoint.then(res => {
-      console.log('generate invite ', res.data);
-      dispatch({type: SAVE_GROUP_INVITE, payload: res.data.invites})
+      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: backendURL + '/i/' + res.data.inviteCode} })
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})
     })
-
   }
 }
 
@@ -495,7 +500,9 @@ export const createGroup = (groupName, userId) => {
     endpoint.then(res => {
       dispatch({type: GROUP_CREATED})
       console.log(res.data);
-  }).catch(err => {
+  }).then(() => {
+      getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
+    }).catch(err => {
     console.log(err);
     dispatch({type: ERROR})
   })
@@ -510,11 +517,14 @@ export const getGroupItems = (groupId) => {
     }
   }
 
+  console.log("GETTING GROUP ITEMS => ", groupId);
+
   const endpoint = axios.get(`${backendURL}/api/item/group/${groupId}`, options);
 
   return dispatch => {
     dispatch({type: GET_GROUP_ITEMS})
     endpoint.then(res => {
+      console.log("GETTING GROUP ITEMS DATA => ", res.data);
       dispatch({type: SAVE_GROUP_ITEMS, payload: res.data});
     })
   }
@@ -692,7 +702,7 @@ export const updateGroupName = (groupID, changes) => dispatch => {
     console.log("RES => ", res);
     dispatch({ type: CHANGE_GROUP_NAME_SUCCESS});
   }).then(() => {
-    gettingGroups()(dispatch)
+    getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
   }).catch(err => {
     console.log("ERR => ", err);
   })
@@ -719,7 +729,7 @@ export const removeGroup = (groupID, userID) => dispatch => {
     console.log("RES => ", res);
     dispatch({ type: REMOVE_GROUP_SUCCESS});
   }).then(() => {
-    gettingGroups()(dispatch)
+    getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
   }).catch(err => {
     console.log("ERR => ", err);
   })
@@ -734,5 +744,49 @@ export const clearItems = () => {
 export const clearGroupUsers = () => {
   return dispatch => {
     dispatch({type: CLEAR_GROUP_USERS});
+  }
+}
+
+export const getInviteInfo = inviteCode => {
+  let token = localStorage.getItem('jwt');
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+
+  const endpoint = axios.get(`${backendURL}/api/invite/${inviteCode}`, options);
+
+  return dispatch => {
+    dispatch({type: GET_INVITE_INFO});
+
+    endpoint.then(response => {
+      dispatch({type: SAVE_INVITE_INFO, payload: response.data});
+    })
+  }
+}
+
+export const acceptInvite = inviteCode => {
+  let token = localStorage.getItem('jwt');
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  let body = {
+    inviteCode: inviteCode,
+  }
+
+  const endpoint = axios.post(`${backendURL}/api/invite/join`, body, options);
+
+  return dispatch => {
+    dispatch({type: ACCEPTING_INVITE});
+
+    endpoint.then(response => {
+      console.log('invite response', response);
+      dispatch({type: INVITE_ACCEPTED});
+    })
   }
 }

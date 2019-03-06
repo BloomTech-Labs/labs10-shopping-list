@@ -11,7 +11,7 @@ class GroupUser extends React.Component{
 
     componentWillMount(){
         if(this.props.user){
-            console.log('USER', this.props.user);
+            // console.log('USER', this.props.user);
             this.getLocalUser(this.props.user.userID)        }
     }
 
@@ -38,7 +38,7 @@ class GroupUser extends React.Component{
         }
 
         axios.get(`${backendURL}/api/user/${id}`, options).then(response => {
-            console.log('localuser', response);
+            // console.log('localuser', response);
             this.setState({
                 targetUser: response.data
             })
@@ -60,7 +60,7 @@ class GroupUser extends React.Component{
                 }
             }
             userNet = this.props.groupTotal - userTotal;
-            console.log(`net ${userNet}, total ${userTotal.toFixed(2)}, grouptotal: ${this.props.groupTotal.toFixed(2)}`)
+            // console.log(`net ${userNet}, total ${userTotal.toFixed(2)}, grouptotal: ${this.props.groupTotal.toFixed(2)}`)
         }
         return(
             <div className = 'group-user-container'>

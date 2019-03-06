@@ -26,6 +26,7 @@ class UserCart extends React.Component{
 
     handleChange = event => {
         event.preventDefault();
+        console.log(event.target.value);
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -33,7 +34,7 @@ class UserCart extends React.Component{
 
     handleCheckout = event => {
         event.preventDefault();
-        console.log('checkout');
+        // console.log('checkout');
 
         let info = {
             userId: this.props.currentUser.id,
@@ -41,6 +42,7 @@ class UserCart extends React.Component{
             cartItems: this.props.userCart,
             amount: this.state.amount
         }
+
         if(this.state.amount > 0 && this.state.amount !== ''){
             this.props.checkOut(info);
         }
@@ -48,6 +50,7 @@ class UserCart extends React.Component{
         this.setState({
             amount: '',
         })
+
     }
 
     render(){
@@ -60,7 +63,7 @@ class UserCart extends React.Component{
                 this.props.userCart.map(item => (
                     /** @TODO break these divs into components */
                     <div className = 'cart-item' key = {item.id}>
-                        <button type="button" className="close" aria-label="Close">
+                        <button type="button" className="close close1" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                         {item.name}
@@ -71,7 +74,7 @@ class UserCart extends React.Component{
 
                 <div className = 'checkout-container'>
                     <MDBInput size="lg"  label="Total $ Spent" type = 'text' name = 'amount' valueDefault= {this.state.amount} onChange = {this.handleChange}></MDBInput>
-                    <MDBBtn color="success" onClick = {this.handleCheckout} >Checkout</MDBBtn>
+                    <MDBBtn className="btn-dark-green" onClick = {this.handleCheckout} >Checkout</MDBBtn>
                 </div>
             </div>
         )

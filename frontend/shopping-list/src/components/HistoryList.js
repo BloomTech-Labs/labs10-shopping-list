@@ -12,9 +12,9 @@ class HistoryList extends React.Component{
     }
 
     componentWillReceiveProps = newProps => {
-        // if(newProps.needsNewHistory === true){
-        //     this.props.getGroupHistoryList(this.props.match.params.id);
-        // }
+        if(newProps.needsNewHistoryList === true){
+            this.props.getGroupHistoryList(this.props.match.params.id);
+        }
     }
 
     constructor(props){
@@ -27,9 +27,11 @@ class HistoryList extends React.Component{
 
 
     render(){
+        const grp = this.props.userGroups !== null ? this.props.userGroups.filter(grp => grp.id === Number(this.props.match.params.id)) : this.props.userGroups
+
         return(
             <div className = 'item-list-container'>
-                <h1>Shopping List History</h1>
+                <h1>{this.props.userGroups !== null ? grp[0].name : "Loading name..."}</h1>
                 <div className = 'item-list'>
 
                     {this.props.groupHistoryList !== null ?
@@ -53,7 +55,9 @@ const mapStateToProps = state => {
     return {
         //state items
         groupHistoryList: state.groupHistoryList,
-        needsNewHistory: state.needsNewHistory
+        needsNewHistory: state.needsNewHistory,
+        needsNewHistoryList: state.needsNewHistoryList,
+        userGroups: state.userGroups,
     }
 }
 
