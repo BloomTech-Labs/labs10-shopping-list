@@ -1,3 +1,12 @@
+.group-profile-container {
+    margin-top: 65px;
+}
+
+.group-profile-header {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .group-profile-columns {
     display: flex;
     flex-flow: row nowrap;
@@ -10,7 +19,13 @@
     }
 }
 
+.group-profile-nav {
+    width: 20%;
+    border: 1px solid red;
+}
+
 .group-profile-left{
+    margin-left: 10%;
     width: 50%;
 }
 

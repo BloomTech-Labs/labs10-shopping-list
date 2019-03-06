@@ -13,10 +13,10 @@ import {
   getItems,
   updateItemPurchased,
   submitPaidItems,
-  generateGroupInviteUrl
+  generateGroupInviteUrl,
+  getUserGroups
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
-import "./Styles/Group.css";
 import "./Styles/Scrollbar.css";
 import "./Styles/GroupProfile.css";
 import {
@@ -74,6 +74,10 @@ class GroupsProfile extends Component {
     // Gather current group user's
     if (!this.props.groupUsers) {
       this.props.getGroupUsers(this.props.match.params.id);
+    }
+
+    if (!this.props.userGroups) {
+      this.props.getUserGroups(localStorage.getItem("userId"));
     }
   }
 
@@ -213,7 +217,7 @@ class GroupsProfile extends Component {
             */
           }
           <MDBBtn
-            color="primary"
+            className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
             onClick={() => {
               this.toggleListClass();
             }}
@@ -221,7 +225,7 @@ class GroupsProfile extends Component {
             List
           </MDBBtn>
           <MDBBtn
-            color="primary"
+              className={this.state.histToggle ? "btn-outline-dark-green" : "btn-dark-green"}
             onClick={() => {
               this.toggleHistClass();
             }}
@@ -229,21 +233,21 @@ class GroupsProfile extends Component {
             History
           </MDBBtn>
           <MDBBtn
-            color="primary"
+              className="btn-dark-green"
             onClick={() => {
               this.toggleInviClass();
             }}
           >
-            Invite
+            Invite Member
           </MDBBtn>
-          <MDBBtn
-            color="primary"
-            onClick={() => {
-              this.toggleTotal();
-            }}
-          >
-            Total
-          </MDBBtn>
+          {/*<MDBBtn*/}
+              {/*className="btn-dark-green"*/}
+            {/*onClick={() => {*/}
+              {/*this.toggleTotal();*/}
+            {/*}}*/}
+          {/*>*/}
+            {/*Total*/}
+          {/*</MDBBtn>*/}
         </div>
 
         <div className="group-profile-columns">
@@ -254,7 +258,7 @@ class GroupsProfile extends Component {
           }
           <div className="group-profile-left">
             {this.state.listToggle ? (
-              <ItemList items={this.props.groupItems} />
+              <ItemList items={this.props.groupItems} group={this.props.userGroups} />
             ) : null}
 
             {this.state.histToggle ? (
@@ -300,7 +304,7 @@ class GroupsProfile extends Component {
                 Close
               </MDBBtn>
               <MDBBtn
-                color="primary"
+                className="btn-dark-green"
                 onClick={this.copyInviteToClipboard(
                   this.props.invites !== null
                     ? this.props.invites[this.props.match.params.id]
@@ -340,7 +344,8 @@ const mapStateToProps = state => {
     groupItems: state.groupItems,
 
     // current user state
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    userGroups: state.userGroups
   };
 };
 
@@ -360,6 +365,7 @@ export default connect(
     getGroupHistory,
     getGroupUsers,
     getUserProfile,
-    generateGroupInviteUrl
+    generateGroupInviteUrl,
+    getUserGroups
   }
 )(GroupsProfile);

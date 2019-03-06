@@ -1,31 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {checkEmail, createGroup, getCurrentUser, getUserGroups, addGroup, clearCurrentGroup, gettingGroups, updateGroupName, removeGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer, MDBCol,
     MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
 import GroupCard from './GroupCard';
-
-// import {checkEmail, gettingGroups, addGroup, clearCurrentGroup,updateGroupName,removeGroup } from '../store/actions/rootActions';
-// import {connect} from 'react-redux';
-// import Navigation from "./Navigation";
-// import {
-//     MDBCard,
-//     MDBCardBody,
-//     MDBCardTitle,
-//     MDBCardText,
-//     MDBBtn,
-//     MDBContainer,
-//     MDBCardHeader,
-//     MDBModal,
-//     MDBModalBody,
-//     MDBModalHeader,
-//     MDBModalFooter,
-//     MDBRow,
-//     MDBInput,
-//     MDBNavLink,
-//     MDBIcon,
-//     MDBBadge,
-// } from "mdbreact";
 
 
 function makeid() {
@@ -116,8 +94,7 @@ class GroupsPage extends Component{
 
     render(){
         return (
-            <div className = 'groups-container'>
-                <MDBContainer>
+                <MDBContainer className="groups-container">
                     <MDBRow center>
                         <MDBCard className="text-center" style={{ width: "20rem", marginTop: "1.5rem", height: '15rem' }}>
                             <MDBCardBody>
@@ -130,40 +107,14 @@ class GroupsPage extends Component{
                         </MDBCard>
 
                         {this.props.userGroups !== null ? (
-                            this.props.userGroups.map(group => 
+                            this.props.userGroups.map(group =>
                                 (
                                     <GroupCard group = {group} key = {group.id} updateGroup={this.saveGroupName} removeGroup={this.deleteGroup} />
                                 )
                             )
-                          ) : null}
-                      
-                        </MDBRow>
-                </MDBContainer>
- 
-                         {/* {this.props.groups !== null ? ( 
+                        ) : null}
 
-                            this.props.groups.map((g, i) => (
-
-                                     <MDBCard key={makeid()} border="primary" className="m-3" style={{ minWidth: "14rem", maxWidth: "18rem"}}>
-                                         <MDBCardHeader key={makeid()}>{g.name} <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => this.saveGroupName(g.id, g.name)} /> <MDBIcon icon="trash" onClick={() => this.deleteGroup(g.id, g.name)} style={{cursor: "pointer"}} /></MDBCardHeader>
-                                         <MDBCardBody key={makeid()} className="text-primary">
-                                             <MDBCardTitle key={makeid()} tag="h5" className={"align-center"}>{g.memberAmount === 1 ? `${g.memberAmount} Member` : `${g.memberAmount} Members`}</MDBCardTitle>
-                                             <MDBCardText key={makeid()}>
-                                                 {
-                                                     g.members.map((h, j) => (
-                                                         <img src={h.profilePicture} alt="Avatar" className="avatar-group" />
-                                                     ))
-                                                 }
-                                             </MDBCardText>
-                                             <MDBNavLink key={makeid()} to={`/groups/${g.id}`}><MDBBtn>ENTER</MDBBtn></MDBNavLink>
-
-                                         </MDBCardBody>
-                                     </MDBCard>
-                             )) */}
-                         
-
-
-                <MDBContainer>
+                    </MDBRow>
                     <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
                         <MDBModalHeader toggle={this.toggle(14)}>Create A New Group</MDBModalHeader>
                         <MDBModalBody>
@@ -199,7 +150,6 @@ class GroupsPage extends Component{
                         </MDBModalFooter>
                     </MDBModal>
                 </MDBContainer>
-            </div>
         )
     }
 }

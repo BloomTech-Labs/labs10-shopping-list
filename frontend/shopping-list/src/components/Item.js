@@ -100,7 +100,7 @@ class Item extends React.Component {
                                         <div className = 'item-row'><span><h2>{this.props.item.name}</h2></span><MDBBtn color="danger" onClick = {this.handleDelete}>Delete</MDBBtn>
 
                                             {this.state.inCart !== true ? (
-                                                <MDBBtn color="success" onClick = {this.addToCart} >Add to Cart</MDBBtn>
+                                                <MDBBtn className="btn-dark-green" onClick = {this.addToCart} >Add to Cart</MDBBtn>
 
                                             ) : <MDBBtn color="success" onClick = {this.removeFromCart} >Remove to Cart</MDBBtn>}
 
@@ -110,7 +110,7 @@ class Item extends React.Component {
                                     ) : (<div>
                                         <form className="form-group" onSubmit = {this.handleClickOutside}>
                                             <MDBInput size="lg"  label="Change Item Name" type = 'text' name = 'item' valueDefault= {this.state.item} onChange = {this.handleChange}></MDBInput>
-                                            <MDBBtn color="success" type = 'submit' >Submit Changes</MDBBtn>
+                                            <MDBBtn className="btn-dark-green" type = 'submit' >Submit Changes</MDBBtn>
                                         </form>
                                     </div>)}
                             </MDBListGroup>
