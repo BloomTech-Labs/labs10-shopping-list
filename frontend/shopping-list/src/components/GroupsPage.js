@@ -48,9 +48,16 @@ class GroupsPage extends Component{
         groupId: null,
     }
 
-    componentWillMount(){
-        this.props.checkEmail();
-      }
+    // let App.js handle this
+    // componentWillMount(){
+    //     this.props.checkEmail();
+    //   } 
+
+    componentDidMount(){
+        if(!this.props.userGroups && this.props.currentUser){
+            this.props.getUserGroups(this.props.currentUser.id);
+        }
+    }
 
     componentWillReceiveProps = newProps => {
         if(newProps.currentUser && !this.props.userGroups){
@@ -86,6 +93,9 @@ class GroupsPage extends Component{
         this.props.getUserGroups(this.props.currentUser.id);
 //         this.props.addGroup(this.state.groupName);
         this.setState({modal14: false})
+        if(!this.props.userGroups){
+            this.props.getUserGroups(this.props.currentUser.id);
+        }
     }
 
     handleUpdateGroupName = () => {
@@ -95,8 +105,6 @@ class GroupsPage extends Component{
 
             this.setState({modal15: false})
         }
-
-
     }
 
     handleDeleteGroup = () => {

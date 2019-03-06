@@ -59,16 +59,14 @@ groupMemberRouter.post('/', (req, res) => {
  * **/
 
 /**************************************************/
-groupMemberRouter.get('/group/:id', checkUser, (req, res) => {
+groupMemberRouter.get('/group/:id', (req, res) => {
     const id = req.params.id;
 
     groupMemDb.getByGroup(id).then(mem => {
         if (mem.length >= 1) {
             return res.status(200).json(mem);
         }
-
         return res.status(404).json({message: "The requested group members do not exist."});
-
     })
         .catch(err => {
             const error = {

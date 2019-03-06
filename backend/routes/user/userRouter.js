@@ -202,7 +202,7 @@ userRouter.delete('/:id', checkUser, (req, res) => {
 /**************************************************/
 userRouter.get('/check/getid', (req, res) => {
     let email = req.user.email;
-
+    console.log('url', req.originalUrl)
     userDb.getIdByEmail(email).then(id => {
         console.log(id, 'id response /check/getid');
         if(!id || id.length === 0){
@@ -230,7 +230,7 @@ userRouter.get('/check/getid', (req, res) => {
             console.log('user found', id[0].id);
 
             userDb.getById(id[0].id).then(profile => {
-                return res.status(200).json({profile: profile[0], id: id[0].id})
+                return res.status(200).json({profile: profile[0], id: id[0].id});
             }).catch(err => {
                 console.log(err);
                 return res.status(404).json({error: `Nothing here.`})

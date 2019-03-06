@@ -46,13 +46,29 @@
                                             <action selector="settingsButtonPressed:" destination="WgK-Rm-0lC" eventType="touchUpInside" id="SbN-wV-dsc"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="elC-r8-C1J" userLabel="Dropdown button">
+                                        <rect key="frame" x="19" y="66" width="19" height="9"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="9" id="9aW-oX-LME"/>
+                                            <constraint firstAttribute="width" constant="19" id="YeN-Z3-8Yl"/>
+                                        </constraints>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" image="Dismiss view"/>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="oaN-jX-jJx">
+                                        <rect key="frame" x="48" y="86" width="261" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fko-Jh-lZH">
                                         <rect key="frame" x="18" y="40" width="295" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="0vn-RD-dkx"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="contentEdgeInsets" minX="32" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <action selector="showGroupsButtonPressed:" destination="WgK-Rm-0lC" eventType="touchUpInside" id="0X0-O6-v39"/>
                                         </connections>
@@ -60,13 +76,18 @@
                                 </subviews>
                                 <color key="backgroundColor" name="Theme"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="elC-r8-C1J" secondAttribute="bottom" constant="71" id="0sA-ZO-Jit"/>
                                     <constraint firstItem="SQB-cp-EOJ" firstAttribute="centerX" secondItem="hIb-uV-oUA" secondAttribute="centerX" id="5Ia-a5-lry"/>
                                     <constraint firstAttribute="bottom" secondItem="0hW-fc-I8X" secondAttribute="bottom" constant="46" id="6eF-mY-62y"/>
                                     <constraint firstItem="SQB-cp-EOJ" firstAttribute="top" secondItem="fko-Jh-lZH" secondAttribute="bottom" constant="2" id="EgD-ac-pDX"/>
                                     <constraint firstAttribute="trailing" secondItem="0hW-fc-I8X" secondAttribute="trailing" constant="8" id="Iok-nk-5Es"/>
                                     <constraint firstItem="fko-Jh-lZH" firstAttribute="leading" secondItem="hIb-uV-oUA" secondAttribute="leading" constant="18" id="L8Q-FF-A9q"/>
+                                    <constraint firstItem="0hW-fc-I8X" firstAttribute="leading" secondItem="oaN-jX-jJx" secondAttribute="trailing" constant="12" id="LtC-pl-99I"/>
                                     <constraint firstAttribute="bottom" secondItem="SQB-cp-EOJ" secondAttribute="bottom" constant="16" id="Q3M-U3-POM"/>
                                     <constraint firstItem="0hW-fc-I8X" firstAttribute="leading" secondItem="fko-Jh-lZH" secondAttribute="trailing" constant="8" id="VHe-5A-0rA"/>
+                                    <constraint firstItem="oaN-jX-jJx" firstAttribute="leading" secondItem="elC-r8-C1J" secondAttribute="trailing" constant="10" id="aGh-1U-XPi"/>
+                                    <constraint firstItem="SQB-cp-EOJ" firstAttribute="top" secondItem="oaN-jX-jJx" secondAttribute="bottom" constant="16" id="aX9-cZ-nWS"/>
+                                    <constraint firstItem="elC-r8-C1J" firstAttribute="leading" secondItem="hIb-uV-oUA" secondAttribute="leading" constant="19" id="gKE-l2-7fI"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
@@ -116,21 +137,34 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XsU-Xe-TG5">
+                                <rect key="frame" x="0.0" y="146" width="375" height="558"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="WgK-Rm-0lC" id="IfR-dV-FSt"/>
+                                    <outlet property="delegate" destination="WgK-Rm-0lC" id="8rt-jH-N5I"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" name="Background"/>
                         <constraints>
+                            <constraint firstItem="XsU-Xe-TG5" firstAttribute="top" secondItem="hIb-uV-oUA" secondAttribute="bottom" id="281-xh-9jO"/>
                             <constraint firstItem="OTX-De-Wyf" firstAttribute="top" secondItem="hIb-uV-oUA" secondAttribute="bottom" constant="-102" id="93z-T0-7Cl"/>
                             <constraint firstAttribute="bottom" secondItem="UCD-Fp-yTx" secondAttribute="bottom" id="Edh-nc-GkB"/>
                             <constraint firstItem="hIb-uV-oUA" firstAttribute="top" secondItem="i2M-Tw-f80" secondAttribute="top" id="LSQ-ZS-9jU"/>
+                            <constraint firstItem="XsU-Xe-TG5" firstAttribute="trailing" secondItem="OTX-De-Wyf" secondAttribute="trailing" id="M7Y-K8-Vke"/>
+                            <constraint firstItem="XsU-Xe-TG5" firstAttribute="leading" secondItem="OTX-De-Wyf" secondAttribute="leading" id="Wvf-OR-a3R"/>
                             <constraint firstItem="OTX-De-Wyf" firstAttribute="trailing" secondItem="hIb-uV-oUA" secondAttribute="trailing" id="azE-MI-qBX"/>
                             <constraint firstItem="UCD-Fp-yTx" firstAttribute="leading" secondItem="OTX-De-Wyf" secondAttribute="leading" id="dmc-3B-Pcy"/>
                             <constraint firstItem="hIb-uV-oUA" firstAttribute="leading" secondItem="OTX-De-Wyf" secondAttribute="leading" id="gA3-jO-gcg"/>
+                            <constraint firstItem="UCD-Fp-yTx" firstAttribute="top" secondItem="XsU-Xe-TG5" secondAttribute="bottom" id="ibM-VZ-PHh"/>
                             <constraint firstItem="UCD-Fp-yTx" firstAttribute="trailing" secondItem="OTX-De-Wyf" secondAttribute="trailing" id="ocL-4M-7c1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="OTX-De-Wyf"/>
                     </view>
                     <connections>
-                        <outlet property="groupName" destination="fko-Jh-lZH" id="76B-MH-EnL"/>
+                        <outlet property="groupName" destination="oaN-jX-jJx" id="anJ-Yj-zcH"/>
+                        <outlet property="tableView" destination="XsU-Xe-TG5" id="oqo-v8-ORT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ggm-TS-pft" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -139,6 +173,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Dismiss view" width="300" height="88"/>
         <image name="Options" width="29" height="32"/>
         <namedColor name="Background">
             <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

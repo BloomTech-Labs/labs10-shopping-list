@@ -111,13 +111,8 @@ class UserController {
                
         Alamofire.request(request).validate().responseData { (response) in
  
-            print(url)
             switch response.result {
             case .success(let value):
-               
-                let string = String(data: value, encoding: .utf8)
-                 print("Data String: \(string!)")
-                //guard let data = response.data else { completion(nil); return }
                 
                 do {
                     let decoder = JSONDecoder()

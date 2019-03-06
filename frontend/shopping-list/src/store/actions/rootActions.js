@@ -82,6 +82,9 @@ export const SAVE_GROUP_USERS = 'SAVE_GROUP_USERS';
 export const GET_USER_PROFILE = 'GET_USER_PROFILE';
 export const SAVE_USER_PROFILE = 'SAVE_USER_PROFILE';
 
+export const CLEAR_ITEMS = 'CLEAR_ITEMS';
+export const CLEAR_GROUP_USERS = 'CLEAR_GROUP_USERS';
+
 export const GET_GROUP_HISTORY_LIST = 'GET_GROUP_HISTORY_LIST';
 export const SAVE_GROUP_HISTORY_LIST = 'SAVE_GROUP_HISTORY_LIST';
 
@@ -91,6 +94,8 @@ if(process.env.NODE_ENV === 'development'){
 } else {
   backendURL = `https://shoptrak-backend.herokuapp.com`
 }
+
+console.log('backendURL', backendURL);
 
 /**
  * Test function
@@ -446,6 +451,7 @@ export const generateGroupInviteUrl = (userId, groupId) => {
 }
 
 export const getUserGroups = (userId) => {
+  console.log('backendURL', backendURL);
   let token = localStorage.getItem('jwt');
     let options = {
       headers: {
@@ -717,4 +723,16 @@ export const removeGroup = (groupID, userID) => dispatch => {
   }).catch(err => {
     console.log("ERR => ", err);
   })
+}
+
+export const clearItems = () => {
+  return dispatch => {
+    dispatch({type: CLEAR_ITEMS});
+  }
+}
+
+export const clearGroupUsers = () => {
+  return dispatch => {
+    dispatch({type: CLEAR_GROUP_USERS});
+  }
 }

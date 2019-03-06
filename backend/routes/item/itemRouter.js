@@ -39,7 +39,7 @@ itemRouter.post('/', (req, res) => {
         return res.status(200).json({message: `Item successfully added`, id: id[0]});
     }).catch(err => {
         console.log(err);
-        return res.status(500).json(error);
+        return res.status(500).json(err);
         })
 })
 
