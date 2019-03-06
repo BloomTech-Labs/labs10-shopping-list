@@ -1,402 +1,371 @@
-import React, { Component } from 'react';
-import {getGroupHistoryList, checkEmail, getSingleGroup, addGroup, clearItems, clearGroupUsers, getUserProfile, getGroupUsers, getGroupHistory, getGroupItems, gettingGroups, addItem, getItems, updateItemPurchased, submitPaidItems, generateGroupInviteUrl } from '../store/actions/rootActions';
-
-// import React, { Component, Fragment } from 'react';
-// import {checkEmail, getSingleGroup, addGroup, gettingGroups, addItem, getItems, updateItemPurchesd, submitPaidItems } from '../store/actions/rootActions';
-
-import {connect} from 'react-redux';
-import "./Styles/Group.css";
+import React, { Component } from "react";
+import {
+  getGroupHistoryList,
+  checkEmail,
+  clearItems,
+  clearGroupUsers,
+  getUserProfile,
+  getGroupUsers,
+  getGroupHistory,
+  getGroupItems,
+  gettingGroups,
+  addItem,
+  getItems,
+  updateItemPurchased,
+  submitPaidItems,
+  generateGroupInviteUrl,
+  getUserGroups
+} from "../store/actions/rootActions";
+import { connect } from "react-redux";
 import "./Styles/Scrollbar.css";
 import "./Styles/GroupProfile.css";
 import {
-    MDBListGroup,
-    MDBListGroupItem,
-    MDBContainer,
-    MDBBtn,
-    MDBIcon,
-    MDBBadge,
-    MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
-    MDBTooltip,
-    MDBScrollbar,
+  MDBContainer,
+  MDBBtn,
+  MDBModal,
+  MDBModalHeader,
+  MDBModalBody,
+  MDBModalFooter
 } from "mdbreact";
-import ItemList from './ItemList';
-import GroupUserList from './GroupUserList';
-import UserCart from './UserCart';
-import axios from "axios";
+import ItemList from "./ItemList";
+import GroupUserList from "./GroupUserList";
+import UserCart from "./UserCart";
 import HistoryList from "./HistoryList";
 
-class GroupsProfile extends Component{
-    state = {
-        modal14: false,
-        itemName: "",
-        itemPrice: 0.00,
-        itemQuantity: 1,
-        itemMeasure: "",
-        itemPurchased: false,
-        total: 0.00,
-        listToggle: true,
-        histToggle: false,
-        totalToggle: true,
-        inviToggle: false,
-        groupHistory: null,
-        members: null,
-        totals: null,
-        invites:{
-            [this.props.match.params.id]: ''
-        }
+class GroupsProfile extends Component {
+  state = {
+    modal14: false,
+    itemName: "",
+    itemPrice: 0.0,
+    itemQuantity: 1,
+    itemMeasure: "",
+    itemPurchased: false,
+    total: 0.0,
+    listToggle: true,
+    histToggle: false,
+    totalToggle: true,
+    inviToggle: false,
+    groupHistory: null,
+    members: null,
+    totals: null,
+    invites: {
+      [this.props.match.params.id]: ""
+    }
+  };
+
+  /**
+   * Triggers before the component mounts.
+   * Retrieve a list of items from state
+   * @returns {*}
+   */
+  componentWillMount() {
+      // Gather current group items
+    if (!this.props.groupItems) {
+      this.props.getGroupItems(this.props.match.params.id);
     }
 
-    /*
-     * Triggers before the component mounts.
-     * Retrieve a list of items from state
-    */
-
-
-    componentWillMount() {
-        if(!this.props.groupItems){
-            this.props.getGroupItems(this.props.match.params.id);
-        } 
-        
-        if(!this.props.groupHistory){
-            console.log('\n GROUP HISTORY FETCH ==>')
-            this.props.getGroupHistory(this.props.match.params.id);
-        }
-
-        this.props.getGroupHistoryList(this.props.match.params.id);
-
-        if(!this.props.groupUsers){
-            console.log('GET GROUP USERS ===>')
-            this.props.getGroupUsers(this.props.match.params.id);
-        }
-
-        // let App.js handle this
-        // if(!this.props.currentUser){
-        //     this.props.checkEmail();
-        // }
-
-//         if (this.props.groups !== null) {
-//             const group = this.props.groups.filter(grp => grp.id === Number(this.props.match.params.id));
-//             this.setState({ members: group[0].members})
+    // Gather current group expenditures
+    if (!this.props.groupHistory) {
+      this.props.getGroupHistory(this.props.match.params.id);
     }
 
-    componentWillReceiveProps = newProps => {
-        if(newProps.needsNewItems){
-            this.props.getGroupItems(this.props.match.params.id);
-            this.props.getGroupHistory(this.props.match.params.id);
-        }
+    this.props.getGroupHistoryList(this.props.match.params.id);
 
-        if(newProps.needsNewHistory){
-            this.props.getGroupHistory(this.props.match.params.id);
-        }
-
-        if(newProps.needsNewHistoryList){
-            this.props.getGroupHistoryList(this.props.match.params.id);
-        }
-
-        if(!newProps.currentUser){
-            this.props.checkEmail();
-        }
-
-        // if(newProps.groupUsers && !this.props.groupUserProfiles){
-        //     console.log('groupusers',  newProps.groupUsers);
-        //     for(let i = 0; i < newProps.groupUsers.length; i++){
-        //         console.log('\n USER ID \n', newProps.groupUsers[i].userID);
-        //         this.props.getUserProfile(newProps.groupUsers[i].userID);
-        //         console.log('current profiles', this.props.groupUserProfiles);
-        //     }
-        // }
+    // Gather current group user's
+    if (!this.props.groupUsers) {
+      this.props.getGroupUsers(this.props.match.params.id);
     }
 
-    componentWillUnmount(){
-        this.props.clearItems();
-        this.props.clearGroupUsers();
+    if (!this.props.userGroups) {
+      this.props.getUserGroups(localStorage.getItem("userId"));
+    }
+  }
+
+  /**
+   * TODO: This is depreciated lifecycle in React, find a way to update this to later versions
+   * Triggers when any change happens to props values
+   * @returns {*}
+   */
+  componentWillReceiveProps = newProps => {
+      // If we need new items, gather new items
+    if (newProps.needsNewItems) {
+      this.props.getGroupItems(this.props.match.params.id);
+      this.props.getGroupHistory(this.props.match.params.id);
     }
 
-    /*
-     * Retrieve the group history and save to component state
-    */
-    getGroupHistory = (groupId) => {
-
-        this.props.getGroupHistory(groupId);
-
+    // If an item has been purchased, gather new totals
+    if (newProps.needsNewHistory) {
+      this.props.getGroupHistory(this.props.match.params.id);
     }
 
-    // Toggles the modals
-    toggle = viewToToggle => () => {
-        this.setState({
-            [viewToToggle]: !this.state[viewToToggle]
-        });
+    // If an item has been purchased, gather new history data
+    if (newProps.needsNewHistoryList) {
+      this.props.getGroupHistoryList(this.props.match.params.id);
     }
-    
-    copyInviteToClipboard = (text) => {
-        var dummy = document.createElement("input");
-        document.body.appendChild(dummy);
-        dummy.setAttribute('value', `${text}`);
-        dummy.select();
-        document.execCommand("copy");
-        document.body.removeChild(dummy);
+
+    // if current user has been update, gather new user
+    if (!newProps.currentUser) {
+      this.props.checkEmail();
     }
-    
-    /*
-     * Handles all text/number inputs
-     * @param e - Event
+  };
+
+  /**
+   * Clear any listeners and unnecessary data
+   * @returns {*}
+   */
+  componentWillUnmount() {
+    this.props.clearItems();
+    this.props.clearGroupUsers();
+  }
+
+  /**
+   * Retrieve the group history and save to component state
+   * @returns {*}
+   */
+  getGroupHistory = groupId => {
+    this.props.getGroupHistory(groupId);
+  };
+
+  /**
+   * Toggles the models
+   * @param viewToToggle - The modal to toggle
+   * @returns {*}
+   */
+  toggle = viewToToggle => () => {
+    this.setState({
+      [viewToToggle]: !this.state[viewToToggle]
+    });
+  };
+
+  /**
+   * Copy the invite link to the clipboard
+   * @param text - Link to copy
+   * @returns {*}
+   */
+  copyInviteToClipboard = text => {
+    var dummy = document.createElement("input");
+    document.body.appendChild(dummy);
+    dummy.setAttribute("value", `${text}`);
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+  };
+
+  /**
+   * Checks the item checkbox on the list
+   * @param e - Event
+   * @returns {*}
+   */
+  check = e => {
+    // Filter the item so we can check if the item has already been purchased.
+    const item = this.props.items.filter(itm => itm.id === e);
+
+    // Only check to box if the item hasn't been purchased
+    if (item[0].purchasedBy === null) {
+      this.props.updateItemPurchased(e);
+    }
+  };
+
+  /**
+   * Hides the History component and displays the List component
+   * @returns {*}
+   */
+  toggleListClass = () => {
+    this.setState({ histToggle: false, listToggle: true });
+  };
+
+  /**
+   * Hides the List component and displays the History component
+   * @returns {*}
+   */
+  toggleHistClass = () => {
+    this.setState({ histToggle: true, listToggle: false });
+  };
+
+  /**
+   * Generates a group invite link
+   * @returns {*}
+   */
+  toggleInviClass = () => {
+    this.setState({ inviToggle: true });
+    this.props.generateGroupInviteUrl(
+      localStorage.getItem("userId"),
+      this.props.match.params.id
+    );
+  };
+
+  /**
+   * TODO: This may be depreciated depending on if we follow the Basalmiq or not
+   * Toggles between total and net view
+   * @returns {*}
+   */
+  toggleTotal = () => {
+    this.setState({ totalToggle: !this.state.totalToggle });
+  };
+
+    /**
+     * TODO Create a loading component that can render during data queries
+     * @returns {*}
      */
-    handleInput = e => {
-        e.preventDefault();
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
+  render() {
+    return (
+      <div className={"group-profile-container"}>
+        <div className={"group-profile-header"}>
+          {
+           /*
+            * Buttons to display List, History, Invite Members and toggle Total/Net
+            */
+          }
+          <MDBBtn
+            className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+            onClick={() => {
+              this.toggleListClass();
+            }}
+          >
+            List
+          </MDBBtn>
+          <MDBBtn
+              className={this.state.histToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+            onClick={() => {
+              this.toggleHistClass();
+            }}
+          >
+            History
+          </MDBBtn>
+          <MDBBtn
+              className="btn-dark-green"
+            onClick={() => {
+              this.toggleInviClass();
+            }}
+          >
+            Invite Member
+          </MDBBtn>
+          {/*<MDBBtn*/}
+              {/*className="btn-dark-green"*/}
+            {/*onClick={() => {*/}
+              {/*this.toggleTotal();*/}
+            {/*}}*/}
+          {/*>*/}
+            {/*Total*/}
+          {/*</MDBBtn>*/}
+        </div>
 
-    /*
-     * Ticks the item checkbox in adding an item
-     */
-    itmPurchased = () => {
-        this.setState({itemPurchased: true})
-    }
+        <div className="group-profile-columns">
+          {
+           /*
+            * Left column that displays List and History Components
+            */
+          }
+          <div className="group-profile-left">
+            {this.state.listToggle ? (
+              <ItemList items={this.props.groupItems} group={this.props.userGroups} />
+            ) : null}
 
-    /*
-     * Checks the item checkbox on the list
-     * @param e - Event
-     */
-    check = e => {
-        // Filter the item so we can check if the item has already been purchased.
-        const item = this.props.items.filter(itm => itm.id === e);
+            {this.state.histToggle ? (
+              <HistoryList history={this.props.groupHistoryList} />
+            ) : null}
+          </div>
 
-        // Only check to box if the item hasn't been purchased
-        if (item[0].purchasedBy === null) {
-            this.props.updateItemPurchased(e);
-        }
-    }
+          {
+           /*
+            * Right column that displays members and the user's cart components
+            */
+          }
+          <div className="group-profile-right">
+            <GroupUserList users={this.props.groupUsers} />
+            <UserCart />
+          </div>
+        </div>
 
-    // Submits a one or more items to be purchased
-    handleSubmitItems = e => {
-        e.preventDefault();
-        // Filter to make sure we are not sending in previous bought items
-        const purchased = this.props.items.filter(itm => itm.purchased === true && itm.purchasedBy === null);
-        this.props.submitPaidItems(purchased, Number(localStorage.getItem("userId")), Number(this.state.total));
-        this.props.getItems(Number(this.props.match.params.id));
-    }
-
-    // Change between List and History views
-    toggleListClass = () => {
-        this.setState({ histToggle: false, listToggle: true, inviToggle: false})
-    }
-
-    toggleHistClass = () => {
-        this.setState({ histToggle: true, listToggle: false, inviToggle: false})
-    }
-
-    toggleInviClass = () => {
-        this.setState({ inviToggle: true, histToggle: false, listToggle: false})
-        this.setState({ inviteUrl: this.props.generateGroupInviteUrl(localStorage.getItem("userId"), this.props.match.params.id)})
-        console.log(this.state.invites[1])
-    }
-
-    toggleTotal = () => {
-        console.log("TOGGLE")
-        this.setState({ totalToggle: !this.state.totalToggle })
-    }
-
-    /*
-     * Creates an item object and send it to the action to add to the database
-    */
-    handleAddItem = (e) => {
-        e.preventDefault();
-
-        let item = null;
-
-        // Check if purchased checkbox was ticked
-        if (this.state.itemPurchased) {
-            item = {
-                name: this.state.itemName,
-                groupID: Number(this.props.match.params.id),
-                price: Number(this.state.itemPrice),
-                quantity: Number(this.state.itemQuantity),
-                measurement: this.state.itemMeasure,
-                purchased: this.state.itemPurchased
-            };
-
-            this.props.addItem(item);
-            this.setState({modal14: false});
-        } else {
-            item = {
-                name: this.state.itemName,
-                groupID: Number(this.props.match.params.id),
-                price: Number(this.state.itemPrice),
-                quantity: Number(this.state.itemQuantity),
-                measurement: this.state.itemMeasure
-            };
-            this.props.addItem(item);
-            this.setState({modal14: false});
-        }
-
-    }
-
-    /*
-     * Calculate the total amount the member has spent
-     * @params items - Array of items to tally
-     */
-    totalItems = (items) => {
-        const total = items.reduce((accumulator, currentValue) => {
-            return accumulator + currentValue.total;
-        }, 0);
-
-        return total;
-    }
-
-    groupBy = ( array , f ) => {
-        // Set a new group object
-        var groups = {};
-
-        // Loop through the array and start sorting based on the f inputs
-        array.forEach( function( o )
         {
-            var group = JSON.stringify( f(o) );
-            groups[group] = groups[group] || [];
-            groups[group].push( o );
-        });
-
-        // Return a new array of groups
-        return Object.keys(groups).map( function( group )
-        {
-            return groups[group];
-        })
-    }
-
-    calculateTotal = () => {
-        // console.log("HISTORY => ", this.state.groupHistory);
-        const hists = this.state.groupHistory;
-        const members = this.state.members;
-
-        let newSorted = [];
-
-        let arr = [];
-
-        if (hists !== null) {
-
-            hists.forEach((itm, i) => {
-                // console.log("ITM => ", itm);
-
-                itm.forEach((x, j) => {
-                    if (x.grandTotal) {
-                        // console.log(x);
-                        arr.push({user: itm[0].user, total: x.grandTotal});
-                    }
-                })
-            })
-
-            // console.log(arr);
-
-            const ress = this.groupBy(arr, function(itm) {
-                return [itm.user]
-            })
-
-            // console.log("RESS => ", ress);
-            //
-            // let newSorted = [];
-
-            // Calculate the total and send to te newSorted array
-            ress.forEach((rs, i) => {
-                let total = this.totalItems(ress[i]);
-                const grandTotal = {
-                    grandTotal: total,
-                    user: rs[0].user,
-                }
-                newSorted.push(grandTotal);
-            })
-
-            // console.log("NEW SORTED => ", newSorted);
-            return newSorted;
-
-            // this.setState({totals: newSorted});
-
-
+         /*
+          * Modals - Keep modals at end to avoid "blank space" in regular components
+          */
         }
-
-        // this.setState({totals: newSorted});
-
-
-    }
-
-    render(){
-
-        // if(!this.props.currentGroup){ // tell user info is loading...
-        //     /**
-        //      * @TODO Create a loading component that can render during data queries
-        //      */
-        //     return (
-        //         <div>Fetching group information...</div>
-        //     )
-        // } else {
-
-        return (
-            <div className={"group-profile-container"}>
-                <div className={"group-profile-header"}>
-                    <MDBBtn color="primary" onClick={() => {this.toggleListClass()}} >List</MDBBtn>
-                    <MDBBtn color="primary" onClick={() => {this.toggleHistClass()}} >History</MDBBtn>
-                    <MDBBtn color="primary" onClick={() => {this.toggleInviClass()}} >Invite</MDBBtn>
-                    <MDBBtn color="primary" onClick={() => {this.toggleTotal()}} >Total</MDBBtn>
-                </div>
-
-                <div className = 'group-profile-columns'>
-
-                    <div className = 'group-profile-left'>
-
-                    {this.state.listToggle ? <ItemList items = {this.props.groupItems} /> : null}
-
-                    {this.state.histToggle ? <HistoryList history = {this.props.groupHistoryList}/> : null}
-                    </div>
-
-                    <div className = 'group-profile-right'>
-
-                        <GroupUserList users = {this.props.groupUsers} />
-                        <UserCart />
-                    </div>
-                </div>
-
-                <MDBContainer>
-                    <MDBModal isOpen={this.state.inviToggle} toggle={this.toggle('inviToggle')} centered>
-                        <MDBModalHeader toggle={this.toggle('inviToggle')}>Group Invitation</MDBModalHeader>
-                        <MDBModalBody>
-                            <p className="text-left">{this.props.invites !== null ? this.props.invites[this.props.match.params.id] : ''}</p>
-                        </MDBModalBody>
-                        <MDBModalFooter>
-                            <MDBBtn color="secondary" onClick={this.toggle('inviToggle')}>Close</MDBBtn>
-                            <MDBBtn color="primary" onClick={this.copyInviteToClipboard(this.props.invites !== null ? this.props.invites[this.props.match.params.id] : '')} >Copy to clipboard</MDBBtn>
-                        </MDBModalFooter>
-                    </MDBModal>
-                </MDBContainer>
-
-            </div>
-        )
-    }
+        <MDBContainer>
+          {/* Invite modal */}
+          <MDBModal
+            isOpen={this.state.inviToggle}
+            toggle={this.toggle("inviToggle")}
+            centered
+          >
+            <MDBModalHeader toggle={this.toggle("inviToggle")}>
+              Group Invitation
+            </MDBModalHeader>
+            <MDBModalBody>
+              <p className="text-left">
+                {this.props.invites !== null
+                  ? this.props.invites[this.props.match.params.id]
+                  : ""}
+              </p>
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn color="secondary" onClick={this.toggle("inviToggle")}>
+                Close
+              </MDBBtn>
+              <MDBBtn
+                className="btn-dark-green"
+                onClick={this.copyInviteToClipboard(
+                  this.props.invites !== null
+                    ? this.props.invites[this.props.match.params.id]
+                    : ""
+                )}
+              >
+                Copy to clipboard
+              </MDBBtn>
+            </MDBModalFooter>
+          </MDBModal>
+        </MDBContainer>
+      </div>
+    );
+  }
 }
 
-
+/**
+ * Connects state to props
+ * @param state
+ * @returns {{needsNewHistoryList: boolean, currentUser: null, needsNewItems: boolean, groupHistoryList: null, groupHistory: null, invites: (GroupsProfile.state.invites|{}|null|invites), groupUsers: null, groupItems: (null|*), groupUserProfiles: (null|Array)}}
+ */
 const mapStateToProps = state => {
-    state = state.rootReducer; // pull values from state root reducer
-    return {
-        // group state
-        groupUserProfiles: state.groupUserProfiles,
-        groupUsers: state.groupUsers,
-        groupHistory: state.groupHistory,
-        groupHistoryList: state.groupHistoryList,
-        needsNewHistoryList: state.needsNewHistoryList,
+  state = state.rootReducer; // pull values from state root reducer
+  return {
+    // group state
+    groupUserProfiles: state.groupUserProfiles,
+    groupUsers: state.groupUsers,
+    groupHistory: state.groupHistory,
+    groupHistoryList: state.groupHistoryList,
+    needsNewHistoryList: state.needsNewHistoryList,
 
-        // all group invites
-        invites: state.invites,
+    // all group invites
+    invites: state.invites,
 
-        // item state
-        needsNewItems: state.needsNewItems,
-        groupItems: state.groupItems,
+    // item state
+    needsNewItems: state.needsNewItems,
+    groupItems: state.groupItems,
 
-        // current user state
-        currentUser: state.currentUser,
-        
-    }
-}
+    // current user state
+    currentUser: state.currentUser,
+    userGroups: state.userGroups
+  };
+};
 
-export default connect(mapStateToProps, {
-    getGroupHistoryList, gettingGroups, clearItems, clearGroupUsers, addItem, getItems, checkEmail, updateItemPurchased, submitPaidItems, getGroupItems, getGroupHistory, getGroupUsers, getUserProfile, generateGroupInviteUrl
-})(GroupsProfile);
+export default connect(
+  mapStateToProps,
+  {
+    getGroupHistoryList,
+    gettingGroups,
+    clearItems,
+    clearGroupUsers,
+    addItem,
+    getItems,
+    checkEmail,
+    updateItemPurchased,
+    submitPaidItems,
+    getGroupItems,
+    getGroupHistory,
+    getGroupUsers,
+    getUserProfile,
+    generateGroupInviteUrl,
+    getUserGroups
+  }
+)(GroupsProfile);

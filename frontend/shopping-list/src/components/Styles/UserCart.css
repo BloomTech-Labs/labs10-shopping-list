@@ -11,7 +11,7 @@
     margin: 5px;
     background: white;
     padding: 5px;
-    border-radius: 5px; 
+    border-radius: 5px;
 }
 
 .checkout-container {
@@ -27,7 +27,16 @@
     font-size: 1.5rem;
 }
 
+.close {
+    margin-left: 5px;
+}
+
 @media only screen and (max-width: 767px){
+
+    .user-cart-container {
+        padding-top: 0;
+    }
+
     .checkout-container{
         display: flex;
         flex-flow: column nowrap;

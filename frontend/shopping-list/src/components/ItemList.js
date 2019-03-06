@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import Item from './Item';
-import {getItems, getGroupItems, addItem,} from '../store/actions/rootActions';
+import {getUserGroups, getGroupItems, addItem,} from '../store/actions/rootActions';
 import './Styles/ItemList.css';
 import {
     MDBListGroup,
@@ -21,6 +21,9 @@ class ItemList extends React.Component{
         if(!this.props.groupItems){
             this.props.getGroupItems(this.props.match.params.id);
         }
+
+
+
     }
 
     componentWillReceiveProps = newProps => {
@@ -90,9 +93,10 @@ class ItemList extends React.Component{
 
 
     render(){
+        const grp = this.props.userGroups !== null ? this.props.userGroups.filter(grp => grp.id === Number(this.props.match.params.id)) : this.props.userGroups
         return(
             <div className = 'item-list-container'>
-            <h1>Shopping List</h1>
+            <h1>{this.props.userGroups !== null ? grp[0].name : "Loading name..."}</h1>
             <div className = 'item-list'>
             
             {this.props.groupItems !== null ? 
@@ -109,7 +113,7 @@ class ItemList extends React.Component{
                 <div className="form-group">
             <form onSubmit = {this.handleSubmit}>
                 <MDBInput size="md"  label="Add an Item" type = 'text' name = 'item' valueDefault= {this.state.item} onChange = {this.handleChange}></MDBInput>
-                <MDBBtn color="success" type = 'submit' >Add to List</MDBBtn>
+                <MDBBtn className="btn-dark-green" type = 'submit' >Add to List</MDBBtn>
             </form>
 
             </div>
@@ -125,7 +129,8 @@ const mapStateToProps = state => {
     return {
         //state items
         groupItems: state.groupItems,
-        needsNewItems: state.needsNewItems
+        needsNewItems: state.needsNewItems,
+        userGroups: state.userGroups
     }
 }
 
@@ -133,5 +138,6 @@ export default withRouter(connect(mapStateToProps, {
     // actions
     getGroupItems,
     addItem,
+    getUserGroups,
 
 })(ItemList));

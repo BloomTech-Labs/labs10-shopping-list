@@ -1,20 +1,13 @@
-import React from 'react';
-import {purchaseItem, addToCart, removeFromCart, updateItem, deleteItem, getItems, markItemForPurchase, unMarkItem} from '../store/actions/rootActions';
+import React, {Fragment} from 'react';
+import {addToCart, removeFromCart, updateItem, deleteItem } from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import moment from 'moment';
 import './Styles/Item.css';
-import { stat } from 'fs';
 import {
     MDBListGroup,
-    MDBListGroupItem,
-    MDBContainer,
     MDBBtn,
-    MDBIcon,
-    MDBBadge,
-    MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter,
-    MDBTooltip,
-    MDBScrollbar, MDBCardBody, MDBCard,
+    MDBIcon, MDBContainer,
+    MDBInput, MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter, MDBCardBody, MDBCard,
 } from "mdbreact";
 
 class Item extends React.Component {
@@ -26,7 +19,15 @@ class Item extends React.Component {
             item: this.props.item.name,
             isEditing: false,
             inCart: false,
+            modal14: false,
         }
+    }
+
+    toggle = nr => () => {
+        let modalNumber = 'modal' + nr
+        this.setState({
+            [modalNumber]: !this.state[modalNumber]
+        });
     }
 
     handleChange = event => {
@@ -91,16 +92,25 @@ class Item extends React.Component {
             return null;
         } else {
             return (
+                <Fragment>
                 <div className = 'item-container' onDoubleClick = {this.handleEdit} key = {this.props.key}>
+                    {/*<div className="delete-hover"><MDBIcon icon="trash" size="2x" onClick={this.handleDelete} /></div>*/}
                     <MDBCard>
                         <MDBCardBody>
                             <MDBListGroup>
                                 {this.state.isEditing === false ?
                                     (
-                                        <div className = 'item-row'><span><h2>{this.props.item.name}</h2></span><MDBBtn color="danger" onClick = {this.handleDelete}>Delete</MDBBtn>
+                                        <div className = 'item-row'><span><h2>{this.props.item.name}</h2></span>
+                                            <div className="delete-hover">
+                                                <MDBIcon icon="trash" size="2x" className="red-text ml-3" onClick={this.toggle(14)} />
 
+                                                {/*<MDBBtn floating size="lg" gradient="purple"><MDBIcon icon="bolt" /></MDBBtn>*/}
+                                            </div>
+                                            <div className="mobile-hover">
+                                                <MDBIcon icon="trash" size="lg" className="red-text ml-3" onClick={this.toggle(14)} />
+                                            </div>
                                             {this.state.inCart !== true ? (
-                                                <MDBBtn color="success" onClick = {this.addToCart} >Add to Cart</MDBBtn>
+                                                <MDBBtn className="btn-dark-green" onClick = {this.addToCart} >Add to Cart</MDBBtn>
 
                                             ) : <MDBBtn color="success" onClick = {this.removeFromCart} >Remove to Cart</MDBBtn>}
 
@@ -110,13 +120,27 @@ class Item extends React.Component {
                                     ) : (<div>
                                         <form className="form-group" onSubmit = {this.handleClickOutside}>
                                             <MDBInput size="lg"  label="Change Item Name" type = 'text' name = 'item' valueDefault= {this.state.item} onChange = {this.handleChange}></MDBInput>
-                                            <MDBBtn color="success" type = 'submit' >Submit Changes</MDBBtn>
+                                            <MDBBtn className="btn-dark-green" type = 'submit' >Submit Changes</MDBBtn>
                                         </form>
                                     </div>)}
                             </MDBListGroup>
                         </MDBCardBody>
                     </MDBCard>
+
                 </div>
+                <MDBContainer>
+                <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
+            <MDBModalHeader toggle={this.toggle(14)}>Are you sure you want to remove this item?</MDBModalHeader>
+            <MDBModalBody>
+                Any members inside this group will no longer be able to view or purchase this item.
+            </MDBModalBody>
+            <MDBModalFooter>
+            <MDBBtn color="secondary" onClick={this.toggle(14)}>No</MDBBtn>
+            <MDBBtn color="primary" onClick={this.handleDelete}>Yes</MDBBtn>
+            </MDBModalFooter>
+        </MDBModal>
+        </MDBContainer>
+                </Fragment>
             )
         }
     }

@@ -42,7 +42,7 @@ class Navigation extends React.Component{
         return(
             <div className = 'navigation-container'>
             
-            <MDBNavbar color="#00cc00" dark expand="md">
+            <MDBNavbar style={{backgroundColor: "#2A922D"}} dark expand="md">
 
                 <MDBNavbarBrand>
                     <strong className="white-text">ShopTrak</strong>
@@ -72,8 +72,8 @@ class Navigation extends React.Component{
                                              style={{ height: "35px", padding: 0 }} alt="" />
                                     </MDBDropdownToggle>
                                     <MDBDropdownMenu className="dropdown-default" center>
-                                        <MDBNavLink to = '/profile'>My account</MDBNavLink>
-                                        <MDBNavLink to = '/' onClick={this.signOut}>Log out</MDBNavLink>
+                                        <MDBNavLink to = '/profile' style={{color: "#000000"}}>My account</MDBNavLink>
+                                        <MDBNavLink to = '/' onClick={this.signOut} style={{color: "#000000"}}>Log out</MDBNavLink>
                                     </MDBDropdownMenu>
                                 </MDBDropdown>
                             ) : (
@@ -104,6 +104,7 @@ const mapStateToProps = state => {
         email: state.email,
         profilePicture: state.profilePicture,
         currentUser: state.currentUser,
+        userGroups: state.userGroups,
     }
 }
 
