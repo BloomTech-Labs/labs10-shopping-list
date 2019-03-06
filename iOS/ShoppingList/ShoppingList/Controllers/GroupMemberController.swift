@@ -18,12 +18,13 @@ class GroupMemberController {
     
     
     
-    func getGroupMembers(forGroup group: Group, completion: @escaping (Group?) -> Void) {
+    func getGroupMembers(completion: @escaping (Bool) -> Void) {
+        guard let group = selectedGroup else { completion(false); return }
         
         let url = baseURL.appendingPathComponent("groupMember").appendingPathComponent("group").appendingPathComponent(String(group.groupID))
         
         
-        guard let accessToken = SessionManager.tokens?.idToken else {return}
+        guard let accessToken = SessionManager.tokens?.idToken else { completion(false); return }
         var request = URLRequest(url: url)
         
         request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
@@ -33,23 +34,23 @@ class GroupMemberController {
             
             if let error = response.error {
                 print(error.localizedDescription)
-                completion(nil)
+                completion(false)
                 return
             }
             
-            guard let data = response.data else { completion(nil); return }
+            guard let data = response.data else { completion(false); return }
             
             do {
                 
-                let groupMembers = try JSONDecoder().decode([GroupMember].self, from: data)
+                let members = try JSONDecoder().decode([GroupMember].self, from: data)
                 
-                let newGroup = group
-                newGroup.groupMembers = groupMembers
-                completion(newGroup)
+                groupMembers = members
+                completion(true)
+                return
                 
             } catch {
                 print("Could not decode groupMembers")
-                completion(nil)
+                completion(false)
                 return
             }
 

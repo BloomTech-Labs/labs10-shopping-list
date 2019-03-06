@@ -77,8 +77,14 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
             tableView.rowHeight = 200
             
         case .stats:
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            GroupMemberController().getGroupMembers { (success) in
+                if success {
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                } else {
+                    // TODO: Show error getting stats
+                }
             }
         }
     }
@@ -111,7 +117,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         case .history:
             return history.count
         case .stats:
-            return 0
+            return groupMembers.count
         }
         
     }
@@ -128,9 +134,10 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         case .history:
             item = history[indexPath.row]
         case .stats:
-            return cell
+            let groupMember = groupMembers[indexPath.row]
+            cell.textLabel?.text = String(groupMember.net)
         }
-
+        
         guard item != nil else { return cell }
         cell.textLabel?.text = item!.name
         return cell
