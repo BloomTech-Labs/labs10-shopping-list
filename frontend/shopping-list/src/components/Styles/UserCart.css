@@ -32,6 +32,11 @@
 }
 
 @media only screen and (max-width: 767px){
+
+    .user-cart-container {
+        padding-top: 0;
+    }
+
     .checkout-container{
         display: flex;
         flex-flow: column nowrap;

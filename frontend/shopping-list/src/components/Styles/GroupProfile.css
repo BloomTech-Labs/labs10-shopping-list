@@ -7,6 +7,12 @@
     justify-content: flex-end;
 }
 
+@media only screen and (max-width: 767px){
+    .group-profile-header {
+        flex-flow: column wrap;
+    }
+}
+
 .group-profile-columns {
     display: flex;
     flex-flow: row nowrap;
@@ -21,7 +27,6 @@
 
 .group-profile-nav {
     width: 20%;
-    border: 1px solid red;
 }
 
 .group-profile-left{
@@ -32,10 +37,13 @@
 @media only screen and (max-width: 767px){
     .group-profile-left{
         width: 100%;
+        margin-left: 0;
     }
 }
 
 .group-profile-right{
+    display: flex;
+    flex-flow: column;
     width: 50%;
 }
 

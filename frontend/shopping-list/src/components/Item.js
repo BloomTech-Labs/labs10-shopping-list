@@ -92,13 +92,21 @@ class Item extends React.Component {
         } else {
             return (
                 <div className = 'item-container' onDoubleClick = {this.handleEdit} key = {this.props.key}>
+                    {/*<div className="delete-hover"><MDBIcon icon="trash" size="2x" onClick={this.handleDelete} /></div>*/}
                     <MDBCard>
                         <MDBCardBody>
                             <MDBListGroup>
                                 {this.state.isEditing === false ?
                                     (
-                                        <div className = 'item-row'><span><h2>{this.props.item.name}</h2></span><MDBBtn color="danger" onClick = {this.handleDelete}>Delete</MDBBtn>
+                                        <div className = 'item-row'><span><h2>{this.props.item.name}</h2></span>
+                                            <div className="delete-hover">
+                                                <MDBIcon icon="trash" size="2x" className="red-text ml-3" onClick={this.handleDelete} />
 
+                                                {/*<MDBBtn floating size="lg" gradient="purple"><MDBIcon icon="bolt" /></MDBBtn>*/}
+                                            </div>
+                                            <div className="mobile-hover">
+                                                <MDBIcon icon="trash" size="lg" className="red-text ml-3" onClick={this.handleDelete} />
+                                            </div>
                                             {this.state.inCart !== true ? (
                                                 <MDBBtn className="btn-dark-green" onClick = {this.addToCart} >Add to Cart</MDBBtn>
 
