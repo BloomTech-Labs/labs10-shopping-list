@@ -8,6 +8,7 @@ const userDb = require('../../helpers/userModel');
 const checkJwt = require('../../validators/checkJwt');
 const checkUser = require('../../validators/checkUser');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
+const moment = require('moment');
 
 var Pusher = require('pusher');
 
@@ -70,7 +71,8 @@ itemRouter.post('/', (req, res) => {
                 notification.content = `${notification.userName} added ${item.name} to the ${notification.groupName} shopping list.`
 
                 pusher.trigger(`group-${groupID}`, 'add-item', {
-                    "message": `${notification.userName} added ${item.name} to the ${notification.groupName} shopping list.`
+                    "message": `${notification.userName} added ${item.name} to the ${notification.groupName} shopping list.`,
+                    "timestamp": moment().format()
                 })
 
                 console.log('NOTIFICATION\n\n', notification);
@@ -203,7 +205,8 @@ itemRouter.put('/:id', (req, res) => {
                                 notification.content = `${notification.userName} updated ${oldItem.name} to ${newItem[0].name} in the ${notification.groupName} shopping list.`
         
                                 pusher.trigger(`group-${groupID}`, 'update-item', {
-                                    "message": `${notification.userName} updated ${oldItem.name} to ${newItem[0].name} in the ${notification.groupName} shopping list.`
+                                    "message": `${notification.userName} updated ${oldItem.name} to ${newItem[0].name} in the ${notification.groupName} shopping list.`,
+                                    "timestamp": moment().format()
                                 })
         
                                 console.log('NOTIFICATION\n\n', notification);
@@ -259,7 +262,8 @@ itemRouter.delete('/:id', (req, res) => {
                                 notification.content = `${notification.userName} removed ${oldItem.name} from the ${notification.groupName} shopping list.`
         
                                 pusher.trigger(`group-${groupID}`, 'delete-item', {
-                                    "message": `${notification.userName} removed ${oldItem.name} from the ${notification.groupName} shopping list.`
+                                    "message": `${notification.userName} removed ${oldItem.name} from the ${notification.groupName} shopping list.`,
+                                    "timestamp": moment().format()
                                 })
         
                                 console.log('NOTIFICATION\n\n', notification);
