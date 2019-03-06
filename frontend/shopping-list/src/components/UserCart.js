@@ -73,7 +73,7 @@ class UserCart extends React.Component{
             </div>
 
                 <div className = 'checkout-container'>
-                    <MDBInput size="lg"  label="Total $ Spent" type = 'text' name = 'amount' valueDefault= {this.state.amount} onChange = {this.handleChange}></MDBInput>
+                    <MDBInput size="lg"  label="Total $ Spent" type = 'text' name = 'amount' valueDefault= {this.state.amount} value={this.state.amount} onChange = {this.handleChange}></MDBInput>
                     <MDBBtn className="btn-dark-green" onClick = {this.handleCheckout} >Checkout</MDBBtn>
                 </div>
             </div>
