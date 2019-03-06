@@ -21,11 +21,13 @@
     "jsonwebtoken": "^8.5.0",
     "jwks-rsa": "^1.4.0",
     "knex": "^0.16.3",
+    "knex-migrate": "^1.7.0",
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "nodemailer": "^5.1.1",
     "nodemon": "^1.18.10",
     "pg": "^7.8.1",
+    "pusher": "^2.2.0",
     "sqlite3": "^4.0.6",
     "stripe": "^6.25.1"
   }
