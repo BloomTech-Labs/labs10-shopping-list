@@ -5,6 +5,21 @@ const notificationDb = require('../../helpers/notificationsModel');
 const checkJwt = require('../../validators/checkJwt');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
 
+if(process.env.NODE_ENV === 'development'){
+    var dotenv = require('dotenv'); // allows us to load .env variables in development mode
+    dotenv.config();
+}
+
+var Pusher = require('pusher');
+
+var pusher = new Pusher({
+    appId: process.env.PUSHER_APP_ID,
+    key: process.env.PUSHER_KEY,
+    secret: process.env.PUSHER_SECRET,
+    cluster: process.env.PUSHER_CLUSTER,
+    encrypted: true
+  });
+
 /****************************************************************************************************/
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/notifcation ENDPOINT **/
 /****************************************************************************************************/

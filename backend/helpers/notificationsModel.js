@@ -29,10 +29,10 @@ function getById(id) {
         .where({ id });
 }
 
-function add(item) {
+function add(notification) {
     return db("notifications")
         .returning("id")
-        .insert(item)
+        .insert(notification)
         .into("notifications");
 }
 
