@@ -98,16 +98,9 @@ class GroupsProfile extends Component {
       this.props.getGroupHistory(this.props.match.params.id);
     }
 
-<<<<<<< HEAD
-    toggleInviClass = () => {
-        this.setState({ inviToggle: true, histToggle: false, listToggle: false})
-        this.setState({ inviteUrl: this.props.generateGroupInviteUrl(localStorage.getItem("userId"), this.props.match.params.id)})
-        console.log(this.state.invites[1])
-=======
     // If an item has been purchased, gather new history data
     if (newProps.needsNewHistoryList) {
       this.props.getGroupHistoryList(this.props.match.params.id);
->>>>>>> 9abbc84a00d6097173ea579e19da9dfd94db6ba8
     }
 
     // if current user has been update, gather new user
