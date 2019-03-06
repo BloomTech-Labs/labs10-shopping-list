@@ -1,6 +1,5 @@
 .item-container {
     width: 100%;
-    /*background: white;*/
     margin: 2px 0px;
     padding: 5px;
 }
@@ -10,6 +9,12 @@
     flex-flow: row nowrap;
     width: 100%;
     justify-content: space-between;
+}
+
+@media only screen and (max-width: 767px){
+    .item-row h2 {
+        font-size: medium;
+    }
 }
 
 .item-row span {
@@ -43,4 +48,38 @@
 
 .item-remove {
     cursor: pointer;
+}
+
+.item-list-container {
+    z-index: 90;
+}
+
+.delete-hover {
+    display: none;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-right: 20px;
+}
+
+
+.item-row:hover > .delete-hover{
+    display: block;
+}
+
+.mobile-hover {
+    display: none;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-right: 30px;
+    width: 10px;
+}
+
+@media only screen and (max-width: 767px){
+    .item-row:hover > .delete-hover {
+        display: none;
+    }
+
+    .item-row:hover > .mobile-hover {
+        display: block;
+    }
 }

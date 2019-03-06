@@ -27,9 +27,11 @@ class HistoryList extends React.Component{
 
 
     render(){
+        const grp = this.props.userGroups !== null ? this.props.userGroups.filter(grp => grp.id === Number(this.props.match.params.id)) : this.props.userGroups
+
         return(
             <div className = 'item-list-container'>
-                <h1>Shopping List History</h1>
+                <h1>{this.props.userGroups !== null ? grp[0].name : "Loading name..."}</h1>
                 <div className = 'item-list'>
 
                     {this.props.groupHistoryList !== null ?
@@ -54,7 +56,8 @@ const mapStateToProps = state => {
         //state items
         groupHistoryList: state.groupHistoryList,
         needsNewHistory: state.needsNewHistory,
-        needsNewHistoryList: state.needsNewHistoryList
+        needsNewHistoryList: state.needsNewHistoryList,
+        userGroups: state.userGroups,
     }
 }
 
