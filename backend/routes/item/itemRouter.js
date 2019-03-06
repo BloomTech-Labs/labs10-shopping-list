@@ -180,18 +180,45 @@ itemRouter.put('/:id', (req, res) => {
     let id = req.params.id;
     let changes = req.body;
     // changes.price = parseFloat(changes.price);
-    console.log('changes', changes);
-    itemDb.update(id, changes).then(status => {
+    console.log('id, changes', id, changes);
+    itemDb.getById(id).then(item => {
+        let oldItem = item[0];
+
+        itemDb.update(id, changes).then(status => {
+            console.log('item update', status);
+
+            if (status.length >= 1 || status === 1) {
+                    let notification = {};
+                    userDb.getProfileByEmail(req.user.email).then(user => {
+                        notification.userID = user[0].id;
+                        notification.userName = user[0].name;
         
-        if(changes.purchased === 1){
-            console.log('new item purchased');
-        }
-
-        if (status.length >= 1 || status === 1) {
-            return res.status(200).json({message: "Item updated successfully", id: status[0]})
-        }
-
-        return res.status(404).json({message: "The requested item does not exist."});
+                        itemDb.getById(id).then(newItem => {
+                            let groupID = newItem[0].groupID;
+        
+                            groupDb.getById(groupID).then(group => {
+                                notification.groupID = group[0].id;
+                                notification.groupName = group[0].name;
+                                notification.action = 'update-item';
+                                notification.content = `${notification.userName} updated ${oldItem.name} to ${newItem[0].name} in the ${notification.groupName} shopping list.`
+        
+                                pusher.trigger(`group-${groupID}`, 'update-item', {
+                                    "message": `${notification.userName} updated ${oldItem.name} to ${newItem[0].name} in the ${notification.groupName} shopping list.`
+                                })
+        
+                                console.log('NOTIFICATION\n\n', notification);
+        
+                                notificationDb.add(notification).then(response => {
+                                    console.log('notification added', response);
+                                    return res.status(200).json({message: "Item updated successfully", id: status[0]})                                    
+                                })
+                            })
+                        })
+                    })
+                } else {
+                    return res.status(404).json({message: "The requested item does not exist."});
+                }
+        })
     })
         .catch(err => {
             const error = {
