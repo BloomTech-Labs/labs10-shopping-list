@@ -17,8 +17,8 @@ const GroupCard = props => {
                     <MDBCardTitle></MDBCardTitle>
                     <MDBCardText>
                         {
-                            props.group.members !== null ? props.group.members.map(usr => (
-                                <p>{usr.name}</p>
+                            props.group.members !== null ? props.group.members.map((usr, index) => (
+                                <span key={index}>{usr.name}</span>
                             )) : null
                         }
                     </MDBCardText>
