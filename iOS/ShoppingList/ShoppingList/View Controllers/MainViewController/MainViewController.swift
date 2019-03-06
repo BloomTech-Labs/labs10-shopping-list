@@ -15,9 +15,9 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
-    enum GroupView { case list, history }
+    enum GroupView { case list, history, stats }
     
-    var currentView: GroupView = .list { didSet { updatesNeeded() }}
+    var currentView: GroupView = .list { didSet { updateTableView() }}
     
     // MARK: - Lifecycle methods
     
@@ -56,6 +56,33 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         }
     }
     
+    func updateTableView() {
+        switch currentView {
+        case .list:
+            tableView.rowHeight = 80
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        case .history:
+            HistoryController().getHistory { (success) in
+                
+                if success {
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+            
+            tableView.rowHeight = 200
+            
+        case .stats:
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     
     // MARK: - IBActions
     
@@ -78,14 +105,34 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectedGroup?.items?.count ?? 0
+        switch currentView {
+        case .list:
+            return selectedGroup?.items?.count ?? 0
+        case .history:
+            return history.count
+        case .stats:
+            return 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReuseIdentifier", for: indexPath)
         guard let selectedGroup = selectedGroup else { return cell }
-        guard let item = selectedGroup.items?[indexPath.row] else { return cell }
-        cell.textLabel?.text = item.name
+        
+        var item: Item?
+        
+        switch currentView {
+        case .list:
+            item = selectedGroup.items?[indexPath.row]
+        case .history:
+            item = history[indexPath.row]
+        case .stats:
+            return cell
+        }
+
+        guard item != nil else { return cell }
+        cell.textLabel?.text = item!.name
         return cell
     }
     
