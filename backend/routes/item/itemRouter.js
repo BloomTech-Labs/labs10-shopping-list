@@ -241,23 +241,50 @@ itemRouter.put('/:id', (req, res) => {
 
 itemRouter.delete('/:id', (req, res) => {
     const id = req.params.id;
-
-    itemDb.remove(id).then(status => {
-        if (status.length >= 1 || status === 1) {
-            return res.status(200).json({message: "Item removed successfully", id: status[0]})
-        }
-
-        return res.status(404).json({message: "The requested item does not exist."});
-    })
-        .catch(err => {
-            const error = {
-                message: `Internal Server Error - Removing Item`,
-                data: {
-                    err: err
-                },
+    itemDb.getById(id).then(item => {
+        let groupID = item[0].groupID;
+        let oldItem = item[0];
+        return itemDb.remove(id).then(status => {
+            console.log('remove status', status)
+            if (status.length >= 1 || status === 1) {
+                let notification = {};
+                    return userDb.getProfileByEmail(req.user.email).then(user => {
+                        notification.userID = user[0].id;
+                        notification.userName = user[0].name;
+        
+                            return groupDb.getById(groupID).then(group => {
+                                notification.groupID = group[0].id;
+                                notification.groupName = group[0].name;
+                                notification.action = 'delete-item';
+                                notification.content = `${notification.userName} removed ${oldItem.name} from the ${notification.groupName} shopping list.`
+        
+                                pusher.trigger(`group-${groupID}`, 'delete-item', {
+                                    "message": `${notification.userName} removed ${oldItem.name} from the ${notification.groupName} shopping list.`
+                                })
+        
+                                console.log('NOTIFICATION\n\n', notification);
+        
+                                return notificationDb.add(notification).then(response => {
+                                    console.log('notification added', response);
+                                    return res.status(200).json({message: "Item removed successfully", id: status[0]})                               
+                                })
+                            })
+                        })
+            } else {
+                return res.status(404).json({message: "The requested item does not exist."});
             }
-            return res.status(500).json(error);
+
         })
+    })
+            .catch(err => {
+                const error = {
+                    message: `Internal Server Error - Removing Item`,
+                    data: {
+                        err: err
+                    },
+                }
+                return res.status(500).json(error);
+            })
 })
 
 module.exports = itemRouter;
