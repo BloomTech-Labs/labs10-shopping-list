@@ -43,7 +43,16 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     }
     
     @IBAction func segmentControlSwitched(_ sender: UISegmentedControl) {
-        currentView = sender.selectedSegmentIndex == 0 ? .list : .history
+        switch sender.selectedSegmentIndex {
+        case 0:
+            currentView = .list
+        case 1:
+            currentView = .history
+        case 2:
+            currentView = .stats
+        default:
+            currentView = .list
+        }
     }
 
     

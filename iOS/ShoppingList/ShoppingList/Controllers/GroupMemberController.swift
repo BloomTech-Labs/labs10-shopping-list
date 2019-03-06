@@ -40,6 +40,9 @@ class GroupMemberController {
             
             guard let data = response.data else { completion(false); return }
             
+            let dataString = String(data: data, encoding: .utf8)
+            print(dataString)
+            
             do {
                 
                 let members = try JSONDecoder().decode([GroupMember].self, from: data)
