@@ -17,7 +17,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     
     var currentViewIsList = true {
         didSet {
-            self.tableView.reloadData()
+            updateTableView()
         }
     }
     
@@ -57,6 +57,26 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         }
     }
     
+    func updateTableView() {
+        if !currentViewIsList && history.isEmpty {
+            HistoryController().getHistory { (success) in
+                if success {
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                } else {
+                    // TODO: Show error getting history
+                }
+            }
+        }
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    
+    
     
     // MARK: - IBActions
     
@@ -79,14 +99,28 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectedGroup?.items?.count ?? 0
+        if currentViewIsList {
+            return selectedGroup?.items?.count ?? 0
+        } else {
+            return history.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReuseIdentifier", for: indexPath)
         guard let selectedGroup = selectedGroup else { return cell }
-        guard let item = selectedGroup.items?[indexPath.row] else { return cell }
-        cell.textLabel?.text = item.name
+        
+        var item: Item?
+        
+        if currentViewIsList {
+            item = selectedGroup.items?[indexPath.row]
+        } else {
+            item = history[indexPath.row]
+        }
+        
+        guard item != nil else { return cell }
+        
+        cell.textLabel?.text = item!.name
         return cell
     }
     
