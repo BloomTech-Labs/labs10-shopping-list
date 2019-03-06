@@ -15,6 +15,10 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
+    enum GroupView { case list, history, stats }
+    
+    var currentView: GroupView = .list { didSet { updateTableView() }}
+    
     // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
@@ -38,11 +42,59 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         }
     }
     
+    @IBAction func segmentControlSwitched(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            currentView = .list
+        case 1:
+            currentView = .history
+        case 2:
+            currentView = .stats
+        default:
+            currentView = .list
+        }
+    }
+
+    
+    
     func updatesNeeded() {
         guard let selectedGroup = selectedGroup else { return }
         groupName.text = selectedGroup.name
         ItemController.shared.loadItems { (_) in
             UI { self.tableView.reloadData() }
+        }
+    }
+    
+    func updateTableView() {
+        switch currentView {
+        case .list:
+            tableView.rowHeight = 80
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        case .history:
+            HistoryController().getHistory { (success) in
+                
+                if success {
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+            
+            tableView.rowHeight = 200
+            
+        case .stats:
+            GroupMemberController().getGroupMembers { (success) in
+                if success {
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                } else {
+                    // TODO: Show error getting stats
+                }
+            }
         }
     }
     
@@ -68,14 +120,35 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectedGroup?.items?.count ?? 0
+        switch currentView {
+        case .list:
+            return selectedGroup?.items?.count ?? 0
+        case .history:
+            return history.count
+        case .stats:
+            return groupMembers.count
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReuseIdentifier", for: indexPath)
         guard let selectedGroup = selectedGroup else { return cell }
-        guard let item = selectedGroup.items?[indexPath.row] else { return cell }
-        cell.textLabel?.text = item.name
+        
+        var item: Item?
+        
+        switch currentView {
+        case .list:
+            item = selectedGroup.items?[indexPath.row]
+        case .history:
+            item = history[indexPath.row]
+        case .stats:
+            let groupMember = groupMembers[indexPath.row]
+            cell.textLabel?.text = String(groupMember.net)
+        }
+        
+        guard item != nil else { return cell }
+        cell.textLabel?.text = item!.name
         return cell
     }
     

@@ -3,19 +3,27 @@ import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import auth0Client from './Auth';
 import {Spinner} from 'reactstrap';
-import {checkEmail} from '../store/actions';
+import {checkEmail, acceptInvite} from '../store/actions';
 
 class Callback extends Component {
   
   async componentDidMount() {
     await auth0Client.handleAuthentication();
-    this.props.history.replace('/groups'); //reroute into groups
+    if(localStorage.getItem('pendingInvite')){
+      let inviteCode = localStorage.getItem('pendingInvite');
+      console.log('pending invite', inviteCode);
+      await this.props.acceptInvite(inviteCode); // tell the server to add the now logged-in user to the invite group
+
+      localStorage.removeItem('pendingInvite');
+
+      this.props.history.replace('/groups'); //reroute into groups
+    } else {
+      this.props.history.replace('/groups'); //reroute into groups
+    }
+
+    
   }
 
-  componentWillUnmount(){
-    // see if we need to add new user to database
-    this.props.checkEmail();
-  }
 
   /**
    * @TODO Make this a nifty loading wheel or progress bar
@@ -42,4 +50,5 @@ const mapStateToProps = state => {
 export default withRouter(connect(mapStateToProps, {
   // actions
   checkEmail,
+  acceptInvite,
 })(Callback));
