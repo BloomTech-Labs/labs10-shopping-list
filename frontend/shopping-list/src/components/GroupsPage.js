@@ -26,10 +26,11 @@ class GroupsPage extends Component{
         groupId: null,
     }
 
-    // let App.js handle this
-    // componentWillMount(){
-    //     this.props.checkEmail();
-    //   } 
+    componentWillMount(){
+        if(localStorage.getItem('email') && !this.props.currentUser){
+          this.props.checkEmail();
+        }
+      }
 
     componentDidMount(){
         if(!this.props.userGroups && this.props.currentUser){
