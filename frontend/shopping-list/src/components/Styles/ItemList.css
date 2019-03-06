@@ -6,6 +6,8 @@
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
+    height: 500px;
+    overflow: auto;
 }
 
 .item-form{
