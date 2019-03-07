@@ -26,17 +26,17 @@ const GroupCard = props => {
                         <MDBBtn color="success">Enter</MDBBtn>
                     </MDBNavLink>
                 </MDBCardBody>
-                <MDBCardFooter color="success-color">
+                <MDBCardFooter style = {{background: '#2A922D'}}>
                 <div className = 'group-card-footer'>
                 
-                <div className = 'group-card-footer-button'>
-                    <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => props.updateGroup(props.group.id, props.group.name)} />     
+                <div className = 'group-card-footer-button' onClick={() => props.updateGroup(props.group.id, props.group.name)}>
+                    <MDBIcon icon="edit"/>     
                     Change Name
                 </div>
 
                     
-                    <div className = 'group-card-footer-button'>
-                    <MDBIcon icon="trash" onClick={() => props.removeGroup(props.group.id, props.group.name)} style={{cursor: "pointer"}} />
+                    <div className = 'group-card-footer-button' onClick={() => props.removeGroup(props.group.id, props.group.name)}>
+                    <MDBIcon icon="trash"/>
                     Delete Group
                     </div>
                     </div>
