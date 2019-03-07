@@ -103,7 +103,7 @@ class GroupsPage extends Component{
                     <div className = 'add-group-container'>
                         <MDBCard className="text-center" >
                             <MDBCardBody>
-                                <MDBCardTitle><h2>Create New Group</h2></MDBCardTitle>
+                                <MDBCardTitle>Create New Group</MDBCardTitle>
                                 <MDBCardText>
                                     <p>Create a new group and start inviting to help with the shopping!</p>
                                 </MDBCardText>
