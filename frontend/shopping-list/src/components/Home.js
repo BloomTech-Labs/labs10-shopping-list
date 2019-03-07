@@ -1,9 +1,11 @@
 import React from 'react';
 import Navigation from './Navigation';
-import tomatoShare from '../images/tomato-share.jpg';
 import '../components/Styles/Home.css';
 
 import groceryBag from '../images/grocery-bag.jpg';
+import bicycleBags from '../images/bicycle-bags.jpg';
+import tomatoShare from '../images/tomato-share.jpg';
+import laptopWoman from '../images/laptop-woman.jpg';
 
 class Home extends React.Component{
     render(){
@@ -43,8 +45,8 @@ class Home extends React.Component{
                 
                 <div className = 'content-tiles'>
                 
-                <div className = 'tile-img'>
-                <img src = {tomatoShare} alt = 'sharing food'></img>
+                <div className = 'tile-img' style = {{backgroundImage: `url(${laptopWoman})`}}>
+
                 </div>
                 
                 <div className = 'tile-text'>
@@ -57,18 +59,16 @@ class Home extends React.Component{
                 <p>Our generated invitation URLs make it easy to add members, just send the URL to the group member you wish to invite, and we'll add them automatically once they log in or sign up.</p>
                 </div>
 
-                <div className = 'tile-img'>
-                <img src = {tomatoShare} alt = 'sharing food'></img>
+                <div className = 'tile-img' style = {{backgroundImage: `url(${tomatoShare})`}}>
                 </div>
 
 
-                <div className = 'tile-img'>
-                <img src = {tomatoShare} alt = 'sharing food'></img>
+                <div className = 'tile-img' style = {{backgroundImage: `url(${bicycleBags})`}}>
                 </div>
 
 
                 <div className = 'tile-text'>
-                <h3>Share Your Shopping List</h3>
+                <h3>Track Your Shopping Trips</h3>
                 <p>Household members can see items as they are added to the shopping queue, and review previous shopping trips to see what was bought and how much was spent. ShopTrak makes it simple to see how much each member has contributed, and helps you make sure each person is paying their fair share.</p>
                 </div>
                 </div>
