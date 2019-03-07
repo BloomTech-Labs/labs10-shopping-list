@@ -721,11 +721,6 @@ export const removeGroup = (groupID, userID) => dispatch => {
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/group/remove/${groupID}/${userID}`;
 
-  const data = {
-    groupID: groupID,
-    userID: userID
-  }
-
   const options = {
     headers: {
       Authorization: `Bearer ${token}`,

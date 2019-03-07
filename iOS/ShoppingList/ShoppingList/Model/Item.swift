@@ -33,3 +33,12 @@ struct Item: Codable {
         self.id = nil
     }
 }
+
+extension Item: Equatable {
+    
+    static func ==(lhs: Item, rhs: Item) -> Bool {
+        return lhs.name == rhs.name &&
+            lhs.groupID == rhs.groupID
+    }
+    
+}

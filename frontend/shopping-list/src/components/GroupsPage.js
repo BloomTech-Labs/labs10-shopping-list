@@ -87,7 +87,8 @@ class GroupsPage extends Component{
         }
     }
 
-    handleDeleteGroup = () => {
+    handleDeleteGroup = (event) => {
+        event.preventDefault();
         if (this.state.groupId !== null) {
             this.props.removeGroup(this.state.groupId, localStorage.getItem("userId"));
             this.setState({modal16: false})

@@ -55,6 +55,22 @@ class GroupsPopoverView: UIView, NibInstantiatable, UITableViewDelegate, UITable
         popover.dismiss()
     }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        guard let selectedGroup = selectedGroup else { return [] }
+        let group = allGroups[indexPath.row]
+        let index = allGroups.index(of: group) ?? 0
+        print(group.groupID)
+        
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+            GroupController.shared.delete(group: group, completion: { (_) in })
+            allGroups.remove(at: index)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        
+        return selectedGroup == group ? [] : [delete]
+    }
+    
     @IBOutlet weak var tableView: UITableView!
     
 }
