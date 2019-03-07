@@ -53,16 +53,23 @@ class ItemController {
                 
                 group.items = nil
                 
+                var myHistory: [Item] = []
+                
                 for item in items {
-                    if item.groupID == group.groupID {
+                    if item.groupID == group.groupID  && !item.purchased {
                         if group.items != nil {
                             group.items?.append(item)
                         } else {
                             group.items = [item]
                         }
                     }
+                    
+                    if item.purchased && item.groupID == group.groupID {
+                        myHistory.append(item)
+                    }
                 }
                 
+                history = myHistory
                 completion(true)
                 
             } catch {

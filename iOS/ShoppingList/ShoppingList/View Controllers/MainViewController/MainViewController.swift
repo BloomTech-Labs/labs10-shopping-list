@@ -84,9 +84,10 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
             }
         case .history:
             tableView.rowHeight = 200
-            HistoryController().getHistory { (_) in
-                UI { self.tableView.reloadData() }
-            }
+//            HistoryController().getHistory { (_) in
+//                UI { self.tableView.reloadData() }
+//            }
+             UI { self.tableView.reloadData() }
         case .stats:
             GroupMemberController().getGroupMembers { (_) in
                 UI { self.tableView.reloadData() }
