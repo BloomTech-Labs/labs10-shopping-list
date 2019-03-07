@@ -106,7 +106,7 @@ class GroupsPage extends Component{
                                 <MDBCardText>
                                     <p>Create a new group and start inviting to help with the shopping!</p>
                                 </MDBCardText>
-                                <MDBBtn color="primary" onClick={this.toggle(14)}><p>Create</p></MDBBtn>
+                                <MDBBtn color="primary" onClick={this.toggle(14)}>Create</MDBBtn>
                             </MDBCardBody>
                         </MDBCard>
                         </div>
