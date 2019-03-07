@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer, MDBCol,
     MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
 import GroupCard from './GroupCard';
+import './Styles/GroupCard.css';
 
 
 function makeid() {
