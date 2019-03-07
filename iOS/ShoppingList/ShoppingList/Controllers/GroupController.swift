@@ -205,7 +205,7 @@ class GroupController {
         }
     }
     
-    func delete(group: Group, userID: Int,  completion: @escaping (Bool) -> Void) {
+    func delete(group: Group, completion: @escaping (Bool) -> Void) {
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
@@ -214,7 +214,7 @@ class GroupController {
         
         let parameters: Parameters = ["userID": userID, "groupID": group.groupID]
         
-        Alamofire.request(url, parameters: parameters, headers: headers).validate().response { (response) in
+        Alamofire.request(url, method: .delete, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().response { (response) in
             
             if let error = response.error {
                 print(error.localizedDescription)
@@ -223,7 +223,9 @@ class GroupController {
             }
             
             completion(true)
+            
         }
+        
     }
     
  
