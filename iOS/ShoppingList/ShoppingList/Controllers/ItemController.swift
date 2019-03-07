@@ -122,6 +122,28 @@ class ItemController {
         }
     }
     
+    
+    func deleteItem(id: Int, completion: @escaping (Error?) -> Void) {
+        guard let accessToken = SessionManager.tokens?.idToken else { return }
+        let headers: HTTPHeaders = ["Authorization": "Bearer \(accessToken)"]
+        let url = baseURL.appendingPathComponent("item").appendingPathComponent(String(describing: id))
+        
+        Alamofire.request(url, method: .delete, headers: headers).validate().responseJSON { (response) in
+            switch response.result {
+            case .success(_):
+                completion(nil)
+                return
+            case .failure(let error):
+                completion(ItemError.backendError(String(data: response.data!, encoding: .utf8 )!, error))
+                return
+            }
+        }
+    }
+    
+    
+    
+    
+    
     func itemToJSON(item: Item) throws -> Parameters {
         let jsonData = try! JSONEncoder().encode(item)
         return try! JSONSerialization.jsonObject(with: jsonData, options: []) as! [String: Any]
