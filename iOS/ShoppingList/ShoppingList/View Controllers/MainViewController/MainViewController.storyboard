@@ -136,6 +136,9 @@
                                                         <integer key="value" value="8"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="checkoutButtonTapped:" destination="WgK-Rm-0lC" eventType="touchUpInside" id="wwA-ON-Kmx"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>

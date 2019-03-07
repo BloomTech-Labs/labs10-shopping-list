@@ -58,6 +58,15 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         }
     }
     
+    @IBAction func checkoutButtonTapped(_ sender: Any) {
+        ItemController().checkout(items: selectedItems, withTotal: 25) { (success) in
+            if success {
+                print("Checked out")
+            } else {
+                fatalError()
+            }
+        }
+    }
     
     
     func updatesNeeded() {

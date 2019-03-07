@@ -84,7 +84,7 @@ class HistoryController {
         
         request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         
-        let parameters: [String: Any] = ["userID": userID, "groupID": groupID, "total": total, "purchasedOn": Date()]
+        let parameters: [String: Any] = ["userID": userID, "groupID": groupID, "total": total, "purchasedOn": Date().dateToString()]
         
         Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().response { (response) in
             
