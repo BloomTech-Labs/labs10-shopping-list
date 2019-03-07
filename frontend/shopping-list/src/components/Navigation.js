@@ -67,7 +67,6 @@ var lock = new Auth0Lock(
     lockOptions
 )
 
-
 class Navigation extends React.Component{
     constructor(props){
         super(props);
@@ -76,7 +75,6 @@ class Navigation extends React.Component{
             activeTabClassname: "home",
             isOpen: false,
         }
-
     }
 
     // Toggles dropdown menus for MDB
