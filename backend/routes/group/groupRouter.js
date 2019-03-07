@@ -3,6 +3,7 @@ const groupRouter = express.Router();
 const groupDb = require('../../helpers/groupModel');
 const groupMembersDb = require('../../helpers/groupMembersModel');
 const groupMemDb = require('../../helpers/groupMembersModel');
+const cors = require('cors');
 
 const usersDb = require('../../helpers/userModel');
 const nodemailer = require('nodemailer');
@@ -11,6 +12,8 @@ const nodemailer = require('nodemailer');
 const checkJwt = require('../../validators/checkJwt');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
 const checkUser = require('../../validators/checkUser');
+
+const chkC = require("./checkCors");
 
 /****************************************************************************************************/
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/group ENDPOINT **/
@@ -137,6 +140,7 @@ function fetch_group_mem(id) {
 
 // get all groups with user ID
 groupRouter.get('/user/:id', (req, res) => {
+
     let userId = req.params.id;
   
     groupDb.getByUser(userId).then(groups => {

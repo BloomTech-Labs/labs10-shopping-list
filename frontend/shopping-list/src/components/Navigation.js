@@ -164,10 +164,6 @@ class Navigation extends React.Component{
                                     </MDBBtn>
 
                                 </MDBNavItem>
-                                <MDBNavItem className="nav-mobile" >
-                                    <MDBNavLink to = '#' onClick={auth0Client.signIn}>Log In</MDBNavLink>
-                                </MDBNavItem>
-                                </div>
                             ) }
 
                         </MDBNavItem>
