@@ -1,7 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto');
+
 .group-user-image img{
     width: 60px;
     border-radius: 60px;
-    padding-bottom: 10px;
 }
 
 .group-user-image {
@@ -19,5 +20,7 @@
 }
 
 .group-user-stats {
+    font-family: "Roboto" sans-serif;
+    margin: 10px 0px;
     text-align: center;
 }
