@@ -3,6 +3,8 @@ import Navigation from './Navigation';
 import tomatoShare from '../images/tomato-share.jpg';
 import '../components/Styles/Home.css';
 
+import groceryBag from '../images/grocery-bag.jpg';
+
 class Home extends React.Component{
     render(){
         return(
@@ -10,9 +12,10 @@ class Home extends React.Component{
                 
                 <header className = 'home-banner-vid'>
                 
-                <video playsInline autoPlay muted loop poster="poster.jpg" id = "bg-vid">
+                {/* <video playsInline autoPlay muted loop poster="poster.jpg" id = "bg-vid">
                 <source src = 'http://adamreid.me/images/time-lapse-cc-blur-low.mp4'  type = "video/mp4" />
-                </video>
+                </video> */}
+                <img src = {groceryBag} alt = 'bag of groceries'></img>
 
                 <div className = 'home-banner-overlay'>
                 <h1>SHOPTRAK</h1>
