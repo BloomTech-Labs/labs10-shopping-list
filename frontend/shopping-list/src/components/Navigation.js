@@ -89,9 +89,17 @@ class Navigation extends React.Component{
                                 <MDBNavLink to="/">Home</MDBNavLink>
                             </MDBNavItem>
                             {isLoggedIn ? (
-                                <MDBNavItem active={pathname === "/groups" ? "active" : null} >
-                                    <MDBNavLink to="/groups">Groups</MDBNavLink>
-                                </MDBNavItem>
+                                <div>
+                                    <MDBNavItem active={pathname === "/groups" ? "active" : null} >
+                                        <MDBNavLink to="/groups">Groups</MDBNavLink>
+                                    </MDBNavItem>
+                                    <MDBNavItem active={pathname === "/profile" ? "active" : null} className="nav-mobile" >
+                                        <MDBNavLink to="/profile">My Account</MDBNavLink>
+                                    </MDBNavItem>
+                                    <MDBNavItem className="nav-mobile">
+                                        <MDBNavLink to="#" onClick={this.signOut} >Log Out</MDBNavLink>
+                                    </MDBNavItem>
+                                </div>
                             ) : null}
 
                         </MDBNavbarNav>
@@ -99,7 +107,7 @@ class Navigation extends React.Component{
                         <MDBNavbarNav right>
                             <MDBNavItem>
                                 {isLoggedIn ? (
-                                    <MDBDropdown>
+                                    <MDBDropdown className="nav-hide">
                                         <MDBDropdownToggle className="dropdown-toggle" nav>
                                             {this.props.currentUser ? (
                                                 <img src={this.props.currentUser.profilePicture} className="rounded-circle z-depth-0"
@@ -119,11 +127,17 @@ class Navigation extends React.Component{
                                         </MDBDropdownMenu>
                                     </MDBDropdown>
                                 ) : (
-                                    <MDBNavItem>
-                                        <MDBBtn color="deep-orange" onClick={this.signIn}>
-                                            Log In / Sign Up
-                                        </MDBBtn>
-                                    </MDBNavItem>
+                                    <div>
+                                        <MDBNavItem className="nav-hide">
+                                            <MDBBtn color="deep-orange" onClick={this.signIn}>
+                                                Log In / Sign Up
+                                            </MDBBtn>
+                                        </MDBNavItem>
+                                        <MDBNavItem className="nav-mobile">
+                                            <MDBNavLink to = '#' onClick={this.signIn}>Log In / Sign Up
+                                            </MDBNavLink>
+                                        </MDBNavItem>
+                                    </div>
                                 ) }
 
                             </MDBNavItem>
