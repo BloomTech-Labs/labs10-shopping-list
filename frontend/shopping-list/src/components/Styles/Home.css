@@ -84,6 +84,7 @@
     background: white;
     padding: 60px 60px;
     margin: 0 auto;
+    max-width: 80%;
 }
 
 .content-tiles{
