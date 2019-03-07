@@ -97,12 +97,15 @@
 .tile-img{
     width: 47%;
     margin: 20px 0px;
+    height: 300px;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
 }
 
-.tile-img img{
-    width: 100%;
+/* .tile-img img{
     border-radius: 20px;
-}
+} */
 
 .tile-text{
     width: 47%;
