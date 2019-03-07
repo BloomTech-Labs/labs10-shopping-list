@@ -1,5 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto');
+
 .home-container{
     width: 100%;
+}
+
+.home-container h1{
+    font-family: "Montserrat", sans-serif;
+}
+
+
+.home-container h2{
+    font-family: "Montserrat", sans-serif;
+}
+
+
+.home-container h3{
+    font-family: "Montserrat", sans-serif;
+}
+
+.home-container p{
+    font-family: "Roboto" sans-serif;
 }
 
 /* .home-banner{
@@ -16,6 +36,7 @@
 } */
 
 
+
 .home-banner-vid{
     position: relative;
     overflow: hidden;
@@ -24,7 +45,7 @@
     margin-top: 60px;
 }
 
-.home-banner-vid video {
+.home-banner-vid img {
     position: absolute;
     z-index: 1;
     top: 0;
@@ -45,7 +66,7 @@
 }
 
 .home-banner-overlay h1{
-    font-size: 6rem;
+    font-size: 8rem;
     font-weight: 800;
     font-family: "Montserrat", sans-serif;
     color: white;
@@ -54,7 +75,7 @@
 .home-banner-overlay h2{
     font-family: "Roboto", sans-serif;
     font-weight: 400;
-    font-size: 3rem;
+    font-size: 4rem;
     color: white;
 }
 
@@ -63,6 +84,7 @@
     background: white;
     padding: 60px 60px;
     margin: 0 auto;
+    max-width: 80%;
 }
 
 .content-tiles{
@@ -75,12 +97,15 @@
 .tile-img{
     width: 47%;
     margin: 20px 0px;
+    height: 300px;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
 }
 
-.tile-img img{
-    width: 100%;
+/* .tile-img img{
     border-radius: 20px;
-}
+} */
 
 .tile-text{
     width: 47%;
@@ -103,12 +128,13 @@ section {
 
 
 @media only screen and (max-width: 767px){
+
     .home-banner-overlay h1{
-        font-size: 4rem !important;
+        font-size: 4rem;
     }
 
     .home-banner-overlay h2{
-        font-size: 2rem !important;
+        font-size: 2rem;
     }
 
     .content-tiles{

@@ -444,10 +444,17 @@ export const generateGroupInviteUrl = (userId, groupId) => {
     invitee: 'default@dummy.com'
   }
   const endpoint = axios.post(`${backendURL}/api/invite/create`, data, options);
+  let frontendURL;
+
+  if(process.env.NODE_ENV === 'development'){
+    frontendURL = 'localhost:3000'
+  } else {
+    frontendURL = 'https://labs10-shopping-list.netlify.com'
+  }
   return dispatch => {
     dispatch({type: GEN_GROUP_INVITE})
     endpoint.then(res => {
-      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: backendURL + '/i/' + res.data.inviteCode} })
+      dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: `${frontendURL}/invite?${res.data.inviteCode}`} })
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR})

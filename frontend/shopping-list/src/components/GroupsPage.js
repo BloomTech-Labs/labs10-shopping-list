@@ -5,6 +5,7 @@ import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer, 
     MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
 import GroupCard from './GroupCard';
 
+import './Styles/GroupsPage.css';
 
 function makeid() {
     let text = "";
@@ -96,17 +97,20 @@ class GroupsPage extends Component{
 
     render(){
         return (
-                <MDBContainer className="groups-container">
-                    <MDBRow center>
-                        <MDBCard className="text-center" style={{ width: "20rem", marginTop: "1.5rem", height: '15rem' }}>
+            <div className = 'groups-container'>
+
+                <div className = 'groups-cards'>
+                    <div className = 'add-group-container'>
+                        <MDBCard className="text-center" >
                             <MDBCardBody>
-                                <MDBCardTitle>Create New Group</MDBCardTitle>
+                                <MDBCardTitle><h2>Create New Group</h2></MDBCardTitle>
                                 <MDBCardText>
-                                    Create a new group and start inviting to help with the shopping!
+                                    <p>Create a new group and start inviting to help with the shopping!</p>
                                 </MDBCardText>
                                 <MDBBtn color="primary" onClick={this.toggle(14)}>Create</MDBBtn>
                             </MDBCardBody>
                         </MDBCard>
+                        </div>
 
                         {this.props.userGroups !== null ? (
                             this.props.userGroups.map(group =>
@@ -116,7 +120,8 @@ class GroupsPage extends Component{
                             )
                         ) : null}
 
-                    </MDBRow>
+                    </div>
+
                     <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
                         <MDBModalHeader toggle={this.toggle(14)}>Create A New Group</MDBModalHeader>
                         <MDBModalBody>
@@ -129,7 +134,7 @@ class GroupsPage extends Component{
                     </MDBModal>
 
                     <MDBModal isOpen={this.state.modal15} toggle={this.toggle(15)} centered>
-                        <MDBModalHeader toggle={this.toggle(15)}>Update Group Name</MDBModalHeader>
+                        <MDBModalHeader toggle={this.toggle(15)}><p>Update Group Name</p></MDBModalHeader>
                         <MDBModalBody>
                             <MDBInput label="Change Group Name" name={"groupName"} onChange={this.handleInput} defaultValue={this.state.groupName}/>
                         </MDBModalBody>
@@ -151,7 +156,7 @@ class GroupsPage extends Component{
                             <MDBBtn color="primary" onClick={this.handleDeleteGroup} disabled={this.state.groupName !== this.state.delete }>Delete</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
-                </MDBContainer>
+                </div>
         )
     }
 }

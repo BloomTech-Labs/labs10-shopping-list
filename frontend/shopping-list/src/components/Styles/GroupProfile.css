@@ -32,12 +32,14 @@
 .group-profile-left{
     margin-left: 10%;
     width: 50%;
+    border-right: 2px solid gray;
 }
 
 @media only screen and (max-width: 767px){
     .group-profile-left{
         width: 100%;
         margin-left: 0;
+        border: none;
     }
 }
 
