@@ -73,4 +73,30 @@ class HistoryController {
         }
     }
     
+    
+    func newHistory(forItem item: Item, withTotal total: Double, completion: @escaping (Bool) -> Void) {
+        guard let accessToken = SessionManager.tokens?.idToken else {completion(false); return}
+        guard let groupID = selectedGroup?.groupID else { completion(false); return }
+        
+        let url = baseURL.appendingPathComponent("grouphistory")
+        
+        var request = URLRequest(url: url)
+        
+        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        
+        let parameters: [String: Any] = ["userID": userID, "groupID": groupID, "total": total, "purchasedOn": Date()]
+        
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).validate().response { (response) in
+            
+            if let error = response.error {
+                print(error.localizedDescription)
+                completion(false)
+                return
+            }
+            
+            completion(true)
+        }
+        
+    }
+    
 }

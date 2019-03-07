@@ -14,6 +14,7 @@ var selectedGroup: Group? = nil
 var selectedItems: [Item] = []
 var history: [Item] = []
 var groupMembers: [GroupMember] = []
+var userID: Int = 0
 
 // MARK: - Popovers
 

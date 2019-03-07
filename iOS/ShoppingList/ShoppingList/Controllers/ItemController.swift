@@ -140,8 +140,47 @@ class ItemController {
         }
     }
     
+    func checkout(items: [Item], withTotal total: Double, completion: @escaping (Bool) -> Void) {
+        
+        let purchasedItems = items.map { (item) -> Item in
+            item.purchased = true
+            return item
+        }
+        
+//        let purchased = items.map({ $0.purchased = true })
+
+        let group = DispatchGroup()
+        
+        // Updates each item to show purchased Bool
+        for i in purchasedItems {
+            group.enter()
+            self.saveItem(item: i) { (_, error) in
+                if let _ = error {
+                    completion(false)
+                    group.leave()
+                }
+                
+                group.leave()
+            }
+        }
+        
+        // Adds to groupHistory
+        for i in purchasedItems {
+            HistoryController().newHistory(forItem: i, withTotal: total) { (success) in
+                if !success {
+                    completion(false)
+                    group.leave()
+                }
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) {
+            print("Done")
+        }
+    }
     
-    
+ 
     
     
     func itemToJSON(item: Item) throws -> Parameters {
