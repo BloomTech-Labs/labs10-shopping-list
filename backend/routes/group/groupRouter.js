@@ -142,7 +142,7 @@ groupRouter.get('/user/:id', (req, res) => {
     groupDb.getByUser(userId).then(groups => {
         console.log('get groups by user id', groups);
         if(groups.length === 0){
-            res.status(404).json({error: `No groups found for that userID.`})
+            return res.status(404).json({error: `No groups found for that userID.`})
         }
         
         for(let i = 0; i < groups.length; i++){
@@ -179,7 +179,7 @@ groupRouter.get('/user/:id', (req, res) => {
         }
     }).catch(err => {
         console.log(err);
-        res.status(500).json({error: `Error retrieving groups.`})
+        return res.status(500).json({error: `Error retrieving groups.`})
     })
 })
 
@@ -441,7 +441,7 @@ groupRouter.put('/:id', (req, res) => {
 
 /**************************************************/
 
-groupRouter.delete('/remove/:groupID::userID', async (req, res) => {
+groupRouter.delete('/remove/:groupID/:userID', async (req, res) => {
     const groupID = Number(req.params.groupID);
     const userID = Number(req.params.userID);
 
@@ -488,7 +488,7 @@ groupRouter.delete('/remove/:groupID::userID', async (req, res) => {
 
 
     } catch(err) {
-        res.status(404).json(err)
+        return res.status(404).json(err)
     }
 
 
