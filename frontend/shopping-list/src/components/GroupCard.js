@@ -1,7 +1,7 @@
 import React from 'react';
 import {MDBCard, MDBCardBody, MDBCardText, MDBCardHeader, MDBNavLink, MDBCardFooter, MDBIcon, MDBCardTitle, MDBBtn} from 'mdbreact';
 import {withRouter} from 'react-router-dom';
-import "./Styles/Group.css";
+import "./Styles/GroupCard.css";
 
 const GroupCard = props => {
     // console.log('group', props.group.groupMembers)
@@ -27,10 +27,19 @@ const GroupCard = props => {
                     </MDBNavLink>
                 </MDBCardBody>
                 <MDBCardFooter color="success-color">
-                    <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => props.updateGroup(props.group.id, props.group.name)} >
-                        &nbsp;<p>Update Name</p></MDBIcon> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <MDBIcon icon="trash" onClick={() => props.removeGroup(props.group.id, props.group.name)} style={{cursor: "pointer"}} >
-                    &nbsp;<p>Delete Group</p></MDBIcon>
+                <div className = 'group-card-footer'>
+                
+                <div className = 'group-card-footer-button'>
+                    <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => props.updateGroup(props.group.id, props.group.name)} />     
+                    Change Name
+                </div>
+
+                    
+                    <div className = 'group-card-footer-button'>
+                    <MDBIcon icon="trash" onClick={() => props.removeGroup(props.group.id, props.group.name)} style={{cursor: "pointer"}} />
+                    Delete Group
+                    </div>
+                    </div>
                 </MDBCardFooter>
             </MDBCard>
         </div>
