@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 // import {Link, withRouter} from 'react-router-dom';
 import auth0Client from './Auth';
+import Auth0Lock from 'auth0-lock';
 
 import {connect} from 'react-redux';
 import {checkEmail,} from '../store/actions/rootActions';
@@ -10,6 +11,31 @@ import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNav
     MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem,
     // MDBIcon, MDBFormInline, 
     MDBBtn } from "mdbreact";
+
+
+var lockOptions = {
+    auth: {
+        redirectUrl: `http://localhost:3000/callback`,
+        responseType: 'id_token',
+        params: {
+            scope: 'openid email'
+        }
+    },
+    theme: {
+        primaryColor: '#FF7043'
+    },
+    languageDictionary: {
+        title: 'ShopTrak'
+    }
+
+}
+
+var lock = new Auth0Lock(
+    process.env.REACT_APP_AUTH0_CLIENT_ID,
+    process.env.REACT_APP_AUTH0_DOMAIN,
+    lockOptions
+)
+
 
 class Navigation extends React.Component{
     state = {
@@ -30,8 +56,15 @@ class Navigation extends React.Component{
 
     signOut = () => { // logs out the current user and redirects to the homepage
         auth0Client.signOut();
+        // lock.logout();
         this.props.history.replace('/');
     };
+
+    signIn = (event) => {
+        event.preventDefault();
+        console.log('click');
+        lock.show();
+    }
 
     render(){
         // Gather user id to determine if user is logged in or not
@@ -77,20 +110,28 @@ class Navigation extends React.Component{
                         <MDBNavItem>
                             {isLoggedIn ? (
                                 <MDBDropdown>
-                                    <MDBDropdownToggle className="dropdown-toggle nav-hide" nav>
-                                        <img src={localStorage.getItem("img_url")} className="rounded-circle z-depth-0"
-                                             style={{ height: "35px", padding: 0 }} alt="" />
+                                    <MDBDropdownToggle className="dropdown-toggle" nav>
+                                    {this.props.currentUser ? (
+                                        <img src={this.props.currentUser.profilePicture} className="rounded-circle z-depth-0"
+                                        style={{ height: "35px", padding: 0 }} alt="" />
+                                    ) : null}
+
                                     </MDBDropdownToggle>
-                                    <MDBDropdownMenu className="dropdown-default" center>
-                                        <MDBNavLink to = '/profile' style={{color: "#000000"}}>My account</MDBNavLink>
-                                        <MDBNavLink to = '/' onClick={this.signOut} style={{color: "#000000"}}>Log out</MDBNavLink>
+                                    <MDBDropdownMenu className="dropdown-default"
+                                    style = {{'padding': '20px', 'margin-right': '20px'}}>
+
+                                        <MDBNavLink to = '/profile' style={{color: "#000000"}}>My Account
+                                        </MDBNavLink>
+
+                                        <MDBNavLink to = '/' onClick={this.signOut} style={{color: "#000000"}}>
+                                        Log Out
+                                        </MDBNavLink>
                                     </MDBDropdownMenu>
                                 </MDBDropdown>
                             ) : (
-                                <div>
-                                <MDBNavItem className="nav-hide">
-                                    <MDBBtn color="success" onClick={auth0Client.signIn}>
-                                        Login
+                                <MDBNavItem>
+                                    <MDBBtn color="deep-orange" onClick={this.signIn}>
+                                        Log In / Sign Up
                                     </MDBBtn>
 
                                 </MDBNavItem>

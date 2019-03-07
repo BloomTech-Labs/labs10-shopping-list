@@ -5,6 +5,7 @@
     left: 0;
     position: fixed;
     z-index: 3;
+    font-family: "Montserrat", sans-serif;
 }
 
 @media (max-width: 767px){
@@ -100,4 +101,8 @@
         display: block;
     }
 
+}
+.dropdown-default{
+    width: 400px;
+    padding: 20px ;
 }
