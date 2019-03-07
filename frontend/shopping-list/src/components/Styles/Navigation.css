@@ -43,8 +43,12 @@
         display: none !important;
     }
 
-    .collapse {
-        width: 100% !important;
+    .navbar-collapse {
+        width: 100%;
+    }
+
+    .nav-item:hover {
+        background: #00cc00;
     }
 
 }

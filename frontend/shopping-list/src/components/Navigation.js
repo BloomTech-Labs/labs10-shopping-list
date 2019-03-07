@@ -61,7 +61,7 @@ class Navigation extends React.Component{
                                 <MDBNavLink to="/groups">Groups</MDBNavLink>
                             </MDBNavItem>
 
-                            <MDBNavItem active={pathname === "/groups" ? "active" : null} className="nav-mobile" >
+                            <MDBNavItem active={pathname === "/profile" ? "active" : null} className="nav-mobile" >
                                 <MDBNavLink to="/profile">My Account</MDBNavLink>
                             </MDBNavItem>
 
@@ -87,11 +87,17 @@ class Navigation extends React.Component{
                                     </MDBDropdownMenu>
                                 </MDBDropdown>
                             ) : (
-                                <MDBNavItem>
+                                <div>
+                                <MDBNavItem className="nav-hide">
                                     <MDBBtn color="success" onClick={auth0Client.signIn}>
                                         Login
                                     </MDBBtn>
+
                                 </MDBNavItem>
+                                <MDBNavItem className="nav-mobile" >
+                                    <MDBNavLink to = '#' onClick={auth0Client.signIn}>Log In</MDBNavLink>
+                                </MDBNavItem>
+                                </div>
                             ) }
 
                         </MDBNavItem>
