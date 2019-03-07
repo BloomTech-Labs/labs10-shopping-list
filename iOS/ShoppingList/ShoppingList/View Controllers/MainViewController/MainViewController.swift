@@ -30,9 +30,10 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         
         GroupController.shared.getUserID { (user) in
             
-            guard let userID = user?.profile.id else { return }
+            guard let id = user?.profile.id else { return }
+            userID = id
             
-            GroupController.shared.getGroups(forUserID: userID) { (success) in
+            GroupController.shared.getGroups(forUserID: id) { (success) in
                 if allGroups.count > 0 {
                     selectedGroup = allGroups[0]
                     UI { self.updatesNeeded() }
