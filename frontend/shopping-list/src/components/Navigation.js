@@ -56,9 +56,19 @@ class Navigation extends React.Component{
                             <MDBNavLink to="/">Home</MDBNavLink>
                         </MDBNavItem>
                         {isLoggedIn ? (
+                            <div>
                             <MDBNavItem active={pathname === "/groups" ? "active" : null} >
                                 <MDBNavLink to="/groups">Groups</MDBNavLink>
                             </MDBNavItem>
+
+                            <MDBNavItem active={pathname === "/groups" ? "active" : null} className="nav-mobile" >
+                                <MDBNavLink to="/profile">My Account</MDBNavLink>
+                            </MDBNavItem>
+
+                            <MDBNavItem className="nav-mobile">
+                                <MDBNavLink to="/" onClick={this.signOut}>Log Out</MDBNavLink>
+                            </MDBNavItem>
+                            </div>
                         ) : null}
 
                     </MDBNavbarNav>
@@ -67,7 +77,7 @@ class Navigation extends React.Component{
                         <MDBNavItem>
                             {isLoggedIn ? (
                                 <MDBDropdown>
-                                    <MDBDropdownToggle className="dropdown-toggle" nav>
+                                    <MDBDropdownToggle className="dropdown-toggle nav-hide" nav>
                                         <img src={localStorage.getItem("img_url")} className="rounded-circle z-depth-0"
                                              style={{ height: "35px", padding: 0 }} alt="" />
                                     </MDBDropdownToggle>

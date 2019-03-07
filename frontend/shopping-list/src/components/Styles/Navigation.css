@@ -1,5 +1,5 @@
 .navigation-container {
-    width: 100vw;
+    width: 100%;
     /*background-color: #2A922D;*/
     top: 0;
     left: 0;
@@ -9,8 +9,8 @@
 
 @media (max-width: 767px){
     .navigation-container {
-        height: 60px;
-        width: 100vw;
+        /*height: 60px;*/
+        width: 100%;
     }
 
     .navbar{
@@ -18,19 +18,33 @@
     }
 
     .dropdown-menu {
-        background: #00cc00;
+        /*background: #2A922D;*/
+        display: none;
     }
 
     .dropdown-default{
-        background: #00cc00;
+        /*background: #2A922D;*/
+        display: none;
     }
 
     .nav-link {
-        background: #00cc00;
+        /*background: #00cc00;*/
     }
 
     .navbar-nav{
-        background: #00cc00;
+        background: #2A922D;
+    }
+
+    .dropdown-toggle {
+        display: none;
+    }
+
+    .nav-hide {
+        display: none !important;
+    }
+
+    .collapse {
+        width: 100% !important;
     }
 
 }
@@ -72,3 +86,14 @@
     margin-left: 10px;
 }
 
+.nav-mobile {
+    display: none;
+}
+
+
+@media (max-width: 767px){
+    .nav-mobile {
+        display: block;
+    }
+
+}
