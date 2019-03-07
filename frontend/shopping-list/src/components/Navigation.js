@@ -12,13 +12,19 @@ import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNav
     // MDBIcon, MDBFormInline, 
     MDBBtn } from "mdbreact";
 
+let frontendURL;
+if(process.env.NODE_ENV === 'development'){
+    frontendURL = 'http://localhost:3000';
+} else {
+    frontendURL = `https://labs10-shopping-list.netlify.com`
+}
 
 var lockOptions = {
     auth: {
-        redirectUrl: `http://localhost:3000/callback`,
-        responseType: 'id_token',
+        redirectUrl: `${frontendURL}/callback`,
+        responseType: 'token id_token',
         params: {
-            scope: 'openid email'
+            scope: 'profile openid email'
         }
     },
     theme: {
@@ -36,12 +42,41 @@ var lock = new Auth0Lock(
     lockOptions
 )
 
+lock.on('authenticated', function(authResult){
+    console.log('auth attempt');
+    lock.getUserInfo(authResult.accessToken, function(error, profile){
+        if(error){
+            //handle error
+            this.props.history.replace('/');
+            return;
+        }
+        console.log('result \n \n \n', authResult);
+        localStorage.setItem('jwt', authResult.idToken);
+        localStorage.setItem('email', authResult.idTokenPayload.email);
+        localStorage.setItem('name', authResult.idTokenPayload.name);
+        localStorage.setItem('img_url', authResult.idTokenPayload.picture);
+        localStorage.setItem('isLoggedIn', true);
+
+        window.location.href = `${frontendURL}/groups`;
+    })
+})
+
+var lock = new Auth0Lock(
+    process.env.REACT_APP_AUTH0_CLIENT_ID,
+    process.env.REACT_APP_AUTH0_DOMAIN,
+    lockOptions
+)
+
 
 class Navigation extends React.Component{
-    state = {
-        collapseID: "",
-        activeTabClassname: "home",
-        isOpen: false,
+    constructor(props){
+        super(props);
+        this.state = {
+            collapseID: "",
+            activeTabClassname: "home",
+            isOpen: false,
+        }
+
     }
 
     // Toggles dropdown menus for MDB

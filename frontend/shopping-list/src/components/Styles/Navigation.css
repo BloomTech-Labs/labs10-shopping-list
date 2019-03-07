@@ -106,3 +106,7 @@
     width: 400px;
     padding: 20px ;
 }
+
+.navbar-collapse {
+    margin-top: 12px;
+}
