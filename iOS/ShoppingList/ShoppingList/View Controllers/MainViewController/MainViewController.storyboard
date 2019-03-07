@@ -34,7 +34,7 @@
                                         </segments>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <action selector="segmentControlSwitched:" destination="WgK-Rm-0lC" eventType="valueChanged" id="679-l2-gUV"/>
+                                            <action selector="segmentControlSwitched:" destination="WgK-Rm-0lC" eventType="valueChanged" id="1G7-V5-ozn"/>
                                         </connections>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0hW-fc-I8X">
@@ -102,14 +102,71 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UCD-Fp-yTx">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UCD-Fp-yTx" userLabel="Checkout container">
                                 <rect key="frame" x="0.0" y="704" width="375" height="108"/>
                                 <subviews>
-                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r2B-ex-7rg">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4Na-cG-65R">
+                                        <rect key="frame" x="16" y="16" width="343" height="56"/>
+                                        <subviews>
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r2B-ex-7rg">
+                                                <rect key="frame" x="0.0" y="0.0" width="167.66666666666666" height="56"/>
+                                                <color key="backgroundColor" name="Theme"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <state key="normal" title="Add item">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="addNewItemButtonPressed:" destination="WgK-Rm-0lC" eventType="touchUpInside" id="8ay-nc-5s9"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T8n-Jc-5f6" userLabel="Checkout">
+                                                <rect key="frame" x="175.66666666666663" y="0.0" width="167.33333333333337" height="56"/>
+                                                <color key="backgroundColor" red="0.53878908903517686" green="0.74823524746192893" blue="0.3725484165589007" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                <state key="normal" title="Checkout">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="56" id="Wai-71-3cJ"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96624473011217893" green="0.96157688117443896" blue="0.9709125790499189" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="108" id="3ge-wC-u5V"/>
+                                    <constraint firstAttribute="trailing" secondItem="4Na-cG-65R" secondAttribute="trailing" constant="16" id="BPd-tP-MEh"/>
+                                    <constraint firstItem="4Na-cG-65R" firstAttribute="top" secondItem="UCD-Fp-yTx" secondAttribute="top" constant="16" id="DIG-BI-GF5"/>
+                                    <constraint firstItem="4Na-cG-65R" firstAttribute="leading" secondItem="UCD-Fp-yTx" secondAttribute="leading" constant="16" id="XI0-lc-yV2"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                        <integer key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                        <real key="value" value="0.050000000000000003"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bSk-hC-hl8" userLabel="Add new item container">
+                                <rect key="frame" x="0.0" y="704" width="375" height="108"/>
+                                <subviews>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWz-Q4-O9g">
                                         <rect key="frame" x="16" y="16" width="343" height="56"/>
                                         <color key="backgroundColor" name="Theme"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="56" id="rwO-Oe-Nol"/>
+                                            <constraint firstAttribute="height" constant="56" id="wQe-Fb-QeC"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                         <state key="normal" title="Add new item">
@@ -121,16 +178,16 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="addNewItemButtonPressed:" destination="WgK-Rm-0lC" eventType="touchUpInside" id="Ycz-GK-7sC"/>
+                                            <action selector="addNewItemButtonPressed:" destination="WgK-Rm-0lC" eventType="touchUpInside" id="SoH-33-DaB"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.96624473011217893" green="0.96157688117443896" blue="0.9709125790499189" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="backgroundColor" red="0.9662447301" green="0.96157688119999996" blue="0.97091257900000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstItem="r2B-ex-7rg" firstAttribute="leading" secondItem="UCD-Fp-yTx" secondAttribute="leading" constant="16" id="0z3-VO-HaF"/>
-                                    <constraint firstAttribute="height" constant="108" id="3ge-wC-u5V"/>
-                                    <constraint firstItem="r2B-ex-7rg" firstAttribute="top" secondItem="UCD-Fp-yTx" secondAttribute="top" constant="16" id="pwc-Qa-V3g"/>
-                                    <constraint firstAttribute="trailing" secondItem="r2B-ex-7rg" secondAttribute="trailing" constant="16" id="qEr-wq-UT9"/>
+                                    <constraint firstItem="JWz-Q4-O9g" firstAttribute="leading" secondItem="bSk-hC-hl8" secondAttribute="leading" constant="16" id="1CB-Sx-tsb"/>
+                                    <constraint firstItem="JWz-Q4-O9g" firstAttribute="top" secondItem="bSk-hC-hl8" secondAttribute="top" constant="16" id="IpA-ns-qdZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="JWz-Q4-O9g" secondAttribute="trailing" constant="16" id="bPN-2a-VYy"/>
+                                    <constraint firstAttribute="height" constant="108" id="djK-go-q5p"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
@@ -154,12 +211,15 @@
                         <constraints>
                             <constraint firstItem="XsU-Xe-TG5" firstAttribute="top" secondItem="hIb-uV-oUA" secondAttribute="bottom" id="281-xh-9jO"/>
                             <constraint firstItem="OTX-De-Wyf" firstAttribute="top" secondItem="hIb-uV-oUA" secondAttribute="bottom" constant="-102" id="93z-T0-7Cl"/>
+                            <constraint firstAttribute="bottom" secondItem="bSk-hC-hl8" secondAttribute="bottom" id="ES1-By-Lu8"/>
                             <constraint firstAttribute="bottom" secondItem="UCD-Fp-yTx" secondAttribute="bottom" id="Edh-nc-GkB"/>
                             <constraint firstItem="hIb-uV-oUA" firstAttribute="top" secondItem="i2M-Tw-f80" secondAttribute="top" id="LSQ-ZS-9jU"/>
                             <constraint firstItem="XsU-Xe-TG5" firstAttribute="trailing" secondItem="OTX-De-Wyf" secondAttribute="trailing" id="M7Y-K8-Vke"/>
+                            <constraint firstItem="bSk-hC-hl8" firstAttribute="trailing" secondItem="OTX-De-Wyf" secondAttribute="trailing" id="OQ7-fi-swm"/>
                             <constraint firstItem="XsU-Xe-TG5" firstAttribute="leading" secondItem="OTX-De-Wyf" secondAttribute="leading" id="Wvf-OR-a3R"/>
                             <constraint firstItem="OTX-De-Wyf" firstAttribute="trailing" secondItem="hIb-uV-oUA" secondAttribute="trailing" id="azE-MI-qBX"/>
                             <constraint firstItem="UCD-Fp-yTx" firstAttribute="leading" secondItem="OTX-De-Wyf" secondAttribute="leading" id="dmc-3B-Pcy"/>
+                            <constraint firstItem="bSk-hC-hl8" firstAttribute="leading" secondItem="OTX-De-Wyf" secondAttribute="leading" id="eEk-R2-3Gv"/>
                             <constraint firstItem="hIb-uV-oUA" firstAttribute="leading" secondItem="OTX-De-Wyf" secondAttribute="leading" id="gA3-jO-gcg"/>
                             <constraint firstItem="UCD-Fp-yTx" firstAttribute="top" secondItem="XsU-Xe-TG5" secondAttribute="bottom" id="ibM-VZ-PHh"/>
                             <constraint firstItem="UCD-Fp-yTx" firstAttribute="trailing" secondItem="OTX-De-Wyf" secondAttribute="trailing" id="ocL-4M-7c1"/>
@@ -167,6 +227,8 @@
                         <viewLayoutGuide key="safeArea" id="OTX-De-Wyf"/>
                     </view>
                     <connections>
+                        <outlet property="addNewItemContainer" destination="bSk-hC-hl8" id="upY-PW-dJy"/>
+                        <outlet property="checkoutContainer" destination="UCD-Fp-yTx" id="nv8-Ej-u3R"/>
                         <outlet property="groupName" destination="oaN-jX-jJx" id="anJ-Yj-zcH"/>
                         <outlet property="tableView" destination="XsU-Xe-TG5" id="oqo-v8-ORT"/>
                     </connections>
