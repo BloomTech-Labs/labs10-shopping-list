@@ -441,7 +441,7 @@ groupRouter.put('/:id', (req, res) => {
 
 /**************************************************/
 
-groupRouter.delete('/remove/:groupID::userID', async (req, res) => {
+groupRouter.delete('/remove/:groupID/:userID', async (req, res) => {
     const groupID = Number(req.params.groupID);
     const userID = Number(req.params.userID);
 
