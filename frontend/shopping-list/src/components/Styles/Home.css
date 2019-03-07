@@ -1,5 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto');
+
 .home-container{
     width: 100%;
+}
+
+.home-container h1{
+    font-family: "Montserrat", sans-serif;
+}
+
+
+.home-container h2{
+    font-family: "Montserrat", sans-serif;
+}
+
+
+.home-container h3{
+    font-family: "Montserrat", sans-serif;
+}
+
+.home-container p{
+    font-family: "Roboto" sans-serif;
 }
 
 /* .home-banner{
@@ -14,6 +34,7 @@
     color: white;
     font-family: "Roboto", sans-serif;
 } */
+
 
 
 .home-banner-vid{
