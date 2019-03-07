@@ -6,6 +6,7 @@
 @media only screen and (max-width: 767px){
     .group-user-list-container {
         order: 2;
+        border-top: 2px solid gray;
     }
 }
 

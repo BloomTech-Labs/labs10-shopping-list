@@ -39,6 +39,7 @@
     .group-profile-left{
         width: 100%;
         margin-left: 0;
+        border: none;
     }
 }
 

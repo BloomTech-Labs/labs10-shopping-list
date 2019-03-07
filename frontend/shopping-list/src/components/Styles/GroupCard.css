@@ -18,6 +18,9 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     font-family: "Montserrat" sans-serif;
+    background: #2A922D;
+    color: white;
+    margin: 0px;
 }
 
 .group-card-footer-button{

@@ -139,7 +139,7 @@ class GroupsPage extends Component{
                         </MDBModalBody>
                         <MDBModalFooter>
                             <MDBBtn color="secondary" onClick={this.toggle(15)}>Close</MDBBtn>
-                            <MDBBtn color="primary" onClick={this.handleUpdateGroupName}><p>Update</p></MDBBtn>
+                            <MDBBtn color="primary" onClick={this.handleUpdateGroupName}>Update</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
 
