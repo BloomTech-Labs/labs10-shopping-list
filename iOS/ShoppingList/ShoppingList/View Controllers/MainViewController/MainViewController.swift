@@ -62,6 +62,7 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         ItemController().checkout(items: selectedItems, withTotal: 25) { (success) in
             if success {
                 print("Checked out")
+                UI { self.updatesNeeded() }
             } else {
                 fatalError()
             }

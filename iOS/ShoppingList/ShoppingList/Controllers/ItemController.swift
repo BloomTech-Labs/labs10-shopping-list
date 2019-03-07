@@ -172,18 +172,19 @@ class ItemController {
         }
         
         // Adds to groupHistory
-        for i in purchasedItems {
-            HistoryController().newHistory(forItem: i, withTotal: total) { (success) in
-                if !success {
-                    completion(false)
-                    group.leave()
-                }
-                group.leave()
-            }
-        }
+//        for i in purchasedItems {
+//            HistoryController().newHistory(forItem: i, withTotal: total) { (success) in
+//                if !success {
+//                    completion(false)
+//                    group.leave()
+//                }
+//                group.leave()
+//            }
+//        }
         
         group.notify(queue: .main) {
             print("Done")
+            completion(true)
         }
     }
     
