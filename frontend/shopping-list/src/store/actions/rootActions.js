@@ -96,7 +96,7 @@ export const INVITE_ACCEPTED = 'INVITE_ACCEPTED';
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
-  backendURL = `https://shoptrak-backend.herokuapp.com`
+  backendURL = `http://localhost:9000`
 } else {
   backendURL = `https://shoptrak-backend.herokuapp.com`
 }
