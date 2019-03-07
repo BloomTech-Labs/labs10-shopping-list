@@ -23,7 +23,7 @@ const GroupCard = props => {
                         }
                     </MDBCardText>
                     <MDBNavLink key = {props.key} to={`/groups/${props.group.id}`}>
-                        <MDBBtn color="success"><p>Enter</p></MDBBtn>
+                        <MDBBtn color="success">Enter</MDBBtn>
                     </MDBNavLink>
                 </MDBCardBody>
                 <MDBCardFooter color="success-color">
