@@ -11,6 +11,7 @@ import Popover
 
 var allGroups: [Group] = []
 var selectedGroup: Group? = nil
+var selectedItems: [Item] = []
 var history: [Item] = []
 var groupMembers: [GroupMember] = []
 
