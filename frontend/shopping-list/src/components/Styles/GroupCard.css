@@ -12,6 +12,10 @@
     color: red;
 }
 
+.group-card {
+    margin-top: 2%;
+}
+
 
 .group-card-footer {
     display: flex;
