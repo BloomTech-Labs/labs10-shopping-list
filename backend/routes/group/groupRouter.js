@@ -421,7 +421,7 @@ groupRouter.delete('/remove/:groupID/:userID', (req, res) => {
     let groupID = req.params.groupID;
     groupMembersDb.getById(groupID, userID).then(entry => {
         // console.log(entry);
-        if(entry && entry[0].moderator === 1){
+        if(entry && (entry[0].moderator === 1 || entry[0].moderator === true)){
             groupDb.remove(groupID).then(response => {
                 console.log('delete response', response);
                 // delete from groupmembers table
