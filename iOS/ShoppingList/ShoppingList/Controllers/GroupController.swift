@@ -10,15 +10,18 @@ import Foundation
 import Alamofire
 import SwiftKeychainWrapper
 import Auth0
+import PusherSwift
+import PushNotifications
 
 class GroupController {
     
     struct Profile: Codable {
-        let profile: UserID
+        let profile: User
     }
     
-    struct UserID: Codable {
+    struct User: Codable {
         let id: Int
+        let name: String
     }
     
     static let shared = GroupController()
@@ -58,7 +61,7 @@ class GroupController {
     
     
     
-
+    
     private func groupToJSON(group: Group) -> [String: Any]? {
         
         guard let jsonData = try? JSONEncoder().encode(group) else {
@@ -73,7 +76,7 @@ class GroupController {
         }
     }
     
-  
+    
     func newGroup(withName name: String, completion: @escaping (Group?) -> Void) {
         
         guard let accessToken = SessionManager.tokens?.idToken else {return}
@@ -84,7 +87,6 @@ class GroupController {
             
             let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
             let url = self.baseURL.appendingPathComponent("group")
-            
             
             let token = "12345"
             
@@ -121,7 +123,13 @@ class GroupController {
     
     
     // Updates the group and downloads all groups from server. Optional success completion.
-    func updateGroup(group: Group, name: String?, userID: Int?, completion: @escaping (Bool) -> Void = {_ in }) {
+    func updateGroup(
+        group: Group,
+        name: String?,
+        userID: Int?,
+        pusher: PushNotifications,
+        completion: @escaping (Bool) -> Void = {_ in }
+    ) {
         
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
@@ -149,7 +157,7 @@ class GroupController {
                 
                 // This downloads allGroups from server so we have fresh data
                 //TODO: Need current userID here
-                self.getGroups(forUserID: userID! /* XXX: is this right? */, completion: { (success) in
+                self.getGroups(forUserID: userID! /* XXX: is this right? */, pusher: pusher, completion: { (success) in
                     if success {
                         completion(true)
                     } else {
@@ -167,8 +175,12 @@ class GroupController {
     }
     
     // Gets groups from server and updates the singleton. Optional success completion
-    func getGroups(forUserID userID: Int, completion: @escaping (Bool) -> Void = { _ in }) {
-
+    func getGroups(
+        forUserID userID: Int,
+        pusher: PushNotifications,
+        completion: @escaping (Bool) -> Void = { _ in }
+        ) {
+        
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         
         let url = baseURL.appendingPathComponent("group").appendingPathComponent("user").appendingPathComponent(String(userID))
@@ -188,6 +200,11 @@ class GroupController {
                     let groups = try decoder.decode(GroupsList.self, from: value)
                     
                     allGroups = groups.groups
+                    
+                    for group in groups.groups {
+                        let chan = "group-\(group.groupID)"
+                        try! PushNotifications.shared.subscribe(interest:chan)
+                    }
                     
                     completion(true)
                     
@@ -209,12 +226,10 @@ class GroupController {
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
+        let url = baseURL.appendingPathComponent("group").appendingPathComponent("remove").appendingPathComponent("\(group.groupID)").appendingPathComponent("\(userID)")
+        print(url)
         
-        let url = baseURL.appendingPathComponent("group").appendingPathComponent("remove")
-        
-        let parameters: Parameters = ["userID": userID, "groupID": group.groupID]
-        
-        Alamofire.request(url, method: .delete, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().response { (response) in
+        Alamofire.request(url, method: .delete, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().response { (response) in
             
             if let error = response.error {
                 print(error.localizedDescription)
@@ -228,5 +243,5 @@ class GroupController {
         
     }
     
- 
+    
 }

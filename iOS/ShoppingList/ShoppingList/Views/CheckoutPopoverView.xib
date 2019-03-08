@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Au4-fW-Js1" userLabel="Checkout popover view" customClass="CheckoutPopoverView" customModule="ShoppingList" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="383" height="180"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUy-pj-kfN">
+                    <rect key="frame" x="12" y="116" width="359" height="52"/>
+                    <color key="backgroundColor" name="Theme"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="52" id="knB-A4-gSF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <state key="normal" title="Checkout">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="checkoutPressed:" destination="Au4-fW-Js1" eventType="touchUpInside" id="Mz2-Xa-Yay"/>
+                    </connections>
+                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="roY-Ak-fON">
+                    <rect key="frame" x="16" y="40" width="351" height="68"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="You paid how much?" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8VO-uh-tQp">
+                            <rect key="frame" x="0.0" y="0.0" width="351" height="68"/>
+                            <color key="tintColor" name="Theme"/>
+                            <nil key="textColor"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="decimalPad"/>
+                        </textField>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CHECKOUT 5 ITEMS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xcW-Or-5X2">
+                    <rect key="frame" x="16" y="15" width="351" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="ord-Y2-Ikr"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
+                    <color key="textColor" red="0.42112151015228427" green="0.42112151015228427" blue="0.42112151015228427" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" name="Background"/>
+            <constraints>
+                <constraint firstItem="5Kc-rZ-cfU" firstAttribute="trailing" secondItem="mUy-pj-kfN" secondAttribute="trailing" constant="12" id="6cF-yK-2Wa"/>
+                <constraint firstItem="5Kc-rZ-cfU" firstAttribute="bottom" secondItem="mUy-pj-kfN" secondAttribute="bottom" constant="12" id="Di1-JB-unA"/>
+                <constraint firstItem="roY-Ak-fON" firstAttribute="top" secondItem="5Kc-rZ-cfU" secondAttribute="top" constant="40" id="HNR-7h-h6J"/>
+                <constraint firstItem="5Kc-rZ-cfU" firstAttribute="trailing" secondItem="xcW-Or-5X2" secondAttribute="trailing" constant="16" id="S95-oD-hai"/>
+                <constraint firstItem="5Kc-rZ-cfU" firstAttribute="trailing" secondItem="roY-Ak-fON" secondAttribute="trailing" constant="16" id="WlC-l1-O6v"/>
+                <constraint firstItem="mUy-pj-kfN" firstAttribute="top" secondItem="roY-Ak-fON" secondAttribute="bottom" constant="8" id="Yhb-Sw-1NQ"/>
+                <constraint firstItem="xcW-Or-5X2" firstAttribute="leading" secondItem="5Kc-rZ-cfU" secondAttribute="leading" constant="16" id="kIB-QJ-PNR"/>
+                <constraint firstItem="roY-Ak-fON" firstAttribute="leading" secondItem="5Kc-rZ-cfU" secondAttribute="leading" constant="16" id="mBJ-oN-ZdG"/>
+                <constraint firstItem="mUy-pj-kfN" firstAttribute="leading" secondItem="5Kc-rZ-cfU" secondAttribute="leading" constant="12" id="pAL-ye-3gD"/>
+                <constraint firstItem="xcW-Or-5X2" firstAttribute="top" secondItem="5Kc-rZ-cfU" secondAttribute="top" constant="15" id="tm8-Jh-mbI"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="5Kc-rZ-cfU"/>
+            <connections>
+                <outlet property="checkoutLabel" destination="xcW-Or-5X2" id="JUY-Bj-hYA"/>
+                <outlet property="priceField" destination="8VO-uh-tQp" id="d9w-ik-tZV"/>
+            </connections>
+            <point key="canvasLocation" x="240.80000000000001" y="283.35832083958024"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="Background">
+            <color red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Theme">
+            <color red="0.16470588235294117" green="0.5725490196078431" blue="0.17647058823529413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
