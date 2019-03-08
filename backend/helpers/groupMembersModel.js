@@ -10,7 +10,8 @@ module.exports = {
   returnUserGroups,
   add,
   update,
-  remove
+  remove,
+  removeGroup,
 }
 /**
  * Returns all the group members in the database
@@ -100,4 +101,11 @@ function remove(id) {
       .returning("id")
     .where({id})
     .del();
+}
+
+function removeGroup(groupID){
+  return db('groupMembers')
+  .returning('id')
+  .where({groupID})
+  .del()
 }

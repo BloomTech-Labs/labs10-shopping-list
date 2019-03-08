@@ -5,6 +5,8 @@ import auth0Client from './Auth';
 import {Spinner} from 'reactstrap';
 import {checkEmail, acceptInvite} from '../store/actions';
 
+import './Styles/Callback.css';
+
 class Callback extends Component {
   
   componentDidMount() {
@@ -34,7 +36,7 @@ class Callback extends Component {
 
   render() {
     return (
-        <div>
+        <div className = 'callback-container'>
         <h1>Loading profile...</h1>
         <Spinner style = {{width: '3rem', height: '3rem'}} type = "grow" />
         </div>
