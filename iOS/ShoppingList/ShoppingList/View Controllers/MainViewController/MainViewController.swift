@@ -8,8 +8,11 @@
 
 import UIKit
 import Auth0
+import PusherSwift
+import PushNotifications
 
 class MainViewController: UIViewController, StoryboardInstantiatable, PopoverViewDelegate {
+    var pusher: PushNotifications!
     
     static let storyboardName: StoryboardName = "MainViewController"
     @IBOutlet weak var groupName: UILabel!
@@ -31,8 +34,9 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         GroupController.shared.getUserID { (user) in
             
             guard let userID = user?.profile.id else { return }
+            guard let pusher = self.pusher else {return}
             
-            GroupController.shared.getGroups(forUserID: userID) { (success) in
+            GroupController.shared.getGroups(forUserID: userID, pusher: pusher) { (success) in
                 if allGroups.count > 0 {
                     selectedGroup = allGroups[0]
                     UI { self.updatesNeeded() }
@@ -179,6 +183,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             ItemController.shared.deleteItem(id: item.id!) {(_) in
            
         }
+            
          completion(true)
         }
         action.backgroundColor = .red
