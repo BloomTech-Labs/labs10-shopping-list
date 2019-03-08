@@ -61,6 +61,11 @@ lock.on('authenticated', function(authResult){
     })
 })
 
+var lock = new Auth0Lock(
+    process.env.REACT_APP_AUTH0_CLIENT_ID,
+    process.env.REACT_APP_AUTH0_DOMAIN,
+    lockOptions
+)
 
 class Navigation extends React.Component{
     constructor(props){
@@ -70,9 +75,8 @@ class Navigation extends React.Component{
             activeTabClassname: "home",
             isOpen: false,
         }
-        
     }
-    
+
     // Toggles dropdown menus for MDB
     // toggleCollapse = collapseID => () =>
     //     this.setState(prevState => ({
@@ -103,63 +107,77 @@ class Navigation extends React.Component{
         const pathname = this.props.location.pathname;
         return(
             <div className = 'navigation-container'>
-            
-            <MDBNavbar style={{backgroundColor: "#2A922D"}} dark expand="md">
 
-                <MDBNavbarBrand>
-                    <strong className="white-text">ShopTrak</strong>
-                </MDBNavbarBrand>
+                <MDBNavbar style={{backgroundColor: "#2A922D"}} dark expand="md">
 
-                <MDBNavbarToggler onClick={this.toggleCollapse} />
+                    <MDBNavbarBrand>
+                        <strong className="white-text">ShopTrak</strong>
+                    </MDBNavbarBrand>
 
-                <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
-                    <MDBNavbarNav left>
-                        <MDBNavItem active={pathname === "/" ? "active" : null} >
-                            <MDBNavLink to="/">Home</MDBNavLink>
-                        </MDBNavItem>
-                        {isLoggedIn ? (
-                            <MDBNavItem active={pathname === "/groups" ? "active" : null} >
-                                <MDBNavLink to="/groups">Groups</MDBNavLink>
+                    <MDBNavbarToggler onClick={this.toggleCollapse} />
+
+                    <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
+                        <MDBNavbarNav left>
+                            <MDBNavItem active={pathname === "/" ? "active" : null} >
+                                <MDBNavLink to="/">Home</MDBNavLink>
                             </MDBNavItem>
-                        ) : null}
-
-                    </MDBNavbarNav>
-
-                    <MDBNavbarNav right>
-                        <MDBNavItem>
                             {isLoggedIn ? (
-                                <MDBDropdown>
-                                    <MDBDropdownToggle className="dropdown-toggle" nav>
-                                    {this.props.currentUser ? (
-                                        <img src={this.props.currentUser.profilePicture} className="rounded-circle z-depth-0"
-                                        style={{ height: "35px", padding: 0 }} alt="" />
-                                    ) : null}
-                                        
-                                    </MDBDropdownToggle>
-                                    <MDBDropdownMenu className="dropdown-default"
-                                    style = {{'padding': '20px', 'margin-right': '20px'}}>
-                                        
-                                        <MDBNavLink to = '/profile' style={{color: "#000000"}}>My Account
-                                        </MDBNavLink>
-                                        
-                                        <MDBNavLink to = '/' onClick={this.signOut} style={{color: "#000000"}}>
-                                        Log Out
-                                        </MDBNavLink>
-                                    </MDBDropdownMenu>
-                                </MDBDropdown>
-                            ) : (
-                                <MDBNavItem>
-                                    <MDBBtn color="deep-orange" onClick={this.signIn}>
-                                        Log In / Sign Up
-                                    </MDBBtn>
-                                </MDBNavItem>
-                            ) }
+                                <div>
+                                    <MDBNavItem active={pathname === "/groups" ? "active" : null} >
+                                        <MDBNavLink to="/groups">Groups</MDBNavLink>
+                                    </MDBNavItem>
+                                    <MDBNavItem active={pathname === "/profile" ? "active" : null} className="nav-mobile" >
+                                        <MDBNavLink to="/profile">My Account</MDBNavLink>
+                                    </MDBNavItem>
+                                    <MDBNavItem className="nav-mobile">
+                                        <MDBNavLink to="#" onClick={this.signOut} >Log Out</MDBNavLink>
+                                    </MDBNavItem>
+                                </div>
+                            ) : null}
 
-                        </MDBNavItem>
-                    </MDBNavbarNav>
+                        </MDBNavbarNav>
 
-                </MDBCollapse>
-            </MDBNavbar>      
+                        <MDBNavbarNav right>
+                            <MDBNavItem>
+                                {isLoggedIn ? (
+                                    <MDBDropdown className="nav-hide">
+                                        <MDBDropdownToggle className="dropdown-toggle" nav>
+                                            {this.props.currentUser ? (
+                                                <img src={this.props.currentUser.profilePicture} className="rounded-circle z-depth-0"
+                                                     style={{ height: "35px", padding: 0 }} alt="" />
+                                            ) : null}
+
+                                        </MDBDropdownToggle>
+                                        <MDBDropdownMenu className="dropdown-default"
+                                                         style = {{'padding': '20px', 'margin-right': '20px'}}>
+
+                                            <MDBNavLink to = '/profile' style={{color: "#000000"}}>My Account
+                                            </MDBNavLink>
+
+                                            <MDBNavLink to = '/' onClick={this.signOut} style={{color: "#000000"}}>
+                                                Log Out
+                                            </MDBNavLink>
+                                        </MDBDropdownMenu>
+                                    </MDBDropdown>
+                                ) : (
+                                    <div>
+                                        <MDBNavItem className="nav-hide">
+                                            <MDBBtn color="deep-orange" onClick={this.signIn}>
+                                                Log In / Sign Up
+                                            </MDBBtn>
+                                        </MDBNavItem>
+                                        <MDBNavItem className="nav-mobile">
+                                            <MDBNavLink to = '#' onClick={this.signIn}>Log In / Sign Up
+                                            </MDBNavLink>
+                                        </MDBNavItem>
+                                    </div>
+                                ) }
+
+                            </MDBNavItem>
+                        </MDBNavbarNav>
+
+                    </MDBCollapse>
+                </MDBNavbar>
             </div>
 
         )

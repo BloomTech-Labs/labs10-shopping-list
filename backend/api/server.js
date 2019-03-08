@@ -6,6 +6,13 @@ const bodyParser = require('body-parser');
 const server = express();
 const apiRouter = require('../routes/apiRouter');
 
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
 
 // initialize server to set content-type to application/json, allows us to easily pass JSON objects through endpoints
 server.use(express.json());
@@ -31,6 +38,8 @@ server.use(morgan('dev'));
 
 // apiRouter will handle addresses passed to the /api endpoint
 server.use('/api', apiRouter);
+
+server.use(allowCrossDomain);
 
 // test http get request
 server.get('/', (req, res) => {
