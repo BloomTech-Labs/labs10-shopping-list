@@ -13,7 +13,7 @@ struct ItemList: Codable {
     let data: [Item]
 }
 
-struct Item: Codable {
+class Item: Codable {
     
     var measurement: String?
     var name: String

@@ -36,7 +36,7 @@
                         <action selector="addGroup:" destination="VDy-B2-aKh" eventType="touchUpInside" id="5Y7-4X-Mcc"/>
                     </connections>
                 </button>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Group name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5ze-xA-3gQ">
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Group shopping list name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5ze-xA-3gQ">
                     <rect key="frame" x="16" y="8" width="343" height="85"/>
                     <color key="tintColor" name="Theme"/>
                     <nil key="textColor"/>

@@ -12,7 +12,6 @@ class NewItemPopoverView: UIView, NibInstantiatable {
     
     static let nibName: NibName = "NewItemPopoverView"
     weak var delegate: PopoverViewDelegate?
-    var isPurchased = false
     
     override func awakeFromNib() {
         super.awakeFromNib()

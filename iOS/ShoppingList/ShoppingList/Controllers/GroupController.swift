@@ -14,11 +14,12 @@ import Auth0
 class GroupController {
     
     struct Profile: Codable {
-        let profile: UserID
+        let profile: User
     }
     
-    struct UserID: Codable {
+    struct User: Codable {
         let id: Int
+        let name: String
     }
     
     static let shared = GroupController()
@@ -84,7 +85,6 @@ class GroupController {
             
             let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
             let url = self.baseURL.appendingPathComponent("group")
-            
             
             let token = "12345"
             
@@ -209,12 +209,10 @@ class GroupController {
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
+        let url = baseURL.appendingPathComponent("group").appendingPathComponent("remove").appendingPathComponent("\(group.groupID)").appendingPathComponent("\(userID)")
+        print(url)
         
-        let url = baseURL.appendingPathComponent("group").appendingPathComponent("remove")
-        
-        let parameters: Parameters = ["userID": userID, "groupID": group.groupID]
-        
-        Alamofire.request(url, method: .delete, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().response { (response) in
+        Alamofire.request(url, method: .delete, parameters: nil, encoding: JSONEncoding.default, headers: headers).validate().response { (response) in
             
             if let error = response.error {
                 print(error.localizedDescription)
