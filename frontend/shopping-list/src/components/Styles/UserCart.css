@@ -1,4 +1,6 @@
 .user-cart-container {
+    border-top: 2px solid gray;
+    margin: 0px 20px;
     padding: 40px;
 }
 
@@ -7,11 +9,19 @@
     flex-flow: row wrap;
 }
 
+.cart-item span{
+    margin: 5px;
+    outline: none;
+}
+
 .cart-item {
     margin: 5px;
-    background: white;
+    background: #2A922D;
+    color: white;
     padding: 5px;
     border-radius: 5px;
+    display: flex;
+    flex-flow: row nowrap;
 }
 
 .checkout-container {
@@ -34,7 +44,7 @@
 @media only screen and (max-width: 767px){
 
     .user-cart-container {
-        padding-top: 0;
+        padding: 40px;
     }
 
     .checkout-container{

@@ -1,16 +1,16 @@
 .navigation-container {
-    width: 100vw;
-    /*background-color: #2A922D;*/
+    width: 100%;
     top: 0;
     left: 0;
     position: fixed;
     z-index: 3;
+    font-family: "Montserrat", sans-serif;
 }
 
 @media (max-width: 767px){
     .navigation-container {
         height: 60px;
-        width: 100vw;
+        width: 100%;
     }
 
     .navbar{
@@ -18,18 +18,36 @@
     }
 
     .dropdown-menu {
-        background: #00cc00;
+        /*background: #2A922D;*/
+        display: none;
     }
 
     .dropdown-default{
-        background: #00cc00;
+        /*background: #2A922D;*/
+        display: none;
     }
 
     .nav-link {
-        background: #00cc00;
+        /*background: #00cc00;*/
     }
 
     .navbar-nav{
+        background: #2A922D;
+    }
+
+    .dropdown-toggle {
+        display: none;
+    }
+
+    .nav-hide {
+        display: none !important;
+    }
+
+    .navbar-collapse {
+        width: 100%;
+    }
+
+    .nav-item:hover {
         background: #00cc00;
     }
 
@@ -70,5 +88,25 @@
 
 .button{
     margin-left: 10px;
+}
+
+.nav-mobile {
+    display: none;
+}
+
+
+@media (max-width: 767px){
+    .nav-mobile {
+        display: block;
+    }
+
+    .navbar-collapse {
+        margin-top: 12px;
+    }
+
+}
+.dropdown-default{
+    width: 400px;
+    padding: 20px ;
 }
 

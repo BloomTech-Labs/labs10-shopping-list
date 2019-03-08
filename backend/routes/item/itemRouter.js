@@ -247,15 +247,15 @@ itemRouter.delete('/:id', (req, res) => {
     itemDb.getById(id).then(item => {
         let groupID = item[0].groupID;
         let oldItem = item[0];
-        return itemDb.remove(id).then(status => {
+        itemDb.remove(id).then(status => {
             console.log('remove status', status)
             if (status.length >= 1 || status === 1) {
                 let notification = {};
-                    return userDb.getProfileByEmail(req.user.email).then(user => {
+                    userDb.getProfileByEmail(req.user.email).then(user => {
                         notification.userID = user[0].id;
                         notification.userName = user[0].name;
         
-                            return groupDb.getById(groupID).then(group => {
+                            groupDb.getById(groupID).then(group => {
                                 notification.groupID = group[0].id;
                                 notification.groupName = group[0].name;
                                 notification.action = 'delete-item';
@@ -268,7 +268,7 @@ itemRouter.delete('/:id', (req, res) => {
         
                                 console.log('NOTIFICATION\n\n', notification);
         
-                                return notificationDb.add(notification).then(response => {
+                                notificationDb.add(notification).then(response => {
                                     console.log('notification added', response);
                                     return res.status(200).json({message: "Item removed successfully", id: status[0]})                               
                                 })

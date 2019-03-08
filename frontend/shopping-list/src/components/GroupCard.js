@@ -1,7 +1,7 @@
 import React from 'react';
 import {MDBCard, MDBCardBody, MDBCardText, MDBCardHeader, MDBNavLink, MDBCardFooter, MDBIcon, MDBCardTitle, MDBBtn} from 'mdbreact';
 import {withRouter} from 'react-router-dom';
-import "./Styles/Group.css";
+import "./Styles/GroupCard.css";
 
 const GroupCard = props => {
     // console.log('group', props.group.groupMembers)
@@ -9,7 +9,7 @@ const GroupCard = props => {
     {/*<MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => props.updateGroup(props.group.id, props.group.name)} /> <MDBIcon icon="trash" onClick={() => props.removeGroup(props.group.id, props.group.name)} style={{cursor: "pointer"}} />*/}
     return(
         <div className = 'group-card'>
-            <MDBCard style={{ width: "22rem", marginTop: "1rem" }} className="text-center">
+            <MDBCard className="text-center">
                 <MDBCardHeader color="primary-color" tag="h3">
                     {props.group.name}
                 </MDBCardHeader>
@@ -26,11 +26,20 @@ const GroupCard = props => {
                         <MDBBtn color="success">Enter</MDBBtn>
                     </MDBNavLink>
                 </MDBCardBody>
-                <MDBCardFooter color="success-color">
-                    <MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => props.updateGroup(props.group.id, props.group.name)} >
-                        &nbsp;Update Name</MDBIcon> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <MDBIcon icon="trash" onClick={() => props.removeGroup(props.group.id, props.group.name)} style={{cursor: "pointer"}} >
-                    &nbsp;Delete Group</MDBIcon>
+                <MDBCardFooter style = {{background: '#2A922D'}}>
+                <div className = 'group-card-footer'>
+                
+                <div className = 'group-card-footer-button' onClick={() => props.updateGroup(props.group.id, props.group.name)}>
+                    <MDBIcon icon="edit"/>     
+                    Change Name
+                </div>
+
+                    
+                    <div className = 'group-card-footer-button' onClick={() => props.removeGroup(props.group.id, props.group.name)}>
+                    <MDBIcon icon="trash"/>
+                    Delete Group
+                    </div>
+                    </div>
                 </MDBCardFooter>
             </MDBCard>
         </div>

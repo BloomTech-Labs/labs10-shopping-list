@@ -90,6 +90,7 @@ groupMemberRouter.get('/user/:id', (req, res) => {
     const id = req.params.id;
 
     groupMemDb.getByUser(id).then(mem => {
+        console.log('get user groups', mem);
         if (mem.length >= 1) {
             return res.status(200).json({data: mem});
         }

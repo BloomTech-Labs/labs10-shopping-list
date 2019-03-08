@@ -7,21 +7,24 @@ import {checkEmail, acceptInvite} from '../store/actions';
 
 class Callback extends Component {
   
-  async componentDidMount() {
-    await auth0Client.handleAuthentication();
-    if(localStorage.getItem('pendingInvite')){
+  componentDidMount() {
+    // await auth0Client.handleAuthentication();
+
+    console.log('callback', this.props);
+
+    if(localStorage.getItem('pendingInvite') && localStorage.getItem('isLoggedIn')){
       let inviteCode = localStorage.getItem('pendingInvite');
       console.log('pending invite', inviteCode);
-      await this.props.acceptInvite(inviteCode); // tell the server to add the now logged-in user to the invite group
+      this.props.acceptInvite(inviteCode); // tell the server to add the now logged-in user to the invite group
 
       localStorage.removeItem('pendingInvite');
 
       this.props.history.replace('/groups'); //reroute into groups
     } else {
-      this.props.history.replace('/groups'); //reroute into groups
+      if(localStorage.getItem('isLoggedIn')){
+        this.props.history.replace('/groups'); //reroute into groups
+      }
     }
-
-    
   }
 
 

@@ -112,7 +112,7 @@ class Item extends React.Component {
                                             {this.state.inCart !== true ? (
                                                 <MDBBtn className="btn-dark-green" onClick = {this.addToCart} >Add to Cart</MDBBtn>
 
-                                            ) : <MDBBtn color="success" onClick = {this.removeFromCart} >Remove to Cart</MDBBtn>}
+                                            ) : <MDBBtn color="deep-orange" onClick = {this.removeFromCart} >Remove from Cart</MDBBtn>}
 
                                         </div>
 

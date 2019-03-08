@@ -9,9 +9,12 @@
 import Foundation
 import Popover
 
+var userID: Int = 0
+var userName: String = ""
 var allGroups: [Group] = []
 var selectedGroup: Group? = nil
-var history: [Item] = []
+var selectedItems: [Item] = []
+var history: [History] = []
 var groupMembers: [GroupMember] = []
 
 // MARK: - Popovers
@@ -68,8 +71,17 @@ struct Popovers {
     static func triggerNewItemPopover(_ delegate: PopoverViewDelegate) {
         let popoverView = NewItemPopoverView.instantiate()
         popoverView.delegate = delegate
-        popoverView.frame = CGRect(x: 20, y: 0, width: screen.width - 40, height: 320)
-        let startPoint = CGPoint(x: screen.width / 2, y: (screen.height / 2) - 300)
+        popoverView.frame = CGRect(x: 20, y: 0, width: screen.width - 40, height: 160)
+        let startPoint = CGPoint(x: screen.width / 2, y: (screen.height / 2) - 200)
+        popover.show(popoverView, point: startPoint)
+    }
+    
+    static func triggerCheckoutPopover(delegate: PopoverViewDelegate, items: [Item]) {
+        let popoverView = CheckoutPopoverView.instantiate()
+        popoverView.items = items
+        popoverView.delegate = delegate
+        popoverView.frame = CGRect(x: 20, y: 0, width: screen.width - 40, height: 180)
+        let startPoint = CGPoint(x: screen.width / 2, y: (screen.height / 2) - 210)
         popover.show(popoverView, point: startPoint)
     }
     

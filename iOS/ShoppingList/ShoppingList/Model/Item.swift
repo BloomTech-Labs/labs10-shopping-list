@@ -13,7 +13,7 @@ struct ItemList: Codable {
     let data: [Item]
 }
 
-struct Item: Codable {
+class Item: Codable {
     
     var measurement: String?
     var name: String
@@ -32,4 +32,13 @@ struct Item: Codable {
         self.quantity = quantity
         self.id = nil
     }
+}
+
+extension Item: Equatable {
+    
+    static func ==(lhs: Item, rhs: Item) -> Bool {
+        return lhs.name == rhs.name &&
+            lhs.groupID == rhs.groupID
+    }
+    
 }
