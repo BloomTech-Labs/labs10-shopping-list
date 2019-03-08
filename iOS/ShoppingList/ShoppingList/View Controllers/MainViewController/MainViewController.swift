@@ -9,15 +9,18 @@
 import UIKit
 import Auth0
 
+enum GroupView { case list, history, stats }
+
 class MainViewController: UIViewController, StoryboardInstantiatable, PopoverViewDelegate {
     
     static let storyboardName: StoryboardName = "MainViewController"
+    var noItemsView: NoItemsView!
     @IBOutlet weak var groupName: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addNewItemContainer: UIView!
     @IBOutlet weak var checkoutContainer: UIView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    enum GroupView { case list, history, stats }
     
     var currentView: GroupView = .list { didSet { updatesNeeded() }}
     
@@ -26,14 +29,23 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.rowHeight = 80
+        noItemsView = NoItemsView.instantiate()
+        noItemsView.frame = tableView.frame
+        view.insertSubview(noItemsView, aboveSubview: tableView)
+        
+        tableView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
+        tableView.rowHeight = 90
         tableView.tableFooterView = UIView()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ReuseIdentifier")
+        tableView.register(UINib(nibName: "ItemTableViewCell", bundle: nil), forCellReuseIdentifier: "ItemCell")
+        tableView.register(UINib(nibName: "HistoryTableViewCell", bundle: nil), forCellReuseIdentifier: "HistoryCell")
         
         GroupController.shared.getUserID { (user) in
             
-            guard let id = user?.profile.id else { return }
+            guard let id = user?.profile.id,
+                  let name = user?.profile.name else { return }
             userID = id
+            userName = name
             
             GroupController.shared.getGroups(forUserID: id) { (success) in
                 if allGroups.count > 0 {
@@ -41,7 +53,6 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
                     UI { self.updatesNeeded() }
                 }
             }
-            
         }
     }
     
@@ -61,28 +72,41 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     
     
     func updatesNeeded() {
-        guard let selectedGroup = selectedGroup else { return }
-        selectedItems = []
-        addNewItemContainer.alpha = 1
+        noItemsView.alpha = 0
+        noItemsView.groupView = currentView
         checkoutContainer.alpha = 0
-        groupName.text = selectedGroup.name
         
         switch currentView {
         case .list:
-            tableView.rowHeight = 80
             ItemController.shared.loadItems { (_) in
-                UI { self.tableView.reloadData() }
+                UI {
+                    self.tableView.rowHeight = 90
+                    self.addNewItemContainer.alpha = 1
+                    self.tableView.reloadData()
+                }
             }
         case .history:
-            tableView.rowHeight = 200
-            HistoryController().getHistory { (_) in
-                UI { self.tableView.reloadData() }
+            ItemController.shared.loadItems { (_) in
+                HistoryController().getHistory { (_) in
+                    UI {
+                        self.tableView.rowHeight = 120
+                        self.addNewItemContainer.alpha = 0
+                        self.tableView.reloadData()
+                    }
+                }
             }
         case .stats:
             GroupMemberController().getGroupMembers { (_) in
-                UI { self.tableView.reloadData() }
+                UI {
+                    self.addNewItemContainer.alpha = 0
+                    self.tableView.reloadData()
+                }
             }
         }
+        
+        guard let selectedGroup = selectedGroup else { return }
+        selectedItems = []
+        groupName.text = selectedGroup.name
     }
     
     
@@ -91,6 +115,11 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     @IBAction func addNewItemButtonPressed(_ sender: Any) {
         Popovers.triggerNewItemPopover(self)
     }
+    
+    @IBAction func checkoutButtonPressed(_ sender: Any) {
+        Popovers.triggerCheckoutPopover(delegate: self, items: selectedItems)
+    }
+    
     
     @IBAction func showGroupsButtonPressed(_ sender: Any) {
         Popovers.triggerGroupsPopover(self)
@@ -109,10 +138,13 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch currentView {
         case .list:
+            noItemsView.alpha = (selectedGroup?.items?.count ?? 0) == 0 ? 1 : 0
             return selectedGroup?.items?.count ?? 0
         case .history:
+            noItemsView.alpha = history.count == 0 ? 1 : 0
             return history.count
         case .stats:
+            noItemsView.alpha = groupMembers.count == 0 ? 1 : 0
             return groupMembers.count
         }
         
@@ -120,25 +152,38 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReuseIdentifier", for: indexPath)
+        guard let itemCell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as? ItemTableViewCell,
+              let historyCell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath) as? HistoryTableViewCell else { return cell }
+        itemCell.tintColor = UIColor(named: "Theme")
+        itemCell.accessoryType = .none
+        historyCell.accessoryType = .none
         cell.tintColor = UIColor(named: "Theme")
+        cell.textLabel?.numberOfLines = 0
+        cell.accessoryType = .none
         guard let selectedGroup = selectedGroup else { return cell }
-        
-        var item: Item?
         
         switch currentView {
         case .list:
             guard let item = selectedGroup.items?[indexPath.row] else { return cell }
-            cell.accessoryType = selectedItems.contains(item) ? .checkmark : .none
-            cell.textLabel?.text = item.name
+            itemCell.accessoryType = selectedItems.contains(item) ? .checkmark : .none
+            itemCell.itemLabel.text = item.name
+            return itemCell
         case .history:
-            item = history[indexPath.row]
-            cell.textLabel?.text = item?.name
+            let item = history[indexPath.row]
+            let itemName = item.name ?? ""
+            let itemUser = item.user ?? ""
+            let total = item.total?.toCurrency() ?? ""
+            historyCell.itemLabel.text = itemName
+            historyCell.nameLabel.text = itemUser.uppercased()
+            historyCell.priceLabel.text = total
+            return historyCell
         case .stats:
             let groupMember = groupMembers[indexPath.row]
-            cell.textLabel?.text = String(groupMember.net)
+            let total = groupMember.total.toCurrency()
+            let net = groupMember.net.toCurrency()
+            cell.textLabel?.text = "Total: \(total)\nNet: \(net)"
+            return cell
         }
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -147,23 +192,9 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         cellSelected(cell: cell, indexPath: indexPath)
     }
     
-    
-    private func tableView(tableView: UITableView!, canEditRowAtIndexPath indexPath: NSIndexPath!) -> Bool {
-        return true
-    }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        
-        let delete = deleteAction(at: indexPath)
-        
-        return UISwipeActionsConfiguration(actions: [delete]) as UISwipeActionsConfiguration
-    }
-    
-    
-    func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
-        
-        let action = UIContextualAction(style: .destructive, title: "delete") { (action, view, completion) in
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
             guard let selectedGroup = selectedGroup else { return }
             guard let item = selectedGroup.items?[indexPath.row] else { return }
             ItemController.shared.deleteItem(id: item.id ?? 0) {(_) in }
@@ -173,12 +204,9 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             }
             selectedGroup.items?.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            completion(true)
         }
-        action.backgroundColor = .red
-        action.title = "Delete"
         
-        return action
+        return currentView == .list ? [delete] : []
     }
     
     private func cellSelected(cell: UITableViewCell, indexPath: IndexPath) {
@@ -197,9 +225,11 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             break
         }
         
-        let showCheckout = selectedItems.count > 0
-        addNewItemContainer.alpha = showCheckout ? 0 : 1
-        checkoutContainer.alpha = showCheckout ? 1 : 0
+        if currentView == .list {
+            let showCheckout = selectedItems.count > 0
+            addNewItemContainer.alpha = showCheckout ? 0 : 1
+            checkoutContainer.alpha = showCheckout ? 1 : 0
+        }
     }
     
 }

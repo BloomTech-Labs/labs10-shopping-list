@@ -10,10 +10,11 @@ import Foundation
 import Popover
 
 var userID: Int = 0
+var userName: String = ""
 var allGroups: [Group] = []
 var selectedGroup: Group? = nil
 var selectedItems: [Item] = []
-var history: [Item] = []
+var history: [History] = []
 var groupMembers: [GroupMember] = []
 
 // MARK: - Popovers
@@ -72,6 +73,15 @@ struct Popovers {
         popoverView.delegate = delegate
         popoverView.frame = CGRect(x: 20, y: 0, width: screen.width - 40, height: 160)
         let startPoint = CGPoint(x: screen.width / 2, y: (screen.height / 2) - 200)
+        popover.show(popoverView, point: startPoint)
+    }
+    
+    static func triggerCheckoutPopover(delegate: PopoverViewDelegate, items: [Item]) {
+        let popoverView = CheckoutPopoverView.instantiate()
+        popoverView.items = items
+        popoverView.delegate = delegate
+        popoverView.frame = CGRect(x: 20, y: 0, width: screen.width - 40, height: 180)
+        let startPoint = CGPoint(x: screen.width / 2, y: (screen.height / 2) - 210)
         popover.show(popoverView, point: startPoint)
     }
     
