@@ -9,6 +9,7 @@
 import UIKit
 import Kingfisher
 import Auth0
+import TUSafariActivity
 
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
     
@@ -53,12 +54,35 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     
     @IBAction func doneButtonPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    
     }
     
     @IBAction func billingPressed(_ sender: Any) {
-        let billingMessage = "To change your subscription type or modify your billing details, access your ShopTrak account online."
+       // let billingMessage = "To change your subscription type or modify your billing details, access your ShopTrak account online."
         
-        Popovers.triggerMessagePopover(with: billingMessage)
+        InviteController.shared.createInvite { (inviteCode) in
+            guard let inviterCode = inviteCode?.inviteCode else {return}
+     guard let url = NSURL(string: "https://labs10-shopping-list.netlify.com/invite?\(inviterCode)") else { return }
+            
+            
+            let activity = TUSafariActivity()
+            let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: [activity])
+            activityViewController.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList,
+                                                            UIActivity.ActivityType.assignToContact,
+                                                            UIActivity.ActivityType.mail,
+                                                            UIActivity.ActivityType.message,
+                                                            UIActivity.ActivityType.openInIBooks,
+                                                            UIActivity.ActivityType.print,
+                                                            UIActivity.ActivityType.saveToCameraRoll
+            ]
+            
+            self.present(activityViewController, animated: true, completion: nil)
+
+            
+        }
+        
+        
+        //Popovers.triggerMessagePopover(with: billingMessage)
     }
     
     @IBAction func goToAppSettings(_ sender: Any) {
@@ -78,4 +102,8 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
             UIApplication.shared.keyWindow?.rootViewController = LoginViewController.instantiate()
         }
     }
+
+
 }
+
+
