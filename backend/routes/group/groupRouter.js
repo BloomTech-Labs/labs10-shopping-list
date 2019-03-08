@@ -137,6 +137,7 @@ function fetch_group_mem(id) {
 
 // get all groups with user ID
 groupRouter.get('/user/:id', (req, res) => {
+
     let userId = req.params.id;
   
     groupDb.getByUser(userId).then(groups => {
