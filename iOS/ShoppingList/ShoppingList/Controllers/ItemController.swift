@@ -52,17 +52,23 @@ class ItemController {
                 let items = itemList.data
                 
                 group.items = nil
+                var myHistory: [History] = []
                 
                 for item in items {
-                    if item.groupID == group.groupID {
+                    if item.groupID == group.groupID && !item.purchased {
                         if group.items != nil {
                             group.items?.append(item)
                         } else {
                             group.items = [item]
                         }
                     }
+                    
+                    if item.purchased && item.groupID == group.groupID {
+                        myHistory.append(History(item: item))
+                    }
                 }
                 
+                history = myHistory
                 completion(true)
                 
             } catch {
@@ -81,7 +87,7 @@ class ItemController {
         guard let accessToken = SessionManager.tokens?.idToken else { return }
         
         let headers: HTTPHeaders = ["Authorization": "Bearer \(accessToken)"]
-        var item = item
+        let item = item
         
         var url = baseURL.appendingPathComponent("item")
         
@@ -141,7 +147,33 @@ class ItemController {
     }
     
     
-    
+    func checkout(items: [Item], withTotal total: Double, completion: @escaping (Bool) -> Void) {
+        
+        let purchasedItems = items.map { (item) -> Item in
+            item.purchased = true
+            item.price = total
+            return item
+        }
+        
+        let group = DispatchGroup()
+        
+        for i in purchasedItems {
+            group.enter()
+            self.saveItem(item: i) { (_, error) in
+                if let _ = error {
+                    completion(false)
+                    group.leave()
+                }
+                
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) {
+            print("Done")
+            completion(true)
+        }
+    }
     
     
     func itemToJSON(item: Item) throws -> Parameters {

@@ -19,6 +19,15 @@ var pusher = new Pusher({
     cluster: process.env.PUSHER_CLUSTER,
     encrypted: true
   });
+
+  const PushNotifications = require('@pusher/push-notifications-server');
+
+  let beamsClient = new PushNotifications({
+    instanceId: process.env.BEAMS_INSTANCE_ID,
+    secretKey: process.env.BEAMS_SECRET_KEY
+  });
+
+
 /****************************************************************************************************/
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/item ENDPOINT **/
 /****************************************************************************************************/
@@ -73,6 +82,24 @@ itemRouter.post('/', (req, res) => {
                 pusher.trigger(`group-${groupID}`, 'add-item', {
                     "message": `${notification.userName} added ${item.name} to the ${notification.groupName} shopping list.`,
                     "timestamp": moment().format()
+                })
+
+                beamsClient.publishToInterests([`group-${groupID}`], {
+                    apns: {
+                        aps: {
+                            alert: notification.content
+                        }
+                    },
+                    fcm: {
+                        notification: {
+                            title: `New Item Added`,
+                            body: notification.content
+                        }
+                    }
+                }).then((publishResponse) => {
+                    console.log('item notification', publishResponse.publishId);
+                }).catch((error) => {
+                    console.log('error', error);
                 })
 
                 console.log('NOTIFICATION\n\n', notification);
@@ -208,6 +235,24 @@ itemRouter.put('/:id', (req, res) => {
                                     "message": `${notification.userName} updated ${oldItem.name} to ${newItem[0].name} in the ${notification.groupName} shopping list.`,
                                     "timestamp": moment().format()
                                 })
+
+                                beamsClient.publishToInterests([`group-${groupID}`], {
+                                    apns: {
+                                        aps: {
+                                            alert: notification.content
+                                        }
+                                    },
+                                    fcm: {
+                                        notification: {
+                                            title: `Item Updated`,
+                                            body: notification.content
+                                        }
+                                    }
+                                }).then((publishResponse) => {
+                                    console.log('item notification', publishResponse.publishId);
+                                }).catch((error) => {
+                                    console.log('error', error);
+                                })
         
                                 console.log('NOTIFICATION\n\n', notification);
         
@@ -264,6 +309,24 @@ itemRouter.delete('/:id', (req, res) => {
                                 pusher.trigger(`group-${groupID}`, 'delete-item', {
                                     "message": `${notification.userName} removed ${oldItem.name} from the ${notification.groupName} shopping list.`,
                                     "timestamp": moment().format()
+                                })
+
+                                beamsClient.publishToInterests([`group-${groupID}`], {
+                                    apns: {
+                                        aps: {
+                                            alert: notification.content
+                                        }
+                                    },
+                                    fcm: {
+                                        notification: {
+                                            title: `Item Deleted`,
+                                            body: notification.content
+                                        }
+                                    }
+                                }).then((publishResponse) => {
+                                    console.log('item notification', publishResponse.publishId);
+                                }).catch((error) => {
+                                    console.log('error', error);
                                 })
         
                                 console.log('NOTIFICATION\n\n', notification);

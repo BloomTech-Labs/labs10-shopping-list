@@ -14,5 +14,7 @@ pod 'Alamofire'
 pod 'SimpleKeychain'
 pod 'Kingfisher'
 pod 'PusherSwift'
+pod 'PushNotifications'
+pod 'TUSafariActivity', '~> 1.0'
 
 end
