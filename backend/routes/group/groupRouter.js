@@ -420,7 +420,7 @@ groupRouter.delete('/remove/:groupID/:userID', (req, res) => {
     let userID = req.params.userID;
     let groupID = req.params.groupID;
     groupMembersDb.getById(groupID, userID).then(entry => {
-        console.log(entry);
+        // console.log(entry);
         if(entry && entry[0].moderator === 1){
             groupDb.remove(groupID).then(response => {
                 console.log('delete response', response);
