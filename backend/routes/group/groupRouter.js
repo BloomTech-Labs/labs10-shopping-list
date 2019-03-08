@@ -137,49 +137,24 @@ function fetch_group_mem(id) {
 
 // get all groups with user ID
 groupRouter.get('/user/:id', (req, res) => {
-    let userId = req.params.id;
-  
-    groupDb.getByUser(userId).then(groups => {
-        console.log('get groups by user id', groups);
-        if(groups.length === 0){
-            return res.status(404).json({error: `No groups found for that userID.`})
-        }
-        
-        for(let i = 0; i < groups.length; i++){
-            groupMembersDb.getByGroup(groups[i].id).then(members => {
-                // console.log('members', members);
-                groups[i].groupMembers = members;
-                // console.log('UG', userGroups);
-                // console.log('GI', groups[i]);
-                // console.log('GROUPS', groups);
+    let userID = req.params.id;
 
-                let usrs = [];
-                for (let j = 0; j < members.length; j++) {
-                    usersDb.getById(members[j].userID).then(usr => {
-                        console.log("USER => ", usr[0].name);
-                        usrs.push(usr[0]);
-
-
-
-                    }).then(() => {
-                        groups[i].members = usrs;
-                        console.log("GROUP => ", groups);
-
-                        if(i === groups.length - 1){
-                            return res.status(200).json({groups: groups}); // returns all groups with groupmembers appended
-                        }
-                    })
-                }
-
-
-            }).catch(err => {
-                console.log(err);
-                return res.status(500).json({error: `Internal server error.`})
-            })
+    groupDb.getByUser(userID).then(groups => {
+        // console.log('get groups response', groups);
+        if(groups && groups.length > 0){
+            for(let i = 0; i < groups.length; i++){
+                groupMembersDb.getByGroup(groups[i].id).then(response => {
+                    // console.log('groupmem response', response);
+                    groups[i].groupMembers = response; // append members to group
+                })
+            }
+            return res.status(200).json({groups: groups});
+        } else {
+            return res.status(404).json({error: `No groups found for that user.`});
         }
     }).catch(err => {
         console.log(err);
-        return res.status(500).json({error: `Error retrieving groups.`})
+        return res.status(500).json({error: `Internal server error.`})
     })
 })
 
@@ -441,60 +416,28 @@ groupRouter.put('/:id', (req, res) => {
 
 /**************************************************/
 
-groupRouter.delete('/remove/:groupID/:userID', async (req, res) => {
-    const groupID = Number(req.params.groupID);
-    const userID = Number(req.params.userID);
-
-    console.log("GROUP ID => ", groupID)
-    console.log("USER ID => ", userID)
-
-    let groups = [];
-    let members = [];
-
-    try {
-        const ress = await groupDb.getById(groupID);
-        console.log("RESS => ", ress);
-
-        if (ress[0].userID === userID) {
-            for (let i = 0; i < ress.length; i++) {
-                const membs = await groupMemDb.getByGroup(groupID);
-                console.log("MEMBS => ", membs);
-
-                if (membs.length >= 1) {
-                    membs.forEach(elem => {
-                        members.push(elem);
-                    })
-                }
-
-            }
-
-            console.log("MEMBESR => ", members)
-
-            if (members.length >= 1) {
-                for (let i = 0; i < members.length; i++) {
-                    // console.log("ID => ", members[i].id)
-                    const returns = await groupMemDb.remove(members[i].id);
-                }
-            }
-
-
-            const deletion = await groupDb.remove(groupID);
-            console.log("DELETION => ", deletion)
-
-            return res.status(200).json({removedID: deletion[0]});
+groupRouter.delete('/remove/:groupID/:userID', (req, res) => {
+    let userID = req.params.userID;
+    let groupID = req.params.groupID;
+    groupMembersDb.getById(groupID, userID).then(entry => {
+        console.log(entry);
+        if(entry && entry[0].moderator === 1){
+            groupDb.remove(groupID).then(response => {
+                console.log('delete response', response);
+                // delete from groupmembers table
+                groupMembersDb.removeGroup(groupID).then(response => {
+                    console.log('groupmem del response', response);
+                    return res.status(200).json({message: `Group successfully deleted.`})
+                })
+            })
         } else {
-            res.status(403).json({message: "You can not delete a group you do not own!"});
+            return res.status(403).json({warning: `You are not authorized to do that.`})
         }
-
-
-    } catch(err) {
-        return res.status(404).json(err)
-    }
-
-
-
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Internal server error.`})
+    })
 })
-
 /**************************************************/
 
 /** GET/ADD user to group by USER ID and GROUP ID

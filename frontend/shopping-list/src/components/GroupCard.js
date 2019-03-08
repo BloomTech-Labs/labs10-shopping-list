@@ -5,7 +5,7 @@ import "./Styles/GroupCard.css";
 
 const GroupCard = props => {
     // console.log('group', props.group.groupMembers)
-    console.log("GROUP => ", props.group);
+    // console.log("GROUP => ", props.group);
     {/*<MDBIcon icon="edit" style={{cursor: "pointer"}} onClick={() => props.updateGroup(props.group.id, props.group.name)} /> <MDBIcon icon="trash" onClick={() => props.removeGroup(props.group.id, props.group.name)} style={{cursor: "pointer"}} />*/}
     return(
         <div className = 'group-card'>

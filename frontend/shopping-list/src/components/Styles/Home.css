@@ -79,6 +79,10 @@
     color: white;
 }
 
+.about p {
+    font-size: 1.25rem;
+}
+
 .home-content{
     /* border-radius: 20px; */
     background: white;
@@ -86,6 +90,7 @@
     margin: 0 auto;
     max-width: 80%;
 }
+
 
 .content-tiles{
     width: 100%;
@@ -110,6 +115,7 @@
 .tile-text{
     width: 47%;
     margin: 20px 0px;
+    font-size: 1.25rem;
 }
 
 section {
@@ -137,9 +143,14 @@ section {
         font-size: 2rem;
     }
 
+    .home-content{
+        padding: 10px;
+    }
+
     .content-tiles{
         flex-flow: column nowrap;
     }
+
 
     .tile-img{
         width: 100%;
