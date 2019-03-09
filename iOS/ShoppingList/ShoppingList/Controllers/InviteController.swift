@@ -54,7 +54,7 @@ class InviteController {
                     return
                 }
                 
-                let parameters: Parameters = ["userID": userID, "groupID": groupID, "invitee": invitee ]
+                let parameters: Parameters = ["userID": userID, "groupID": groupID, "invitee": "default@dummy.com"/* "invitee": invitee */]
                 
                 Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).validate().responseData { (response) in
                     

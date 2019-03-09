@@ -203,7 +203,7 @@ class GroupController {
                     
                     for group in groups.groups {
                         let chan = "group-\(group.groupID)"
-                        try! PushNotifications.shared.subscribe(interest:chan)
+                        try! PushNotifications.shared.addDeviceInterest(interest:chan)
                     }
                     
                     completion(true)
