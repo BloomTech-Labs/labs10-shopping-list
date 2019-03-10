@@ -8,7 +8,6 @@
 
 import UIKit
 import Auth0
-import PusherSwift
 import PushNotifications
 
 enum GroupView { case list, history, stats }
@@ -46,11 +45,15 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         GroupController.shared.getUserID { (user) in
             
             guard let id = user?.profile.id,
-                  let name = user?.profile.name else { return }
+                  let name = user?.profile.name else {
+                    return }
             userID = id
             userName = name
             
-            guard let pusher = self.pusher else {return}
+            guard let pusher = self.pusher else {
+                return
+                
+            }
             
             GroupController.shared.getGroups(forUserID: userID, pusher: pusher) { (success) in
                 if allGroups.count > 0 {

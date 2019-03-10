@@ -17,15 +17,17 @@ import PushNotifications
 let defaults = UserDefaults.standard
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+   
     
     var window: UIWindow?
     let pushNotifications = PushNotifications.shared
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         self.pushNotifications.start(instanceId: "1c17ef2c-92ea-486e-af1b-7bc8faa62607")
         self.pushNotifications.registerForRemoteNotifications()
-       // try? self.pushNotifications.subscribe(interest: "add-item")
+        UNUserNotificationCenter.current().delegate = self
+      //  try? self.pushNotifications.subscribe(interest: "group-103")
 
       
         let center = UNUserNotificationCenter.current()
@@ -43,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let loginVC = LoginViewController.instantiate()
         
         let mainVC = MainViewController.instantiate()
+        mainVC.pusher = self.pushNotifications
         
         
         self.window?.rootViewController = SessionManager.tokens == nil ? loginVC : mainVC
@@ -52,10 +55,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken : Data) {
         self.pushNotifications.registerDeviceToken(deviceToken)
+        print(deviceToken)
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+    ) {
         self.pushNotifications.handleNotification(userInfo: userInfo)
+        print(userInfo)
+        completionHandler(.newData)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
+    {
+        completionHandler([.alert, .badge, .sound])
     }
     
     //Auth0 requires this function in AppDelegate

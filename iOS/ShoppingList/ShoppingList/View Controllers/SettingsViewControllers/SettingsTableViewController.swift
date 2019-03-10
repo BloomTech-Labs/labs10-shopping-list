@@ -73,7 +73,8 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
                                                             UIActivity.ActivityType.message,
                                                             UIActivity.ActivityType.openInIBooks,
                                                             UIActivity.ActivityType.print,
-                                                            UIActivity.ActivityType.saveToCameraRoll
+                                                            UIActivity.ActivityType.saveToCameraRoll,
+                                                            UIActivity.ActivityType.copyToPasteboard
             ]
             
             self.present(activityViewController, animated: true, completion: nil)
