@@ -92,6 +92,7 @@ export const ACCEPTING_INVITE = 'ACCEPTING_INVITE';
 export const INVITE_ACCEPTED = 'INVITE_ACCEPTED';
 
 export const SAVE_USERNAME = 'SAVE_USERNAME';
+export const SAVE_PROFILEPIC = 'SAVE_PROFILEPIC';
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -802,5 +803,32 @@ export const saveUsername = (username) => {
       console.log("ERR => ", err);
     })
   }
+}
 
+export const saveProfilePic = (profilePic) => {
+
+  const token = localStorage.getItem('jwt');
+  const userID = localStorage.getItem("userId");
+  const endpoint = `${backendURL}/api/user/${userID}`;
+
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  const changes = {
+    profilePicture: profilePic
+  }
+
+  return dispatch => {
+    axios.put(endpoint, changes, options).then(res => {
+      console.log("RES => ", res);
+      dispatch({ type: SAVE_PROFILEPIC});
+    }).then(() => {
+      getUserProfile(Number(localStorage.getItem('userId')))(dispatch)
+    }).catch(err => {
+      console.log("ERR => ", err);
+    })
+  }
 }

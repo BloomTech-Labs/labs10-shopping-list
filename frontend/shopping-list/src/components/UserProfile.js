@@ -1,7 +1,22 @@
 import React from 'react';
-import {getCurrentUser, checkEmail, saveUsername} from '../store/actions/rootActions';
+import {getCurrentUser, checkEmail, saveUsername, saveProfilePic} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
-import {MDBContainer, MDBCardHeader, MDBCardGroup, MDBBtn, MDBBadge, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBInput} from 'mdbreact';
+import {
+    MDBContainer,
+    MDBCardHeader,
+    MDBCardGroup,
+    MDBBtn,
+    MDBIcon,
+    MDBBadge,
+    MDBCard,
+    MDBCardBody,
+    MDBCardImage,
+    MDBCardTitle,
+    MDBCardText,
+    MDBCol,
+    MDBInput,
+    MDBModal, MDBModalHeader, MDBModalBody, MDBModalFooter
+} from 'mdbreact';
 import './Styles/UserProfile.css';
 
 class UserProfile extends React.Component{
@@ -10,6 +25,8 @@ class UserProfile extends React.Component{
         notifToggle: false,
         subToggle: false,
         username: "",
+        profilePic: "",
+        modal14: false,
     }
    componentWillMount(){
        this.props.getCurrentUser();
@@ -57,6 +74,18 @@ class UserProfile extends React.Component{
         this.props.saveUsername(this.state.username);
     }
 
+    saveProfilePicture = () => {
+        this.props.saveProfilePic(this.state.profilePic);
+        this.setState({ modal14: false})
+    }
+
+    toggle = nr => () => {
+        let modalNumber = 'modal' + nr
+        this.setState({
+            [modalNumber]: !this.state[modalNumber]
+        });
+    }
+
 
     render(){
         let name, email, profilePicture = '';
@@ -99,7 +128,8 @@ class UserProfile extends React.Component{
                         <div className='user-profile-pic'>
                         <MDBCol>
                             <MDBCard style = {{width: "22rem"}}>
-                            <MDBCardImage className = "img-fluid" src = {profilePicture} waves />
+                                <MDBCardImage className = "img-fluid" src = {profilePicture} waves />
+                                <MDBBtn className="btn-dark-green" onClick={this.toggle(14)}><MDBIcon className="mr-1" icon="edit"></MDBIcon>Change</MDBBtn>
                             <MDBCardBody>
                                 <MDBCardTitle>{name}</MDBCardTitle>
                                 <MDBCardText>{email}</MDBCardText>
@@ -194,6 +224,19 @@ class UserProfile extends React.Component{
 
                     </div>
                 </div>
+
+                <MDBContainer>
+                    <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
+                        <MDBModalHeader toggle={this.toggle(14)}>Update Profile Picture</MDBModalHeader>
+                        <MDBModalBody>
+                            <MDBInput label="Picture URL" name="profilePic" onChange={this.handleInput} defaultValue={this.state.profilePic}/>
+                        </MDBModalBody>
+                        <MDBModalFooter>
+                            <MDBBtn color="secondary" onClick={this.toggle(14)}>Close</MDBBtn>
+                            <MDBBtn color="primary" onClick={this.saveProfilePicture}>Save</MDBBtn>
+                        </MDBModalFooter>
+                    </MDBModal>
+                </MDBContainer>
             </div>
         )
     }
@@ -211,4 +254,5 @@ export default connect(mapStateToProps, {
     getCurrentUser,
     checkEmail,
     saveUsername,
+    saveProfilePic
 })(UserProfile);

@@ -106,4 +106,7 @@ export {
 
     SAVE_USERNAME,
     saveUsername,
+
+    SAVE_PROFILEPIC,
+  saveProfilePic,
 } from "./rootActions";
