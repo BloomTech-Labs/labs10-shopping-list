@@ -1,7 +1,7 @@
 
 exports.seed = function(knex, Promise) {
   // Deletes ALL existing entries
-  return knex('groupHistory').del().truncate()
+  return knex('groupHistory').del()
     // .then(function () {
     //   // Inserts seed entries
     //   return knex('table_name').insert([

@@ -92,38 +92,79 @@ totalItems = (items) => {
 groupHistoryRouter.get('/group/:id', async (req, res) => {
     const groupId = req.params.id;
     const groups = [];
+    console.log("GET GROUPS")
 
     try {
         const grpHistory = await groupHistoryDb.getByGroup(groupId);
+        console.log("GRP HIST", grpHistory);
 
         // Loop through the history and gather information on the item and user
         for (let i = 0; i < grpHistory.length; i++) {
             // Gather the item
             const mem = await itemDb.getById(grpHistory[i].itemID);
+            console.log("GRP MEM", mem);
 
             // Gather the user
-            const usr = await userDb.getById(mem[0].purchasedBy);
+            let usr = null;
+            try {
+                usr = await userDb.getById(mem[0].purchasedBy);
 
-            // Create an item object to return
-            const item = {
-                id: mem[0].id,
-                name: mem[0].name,
-                user: usr[0].name,
-                price: mem[0].price,
+                // Create an item object to return
+                const item = {
+                    id: mem[0].id,
+                    name: mem[0].name,
+                    user: usr[0].name,
+                    price: mem[0].price,
+                }
+
+                // The overall history object to return
+                const hist = {
+                    total: grpHistory[i].total,
+                    item: item,
+                    name: mem[0].name,
+                    user: usr[0].name,
+                    date: new Date(grpHistory[i].createdAt).toLocaleDateString(),
+                    utcDate: new Date(grpHistory[i].createdAt).toUTCString()
+                }
+
+                // Add to the groups array
+                groups.push(hist);
+            } catch (err) {
+                // console.log("err => ", err)
+
+                if (usr === null || usr === undefined || usr.length < 1) {
+                    usr = [{
+                        name: 'Removed Account',
+                        price: 0.00,
+                    }]
+                }
+
+                // Create an item object to return
+                const item = {
+                    id: mem[0].id,
+                    name: mem[0].name,
+                    user: usr[0].name,
+                    price: mem[0].price,
+                }
+
+                // The overall history object to return
+                const hist = {
+                    total: grpHistory[i].total,
+                    item: item,
+                    name: mem[0].name,
+                    user: usr[0].name,
+                    date: new Date(grpHistory[i].createdAt).toLocaleDateString(),
+                    utcDate: new Date(grpHistory[i].createdAt).toUTCString()
+                }
+
+                // Add to the groups array
+                groups.push(hist);
             }
 
-            // The overall history object to return
-            const hist = {
-                total: grpHistory[i].total,
-                item: item,
-                name: mem[0].name,
-                user: usr[0].name,
-                date: new Date(grpHistory[i].createdAt).toLocaleDateString(),
-                utcDate: new Date(grpHistory[i].createdAt).toUTCString()
-            }
 
-            // Add to the groups array
-            groups.push(hist);
+
+
+
         }
 
         // Sort the array by the item's date (2/27/2019) and user(name)
