@@ -109,4 +109,7 @@ export {
 
     SAVE_PROFILEPIC,
   saveProfilePic,
+
+  REMOVE_ACCOUNT,
+    removeAccount,
 } from "./rootActions";

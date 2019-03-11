@@ -3,7 +3,8 @@ import {
   getCurrentUser,
   checkEmail,
   saveUsername,
-  saveProfilePic
+  saveProfilePic,
+    removeAccount
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 import {
@@ -24,8 +25,6 @@ import {
   MDBModalHeader,
   MDBModalBody,
   MDBModalFooter,
-    toast,
-    ToastContainer,
     MDBAlert
 } from "mdbreact";
 import "./Styles/UserProfile.css";
@@ -38,8 +37,10 @@ class UserProfile extends React.Component {
     username: "",
     profilePic: "",
     modal14: false,
+      modal16: false,
     hasSaved: false,
     hasPSaved: false,
+      delete: "",
   };
   componentWillMount() {
     // this.props.getCurrentUser();
@@ -129,6 +130,14 @@ class UserProfile extends React.Component {
     });
   };
 
+    handleDeleteAccount = (event) => {
+        event.preventDefault();
+        if (localStorage.getItem("userId")) {
+            this.props.removeAccount();
+            this.setState({modal16: false})
+        }
+    }
+
 
 
   render() {
@@ -193,6 +202,11 @@ class UserProfile extends React.Component {
                   <MDBCardBody>
                       <MDBCardTitle>{name} <MDBBadge color="primary">{subscriptionType === 1 ? "FREE" : "PREMIUM"}</MDBBadge></MDBCardTitle>
                     <MDBCardText>{email}</MDBCardText>
+                      {/*<div className='user-profile-header'>*/}
+                          {/*<MDBBtn color="danger" onClick={this.toggle(14)}>*/}
+                              {/*Remove Account*/}
+                          {/*</MDBBtn>*/}
+                      {/*</div>*/}
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
@@ -220,6 +234,9 @@ class UserProfile extends React.Component {
                 />
 
                 <div className="user-profile-header">
+                    <MDBBtn color="danger" onClick={this.toggle(16)}>
+                        Remove Account
+                    </MDBBtn>
                     <MDBBtn
                         disabled={this.state.username === localStorage.getItem("name") ? true : false}
                       className={
@@ -352,12 +369,19 @@ class UserProfile extends React.Component {
               </MDBBtn>
             </MDBModalFooter>
           </MDBModal>
+            <MDBModal isOpen={this.state.modal16} toggle={this.toggle(16)} centered>
+                <MDBModalHeader toggle={this.toggle(16)}>Remove Account</MDBModalHeader>
+                <MDBModalBody>
+                    <h6>Type the full name of your username to completely remove it.</h6>
+                    <MDBInput label="Account Name" name={"delete"} onChange={this.handleInput} defaultValue={this.state.delete}/>
+                    <small className="delete-text" >{this.state.username}</small>
+                </MDBModalBody>
+                <MDBModalFooter>
+                    <MDBBtn color="secondary" onClick={this.toggle(16)}>Close</MDBBtn>
+                    <MDBBtn color="primary" onClick={this.handleDeleteAccount} disabled={this.state.username !== this.state.delete }>Delete</MDBBtn>
+                </MDBModalFooter>
+            </MDBModal>
         </MDBContainer>
-          <ToastContainer
-              hideProgressBar={true}
-              newestOnTop={true}
-              autoClose={5000}
-          />
 
       </div>
     );
@@ -378,6 +402,7 @@ export default connect(
     getCurrentUser,
     checkEmail,
     saveUsername,
-    saveProfilePic
+    saveProfilePic,
+      removeAccount
   }
 )(UserProfile);

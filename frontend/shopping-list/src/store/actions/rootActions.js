@@ -93,6 +93,7 @@ export const INVITE_ACCEPTED = 'INVITE_ACCEPTED';
 
 export const SAVE_USERNAME = 'SAVE_USERNAME';
 export const SAVE_PROFILEPIC = 'SAVE_PROFILEPIC';
+export const REMOVE_ACCOUNT = 'REMOVE_ACCOUNT';
 
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -827,6 +828,33 @@ export const saveProfilePic = (profilePic) => {
       dispatch({ type: SAVE_PROFILEPIC, payload: profilePic});
     }).then(() => {
       checkEmail()(dispatch)
+    }).catch(err => {
+      console.log("ERR => ", err);
+    })
+  }
+}
+
+export const removeAccount = () => {
+
+  const token = localStorage.getItem('jwt');
+  const userID = localStorage.getItem("userId");
+  const endpoint = `${backendURL}/api/user/${userID}`;
+
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  return dispatch => {
+    axios.delete(endpoint, options).then(res => {
+      console.log("RES => ", res);
+      localStorage.removeItem('jwt');
+      localStorage.removeItem('email');
+      localStorage.removeItem('name');
+      localStorage.removeItem('img_url');
+      localStorage.setItem('isLoggedIn', false);
+      dispatch({ type: REMOVE_ACCOUNT});
     }).catch(err => {
       console.log("ERR => ", err);
     })
