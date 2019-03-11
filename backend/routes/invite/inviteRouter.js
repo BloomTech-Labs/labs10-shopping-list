@@ -93,7 +93,7 @@ inviteRouter.post('/join', checkJwt, (req, res) => { // req.body must contain th
         newMember.userID = id[0].id; // start constructing the newMember
         inviteDb.getByCode(req.body.inviteCode).then(invite => {
             // console.log(invite[0].usedBefore);
-            if(invite[0].usedBefore === 0){
+            if(invite[0].usedBefore === 0 || invite[0].usedBefore === false){
                 newMember.groupID = invite[0].groupID; // the group ID that is in the invitation
                 // console.log('newmemebr', newMember);
                 let changes = invite[0];
