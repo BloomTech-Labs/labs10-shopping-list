@@ -39,12 +39,12 @@ class GroupsPage extends Component{
         }
 
         // invitation handling on groups redirect
-        if(localStorage.getItem('pendingInvite') && localStorage.getItem('isLoggedIn')){
-            let inviteCode = localStorage.getItem('pendingInvite');
+        if(sessionStorage.getItem('pendingInvite') && localStorage.getItem('isLoggedIn')){
+            let inviteCode = sessionStorage.getItem('pendingInvite');
             console.log('pending invite', inviteCode);
             this.props.acceptInvite(inviteCode); // tell the server to add the now logged-in user to the invite group
       
-            localStorage.removeItem('pendingInvite');
+            sessionStorage.removeItem('pendingInvite');
         }
     }
 
@@ -114,7 +114,7 @@ class GroupsPage extends Component{
                             <MDBCardBody>
                                 <MDBCardTitle>Create New Group</MDBCardTitle>
                                 <MDBCardText>
-                                    <p>Create a new group and start inviting to help with the shopping!</p>
+                                    Create a new group and start inviting to help with the shopping!
                                 </MDBCardText>
                                 <MDBBtn color="primary" onClick={this.toggle(14)}>Create</MDBBtn>
                             </MDBCardBody>

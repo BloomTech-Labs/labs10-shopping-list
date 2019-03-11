@@ -9,8 +9,8 @@ import './Styles/Callback.css';
 
 class Callback extends Component {
   
-  componentDidMount() {
-    // await auth0Client.handleAuthentication();
+  async componentDidMount() {
+    await auth0Client.handleAuthentication();
 
     console.log('callback', this.props);
 

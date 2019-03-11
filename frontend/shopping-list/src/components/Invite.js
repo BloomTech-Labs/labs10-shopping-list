@@ -72,9 +72,13 @@ class Invite extends React.Component {
     handleSignIn = event => {
         event.preventDefault();
 
-        localStorage.setItem('pendingInvite', this.props.inviteInfo.inviteCode);
+        sessionStorage.setItem('pendingInvite', this.props.inviteInfo.inviteCode);
 
-        lock.show();
+        if(localStorage.getItem('isLoggedIn')){
+            this.props.history.replace('/groups');
+        } else {
+            auth0Client.signIn();
+        }
     }
 
     render(){
