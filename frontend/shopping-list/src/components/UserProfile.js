@@ -1,5 +1,5 @@
 import React from 'react';
-import {getCurrentUser, checkEmail} from '../store/actions/rootActions';
+import {getCurrentUser, checkEmail, saveUsername} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import {MDBContainer, MDBCardHeader, MDBCardGroup, MDBBtn, MDBBadge, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBInput} from 'mdbreact';
 import './Styles/UserProfile.css';
@@ -12,17 +12,31 @@ class UserProfile extends React.Component{
         username: "",
     }
    componentWillMount(){
+       this.props.getCurrentUser();
         if(!this.props.currentUser && localStorage.getItem('isLoggedIn')){
             // find a user if none in state
             // console.log('profile mount');
             this.props.checkEmail();
-            this.setState({ username: localStorage.getItem("name")})
+
+
         }
-    }
+
+        if(this.props.currentUser) {
+            this.setState({ username: this.props.currentUser.name})
+        }
+
+   }
+
+   componentDidMount() {
+       // this.props.getCurrentUser();
+       if(this.props.currentUser) {
+           this.setState({ username: this.props.currentUser.name})
+       }
+   }
 
     generalToggle = () => {
         this.setState({generalToggle: !this.state.generalToggle, notifToggle: false, subToggle: false})
-    }
+}
 
     notifToggle = () => {
         this.setState({notifToggle: !this.state.notifToggle, generalToggle: false, subToggle: false})
@@ -31,6 +45,18 @@ class UserProfile extends React.Component{
     subToggle = () => {
         this.setState({subToggle: !this.state.subToggle, generalToggle: false, notifToggle: false})
     }
+
+    handleInput = (e) => {
+        this.setState({
+        [e.target.name]: e.target.value,
+                      })
+    }
+
+    saveCurrentUsername = () => {
+        // Save username
+        this.props.saveUsername(this.state.username);
+    }
+
 
     render(){
         let name, email, profilePicture = '';
@@ -51,14 +77,14 @@ class UserProfile extends React.Component{
                     >
                         General
                     </MDBBtn>
-                    <MDBBtn
-                        className={this.state.notifToggle ? "btn-outline-dark-green" : "btn-dark-green"}
-                        onClick={() => {
-                            this.notifToggle();
-                        }}
-                    >
-                        Notification
-                    </MDBBtn>
+                    {/*<MDBBtn*/}
+                        {/*className={this.state.notifToggle ? "btn-outline-dark-green" : "btn-dark-green"}*/}
+                        {/*onClick={() => {*/}
+                            {/*this.notifToggle();*/}
+                        {/*}}*/}
+                    {/*>*/}
+                        {/*Notification*/}
+                    {/*</MDBBtn>*/}
                     <MDBBtn
                         className={this.state.subToggle ? "btn-outline-dark-green" : "btn-dark-green"}
                         onClick={() => {
@@ -91,13 +117,13 @@ class UserProfile extends React.Component{
                     <div className = 'user-profile-right'>
                         {
                             this.state.generalToggle ?
-                            <div>
-                                <MDBInput label="Username" valueDefault={this.state.username} icon="user" />
-                                <MDBInput label="Email" disabled="true" valueDefault={localStorage.getItem("email")} icon="envelope" />
+                            <div className='user-profile-settings'>
+                                <MDBInput label="Username" name='username' onChange={e => this.handleInput(e)} valueDefault={this.state.username} icon="user" />
+                                <MDBInput label="Email" disabled="true" valueDefault={email} icon="envelope" />
                                 <MDBBtn
                                     className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
                                     onClick={() => {
-                                        this.toggleListClass();
+                                        this.saveCurrentUsername();
                                     }}
                                 >
                                     Save
@@ -107,7 +133,6 @@ class UserProfile extends React.Component{
                         {
                             this.state.notifToggle ?
                                 <div>
-                                    <MDBInput label="Username" valueDefault={this.state.username} icon="user" />
                                     <MDBBtn
                                         className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
                                         onClick={() => {
@@ -120,9 +145,9 @@ class UserProfile extends React.Component{
                         }
                         {
                             this.state.subToggle ?
-                                <div>
+                                <div >
                                     <MDBContainer fluid='true'>
-                                        <MDBCardGroup deck className='user-profile-subs'>
+                                        <MDBCardGroup deck>
                                             <MDBCard style={{ width: "22rem", marginTop: "1rem" }} className="text-center">
                                                 <MDBCardHeader color="success-color">Free</MDBCardHeader>
                                                 <MDBCardBody>
@@ -137,9 +162,9 @@ class UserProfile extends React.Component{
                                             </MDBCard>
 
                                             <MDBCard style={{ width: "22rem", marginTop: "1rem" }} className="text-center">
-                                                <MDBCardHeader color="success-color">Monthly Subscription</MDBCardHeader>
+                                                <MDBCardHeader color="success-color">Yearly Subscription</MDBCardHeader>
                                                 <MDBCardBody>
-                                                    <MDBCardTitle><MDBBadge color="default">$0.99</MDBBadge></MDBCardTitle>
+                                                    <MDBCardTitle><MDBBadge color="default">$9.99</MDBBadge></MDBCardTitle>
                                                     <MDBCardText>
                                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                                     </MDBCardText>
@@ -150,9 +175,9 @@ class UserProfile extends React.Component{
                                             </MDBCard>
 
                                         <MDBCard style={{ width: "22rem", marginTop: "1rem" }} className="text-center">
-                                            <MDBCardHeader color="success-color">Yearly Subscription</MDBCardHeader>
+                                            <MDBCardHeader color="success-color">Yearly Premium Subscription</MDBCardHeader>
                                             <MDBCardBody>
-                                                <MDBCardTitle><MDBBadge color="default">$9.99</MDBBadge></MDBCardTitle>
+                                                <MDBCardTitle><MDBBadge color="default">$29.99</MDBBadge></MDBCardTitle>
                                                 <MDBCardText>
                                                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                                 </MDBCardText>
@@ -185,4 +210,5 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, {
     getCurrentUser,
     checkEmail,
+    saveUsername,
 })(UserProfile);

@@ -1,9 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
 
-export const TEST_START = "TEST_START";
-export const TEST_SUCCESS = "TEST_SUCCESS";
-export const TEST_FAILURE = "TEST_FAILURE";
 export const CHECKING_EMAIL = 'CHECKING_EMAIL';
 export const EMAIL_CHECKED = 'EMAIL_CHECKED';
 export const ERROR = 'ERROR';
@@ -94,28 +91,14 @@ export const SAVE_INVITE_INFO = 'SAVE_INVITE_INFO';
 export const ACCEPTING_INVITE = 'ACCEPTING_INVITE';
 export const INVITE_ACCEPTED = 'INVITE_ACCEPTED';
 
+export const SAVE_USERNAME = 'SAVE_USERNAME';
+
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
   backendURL = `http://localhost:9000`
 } else {
   backendURL = `https://shoptrak-backend.herokuapp.com`
 }
-
-console.log('backendURL', backendURL);
-
-/**
- * Test function
- * @param  {} dispatch
- */
-export const testFunction = () => dispatch => {
-  dispatch({ type: TEST_START });
-
-  const result = true;
-
-  if (result) return dispatch({ type: TEST_SUCCESS });
-
-  dispatch({ type: TEST_FAILURE });
-};
 
 // takes in the user email from auth0 profile
 // sends email to server to obtain user ID
@@ -791,4 +774,33 @@ export const acceptInvite = inviteCode => {
       dispatch({type: INVITE_ACCEPTED});
     })
   }
+}
+
+export const saveUsername = (username) => {
+
+  const token = localStorage.getItem('jwt');
+  const userID = localStorage.getItem("userId");
+  const endpoint = `${backendURL}/api/user/${userID}`;
+
+  const options = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  };
+
+  const changes = {
+    name: username
+  }
+
+  return dispatch => {
+    axios.put(endpoint, changes, options).then(res => {
+      console.log("RES => ", res);
+      dispatch({ type: SAVE_USERNAME});
+    }).then(() => {
+      getUserProfile(Number(localStorage.getItem('userId')))(dispatch)
+    }).catch(err => {
+      console.log("ERR => ", err);
+    })
+  }
+
 }

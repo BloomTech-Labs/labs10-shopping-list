@@ -26,6 +26,8 @@
 }
 
 .user-profile-right {
+    justify-content: center;
+    margin-top: 70px;
     display: flex;
     flex-flow: row;
     width: 100%;
@@ -34,4 +36,8 @@
 .user-profile-subs {
     display: flex;
     justify-content: center;
+}
+
+.user-profile-settings {
+    width: 40%;
 }
