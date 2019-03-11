@@ -22,9 +22,16 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     padding: 0px;
-    width: 40%;
+    width: 30%;
 }
 
 .user-profile-right {
-    width: 30%;
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+}
+
+.user-profile-subs {
+    display: flex;
+    justify-content: center;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import {getCurrentUser, checkEmail} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
-import {MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBInput} from 'mdbreact';
+import {MDBContainer, MDBCardHeader, MDBCardGroup, MDBBtn, MDBBadge, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBInput} from 'mdbreact';
 import './Styles/UserProfile.css';
 
 class UserProfile extends React.Component{
@@ -121,15 +121,49 @@ class UserProfile extends React.Component{
                         {
                             this.state.subToggle ?
                                 <div>
-                                    <MDBInput label="SUB" valueDefault={this.state.username} icon="user" />
-                                    <MDBBtn
-                                        className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
-                                        onClick={() => {
-                                            this.toggleListClass();
-                                        }}
-                                    >
-                                        Save
-                                    </MDBBtn>
+                                    <MDBContainer fluid='true'>
+                                        <MDBCardGroup deck className='user-profile-subs'>
+                                            <MDBCard style={{ width: "22rem", marginTop: "1rem" }} className="text-center">
+                                                <MDBCardHeader color="success-color">Free</MDBCardHeader>
+                                                <MDBCardBody>
+                                                    <MDBCardTitle><MDBBadge color="default">$0.00</MDBBadge></MDBCardTitle>
+                                                    <MDBCardText>
+                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                    </MDBCardText>
+                                                    <MDBBtn color="success" size="sm">
+                                                        Subscribe
+                                                    </MDBBtn>
+                                                </MDBCardBody>
+                                            </MDBCard>
+
+                                            <MDBCard style={{ width: "22rem", marginTop: "1rem" }} className="text-center">
+                                                <MDBCardHeader color="success-color">Monthly Subscription</MDBCardHeader>
+                                                <MDBCardBody>
+                                                    <MDBCardTitle><MDBBadge color="default">$0.99</MDBBadge></MDBCardTitle>
+                                                    <MDBCardText>
+                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                    </MDBCardText>
+                                                    <MDBBtn color="success" size="sm">
+                                                        Subscribe Monthly
+                                                    </MDBBtn>
+                                                </MDBCardBody>
+                                            </MDBCard>
+
+                                        <MDBCard style={{ width: "22rem", marginTop: "1rem" }} className="text-center">
+                                            <MDBCardHeader color="success-color">Yearly Subscription</MDBCardHeader>
+                                            <MDBCardBody>
+                                                <MDBCardTitle><MDBBadge color="default">$9.99</MDBBadge></MDBCardTitle>
+                                                <MDBCardText>
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                </MDBCardText>
+                                                <MDBBtn color="success" size="sm">
+                                                    Subscribe Yearly
+                                                </MDBBtn>
+                                            </MDBCardBody>
+                                        </MDBCard>
+
+                                        </MDBCardGroup>
+                                    </MDBContainer>
                                 </div> : null
                         }
 
