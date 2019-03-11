@@ -33,7 +33,6 @@ var lockOptions = {
     languageDictionary: {
         title: 'ShopTrak'
     }
-
 }
 
 var lock = new Auth0Lock(
@@ -42,30 +41,6 @@ var lock = new Auth0Lock(
     lockOptions
 )
 
-lock.on('authenticated', function(authResult){
-    console.log('auth attempt');
-    lock.getUserInfo(authResult.accessToken, function(error, profile){
-        if(error){
-            //handle error
-            this.props.history.replace('/');
-            return;
-        }
-        console.log('result \n \n \n', authResult);
-        localStorage.setItem('jwt', authResult.idToken);
-        localStorage.setItem('email', authResult.idTokenPayload.email);
-        localStorage.setItem('name', authResult.idTokenPayload.name);
-        localStorage.setItem('img_url', authResult.idTokenPayload.picture);
-        localStorage.setItem('isLoggedIn', true);
-
-        window.location.href = `${frontendURL}/groups`;
-    })
-})
-
-var lock = new Auth0Lock(
-    process.env.REACT_APP_AUTH0_CLIENT_ID,
-    process.env.REACT_APP_AUTH0_DOMAIN,
-    lockOptions
-)
 
 class Navigation extends React.Component{
     constructor(props){

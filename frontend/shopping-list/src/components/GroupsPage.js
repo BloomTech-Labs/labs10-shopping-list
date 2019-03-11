@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {checkEmail, createGroup, getCurrentUser, getUserGroups, addGroup, clearCurrentGroup, gettingGroups, updateGroupName, removeGroup } from '../store/actions/rootActions';
+import {checkEmail, createGroup, acceptInvite, getCurrentUser, getUserGroups, addGroup, clearCurrentGroup, gettingGroups, updateGroupName, removeGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer, MDBCol,
     MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
@@ -31,11 +31,20 @@ class GroupsPage extends Component{
         if(localStorage.getItem('email') && !this.props.currentUser){
           this.props.checkEmail();
         }
-      }
+    }
 
     componentDidMount(){
         if(!this.props.userGroups && this.props.currentUser){
             this.props.getUserGroups(this.props.currentUser.id);
+        }
+
+        // invitation handling on groups redirect
+        if(sessionStorage.getItem('pendingInvite') && localStorage.getItem('isLoggedIn')){
+            let inviteCode = sessionStorage.getItem('pendingInvite');
+            console.log('pending invite', inviteCode);
+            this.props.acceptInvite(inviteCode); // tell the server to add the now logged-in user to the invite group
+      
+            sessionStorage.removeItem('pendingInvite');
         }
     }
 
@@ -105,7 +114,7 @@ class GroupsPage extends Component{
                             <MDBCardBody>
                                 <MDBCardTitle>Create New Group</MDBCardTitle>
                                 <MDBCardText>
-                                    <p>Create a new group and start inviting to help with the shopping!</p>
+                                    Create a new group and start inviting to help with the shopping!
                                 </MDBCardText>
                                 <MDBBtn color="primary" onClick={this.toggle(14)}>Create</MDBBtn>
                             </MDBCardBody>
@@ -185,5 +194,6 @@ export default connect(mapStateToProps, {
     getCurrentUser,
     gettingGroups,
     updateGroupName,
-    removeGroup
+    removeGroup,
+    acceptInvite
 })(GroupsPage);

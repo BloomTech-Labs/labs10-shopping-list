@@ -15,7 +15,8 @@ const moment = require('moment');
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/invite ENDPOINT **/
 /****************************************************************************************************/
 
-inviteRouter.use(checkJwt); // ensures only logged in users can create invitations
+// inviteRouter.use(checkJwt); // ensures only logged in users can create invitations
+// ^ only use on case-by-case basis, as invite acceptance needs to be public
 
 /**
  * Create new invitation
@@ -27,7 +28,7 @@ inviteRouter.use(checkJwt); // ensures only logged in users can create invitatio
  * @param inviteCode = randomly generated string identifier
  */
 
-inviteRouter.post('/create', (req, res) => {
+inviteRouter.post('/create', checkJwt, (req, res) => {
     let info = req.body; // req.body should contain groupID, groupName, userID, userName from the front-end.
 
     let newCode = crypto.randomBytes(14).toString('hex');
@@ -86,7 +87,7 @@ inviteRouter.get('/:code', (req, res) => {
 
 // if invitation is accepted, add new user to groupMembers db
 
-inviteRouter.post('/join', (req, res) => { // req.body must contain the invitation code
+inviteRouter.post('/join', checkJwt, (req, res) => { // req.body must contain the invitation code
     usersDb.getIdByEmail(req.user.email).then(id => {
         let newMember = {};
         newMember.userID = id[0].id; // start constructing the newMember

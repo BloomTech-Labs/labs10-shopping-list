@@ -9,24 +9,12 @@ import './Styles/Callback.css';
 
 class Callback extends Component {
   
-  componentDidMount() {
-    // await auth0Client.handleAuthentication();
+  async componentDidMount() {
+    await auth0Client.handleAuthentication();
 
     console.log('callback', this.props);
 
-    if(localStorage.getItem('pendingInvite') && localStorage.getItem('isLoggedIn')){
-      let inviteCode = localStorage.getItem('pendingInvite');
-      console.log('pending invite', inviteCode);
-      this.props.acceptInvite(inviteCode); // tell the server to add the now logged-in user to the invite group
-
-      localStorage.removeItem('pendingInvite');
-
-      this.props.history.replace('/groups'); //reroute into groups
-    } else {
-      if(localStorage.getItem('isLoggedIn')){
-        this.props.history.replace('/groups'); //reroute into groups
-      }
-    }
+    this.props.history.replace('/groups');
   }
 
 
