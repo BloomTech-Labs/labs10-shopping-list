@@ -8,6 +8,23 @@
 .user-profile-col{
     display: flex;
     flex-flow: row nowrap;
+    /*justify-content: space-between;*/
+    padding: 0px;
+}
+
+.user-profile-header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.user-profile-left {
+    display: flex;
+    flex-flow: row nowrap;
     justify-content: space-between;
     padding: 0px;
+    width: 40%;
+}
+
+.user-profile-right {
+    width: 30%;
 }

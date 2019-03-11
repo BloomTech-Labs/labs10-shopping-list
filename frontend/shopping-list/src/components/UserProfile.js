@@ -1,16 +1,35 @@
 import React from 'react';
 import {getCurrentUser, checkEmail} from '../store/actions/rootActions';
 import {connect} from 'react-redux';
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol } from 'mdbreact';
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, MDBCol, MDBInput} from 'mdbreact';
 import './Styles/UserProfile.css';
 
 class UserProfile extends React.Component{
+    state = {
+        generalToggle: true,
+        notifToggle: false,
+        subToggle: false,
+        username: "",
+    }
    componentWillMount(){
         if(!this.props.currentUser && localStorage.getItem('isLoggedIn')){
             // find a user if none in state
-            console.log('profile mount');
+            // console.log('profile mount');
             this.props.checkEmail();
+            this.setState({ username: localStorage.getItem("name")})
         }
+    }
+
+    generalToggle = () => {
+        this.setState({generalToggle: !this.state.generalToggle, notifToggle: false, subToggle: false})
+    }
+
+    notifToggle = () => {
+        this.setState({notifToggle: !this.state.notifToggle, generalToggle: false, subToggle: false})
+    }
+
+    subToggle = () => {
+        this.setState({subToggle: !this.state.subToggle, generalToggle: false, notifToggle: false})
     }
 
     render(){
@@ -23,27 +42,99 @@ class UserProfile extends React.Component{
         }
         return (
             <div className = 'user-profile-container'>
-            <div className = 'user-profile-col'>
-            <div className = 'user-profile-left'>
-            <MDBCol>
-                <MDBCard style = {{width: "22rem"}}>
-                <MDBCardImage className = "img-fluid" src = {profilePicture} waves />
-                <MDBCardBody>
-                    <MDBCardTitle>{name}</MDBCardTitle>
-                    <MDBCardText>{email}</MDBCardText>
-                </MDBCardBody>
-                </MDBCard>
-            </MDBCol>
-            </div>
+                <div className='user-profile-header'>
+                    <MDBBtn
+                        className={this.state.generalToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+                        onClick={() => {
+                            this.generalToggle();
+                        }}
+                    >
+                        General
+                    </MDBBtn>
+                    <MDBBtn
+                        className={this.state.notifToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+                        onClick={() => {
+                            this.notifToggle();
+                        }}
+                    >
+                        Notification
+                    </MDBBtn>
+                    <MDBBtn
+                        className={this.state.subToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+                        onClick={() => {
+                            this.subToggle();
+                        }}
+                    >
+                        Subscription
+                    </MDBBtn>
+                </div>
+                <div className = 'user-profile-col'>
+                    <div className = 'user-profile-left'>
+                        <div className='user-profile-pic'>
+                        <MDBCol>
+                            <MDBCard style = {{width: "22rem"}}>
+                            <MDBCardImage className = "img-fluid" src = {profilePicture} waves />
+                            <MDBCardBody>
+                                <MDBCardTitle>{name}</MDBCardTitle>
+                                <MDBCardText>{email}</MDBCardText>
+                            </MDBCardBody>
+                            </MDBCard>
+                        </MDBCol>
+                        </div>
+                        {/*<div classname="user-profile-info">*/}
 
-            <div className = 'user-profile-right'>
-            
-            Notification Settings
 
-            Subscription Settings
+                        {/*</div>*/}
 
-            </div>
-            </div>
+                    </div>
+
+                    <div className = 'user-profile-right'>
+                        {
+                            this.state.generalToggle ?
+                            <div>
+                                <MDBInput label="Username" valueDefault={this.state.username} icon="user" />
+                                <MDBInput label="Email" disabled="true" valueDefault={localStorage.getItem("email")} icon="envelope" />
+                                <MDBBtn
+                                    className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+                                    onClick={() => {
+                                        this.toggleListClass();
+                                    }}
+                                >
+                                    Save
+                                </MDBBtn>
+                            </div> : null
+                        }
+                        {
+                            this.state.notifToggle ?
+                                <div>
+                                    <MDBInput label="Username" valueDefault={this.state.username} icon="user" />
+                                    <MDBBtn
+                                        className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+                                        onClick={() => {
+                                            this.toggleListClass();
+                                        }}
+                                    >
+                                        Save
+                                    </MDBBtn>
+                                </div> : null
+                        }
+                        {
+                            this.state.subToggle ?
+                                <div>
+                                    <MDBInput label="SUB" valueDefault={this.state.username} icon="user" />
+                                    <MDBBtn
+                                        className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+                                        onClick={() => {
+                                            this.toggleListClass();
+                                        }}
+                                    >
+                                        Save
+                                    </MDBBtn>
+                                </div> : null
+                        }
+
+                    </div>
+                </div>
             </div>
         )
     }
