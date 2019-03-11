@@ -33,7 +33,6 @@ var lockOptions = {
     languageDictionary: {
         title: 'ShopTrak'
     }
-
 }
 
 var lock = new Auth0Lock(
