@@ -5,9 +5,89 @@
     padding: 40px 40px;
 }
 
+@media only screen and (max-width: 767px){
+
+    .user-profile-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 .user-profile-col{
+    display: flex;
+    flex-flow: row nowrap;
+    /*justify-content: space-between;*/
+    padding: 0px;
+}
+
+@media only screen and (max-width: 767px){
+
+    .user-profile-col {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.user-profile-header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media only screen and (max-width: 767px){
+
+    .user-profile-header {
+        justify-content: center;
+    }
+}
+
+.user-profile-left {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     padding: 0px;
+    width: 30%;
+}
+
+@media only screen and (max-width: 767px){
+
+    .user-profile-left {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+.user-profile-right {
+    justify-content: center;
+    margin-top: 70px;
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+}
+
+@media only screen and (max-width: 767px){
+
+    .user-profile-right {
+        margin-top: 20px;
+    }
+}
+
+.user-profile-subs {
+    display: flex;
+    justify-content: center;
+}
+
+.user-profile-settings {
+    width: 40%;
+}
+
+@media only screen and (max-width: 767px){
+
+    .user-profile-settings {
+        width: 80%;
+    }
+}
+
+.user-profile-change {
+
 }

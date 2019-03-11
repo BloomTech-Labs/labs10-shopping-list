@@ -1,10 +1,6 @@
 import {CHANGE_GROUP_NAME_START, CHANGE_GROUP_NAME_SUCCESS} from "./rootActions";
 
 export {
-  TEST_START,
-  TEST_SUCCESS,
-  TEST_FAILURE,
-  testFunction,
   CHECKING_EMAIL,
   EMAIL_CHECKED,
   ADDING_GROUPS_TO_STATE,
@@ -108,5 +104,12 @@ export {
   ACCEPTING_INVITE,
   INVITE_ACCEPTED,
 
+    SAVE_USERNAME,
+    saveUsername,
 
+    SAVE_PROFILEPIC,
+  saveProfilePic,
+
+  REMOVE_ACCOUNT,
+    removeAccount,
 } from "./rootActions";
