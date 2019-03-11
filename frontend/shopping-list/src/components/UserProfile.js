@@ -191,7 +191,7 @@ class UserProfile extends React.Component {
                     <MDBIcon className="mr-1" icon="edit" />Change
                   </MDBBtn>
                   <MDBCardBody>
-                    <MDBCardTitle>{name}</MDBCardTitle>
+                      <MDBCardTitle>{name} <MDBBadge color="primary">{subscriptionType === 1 ? "FREE" : "PREMIUM"}</MDBBadge></MDBCardTitle>
                     <MDBCardText>{email}</MDBCardText>
                   </MDBCardBody>
                 </MDBCard>
@@ -221,6 +221,7 @@ class UserProfile extends React.Component {
 
                 <div className="user-profile-header">
                     <MDBBtn
+                        disabled={this.state.username === localStorage.getItem("name") ? true : false}
                       className={
                         this.state.listToggle
                           ? "btn-outline-dark-green"
@@ -279,14 +280,14 @@ class UserProfile extends React.Component {
                           <MDBBadge color="default">$0.00</MDBBadge>
                         </MDBCardTitle>
                         <MDBCardText>
-                          Ability to have 1 group with up to 2 members.
+                          Ability to have one group with up to 2 members.
                         </MDBCardText>
                         <MDBBtn
-                          color="success"
+                          className="btn btn-dark-green"
                           disabled={subscriptionType === 1 ? true : false}
-                          size="sm"
+                          size="lg"
                         >
-                          Subscribe
+                            {subscriptionType === 1 ? "Subscribed" : "Subscribe"}
                         </MDBBtn>
                       </MDBCardBody>
                     </MDBCard>
@@ -310,11 +311,11 @@ class UserProfile extends React.Component {
                           Ability to have unlimited groups with up to 6 members.
                         </MDBCardText>
                         <MDBBtn
-                          color="success"
+                          className="btn btn-dark-green"
                           disabled={subscriptionType === 2 ? true : false}
-                          size="sm"
+                          size="lg"
                         >
-                          Subscribe Yearly
+                            {subscriptionType === 1 ? "Subscribed" : "Subscribe"}
                         </MDBBtn>
                       </MDBCardBody>
                     </MDBCard>
