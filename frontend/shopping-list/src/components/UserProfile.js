@@ -29,12 +29,11 @@ class UserProfile extends React.Component{
         modal14: false,
     }
    componentWillMount(){
-       this.props.getCurrentUser();
+       // this.props.getCurrentUser();
         if(!this.props.currentUser && localStorage.getItem('isLoggedIn')){
             // find a user if none in state
             // console.log('profile mount');
             this.props.checkEmail();
-
 
         }
 
@@ -44,11 +43,10 @@ class UserProfile extends React.Component{
 
    }
 
-   componentDidMount() {
-       // this.props.getCurrentUser();
-       if(this.props.currentUser) {
-           this.setState({ username: this.props.currentUser.name})
-       }
+    componentWillReceiveProps = newProps => {
+        if (!newProps.currentUser) {
+            this.props.checkEmail();
+        }
    }
 
     generalToggle = () => {
@@ -89,11 +87,13 @@ class UserProfile extends React.Component{
 
     render(){
         let name, email, profilePicture = '';
+        let subscriptionType = 1;
 
         if(this.props.currentUser){
             name = this.props.currentUser.name;
             email = this.props.currentUser.email;
             profilePicture = this.props.currentUser.profilePicture;
+            subscriptionType = this.props.currentUser.subscriptionType;
         }
         return (
             <div className = 'user-profile-container'>
@@ -178,44 +178,31 @@ class UserProfile extends React.Component{
                                 <div >
                                     <MDBContainer fluid='true'>
                                         <MDBCardGroup deck>
-                                            <MDBCard style={{ width: "22rem", marginTop: "1rem" }} className="text-center">
+                                            <MDBCard style={{ width: "22rem", height: "245px", marginTop: "1rem" }} className="text-center">
                                                 <MDBCardHeader color="success-color">Free</MDBCardHeader>
                                                 <MDBCardBody>
                                                     <MDBCardTitle><MDBBadge color="default">$0.00</MDBBadge></MDBCardTitle>
                                                     <MDBCardText>
-                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                        Ability to have 1 group with up to 2 members.
                                                     </MDBCardText>
-                                                    <MDBBtn color="success" size="sm">
+                                                    <MDBBtn color="success" disabled={subscriptionType === 1 ? true : false} size="sm">
                                                         Subscribe
                                                     </MDBBtn>
                                                 </MDBCardBody>
                                             </MDBCard>
 
-                                            <MDBCard style={{ width: "22rem", marginTop: "1rem" }} className="text-center">
-                                                <MDBCardHeader color="success-color">Yearly Subscription</MDBCardHeader>
+                                            <MDBCard style={{ width: "22rem", height: "245px", marginTop: "1rem" }} className="text-center">
+                                                <MDBCardHeader color="success-color">Yearly Premium Subscription</MDBCardHeader>
                                                 <MDBCardBody>
                                                     <MDBCardTitle><MDBBadge color="default">$9.99</MDBBadge></MDBCardTitle>
                                                     <MDBCardText>
-                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                        Ability to have unlimited groups with up to 6 members.
                                                     </MDBCardText>
-                                                    <MDBBtn color="success" size="sm">
-                                                        Subscribe Monthly
+                                                    <MDBBtn color="success" disabled={subscriptionType === 2 ? true : false} size="sm">
+                                                        Subscribe Yearly
                                                     </MDBBtn>
                                                 </MDBCardBody>
                                             </MDBCard>
-
-                                        <MDBCard style={{ width: "22rem", marginTop: "1rem" }} className="text-center">
-                                            <MDBCardHeader color="success-color">Yearly Premium Subscription</MDBCardHeader>
-                                            <MDBCardBody>
-                                                <MDBCardTitle><MDBBadge color="default">$29.99</MDBBadge></MDBCardTitle>
-                                                <MDBCardText>
-                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                                </MDBCardText>
-                                                <MDBBtn color="success" size="sm">
-                                                    Subscribe Yearly
-                                                </MDBBtn>
-                                            </MDBCardBody>
-                                        </MDBCard>
 
                                         </MDBCardGroup>
                                     </MDBContainer>

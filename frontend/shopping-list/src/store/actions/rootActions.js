@@ -796,9 +796,9 @@ export const saveUsername = (username) => {
   return dispatch => {
     axios.put(endpoint, changes, options).then(res => {
       console.log("RES => ", res);
-      dispatch({ type: SAVE_USERNAME});
+      dispatch({ type: SAVE_USERNAME, payload: username});
     }).then(() => {
-      getUserProfile(Number(localStorage.getItem('userId')))(dispatch)
+      checkEmail()(dispatch)
     }).catch(err => {
       console.log("ERR => ", err);
     })
@@ -824,9 +824,9 @@ export const saveProfilePic = (profilePic) => {
   return dispatch => {
     axios.put(endpoint, changes, options).then(res => {
       console.log("RES => ", res);
-      dispatch({ type: SAVE_PROFILEPIC});
+      dispatch({ type: SAVE_PROFILEPIC, payload: profilePic});
     }).then(() => {
-      getUserProfile(Number(localStorage.getItem('userId')))(dispatch)
+      checkEmail()(dispatch)
     }).catch(err => {
       console.log("ERR => ", err);
     })

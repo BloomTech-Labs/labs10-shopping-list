@@ -53,6 +53,9 @@ import {
   ACCEPTING_INVITE,
   INVITE_ACCEPTED,
 
+    SAVE_USERNAME,
+    SAVE_PROFILEPIC
+
 } from "../actions";
 
 const initialState = {
@@ -280,6 +283,35 @@ export const rootReducer = (state = initialState, action) => {
         needsNewGroups: true,
       }
 
+    case SAVE_USERNAME:
+      const user = {
+        createdAt: state.currentUser.createdAt,
+        email: state.currentUser.email,
+        id: state.currentUser.id,
+        name: action.payload,
+        profilePicture: state.currentUser.profilePic,
+        subscriptionType: state.currentUser.subscriptionType,
+        updatedAt: state.currentUser.updatedAt
+      }
+      return {
+        ...state,
+        currentUser: user
+      }
+
+    case SAVE_PROFILEPIC:
+      const user1 = {
+        createdAt: state.currentUser.createdAt,
+        email: state.currentUser.email,
+        id: state.currentUser.id,
+        name: state.currentUser.name,
+        profilePicture: action.payload,
+        subscriptionType: state.currentUser.subscriptionType,
+        updatedAt: state.currentUser.updatedAt
+      }
+      return {
+        ...state,
+        currentUser: user1
+      }
 
     default:
       return state;
