@@ -1,8 +1,8 @@
 exports.up = function(knex, Promise) {
     return knex.schema.createTable('notifications', (table) => {
         table.increments('id');
-        table.integer('userID').references('id').inTable('users').notNullable();
-        table.integer('groupID').references('id').inTable('groups').notNullable();
+        table.integer('userID').references('id').inTable('users').onDelete("CASCADE").notNullable();
+        table.integer('groupID').references('id').inTable('groups').onDelete("CASCADE").notNullable();
         table.string('userName').notNullable();
         table.string('groupName').notNullable();
         table.string('action').notNullable();

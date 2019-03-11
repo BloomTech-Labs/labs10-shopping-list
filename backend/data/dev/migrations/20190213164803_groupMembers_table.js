@@ -6,8 +6,8 @@ exports.up = function(knex, Promise) {
   return knex.schema.createTable('groupMembers', function(tbl) {
     tbl.increments('id');
 
-    tbl.integer('userID').references('id').inTable('users').notNullable();
-    tbl.integer('groupID').references('id').inTable('groups').notNullable();
+    tbl.integer('userID').references('id').inTable('users').onDelete("CASCADE").notNullable();
+    tbl.integer('groupID').references('id').inTable('groups').onDelete("CASCADE").notNullable();
     tbl.boolean('moderator').defaultTo(false);
     tbl.boolean('weeklyNotification').defaultTo(true);
     tbl.boolean('monthlyNotification').defaultTo(true);

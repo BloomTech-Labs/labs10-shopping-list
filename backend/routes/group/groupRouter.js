@@ -136,26 +136,79 @@ function fetch_group_mem(id) {
 }
 
 // get all groups with user ID
-groupRouter.get('/user/:id', (req, res) => {
+// TODO: Refactor for better performance
+groupRouter.get('/user/:id', async (req, res) => {
     let userID = req.params.id;
+    let groups = [];
 
-    groupDb.getByUser(userID).then(groups => {
-        // console.log('get groups response', groups);
-        if(groups && groups.length > 0){
-            for(let i = 0; i < groups.length; i++){
-                groupMembersDb.getByGroup(groups[i].id).then(response => {
-                    // console.log('groupmem response', response);
-                    groups[i].groupMembers = response; // append members to group
-                })
+    try {
+        // Gather all records for the particular user
+        const members = await groupMembersDb.getByUser(userID);
+
+        // Loop and gather each group the user is in and append them to the groups array
+        for(let i = 0; i < members.length; i++) {
+            let group = await groupDb.getById(members[i].groupID);
+
+            // Create a new group object so we can append members to it
+            let grp = {
+                id: group[0].id,
+                userID: group[0].userID,
+                name: group[0].name,
+                token: group[0].token,
+                createdAt: group[0].createdAt,
+                updatedAt: group[0].updatedAt,
+                members: []
             }
-            return res.status(200).json({groups: groups});
-        } else {
-            return res.status(404).json({error: `No groups found for that user.`});
+
+            groups.push(grp);
         }
-    }).catch(err => {
-        console.log(err);
+
+        // Loop through and gather each member of the group
+        for (let i = 0; i < groups.length; i++) {
+            const grpMember = await groupMembersDb.getByGroup(groups[i].id);
+
+            // Defined to get a list of users
+            let users = [];
+
+            // Gather a list of users in each group
+            for (let j = 0; j < grpMember.length; j++) {
+                const usr = await usersDb.getById(grpMember[j].userID);
+
+                // Create a new user object to get only the needed pairs
+                const user = {
+                    name: usr[0].name,
+                    picture: usr[0].profilePicture
+                }
+                users.push(user);
+            }
+            groups[i].members = users;
+        }
+
+        return res.status(200).json({groups: groups});
+    } catch(err) {
         return res.status(500).json({error: `Internal server error.`})
-    })
+    }
+
+
+
+
+    // groupDb.getByUser(userID).then(groups => {
+    //     // console.log('get groups response', groups);
+    //     if(groups && groups.length > 0){
+    //         for(let i = 0; i < groups.length; i++){
+    //             groupMembersDb.getByGroup(groups[i].id).then(response => {
+    //                 // console.log('groupmem response', response);
+    //                 groups[i].groupMembers = response; // append members to group
+    //             })
+    //         }
+    //         return res.status(200).json({groups: groups});
+    //     } else {
+    //         return res.status(404).json({error: `No groups found for that user.`});
+    //     }
+    // }).catch(err => {
+    //     console.log(err);
+    //     return res.status(500).json({error: `Internal server error.`})
+    // })
 })
 
 

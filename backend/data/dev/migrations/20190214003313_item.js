@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
         //auto-increment primary key for table i.e. item ID
         table.increments('id');
         table.string('name', 255).notNullable();
-        table.integer('purchasedBy').references('id').inTable('users');
-        table.integer('groupID').references('id').inTable('groups').notNullable();
+        table.integer('purchasedBy');
+        table.integer('groupID').references('id').inTable('groups').onDelete("CASCADE").notNullable();
         table.boolean('purchased').defaultTo(false);
         table.float('price').notNullable();
         table.integer('quantity').notNullable();
@@ -14,7 +14,7 @@ exports.up = function(knex, Promise) {
         table.date('purchasedOn');
 
         // will eventually be a foreign key when category table is created
-        table.string('category', 255).references('category').inTable('categories');
+        table.string('category', 255).references('category').inTable('categories').onDelete("SET NULL");
 
         // timestamps the moment of user creation (i.e. registration date)
         table.timestamp('createdAt').defaultTo(knex.fn.now());

@@ -5,9 +5,9 @@ exports.up = function(knex, Promise) {
 
         tbl.string('inviteCode', 255).notNullable().unique(); // the random code that identifies the invitation
 
-        tbl.integer('groupID').references('id').inTable('groups').notNullable(); // the id of the group the invitation is to
+        tbl.integer('groupID').references('id').inTable('groups').onDelete("CASCADE").notNullable(); // the id of the group the invitation is to
 
-        tbl.integer('userID').references('id').inTable('users').notNullable(); // the id of the user who made the invitation
+        tbl.integer('userID').references('id').inTable('users').onDelete("CASCADE").notNullable(); // the id of the user who made the invitation
 
         tbl.string('invitee').notNullable(); // the email of the person receiving the invitation
 
