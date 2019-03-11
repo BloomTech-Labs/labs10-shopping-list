@@ -48,6 +48,15 @@
     width: 30%;
 }
 
+@media only screen and (max-width: 767px){
+
+    .user-profile-left {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
 .user-profile-right {
     justify-content: center;
     margin-top: 70px;
