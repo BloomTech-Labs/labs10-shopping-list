@@ -849,11 +849,14 @@ export const removeAccount = () => {
   return dispatch => {
     axios.delete(endpoint, options).then(res => {
       console.log("RES => ", res);
-      localStorage.removeItem('jwt');
-      localStorage.removeItem('email');
       localStorage.removeItem('name');
+      localStorage.removeItem('email');
+      localStorage.removeItem('jwt');
       localStorage.removeItem('img_url');
-      localStorage.setItem('isLoggedIn', false);
+      localStorage.removeItem('userId');
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('lsid');
+      localStorage.removeItem('userId');
       dispatch({ type: REMOVE_ACCOUNT});
     }).catch(err => {
       console.log("ERR => ", err);

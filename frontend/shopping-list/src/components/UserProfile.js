@@ -37,10 +37,10 @@ class UserProfile extends React.Component {
     username: "",
     profilePic: "",
     modal14: false,
-      modal16: false,
+    modal16: false,
     hasSaved: false,
     hasPSaved: false,
-      delete: "",
+    delete: "",
   };
   componentWillMount() {
     // this.props.getCurrentUser();
@@ -57,7 +57,7 @@ class UserProfile extends React.Component {
     }
   }
 
-    componentDidMount(){
+  componentDidMount(){
         if(!this.props.currentUser){
             this.props.checkEmail();
         }
@@ -130,13 +130,14 @@ class UserProfile extends React.Component {
     });
   };
 
-    handleDeleteAccount = (event) => {
+  handleDeleteAccount = (event) => {
         event.preventDefault();
         if (localStorage.getItem("userId")) {
             this.props.removeAccount();
             this.setState({modal16: false})
+          this.props.history.push("/");
         }
-    }
+  }
 
 
 

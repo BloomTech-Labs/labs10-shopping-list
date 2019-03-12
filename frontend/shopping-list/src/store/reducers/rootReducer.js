@@ -53,8 +53,10 @@ import {
   ACCEPTING_INVITE,
   INVITE_ACCEPTED,
 
-    SAVE_USERNAME,
-    SAVE_PROFILEPIC
+  SAVE_USERNAME,
+  SAVE_PROFILEPIC,
+
+  REMOVE_ACCOUNT
 
 } from "../actions";
 
@@ -312,6 +314,9 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         currentUser: user1
       }
+
+    case REMOVE_ACCOUNT:
+      return state = initialState;
 
     default:
       return state;
