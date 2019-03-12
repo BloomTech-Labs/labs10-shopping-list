@@ -39,7 +39,6 @@ const GroupCard = props => {
               }
             >
               <MDBIcon icon="edit" />
-              Change Name
             </div>
 
             <div
@@ -49,7 +48,6 @@ const GroupCard = props => {
               }
             >
               <MDBIcon icon="trash" />
-              Delete Group
             </div>
           </div>
         </MDBCardFooter>
