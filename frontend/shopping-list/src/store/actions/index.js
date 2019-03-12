@@ -112,4 +112,7 @@ export {
 
   REMOVE_ACCOUNT,
     removeAccount,
+
+  CLEAR_ERROR,
+    clearError,
 } from "./rootActions";

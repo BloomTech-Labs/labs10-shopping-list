@@ -56,7 +56,9 @@ import {
   SAVE_USERNAME,
   SAVE_PROFILEPIC,
 
-  REMOVE_ACCOUNT
+  REMOVE_ACCOUNT,
+  ERROR,
+  CLEAR_ERROR,
 
 } from "../actions";
 
@@ -90,6 +92,8 @@ const initialState = {
   itemPurchasedText: null,
 
   inviteInfo: null,
+
+  errorMessage: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
@@ -101,6 +105,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         currentUser: action.payload,
+        errorMessage: null,
       }
 
     case GEN_GROUP_INVITE:
@@ -110,7 +115,8 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         invites: {
           [action.payload.groupId]: action.payload.inviteUrl
-        }
+        },
+        errorMessage: null,
       }
 
     case GET_CURRENT_USER:
@@ -118,7 +124,8 @@ export const rootReducer = (state = initialState, action) => {
     case SAVE_CURRENT_USER:
       return {
         ...state,
-        currentUser: action.payload
+        currentUser: action.payload,
+        errorMessage: null,
       }
 
     case GET_USER_GROUPS:
@@ -142,6 +149,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         groupItems: unpurchased,
         needsNewItems: false,
+        errorMessage: null,
       }
 
 
@@ -150,7 +158,8 @@ export const rootReducer = (state = initialState, action) => {
     case ITEM_CREATED:
       return {
         ...state,
-        needsNewItems: true
+        needsNewItems: true,
+        errorMessage: null,
       }
 
     case UPDATE_ITEM:
@@ -158,7 +167,8 @@ export const rootReducer = (state = initialState, action) => {
     case ITEM_UPDATED:
       return {
         ...state,
-        needsNewItems: true
+        needsNewItems: true,
+        errorMessage: null,
       }
 
     case DELETE_ITEM:
@@ -166,7 +176,8 @@ export const rootReducer = (state = initialState, action) => {
     case ITEM_DELETED:
       return {
         ...state,
-        needsNewItems: true
+        needsNewItems: true,
+        errorMessage: null,
       }
 
     case ADD_TO_CART:
@@ -181,6 +192,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         userCart: newCart,
         needsNewItems: true,
+        errorMessage: null,
       }
     case REMOVE_FROM_CART:
       let filterCart = state.userCart;
@@ -189,6 +201,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         userCart: filterCart,
         needsNewItems: true,
+        errorMessage: null,
       }
 
     case BEGIN_CHECK_OUT:
@@ -199,7 +212,8 @@ export const rootReducer = (state = initialState, action) => {
         userCart: null,
         needsNewItems: true,
         needsNewHistory: true,
-        needsNewHistoryList: true
+        needsNewHistoryList: true,
+        errorMessage: null,
       }
 
     case GET_GROUP_HISTORY:
@@ -208,7 +222,8 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         groupHistory: action.payload.data,
-        needsNewHistory: false
+        needsNewHistory: false,
+        errorMessage: null,
       }
 
     case GET_GROUP_HISTORY_LIST:
@@ -218,7 +233,8 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         groupHistoryList: action.payload.data,
-        needsNewHistoryList: false
+        needsNewHistoryList: false,
+        errorMessage: null,
       }
 
     case GET_GROUP_USERS:
@@ -229,6 +245,7 @@ export const rootReducer = (state = initialState, action) => {
       return{
         ...state,
         groupUsers: action.payload,
+        errorMessage: null,
       }
 
     case GET_USER_PROFILE:
@@ -252,12 +269,14 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         groupUserProfiles: profileArray,
+        errorMessage: null,
       }
 
     case CLEAR_ITEMS:
       return {
         ...state,
-        groupItems: null
+        groupItems: null,
+        errorMessage: null,
       }
 
     case CLEAR_GROUP_USERS:
@@ -265,6 +284,7 @@ export const rootReducer = (state = initialState, action) => {
         ...state,
         groupUsers: null,
         groupUserProfiles: null,
+        errorMessage: null,
       }
 
     case GET_INVITE_INFO:
@@ -273,7 +293,8 @@ export const rootReducer = (state = initialState, action) => {
     case SAVE_INVITE_INFO:
       return {
         ...state,
-        inviteInfo: action.payload
+        inviteInfo: action.payload,
+        errorMessage: null,
       }
 
     case ACCEPTING_INVITE:
@@ -283,6 +304,7 @@ export const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         needsNewGroups: true,
+        errorMessage: null,
       }
 
     case SAVE_USERNAME:
@@ -297,7 +319,8 @@ export const rootReducer = (state = initialState, action) => {
       }
       return {
         ...state,
-        currentUser: user
+        currentUser: user,
+        errorMessage: null,
       }
 
     case SAVE_PROFILEPIC:
@@ -312,11 +335,24 @@ export const rootReducer = (state = initialState, action) => {
       }
       return {
         ...state,
-        currentUser: user1
+        currentUser: user1,
+        errorMessage: null,
       }
 
     case REMOVE_ACCOUNT:
       return state = initialState;
+
+    case ERROR:
+      return {
+        ...state,
+        errorMessage: action.payload
+      }
+
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        errorMessage: null,
+      }
 
     default:
       return state;

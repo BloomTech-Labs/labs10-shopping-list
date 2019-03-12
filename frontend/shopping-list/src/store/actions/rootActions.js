@@ -95,6 +95,8 @@ export const SAVE_USERNAME = 'SAVE_USERNAME';
 export const SAVE_PROFILEPIC = 'SAVE_PROFILEPIC';
 export const REMOVE_ACCOUNT = 'REMOVE_ACCOUNT';
 
+export const CLEAR_ERROR = 'CLEAR_ERROR';
+
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
   backendURL = `http://localhost:9000`
@@ -492,11 +494,10 @@ export const createGroup = (groupName, userId) => {
     endpoint.then(res => {
       dispatch({type: GROUP_CREATED})
       console.log(res.data);
-  }).then(() => {
-      getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
-    }).catch(err => {
+      // getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
+  }).catch(err => {
     console.log(err);
-    dispatch({type: ERROR})
+    dispatch({type: ERROR, payload: err.response.data.warning})
   })
 }
 }
@@ -861,5 +862,11 @@ export const removeAccount = () => {
     }).catch(err => {
       console.log("ERR => ", err);
     })
+  }
+}
+
+export const clearError = () => {
+  return dispatch => {
+    dispatch({ type: CLEAR_ERROR })
   }
 }

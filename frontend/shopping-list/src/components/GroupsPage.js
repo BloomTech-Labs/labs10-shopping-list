@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import {checkEmail, createGroup, acceptInvite, getCurrentUser, getUserGroups, addGroup, clearCurrentGroup, gettingGroups, updateGroupName, removeGroup } from '../store/actions/rootActions';
+import {checkEmail, clearError, createGroup, acceptInvite, getCurrentUser, getUserGroups, addGroup, clearCurrentGroup, gettingGroups, updateGroupName, removeGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
 import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer, MDBCol,
     MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
@@ -25,6 +25,7 @@ class GroupsPage extends Component{
         groupName: "",
         delete: "",
         groupId: null,
+        modal17: true,
     }
 
     componentWillMount(){
@@ -49,7 +50,7 @@ class GroupsPage extends Component{
     }
 
     componentWillReceiveProps = newProps => {
-        if(newProps.currentUser && !this.props.userGroups){
+        if(newProps.currentUser && !this.props.userGroups && this.props.errorMessage === null){
             this.props.getUserGroups(newProps.currentUser.id);
         }
     }
@@ -102,6 +103,11 @@ class GroupsPage extends Component{
             this.props.removeGroup(this.state.groupId, localStorage.getItem("userId"));
             this.setState({modal16: false})
         }
+    }
+
+    handleClearError = () => {
+        this.props.clearError();
+        // this.setState({modal17: })
     }
 
     render(){
@@ -165,6 +171,18 @@ class GroupsPage extends Component{
                             <MDBBtn color="primary" onClick={this.handleDeleteGroup} disabled={this.state.groupName !== this.state.delete }>Delete</MDBBtn>
                         </MDBModalFooter>
                     </MDBModal>
+                {
+                    this.props.errorMessage !== null ?
+                        <MDBModal isOpen={this.state.modal17} toggle={this.toggle(17)} centered>
+                            <MDBModalHeader toggle={this.toggle(17)}>Warning</MDBModalHeader>
+                            <MDBModalBody>
+                                <h6>{this.props.errorMessage}</h6>
+                            </MDBModalBody>
+                            <MDBModalFooter>
+                                <MDBBtn color="secondary" onClick={this.handleClearError}>Ok</MDBBtn>
+                            </MDBModalFooter>
+                        </MDBModal> : null
+                }
                 </div>
         )
     }
@@ -182,13 +200,15 @@ const mapStateToProps = state => {
         email: state.email,
         profilePicture: state.profilePicture,
         groups: state.groups,
+        errorMessage: state.errorMessage,
     }
 }
 
 export default connect(mapStateToProps, {
     checkEmail, 
     getUserGroups, 
-    addGroup, 
+    addGroup,
+    clearError,
     clearCurrentGroup,
     createGroup,
     getCurrentUser,
