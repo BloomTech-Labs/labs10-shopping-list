@@ -27,16 +27,6 @@ import GroupCard from "./GroupCard";
 
 import "./Styles/GroupsPage.css";
 
-// function makeid() {
-//     let text = "";
-//     const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-//
-//     for (let i = 0; i < 5; i++)
-//         text += possible.charAt(Math.floor(Math.random() * possible.length));
-//
-//     return text;
-// }
-
 class GroupsPage extends Component {
   state = {
     modal14: false,
