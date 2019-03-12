@@ -63,9 +63,7 @@ class UserProfile extends React.Component {
         }
 
         if (this.props.currentUser) {
-            this.setState({ username: this.props.currentUser.name }, () => {
-                console.log("STATE => ", this.state.username)
-            });
+            this.setState({ username: this.props.currentUser.name });
         }
     }
 
@@ -229,7 +227,7 @@ class UserProfile extends React.Component {
                 />
                 <MDBInput
                   label="Email"
-                  disabled="true"
+                  disabled={true}
                   value={email}
                   icon="envelope"
                 />

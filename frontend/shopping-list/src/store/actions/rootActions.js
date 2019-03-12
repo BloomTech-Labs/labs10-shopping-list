@@ -459,7 +459,6 @@ export const getGroupUsers = (groupId) => {
 export const getGroupHistory = groupId => {
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/grouphistory/total/group/${groupId}`;
-  console.log('GET HISTORY')
   const options = {
     headers: {
       Authorization: `Bearer ${token}`
@@ -469,7 +468,6 @@ export const getGroupHistory = groupId => {
     dispatch({type: GET_GROUP_HISTORY});
 
     axios.get(endpoint, options).then(res => {
-      console.log('history', res.data);
       dispatch({type: SAVE_GROUP_HISTORY, payload: res.data})
     }).catch(err => {
       console.log(err);
@@ -486,7 +484,6 @@ export const getGroupHistory = groupId => {
 export const getGroupHistoryList = groupId => {
   const token = localStorage.getItem('jwt');
   const endpoint = `${backendURL}/api/grouphistory/group/${groupId}`;
-  console.log('GET HISTORY')
   const options = {
     headers: {
       Authorization: `Bearer ${token}`
@@ -496,7 +493,6 @@ export const getGroupHistoryList = groupId => {
     dispatch({type: GET_GROUP_HISTORY_LIST});
 
     axios.get(endpoint, options).then(res => {
-      console.log('history', res.data);
       dispatch({type: SAVE_GROUP_HISTORY_LIST, payload: res.data})
     }).catch(err => {
       console.log(err);
@@ -627,14 +623,11 @@ export const getGroupItems = (groupId) => {
     }
   }
 
-  console.log("GETTING GROUP ITEMS => ", groupId);
-
   const endpoint = axios.get(`${backendURL}/api/item/group/${groupId}`, options);
 
   return dispatch => {
     dispatch({type: GET_GROUP_ITEMS})
     endpoint.then(res => {
-      console.log("GETTING GROUP ITEMS DATA => ", res.data);
       dispatch({type: SAVE_GROUP_ITEMS, payload: res.data});
     })
   }
