@@ -175,10 +175,10 @@ class GroupsPage extends Component {
           </MDBModalHeader>
           <MDBModalBody>
             <MDBInput
-              label="Group Name"
-              name={"groupName"}
-              defaultValue={this.state.groupName}
-              onChange={this.handleInput}
+                label="Group Name"
+                name={"groupName"}
+                onChange={this.handleInput}
+                defaultValue={this.state.groupName}
             />
           </MDBModalBody>
           <MDBModalFooter>
