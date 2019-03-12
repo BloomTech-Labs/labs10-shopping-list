@@ -72,7 +72,7 @@ class UserController {
         // save url to user object
         // update user profileImage url on API
         
-        let ref = Storage.storage().reference().child("profileImages")
+        let ref = Storage.storage().reference().child("profileImages").child(String(userID))
         
         guard let compressedImage = image.resizeToDatabaseSize() else { completion(false); return}
         
@@ -86,26 +86,47 @@ class UserController {
                 }
                 
                 ref.downloadURL(completion: { (url, error) in
-                    guard let url = url else { return }
+                    guard let url = url else { completion(false); return }
                     // TODO: save url to user object
                     
-                    let user = User(email: userProfile.email ?? "", name: userProfile.name ?? "", profilePicture: "")
-                    
-                    self.updateUser(user: user, profilePicture: url.absoluteString, completion: { (success, user) in
-                        
-                        guard success else { completion(false); return }
-                        
-                        print("updated user profile pic")
-                        completion(true)
+                    self.updateUserImageOnAPI(withImageURL: url, completion: { (success) in
+                        completion(success)
                     })
                 })
             }
+        } else {
+            completion(false)
         }
-        completion(false)
     }
     
     
-    
+    func updateUserImageOnAPI(withImageURL imageUrl: URL, completion: @escaping (Bool) -> Void) {
+        
+        guard let accessToken = SessionManager.tokens?.idToken else {completion(false); return}
+        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+        
+        let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(userID))
+        
+        let imageURLString = imageUrl.absoluteString
+        
+        let json: [String: Any] = ["profilePicture": imageURLString]
+        
+        
+        Alamofire.request(url, method: .put, parameters: json, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
+            
+            switch response.result {
+            case .success(_):
+                
+                completion(true)
+                return
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(false)
+                return
+            }
+        }
+        
+    }
     
     
     func updateUser(user: User, email: String? = nil, profilePicture: String? = nil, name: String? = nil, completion: @escaping (Bool, User?) -> Void) {
@@ -130,7 +151,7 @@ class UserController {
         guard let accessToken = SessionManager.tokens?.idToken else {completion(false, nil); return}
         let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
-        let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(myUser.userID!))
+        let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(userID))
         
         guard let userJSON = userToJSON(user: myUser) else { completion(false, nil); return }
         
