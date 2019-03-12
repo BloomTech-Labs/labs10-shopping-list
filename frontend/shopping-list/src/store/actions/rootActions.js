@@ -551,7 +551,7 @@ export const generateGroupInviteUrl = (userId, groupId) => {
       dispatch({type: SAVE_GROUP_INVITE, payload: {groupId: data.groupID, inviteUrl: `${frontendURL}/invite?${res.data.inviteCode}`} })
     }).catch(err => {
       console.log(err);
-      dispatch({type: ERROR})
+      dispatch({type: ERROR, payload: err.response.data.warning})
     })
   }
 }

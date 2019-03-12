@@ -12,7 +12,8 @@ import {
   updateItemPurchased,
   submitPaidItems,
   generateGroupInviteUrl,
-  getUserGroups
+  getUserGroups,
+  clearError
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 import "./Styles/Scrollbar.css";
@@ -33,6 +34,7 @@ import HistoryList from "./HistoryList";
 class GroupsProfile extends Component {
   state = {
     modal14: false,
+    modal17: false,
     itemName: "",
     itemPrice: 0.0,
     itemQuantity: 1,
@@ -185,11 +187,17 @@ class GroupsProfile extends Component {
    * @returns {*}
    */
   toggleInviClass = () => {
-    this.setState({ inviToggle: true });
     this.props.generateGroupInviteUrl(
-      localStorage.getItem("userId"),
-      this.props.match.params.id
+        localStorage.getItem("userId"),
+        this.props.match.params.id
     );
+    if (this.props.currentUser.subscriptionType === 1 && this.props.groupUsers.length >= 2) {
+      this.setState({modal17: true})
+    } else {
+      this.setState({ inviToggle: true });
+
+    }
+
   };
 
   /**
@@ -199,6 +207,10 @@ class GroupsProfile extends Component {
    */
   toggleTotal = () => {
     this.setState({ totalToggle: !this.state.totalToggle });
+  };
+
+  handleClearError = () => {
+    this.props.clearError();
   };
 
     /**
@@ -313,6 +325,23 @@ class GroupsProfile extends Component {
               </MDBBtn>
             </MDBModalFooter>
           </MDBModal>
+          {this.props.errorMessage !== null ? (
+              <MDBModal
+                  isOpen={this.state.modal17}
+                  toggle={this.toggle(17)}
+                  centered
+              >
+                <MDBModalHeader toggle={this.toggle(17)}>Warning</MDBModalHeader>
+                <MDBModalBody>
+                  <h6>{this.props.errorMessage}</h6>
+                </MDBModalBody>
+                <MDBModalFooter>
+                  <MDBBtn color="secondary" onClick={this.handleClearError}>
+                    Ok
+                  </MDBBtn>
+                </MDBModalFooter>
+              </MDBModal>
+          ) : null}
         </MDBContainer>
       </div>
     );
@@ -343,7 +372,8 @@ const mapStateToProps = state => {
 
     // current user state
     currentUser: state.currentUser,
-    userGroups: state.userGroups
+    userGroups: state.userGroups,
+    errorMessage: state.errorMessage
   };
 };
 
@@ -362,6 +392,7 @@ export default connect(
     getGroupUsers,
     getUserProfile,
     generateGroupInviteUrl,
-    getUserGroups
+    getUserGroups,
+    clearError
   }
 )(GroupsProfile);

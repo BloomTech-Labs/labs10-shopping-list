@@ -21,7 +21,7 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    font-family: "Montserrat" sans-serif;
+    font-family: "Montserrat", "sans-serif";
     background: #2A922D;
     color: white;
 }
