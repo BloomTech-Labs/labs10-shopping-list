@@ -34,3 +34,10 @@
     margin: 0px 10px;
     cursor: pointer;
 }
+
+@media only screen and (max-width: 767px){
+
+    .group-card{
+        margin-top: 60px;
+    }
+}
