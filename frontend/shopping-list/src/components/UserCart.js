@@ -27,7 +27,7 @@ class UserCart extends React.Component {
   handleCheckout = event => {
     event.preventDefault();
     // console.log('checkout');
-    const amt = this.state.amount;
+    const amt = Number(this.state.amount);
 
     let info = {
       userId: this.props.currentUser.id,
@@ -37,11 +37,10 @@ class UserCart extends React.Component {
     };
 
     if (Number(this.state.amount) > 0 && this.state.amount !== "") {
-
-      this.props.checkOut(info);
       this.setState({
         amount: ""
       });
+      this.props.checkOut(info);
 
     } else {
       this.setState({modal17: true, error: "You have no items in cart"})
@@ -89,6 +88,7 @@ class UserCart extends React.Component {
             name="amount"
             step="0.01"
             valueDefault={this.state.amount}
+            value={this.state.amount}
             onChange={this.handleChange}
           />
           <MDBBtn className="btn-dark-green" onClick={this.handleCheckout}>
