@@ -77,7 +77,7 @@ class UserCart extends React.Component {
             onChange={this.handleChange}
           />
           <MDBBtn className="btn-dark-green" onClick={this.handleCheckout}>
-            Checkout
+            Check out
           </MDBBtn>
         </div>
       </div>

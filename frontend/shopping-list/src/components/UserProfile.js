@@ -234,7 +234,7 @@ class UserProfile extends React.Component {
                   icon="envelope"
                 />
 
-                <div className="user-profile-header">
+                <div className="user-profile-settings-header">
                     <MDBBtn color="danger" onClick={this.toggle(16)}>
                         Remove Account
                     </MDBBtn>
@@ -282,8 +282,8 @@ class UserProfile extends React.Component {
             ) : null}
             {this.state.subToggle ? (
               <div>
-                <MDBContainer fluid={true}>
-                  <MDBCardGroup deck>
+                <MDBContainer >
+                  <MDBCardGroup deck className="user-profile-subs-container">
                     <MDBCard
                       style={{
                         width: "22rem",
