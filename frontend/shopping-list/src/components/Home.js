@@ -1,5 +1,4 @@
 import React from 'react';
-import Navigation from './Navigation';
 import '../components/Styles/Home.css';
 
 import groceryBag from '../images/grocery-bag.jpg';

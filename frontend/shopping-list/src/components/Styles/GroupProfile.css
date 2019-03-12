@@ -31,7 +31,7 @@
 
 .group-profile-left{
     /*margin-left: 10%;*/
-    width: 90%;
+    width: 50%;
 }
 
 @media only screen and (max-width: 767px){
@@ -45,6 +45,8 @@
 .group-profile-right{
     display: flex;
     flex-flow: column;
+    justify-content: center;
+    align-items: center;
     width: 50%;
 }
 

@@ -86,8 +86,37 @@
     .user-profile-settings {
         width: 80%;
     }
+
+    .user-profile-settings-header {
+        width: 80%;
+    }
+
+    .card-deck {
+        padding-left: 15% !important;
+    }
 }
 
-.user-profile-change {
+@media only screen and (max-width: 1200px){
 
+    .user-profile-right {
+        width: 70%;
+    }
+
+    .user-profile-subs-container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .card-deck {
+        flex-direction: column !important;
+    }
+
+}
+
+@media only screen and (max-width: 820px){
+
+    .card-deck {
+        padding-left: 30%;
+    }
 }

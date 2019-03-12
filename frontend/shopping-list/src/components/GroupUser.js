@@ -1,6 +1,6 @@
 // collect user's total and net values
-import React, { useReducer } from 'react';
-import {getUserProfile, checkEmail, FETCHING_USER_PROFILE} from '../store/actions/rootActions';
+import React  from 'react';
+import {getUserProfile, checkEmail} from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import './Styles/GroupUser.css';
@@ -71,7 +71,7 @@ class GroupUser extends React.Component{
                         {this.state.targetUser !== null ? (
                     <div className = 'group-user-image'>
                     <h3>{this.state.targetUser.name}</h3>
-                    <img src = {this.state.targetUser.profilePicture} alt = 'user profile image'></img>
+                    <img src = {this.state.targetUser.profilePicture} alt = 'user profile'></img>
                         </div>) : <h3>No User</h3> }
 
                         <div className = 'group-user-stats'>

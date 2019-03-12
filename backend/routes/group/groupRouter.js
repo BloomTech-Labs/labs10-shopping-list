@@ -11,6 +11,7 @@ const nodemailer = require('nodemailer');
 const checkJwt = require('../../validators/checkJwt');
 // checkJwt middleware authenticates user tokens and ensures they are signed correctly in order to access our internal API
 const checkUser = require('../../validators/checkUser');
+const checkSubscription = require('../../validators/checkSubscription');
 
 /****************************************************************************************************/
 /** THIS ROUTER HANDLES ALL REQUESTS TO THE /api/group ENDPOINT **/
@@ -41,38 +42,57 @@ groupRouter.use(checkJwt);
 /** ADD GROUP
  * @TODO Add middleware to ensure user is logged in
  * **/
-
-groupRouter.post('/', (req, res) => {
+groupRouter.post('/', checkSubscription, (req, res) => {
     let group = req.body;
-    groupDb.add(group).then(groupId => {
-        console.log(groupId);
-        const member = {
-            userID: group.userID,
-            groupID: groupId[0],
-            moderator: true
-        };
-        
-        if (groupId.length >= 1) {
-            groupMembersDb.add(member).then(mId => {
-                const msg = {
-                    message: `Group ${groupId} successfully added.`,
-                    group: {
-                        id: Number(groupId),
-                    },
-                    groupMember: {
-                        id: Number(mId[0]),
-                    }
+    const subType = req.subscriptionType;
+    console.log("GROUP => ", group);
+    console.log("subType => ", subType);
+
+    groupDb.getByUser(group.userID).then(rs => {
+        console.log("RS => ", rs);
+        if (subType === 1 && rs.length >= 1) {
+            return res.status(403).json({ warning: `You do not have permission to do that. Only premium members can create more than one group.`})
+        } else if (subType === 1 && rs.length === 0 || subType === 2) {
+            groupDb.add(group).then(groupId => {
+                // console.log(groupId);
+                const member = {
+                    userID: group.userID,
+                    groupID: groupId[0],
+                    moderator: true
+                };
+
+                if (groupId.length >= 1) {
+                    groupMembersDb.add(member).then(mId => {
+                        const msg = {
+                            message: `Group ${groupId} successfully added.`,
+                            group: {
+                                id: Number(groupId),
+                            },
+                            groupMember: {
+                                id: Number(mId[0]),
+                            }
+                        }
+
+                        if(mId.length >= 1) return res.status(200).json(msg)
+
+                        return res.status(500).json({message: `Could not add member to groupMembers.`})
+                    }).catch(err => {
+                        console.log(err);
+                        const error = {
+                            message: `Internal Server Error - Adding Group Member`,
+                            data: {
+                                err: e
+                            },
+                        }
+                        return res.status(500).json(error);
+                    })
                 }
 
-                if(mId.length >= 1) return res.status(200).json(msg)
-
-                return res.status(500).json({message: `Could not add member to groupMembers.`})
             }).catch(err => {
-                console.log(err);
                 const error = {
-                    message: `Internal Server Error - Adding Group Member`,
+                    message: `Internal Server Error - Adding Group`,
                     data: {
-                        err: e
+                        err: err
                     },
                 }
                 return res.status(500).json(error);
@@ -80,14 +100,10 @@ groupRouter.post('/', (req, res) => {
         }
 
     }).catch(err => {
-        const error = {
-            message: `Internal Server Error - Adding Group`,
-            data: {
-                err: err
-            },
-        }
-        return res.status(500).json(error);
+        return res.status(500).json(err);
     })
+
+
 })
 
 /**************************************************/
