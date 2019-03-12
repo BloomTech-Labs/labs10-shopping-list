@@ -333,7 +333,7 @@ class UserProfile extends React.Component {
                           disabled={subscriptionType === 2 ? true : false}
                           size="lg"
                         >
-                            {subscriptionType === 1 ? "Subscribed" : "Subscribe"}
+                            {subscriptionType === 1 ? "Subscribe" : "Subscribed"}
                         </MDBBtn>
                       </MDBCardBody>
                     </MDBCard>

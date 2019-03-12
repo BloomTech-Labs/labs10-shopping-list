@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter, Link} from 'react-router-dom';
-import auth0Client from './Auth';
 import {getInviteInfo} from '../store/actions/index';
 import {MDBCol, MDBBtn, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText} from 'mdbreact';
 import Auth0Lock from 'auth0-lock';

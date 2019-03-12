@@ -1,5 +1,3 @@
-import {CHANGE_GROUP_NAME_START, CHANGE_GROUP_NAME_SUCCESS} from "./rootActions";
-
 export {
   CHECKING_EMAIL,
   EMAIL_CHECKED,
@@ -34,7 +32,6 @@ export {
   submitPaidItems,
   updateItemPurchased,
   checkEmail,
-
   USER_ADDED_TO_STATE,
   purchaseItem,
   PURCHASING_ITEM,
@@ -46,73 +43,52 @@ export {
   GROUP_TOTAL_SUMMED,
   getGroupUsers,
   getUserProfile,
-
   GEN_GROUP_INVITE,
   SAVE_GROUP_INVITE,
-
   GET_CURRENT_USER,
   SAVE_CURRENT_USER,
-
   GET_USER_GROUPS,
   SAVE_USER_GROUPS,
-
   GET_GROUP_ITEMS,
   SAVE_GROUP_ITEMS,
-
   CREATE_ITEM,
   ITEM_CREATED,
-
   UPDATE_ITEM,
   ITEM_UPDATED,
-
   DELETE_ITEM,
   ITEM_DELETED,
-
   ADD_TO_CART,
   REMOVE_FROM_CART,
-
   BEGIN_CHECK_OUT,
   CHECK_OUT_COMPLETE,
-
   GET_GROUP_HISTORY,
   SAVE_GROUP_HISTORY,
-
   GET_GROUP_USERS,
   SAVE_GROUP_USERS,
-
   GET_USER_PROFILE,
   SAVE_USER_PROFILE,
-
   GET_GROUP_HISTORY_LIST,
   SAVE_GROUP_HISTORY_LIST,
-
   getGroupMembers,
   updateGroupName,
   removeGroup,
-  
   clearItems,
   clearGroupUsers,
   CLEAR_ITEMS,
   CLEAR_GROUP_USERS,
-  
   getGroupHistoryList,
-
   getInviteInfo,
   acceptInvite,
   GET_INVITE_INFO,
   SAVE_INVITE_INFO,
   ACCEPTING_INVITE,
   INVITE_ACCEPTED,
-
-    SAVE_USERNAME,
-    saveUsername,
-
-    SAVE_PROFILEPIC,
+  SAVE_USERNAME,
+  saveUsername,
+  SAVE_PROFILEPIC,
   saveProfilePic,
-
   REMOVE_ACCOUNT,
-    removeAccount,
-
+  removeAccount,
   CLEAR_ERROR,
-    clearError,
+  clearError
 } from "./rootActions";

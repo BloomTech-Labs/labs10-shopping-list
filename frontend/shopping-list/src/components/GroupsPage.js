@@ -1,21 +1,20 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {checkEmail, clearError, createGroup, acceptInvite, getCurrentUser, getUserGroups, addGroup, clearCurrentGroup, gettingGroups, updateGroupName, removeGroup } from '../store/actions/rootActions';
 import {connect} from 'react-redux';
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBContainer, MDBCol,
-    MDBCardHeader, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBInput, MDBNavLink } from "mdbreact";
+import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBInput } from "mdbreact";
 import GroupCard from './GroupCard';
 
 import './Styles/GroupsPage.css';
 
-function makeid() {
-    let text = "";
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    for (let i = 0; i < 5; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-    return text;
-}
+// function makeid() {
+//     let text = "";
+//     const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//
+//     for (let i = 0; i < 5; i++)
+//         text += possible.charAt(Math.floor(Math.random() * possible.length));
+//
+//     return text;
+// }
 
 class GroupsPage extends Component{
     state = {
@@ -107,7 +106,6 @@ class GroupsPage extends Component{
 
     handleClearError = () => {
         this.props.clearError();
-        // this.setState({modal17: })
     }
 
     render(){

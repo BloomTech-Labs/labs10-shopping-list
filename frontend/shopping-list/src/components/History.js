@@ -1,16 +1,10 @@
 import React from 'react';
-import {purchaseItem, addToCart, removeFromCart, updateItem, deleteItem, getItems, markItemForPurchase, unMarkItem} from '../store/actions/rootActions';
+import {addToCart, removeFromCart, updateItem, deleteItem} from '../store/actions/rootActions';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import moment from 'moment';
-import { stat } from 'fs';
 import {
     MDBListGroup,
-    MDBListGroupItem,
     MDBCard,
-    MDBCardTitle,
-    MDBCardText,
-    MDBContainer,
     MDBCardBody,
 } from "mdbreact";
 import "./Styles/History.css";
