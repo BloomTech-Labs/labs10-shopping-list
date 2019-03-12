@@ -15,6 +15,7 @@ import {
   getUserGroups,
   clearError
 } from "../store/actions/rootActions";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { connect } from "react-redux";
 import "./Styles/Scrollbar.css";
 import "./Styles/GroupProfile.css";
@@ -50,7 +51,8 @@ class GroupsProfile extends Component {
     totals: null,
     invites: {
       [this.props.match.params.id]: ""
-    }
+    },
+    copied: false
   };
 
   /**
@@ -143,12 +145,28 @@ class GroupsProfile extends Component {
    * @returns {*}
    */
   copyInviteToClipboard = text => {
-    var dummy = document.createElement("input");
-    document.body.appendChild(dummy);
-    dummy.setAttribute("value", `${text}`);
-    dummy.select();
-    document.execCommand("copy");
-    document.body.removeChild(dummy);
+    // var dummy = document.createElement("input");
+    // document.body.appendChild(dummy);
+    // dummy.setAttribute("value", `${text}`);
+    // dummy.select();
+    // document.execCommand("copy");
+    // document.body.removeChild(dummy);
+
+    let  textField = document.createElement('textarea');
+    textField.innerText = text;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand('copy');
+    textField.remove();
+  };
+
+  copyToClipboard = (e) => {
+    this.textArea.select();
+    document.execCommand('copy');
+    // This is just personal preference.
+    // I prefer to not show the the whole text area selected.
+    e.target.focus();
+    this.setState({ copySuccess: 'Copied!' });
   };
 
   /**
@@ -313,16 +331,17 @@ class GroupsProfile extends Component {
               <MDBBtn color="secondary" onClick={this.toggle("inviToggle")}>
                 Close
               </MDBBtn>
-              <MDBBtn
-                className="btn-dark-green"
-                onClick={this.copyInviteToClipboard(
-                  this.props.invites !== null
-                    ? this.props.invites[this.props.match.params.id]
-                    : ""
-                )}
-              >
-                Copy to clipboard
-              </MDBBtn>
+              <CopyToClipboard text={this.props.invites !== null
+                  ? this.props.invites[this.props.match.params.id]
+                  : ""}
+                               onCopy={() => this.setState({copied: true})}>
+                <MDBBtn
+                    className="btn-dark-green"
+                >
+                  Copy to clipboard
+                </MDBBtn>
+              </CopyToClipboard>
+
             </MDBModalFooter>
           </MDBModal>
           {this.props.errorMessage !== null ? (
