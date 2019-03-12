@@ -140,36 +140,6 @@ class GroupsProfile extends Component {
   };
 
   /**
-   * Copy the invite link to the clipboard
-   * @param text - Link to copy
-   * @returns {*}
-   */
-  copyInviteToClipboard = text => {
-    // var dummy = document.createElement("input");
-    // document.body.appendChild(dummy);
-    // dummy.setAttribute("value", `${text}`);
-    // dummy.select();
-    // document.execCommand("copy");
-    // document.body.removeChild(dummy);
-
-    let  textField = document.createElement('textarea');
-    textField.innerText = text;
-    document.body.appendChild(textField);
-    textField.select();
-    document.execCommand('copy');
-    textField.remove();
-  };
-
-  copyToClipboard = (e) => {
-    this.textArea.select();
-    document.execCommand('copy');
-    // This is just personal preference.
-    // I prefer to not show the the whole text area selected.
-    e.target.focus();
-    this.setState({ copySuccess: 'Copied!' });
-  };
-
-  /**
    * Checks the item checkbox on the list
    * @param e - Event
    * @returns {*}
