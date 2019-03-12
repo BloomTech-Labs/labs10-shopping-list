@@ -349,7 +349,7 @@ export const createGroup = (groupName, userId) => {
     endpoint.then(res => {
       dispatch({type: GROUP_CREATED})
       console.log(res.data);
-      // getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
+      getUserGroups(Number(localStorage.getItem('userId')))(dispatch)
     }).catch(err => {
       console.log(err);
       dispatch({type: ERROR, payload: err.response.data.warning})
