@@ -3,14 +3,16 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { checkOut, removeFromCart } from "../store/actions/rootActions";
 import "./Styles/UserCart.css";
-import { MDBBtn, MDBInput } from "mdbreact";
+import {MDBBtn, MDBInput, MDBModal, MDBModalBody, MDBModalFooter, MDBModalHeader} from "mdbreact";
 
 class UserCart extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      amount: ""
+      amount: "",
+      modal17: false,
+      error: "",
     };
   }
 
@@ -25,20 +27,32 @@ class UserCart extends React.Component {
   handleCheckout = event => {
     event.preventDefault();
     // console.log('checkout');
+    const amt = this.state.amount;
 
     let info = {
       userId: this.props.currentUser.id,
       groupId: this.props.match.params.id,
       cartItems: this.props.userCart,
-      amount: this.state.amount
+      amount: amt
     };
 
-    if (this.state.amount > 0 && this.state.amount !== "") {
+    if (Number(this.state.amount) > 0 && this.state.amount !== "") {
+
       this.props.checkOut(info);
+      this.setState({
+        amount: ""
+      });
+
+    } else {
+      this.setState({modal17: true, error: "You have no items in cart"})
     }
 
+  };
+
+  toggle = nr => () => {
+    let modalNumber = "modal" + nr;
     this.setState({
-      amount: ""
+      [modalNumber]: !this.state[modalNumber]
     });
   };
 
@@ -71,8 +85,9 @@ class UserCart extends React.Component {
           <MDBInput
             size="lg"
             label="Total $ Spent"
-            type="text"
+            type="number"
             name="amount"
+            step="0.01"
             valueDefault={this.state.amount}
             onChange={this.handleChange}
           />
@@ -80,6 +95,21 @@ class UserCart extends React.Component {
             Check out
           </MDBBtn>
         </div>
+        <MDBModal
+            isOpen={this.state.modal17}
+            toggle={this.toggle(17)}
+            centered
+        >
+          <MDBModalHeader toggle={this.toggle(17)}>Warning</MDBModalHeader>
+          <MDBModalBody>
+            <h6>{this.state.error}</h6>
+          </MDBModalBody>
+          <MDBModalFooter>
+            <MDBBtn color="secondary" onClick={this.toggle(17)}>
+              Ok
+            </MDBBtn>
+          </MDBModalFooter>
+        </MDBModal>
       </div>
     );
   }
