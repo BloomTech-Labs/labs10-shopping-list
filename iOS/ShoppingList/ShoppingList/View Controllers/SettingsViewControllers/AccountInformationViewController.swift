@@ -8,7 +8,14 @@
 
 import UIKit
 
-class AccountInformationViewController: UIViewController {
+class AccountInformationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
+    
     
     // MARK: - IBActions
     
@@ -16,4 +23,33 @@ class AccountInformationViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    
+    @IBAction func updatePhoto(_ sender: Any) {
+        
+        showImagePicker()
+        
+    }
+    
+    func showImagePicker() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .photoLibrary
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        dismiss(animated: true, completion: nil)
+        
+        guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        
+        UserController().updateProfilePic(withImage: selectedImage) { (success) in
+            if success {
+                print("Changed user profile pic")
+            } else {
+                print("Did not change profile pic")
+                
+            }
+        }
+    }
 }

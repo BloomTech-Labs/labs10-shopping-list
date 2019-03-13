@@ -420,6 +420,16 @@
                     <view key="view" contentMode="scaleToFill" id="czl-PX-Uh1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ssd-fe-6be">
+                                <rect key="frame" x="151" y="60" width="95" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Update Photo"/>
+                                <connections>
+                                    <action selector="updatePhoto:" destination="lJ5-Dz-kvw" eventType="touchUpInside" id="iIl-eA-Gyr"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" name="Background"/>
                         <viewLayoutGuide key="safeArea" id="4Rb-jg-yFF"/>
                     </view>

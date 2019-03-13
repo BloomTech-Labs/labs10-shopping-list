@@ -17,4 +17,8 @@ pod 'PusherSwift'
 pod 'PushNotifications'
 pod 'TUSafariActivity', '~> 1.0'
 
+pod 'Firebase/Core'
+pod 'Firebase/Storage'
+
+
 end

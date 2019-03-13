@@ -17,6 +17,8 @@ var selectedItems: [Item] = []
 var history: [History] = []
 var groupMembers: [GroupMember] = []
 
+var userObject: User?
+
 // MARK: - Popovers
 
 let screen = UIScreen.main.bounds
