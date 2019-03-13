@@ -86,6 +86,11 @@ class GroupsProfile extends Component {
     if (!this.props.userGroups) {
       this.props.getUserGroups(localStorage.getItem("userId"));
     }
+
+    if (this.props.userGroups !== null) {
+      const group = this.props.userGroups.filter(grp => grp.id === Number(this.props.match.params.id));
+      document.title = `${group[0].name} - Group`;
+    }
   }
 
   /**
@@ -115,6 +120,14 @@ class GroupsProfile extends Component {
       this.props.checkEmail();
     }
   };
+
+  componentDidMount() {
+    if (this.props.userGroups !== null) {
+      const group = this.props.userGroups.filter(grp => grp.id === Number(this.props.match.params.id));
+      document.title = `${group[0].name} - Group`;
+    }
+
+  }
 
   /**
    * Clear any listeners and unnecessary data
@@ -362,7 +375,7 @@ class GroupsProfile extends Component {
 
                               </div>
                             </div>
-                              : <p>No Match</p>
+                              : null
                       }
                     </div>
                 )) : null
