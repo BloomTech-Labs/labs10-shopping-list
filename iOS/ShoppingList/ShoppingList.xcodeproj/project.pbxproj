@@ -27,6 +27,9 @@
 		44A1680522276F1000227DFB /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A1680422276F1000227DFB /* HistoryController.swift */; };
 		44A16807222F418C00227DFB /* Invitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A16806222F418C00227DFB /* Invitation.swift */; };
 		44A1680922318BE700227DFB /* InviteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A1680822318BE700227DFB /* InviteController.swift */; };
+		44A1680C22381C0C00227DFB /* BarCodeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44A1680B22381C0B00227DFB /* BarCodeViewController.storyboard */; };
+		44A1680F223820DC00227DFB /* BarCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A1680D223820DC00227DFB /* BarCodeViewController.swift */; };
+		44A16810223820DC00227DFB /* BarCodeScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A1680E223820DC00227DFB /* BarCodeScannerController.swift */; };
 		96029A422231604800F7F7AE /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96029A412231604700F7F7AE /* MainViewController.storyboard */; };
 		96029A44223189D500F7F7AE /* NoItemsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96029A43223189D500F7F7AE /* NoItemsView.xib */; };
 		96029A46223198FA00F7F7AE /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96029A45223198FA00F7F7AE /* Double.swift */; };
@@ -113,6 +116,9 @@
 		44A1680422276F1000227DFB /* HistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
 		44A16806222F418C00227DFB /* Invitation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invitation.swift; sourceTree = "<group>"; };
 		44A1680822318BE700227DFB /* InviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteController.swift; sourceTree = "<group>"; };
+		44A1680B22381C0B00227DFB /* BarCodeViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BarCodeViewController.storyboard; sourceTree = "<group>"; };
+		44A1680D223820DC00227DFB /* BarCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarCodeViewController.swift; sourceTree = "<group>"; };
+		44A1680E223820DC00227DFB /* BarCodeScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarCodeScannerController.swift; sourceTree = "<group>"; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96029A412231604700F7F7AE /* MainViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
 		96029A43223189D500F7F7AE /* NoItemsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoItemsView.xib; sourceTree = "<group>"; };
@@ -277,6 +283,16 @@
 				96029A45223198FA00F7F7AE /* Double.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		44A1680A22381BD700227DFB /* BarCodeScanningViewController */ = {
+			isa = PBXGroup;
+			children = (
+				44A1680B22381C0B00227DFB /* BarCodeViewController.storyboard */,
+				44A1680D223820DC00227DFB /* BarCodeViewController.swift */,
+				44A1680E223820DC00227DFB /* BarCodeScannerController.swift */,
+			);
+			path = BarCodeScanningViewController;
 			sourceTree = "<group>";
 		};
 		5897CAC300FCDDDF52C3738F /* Frameworks */ = {
@@ -465,6 +481,7 @@
 		96DE302B221637FE00213C3E /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				44A1680A22381BD700227DFB /* BarCodeScanningViewController */,
 				96DE302C221637FE00213C3E /* MainViewController */,
 				96DE302F221637FE00213C3E /* LoginViewController */,
 				96700E2F221C034000F084B3 /* SettingsViewControllers */,
@@ -569,6 +586,7 @@
 				96CBFBEB22285A7700A6B41E /* NewGroupPopoverView.xib in Resources */,
 				96DE3035221637FE00213C3E /* LoginViewController.storyboard in Resources */,
 				96700E2E221C025E00F084B3 /* SettingsTableViewController.storyboard in Resources */,
+				44A1680C22381C0C00227DFB /* BarCodeViewController.storyboard in Resources */,
 				9691AB552225AEB600C1EE1E /* GroupsPopoverView.xib in Resources */,
 				96476B522215D41300E57EB9 /* Assets.xcassets in Resources */,
 				968D512C222EBA5900179241 /* NewItemPopoverView.xib in Resources */,
@@ -664,6 +682,7 @@
 				969A840C2215C99A0003BB37 /* UIAppearance+Swift.m in Sources */,
 				11F5380D221F51EA0046BDFC /* HelperFile.swift in Sources */,
 				96CBFBED22285E7200A6B41E /* NewGroupPopoverView.swift in Sources */,
+				44A16810223820DC00227DFB /* BarCodeScannerController.swift in Sources */,
 				96E7BE60221DC149004EE9FF /* Helpers.swift in Sources */,
 				96700E31221C035600F084B3 /* SettingsTableViewController.swift in Sources */,
 				969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */,
@@ -683,6 +702,7 @@
 				969A841E2215C99A0003BB37 /* Identifier.swift in Sources */,
 				969A84192215C99A0003BB37 /* Reusable+UITableView.swift in Sources */,
 				969A84142215C99A0003BB37 /* Reusable.swift in Sources */,
+				44A1680F223820DC00227DFB /* BarCodeViewController.swift in Sources */,
 				96029A46223198FA00F7F7AE /* Double.swift in Sources */,
 				44A167FF22264D5500227DFB /* NavigationController.swift in Sources */,
 				969A84052215C99A0003BB37 /* UIButton+Chameleon.m in Sources */,

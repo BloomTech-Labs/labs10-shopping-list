@@ -53,6 +53,7 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     // MARK: - IBActions
     
     @IBAction func doneButtonPressed(_ sender: Any) {
+        
         dismiss(animated: true, completion: nil)
     
     }
@@ -69,12 +70,12 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
             let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: [activity])
             activityViewController.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList,
                                                             UIActivity.ActivityType.assignToContact,
-                                                            UIActivity.ActivityType.mail,
-                                                            UIActivity.ActivityType.message,
+                                                          //  UIActivity.ActivityType.mail,
+                                                           // UIActivity.ActivityType.message,
                                                             UIActivity.ActivityType.openInIBooks,
                                                             UIActivity.ActivityType.print,
                                                             UIActivity.ActivityType.saveToCameraRoll,
-                                                            UIActivity.ActivityType.copyToPasteboard
+                                                          //  UIActivity.ActivityType.copyToPasteboard
             ]
             
             self.present(activityViewController, animated: true, completion: nil)
@@ -93,8 +94,10 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     }
     
     @IBAction func openOnlineHelp(_ sender: Any) {
-        let url = URL(string: "https://labs10-shopping-list.netlify.com")!
-        UIApplication.shared.open(url)
+        let storyboard = UIStoryboard(name: "BarCodeViewController", bundle: nil)
+        let barCodeVC = storyboard.instantiateInitialViewController() ??
+            BarCodeViewController.instantiate()
+        present(barCodeVC, animated: true, completion: nil)
     }
     
     @IBAction func logoutPressed(_ sender: Any) {
