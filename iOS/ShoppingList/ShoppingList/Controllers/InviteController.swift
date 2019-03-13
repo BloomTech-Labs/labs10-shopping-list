@@ -10,14 +10,9 @@ import Foundation
 import Alamofire
 import Auth0
 
-
-
 private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
 
-
 class InviteController {
-    
-    
     
     static let shared = InviteController()
     
@@ -28,21 +23,19 @@ class InviteController {
             return}
         
         SessionManager.retrieveProfile { (profile, error) in
-            if let error = error  {
+            if error != nil  {
                 completion(nil)
                 return
             }
-            
             
             GroupController.shared.getUserID { (id) in
                 
                 guard let userID = id?.profile.id else {
                     completion(nil)
                     return
-                    
                 }
                 
-                guard let invitee = profile?.email else {
+                guard (profile?.email) != nil else {
                     completion(nil)
                     return
                 }
@@ -83,7 +76,6 @@ class InviteController {
                 }
             }
         }
-        
     }
     
 }
