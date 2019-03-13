@@ -48,36 +48,26 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     // MARK: - IBActions
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        
         dismiss(animated: true, completion: nil)
-    
     }
     
-    @IBAction func billingPressed(_ sender: Any) {
-       // let billingMessage = "To change your subscription type or modify your billing details, access your ShopTrak account online."
-        
+    @IBAction func inviteUser(_ sender: Any) {
         InviteController.shared.createInvite { (inviteCode) in
             guard let inviterCode = inviteCode?.inviteCode else { return }
             guard let url = NSURL(string: "https://labs10-shopping-list.netlify.com/invite?\(inviterCode)") else { return }
             
-            
             let activity = TUSafariActivity()
             let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: [activity])
-            activityViewController.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList,
-                                                            UIActivity.ActivityType.assignToContact,
-                                                          //  UIActivity.ActivityType.mail,
-                                                           // UIActivity.ActivityType.message,
-                                                            UIActivity.ActivityType.openInIBooks,
-                                                            UIActivity.ActivityType.print,
-                                                            UIActivity.ActivityType.saveToCameraRoll,
-                                                          //  UIActivity.ActivityType.copyToPasteboard
-            ]
+            activityViewController.excludedActivityTypes = [.addToReadingList, .assignToContact, .openInIBooks, .print, .saveToCameraRoll]
             
             self.present(activityViewController, animated: true, completion: nil)
         }
-        
-        
-        //Popovers.triggerMessagePopover(with: billingMessage)
+    }
+    
+    
+    @IBAction func billingPressed(_ sender: Any) {
+        let billingMessage = "To change your subscription type or modify your billing details, access your ShopTrak account online."
+        Popovers.triggerMessagePopover(with: billingMessage)
     }
     
     @IBAction func goToAppSettings(_ sender: Any) {

@@ -33,7 +33,6 @@
 		96029A422231604800F7F7AE /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96029A412231604700F7F7AE /* MainViewController.storyboard */; };
 		96029A44223189D500F7F7AE /* NoItemsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96029A43223189D500F7F7AE /* NoItemsView.xib */; };
 		96029A46223198FA00F7F7AE /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96029A45223198FA00F7F7AE /* Double.swift */; };
-		960FBF63221C26220076C662 /* ManageGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */; };
 		960FBF65221C27050076C662 /* AccountInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF64221C27050076C662 /* AccountInformationViewController.swift */; };
 		960FBF68221C31E60076C662 /* AboutShopTrakTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */; };
 		960FBF6B221C41570076C662 /* MessagePopoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 960FBF6A221C41570076C662 /* MessagePopoverView.xib */; };
@@ -123,7 +122,6 @@
 		96029A412231604700F7F7AE /* MainViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
 		96029A43223189D500F7F7AE /* NoItemsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoItemsView.xib; sourceTree = "<group>"; };
 		96029A45223198FA00F7F7AE /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
-		960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageGroupsTableViewController.swift; sourceTree = "<group>"; };
 		960FBF64221C27050076C662 /* AccountInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInformationViewController.swift; sourceTree = "<group>"; };
 		960FBF66221C29D00076C662 /* ShoppingList.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShoppingList.entitlements; sourceTree = "<group>"; };
 		960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutShopTrakTableViewController.swift; sourceTree = "<group>"; };
@@ -348,7 +346,6 @@
 				96700E2D221C025E00F084B3 /* SettingsTableViewController.storyboard */,
 				96700E30221C035600F084B3 /* SettingsTableViewController.swift */,
 				44A167FE22264D5500227DFB /* NavigationController.swift */,
-				960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */,
 				960FBF64221C27050076C662 /* AccountInformationViewController.swift */,
 				960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */,
 			);
@@ -675,7 +672,6 @@
 				969A84072215C99A0003BB37 /* Chameleon_.m in Sources */,
 				96DE302A221637EB00213C3E /* Constants.swift in Sources */,
 				118646D8221CA9D900D0F04B /* User.swift in Sources */,
-				960FBF63221C26220076C662 /* ManageGroupsTableViewController.swift in Sources */,
 				44A16801222746E600227DFB /* ItemController.swift in Sources */,
 				969A84112215C99A0003BB37 /* Reusable+NSCollectionView.swift in Sources */,
 				44A1680922318BE700227DFB /* InviteController.swift in Sources */,
