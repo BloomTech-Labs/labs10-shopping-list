@@ -846,6 +846,7 @@ export const addToCart = item => {
  */
 export const removeFromCart = item => {
   return dispatch => {
+    console.log("REMOVE FROM CART ===>", item);
     dispatch({type: REMOVE_FROM_CART, payload: item})
   }
 }

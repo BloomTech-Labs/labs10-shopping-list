@@ -52,6 +52,15 @@ class UserCart extends React.Component {
 
   };
 
+  handleRemoveFromCart = (event, id) => {
+    event.preventDefault();
+
+    if (this.props.userCart !== null) {
+      const item = this.props.userCart.filter((itm => itm.id === id));
+      this.props.removeFromCart(item[0]);
+    }
+  }
+
   toggle = nr => () => {
     let modalNumber = "modal" + nr;
     this.setState({
@@ -69,13 +78,7 @@ class UserCart extends React.Component {
             this.props.userCart.map(item => (
               /** @TODO break these divs into components */
               <div className="cart-item" key={item.id}>
-                <button
-                  type="button"
-                  className="close close1"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
+
                 {item.name}
               </div>
             ))
