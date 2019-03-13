@@ -349,15 +349,16 @@ class GroupsProfile extends Component {
               {
                 this.props.groupUsers !== null ? this.props.groupUsers.map((grp, i) => (
                     <div key={i}>
+                      Update your group notification settings
                       {
                         grp.userID === Number(localStorage.getItem("userId")) ?
                             <div className={"label-check"}>
                               <div>
                                 <input type="checkbox" name="checkGrp1" id="check1_Opt1" onChange={(e) => this.handleUpdateNotif(e, !grp.weeklyNotification, grp.id, "week")} checked={grp.weeklyNotification} />
-                                <label htmlFor="check1_Opt1">Weekly Notification</label>
+                                <label htmlFor="check1_Opt1">Weekly Notifications</label>
                                 <br></br>
                                 <input type="checkbox" name="checkGrp2" id="check1_Opt2" onChange={(e) => this.handleUpdateNotif(e, !grp.monthlyNotification, grp.id, "month")} checked={grp.monthlyNotification} />
-                                <label htmlFor="check1_Opt2">Monthly Notification</label>
+                                <label htmlFor="check1_Opt2">Monthly Notifications</label>
 
                               </div>
                             </div>
