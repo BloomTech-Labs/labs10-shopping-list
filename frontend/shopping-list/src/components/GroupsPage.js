@@ -45,6 +45,7 @@ class GroupsPage extends Component {
   }
 
   componentDidMount() {
+    document.title = `ShopTrak - Groups`;
     if (!this.props.userGroups && this.props.currentUser) {
       this.props.getUserGroups(this.props.currentUser.id);
     }

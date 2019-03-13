@@ -63,7 +63,8 @@ class UserProfile extends React.Component {
         }
 
         if (this.props.currentUser) {
-            this.setState({ username: this.props.currentUser.name });
+          document.title = `${this.props.currentUser.name}'s Profile`;
+          this.setState({ username: this.props.currentUser.name });
         }
     }
 
@@ -167,14 +168,6 @@ class UserProfile extends React.Component {
             General
           </MDBBtn>
           <MDBBtn
-          className={this.state.notifToggle ? "btn-outline-dark-green" : "btn-dark-green"}
-          onClick={() => {
-          this.notifToggle();
-          }}
-          >
-          Notification
-          </MDBBtn>
-          <MDBBtn
             className={
               this.state.subToggle ? "btn-outline-dark-green" : "btn-dark-green"
             }
@@ -260,22 +253,6 @@ class UserProfile extends React.Component {
                           Profile picture Saved!
                       </MDBAlert> : null
                   }
-              </div>
-            ) : null}
-            {this.state.notifToggle ? (
-              <div>
-                <MDBBtn
-                  className={
-                    this.state.listToggle
-                      ? "btn-outline-dark-green"
-                      : "btn-dark-green"
-                  }
-                  onClick={() => {
-                    this.toggleListClass();
-                  }}
-                >
-                  Save
-                </MDBBtn>
               </div>
             ) : null}
             {this.state.subToggle ? (

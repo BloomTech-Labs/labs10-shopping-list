@@ -7,7 +7,11 @@ import tomatoShare from '../images/tomato-share.jpg';
 import laptopWoman from '../images/laptop-woman.jpg';
 
 class Home extends React.Component{
-    render(){
+        componentDidMount() {
+                document.title = `ShopTrak`;
+        }
+
+        render(){
         return(
             <div className = 'home-container'>
                 
