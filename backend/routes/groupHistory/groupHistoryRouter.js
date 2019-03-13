@@ -90,127 +90,44 @@ totalItems = (items) => {
 }
 
 groupHistoryRouter.get('/group/:id', async (req, res) => {
-    const groupId = req.params.id;
-    const groups = [];
-    console.log("GET GROUPS")
+    // get group histories
+    let groupID = req.params.id;
 
-    try {
-        const grpHistory = await groupHistoryDb.getByGroup(groupId);
-        console.log("GRP HIST", grpHistory);
+    groupHistoryDb.getByGroup(groupID).then(hist => {
+        // iterate over each history and collect username and items purchased
 
-        // Loop through the history and gather information on the item and user
-        for (let i = 0; i < grpHistory.length; i++) {
-            // Gather the item
-            const mem = await itemDb.getById(grpHistory[i].itemID);
-            console.log("GRP MEM", mem);
-
-            // Gather the user
-            let usr = null;
-            try {
-                usr = await userDb.getById(mem[0].purchasedBy);
-
-                // Create an item object to return
-                const item = {
-                    id: mem[0].id,
-                    name: mem[0].name,
-                    user: usr[0].name,
-                    price: mem[0].price,
-                }
-
-                // The overall history object to return
-                const hist = {
-                    total: grpHistory[i].total,
-                    item: item,
-                    name: mem[0].name,
-                    user: usr[0].name,
-                    date: new Date(grpHistory[i].createdAt).toLocaleDateString(),
-                    utcDate: new Date(grpHistory[i].createdAt).toUTCString()
-                }
-
-                // Add to the groups array
-                groups.push(hist);
-            } catch (err) {
-                // console.log("err => ", err)
-
-                if (usr === null || usr === undefined || usr.length < 1) {
-                    usr = [{
-                        name: 'Removed Account',
-                        price: 0.00,
-                    }]
-                }
-
-                // Create an item object to return
-                const item = {
-                    id: mem[0].id,
-                    name: mem[0].name,
-                    user: usr[0].name,
-                    price: mem[0].price,
-                }
-
-                // The overall history object to return
-                const hist = {
-                    total: grpHistory[i].total,
-                    item: item,
-                    name: mem[0].name,
-                    user: usr[0].name,
-                    date: new Date(grpHistory[i].createdAt).toLocaleDateString(),
-                    utcDate: new Date(grpHistory[i].createdAt).toUTCString()
-                }
-
-                // Add to the groups array
-                groups.push(hist);
-            }
-
-
-
-
-
-        }
-
-        // Sort the array by the item's date (2/27/2019) and user(name)
-        const results = groupBy(groups, function(itm) {
-            return [itm.date, itm.user]
-        })
-
-        // Map a new array to use for calculating the total. This sets any item that was purchased on the same
-        // date/time to a total of 0 so it does not get recalculated
-        let result = results.map((x, i) => {
-
-            // Check the utcDate to see if they match, if so, return a new object overwriting the prev with a total 0
-            // else, return the original object
-            let rr = x.map((y, iy) => {
-                if (results[i][iy-1] && results[i][iy].utcDate === results[i][iy - 1].utcDate) {
-                    return {total: 0};
+        for(let i = 0; i < hist.length; i++){
+            userDb.getById(hist[i].userID).then(user => {
+                // collect username of trip
+                if(!user || user.length === 0){
+                    hist[i].userName = 'Removed User';
                 } else {
-                    return y;
+                    hist[i].userName = user[0].name;
                 }
+
+                itemDb.getByGroup(groupID).then(items => {
+                    if(!hist[i].purchasedItems){
+                        // initialize an array for the purchased items
+                        hist[i].purchasedItems = [];
+                    }
+                    for(let j = 0; j < items.length; j++){
+                        if(hist[i].purchasedOn === items[j].purchasedOn){
+                            hist[i].purchasedItems.push(items[j]);
+                        }
+                    }
+
+                    if(i === hist.length - 1){
+                        console.log('loop complete', hist);
+                        return res.status(200).json({data: hist});
+                    }
+                })
             })
+        }
+    })
 
-            return rr;
 
-        });
 
-        // Create a new array
-        let newSorted = results.map(x => x);
-
-        // Calculate the total and send to te newSorted array
-        result.forEach((rs, i) => {
-            let total = totalItems(result[i]);
-            const grandTotal = {
-                grandTotal: total,
-            }
-            newSorted[i].push(grandTotal);
-        })
-
-        // Finally, reverse the order to have the newest dates first.
-        const sorted = newSorted.reverse();
-
-        return res.status(200).json({data: sorted });
-
-    } catch (e) {
-        return res.status(500).json({message: "Internal Server Error", err: e})
-    }
-});
+})
 
 /**************************************************/
 
