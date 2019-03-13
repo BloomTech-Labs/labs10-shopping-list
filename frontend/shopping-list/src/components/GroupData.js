@@ -7,6 +7,7 @@ import {getGroupHistoryList} from '../store/actions/rootActions';
 import './Styles/GroupData.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
+import {MDBBtn} from 'mdbreact';
 
 class GroupData extends React.Component {
     componentWillMount(){
@@ -26,11 +27,14 @@ class GroupData extends React.Component {
             endDate: moment().toDate(),
             data: {},
             chartTitle: 'Expenditures Over Time',
+            dateView: 'this-month'
         }
     }
 
     showExpendituresOverTime = (start, end) => {
         console.log('start, end', start, end);
+
+
 
         let EOTdata = {
                 labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -78,6 +82,12 @@ class GroupData extends React.Component {
         this.refreshChart(date, this.state.endDate);
     }
 
+    handleViewChange = event => {
+        console.log(event.target.name);
+        this.setState({
+            dateView: event.target.name
+        })
+    }
 
     render(){
 
@@ -105,6 +115,19 @@ class GroupData extends React.Component {
 
             <div className = 'chart-container'>
             <Bar data = {this.state.data} width = {600} height = {200} />
+
+            Date View:
+            <MDBBtn onClick = {this.handleViewChange} name = 'last-7-days'>Last 7 Days</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'last-14-days'>Last 14 Days</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'this-month'>This Month</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'last-month'>Last Month</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'last-3-months'>Last 3 Months</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'last-6-months'>Last 6 Months</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'last-12-months'>Last 12 Months</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'this-year'>This Year</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'last-year'>Last Year</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'all-time'>All Time</MDBBtn>
+
             </div>
 
             <div className = 'chart-container'>
