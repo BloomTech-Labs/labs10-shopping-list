@@ -13,7 +13,6 @@ import PushNotifications
 enum GroupView { case list, history, stats }
 
 class MainViewController: UIViewController, StoryboardInstantiatable, PopoverViewDelegate {
-    var pusher: PushNotifications!
     
     static let storyboardName: StoryboardName = "MainViewController"
     var noItemsView: NoItemsView!
@@ -28,8 +27,8 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     
     // MARK: - Lifecycle methods
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         noItemsView = NoItemsView.instantiate()
         noItemsView.frame = tableView.frame
@@ -45,17 +44,15 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         GroupController.shared.getUserID { (user) in
             
             guard let id = user?.profile.id,
-                  let name = user?.profile.name else {
-                    return }
+                let name = user?.profile.name else {
+                    return
+                    
+            }
             userID = id
             userName = name
             
-            guard let pusher = self.pusher else {
-                return
-                
-            }
             
-            GroupController.shared.getGroups(forUserID: userID, pusher: pusher) { (success) in
+            GroupController.shared.getGroups(forUserID: userID, pusher: PushNotifications.shared) { (success) in
                 if allGroups.count > 0 {
                     selectedGroup = allGroups[0]
                     UI { self.updatesNeeded() }
@@ -161,7 +158,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReuseIdentifier", for: indexPath)
         guard let itemCell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as? ItemTableViewCell,
-              let historyCell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath) as? HistoryTableViewCell else { return cell }
+            let historyCell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath) as? HistoryTableViewCell else { return cell }
         itemCell.tintColor = UIColor(named: "Theme")
         itemCell.accessoryType = .none
         historyCell.accessoryType = .none
