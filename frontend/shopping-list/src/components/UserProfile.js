@@ -4,7 +4,7 @@ import {
   checkEmail,
   saveUsername,
   saveProfilePic,
-    removeAccount
+  removeAccount
 } from "../store/actions/rootActions";
 import { connect } from "react-redux";
 import {
@@ -166,14 +166,14 @@ class UserProfile extends React.Component {
           >
             General
           </MDBBtn>
-          {/*<MDBBtn*/}
-          {/*className={this.state.notifToggle ? "btn-outline-dark-green" : "btn-dark-green"}*/}
-          {/*onClick={() => {*/}
-          {/*this.notifToggle();*/}
-          {/*}}*/}
-          {/*>*/}
-          {/*Notification*/}
-          {/*</MDBBtn>*/}
+          <MDBBtn
+          className={this.state.notifToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+          onClick={() => {
+          this.notifToggle();
+          }}
+          >
+          Notification
+          </MDBBtn>
           <MDBBtn
             className={
               this.state.subToggle ? "btn-outline-dark-green" : "btn-dark-green"
@@ -391,7 +391,8 @@ const mapStateToProps = state => {
   state = state.rootReducer; // pull values from state root reducer
   return {
     //state items
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+
   };
 };
 
@@ -402,6 +403,6 @@ export default connect(
     checkEmail,
     saveUsername,
     saveProfilePic,
-      removeAccount
+    removeAccount
   }
 )(UserProfile);

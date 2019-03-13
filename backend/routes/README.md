@@ -22,6 +22,15 @@
     * [Add Group Member](#Add-Group-Member)
     * [Update Group Member](#Update-Group-Member)
     * [Remove Group Member](#Remove-Group-Member)
+* [Group History Endpoints](#Group-History-Endpoints)
+    * [Get Group History by Group ID](#Get-Group-History-by-Group-ID)
+    * [Get Group History by User ID](#Get-Group-History-by-User-ID)
+    * [Get Group History by Group and User ID](#Get-Group-History-by-Group-and-User-ID)
+    * [Get Group History Total](#Get-Group-History-Total)
+    * [Get All Group History](#Get-All-Group-History)
+    * [Add Group History](#Add-Group-History)
+    * [Update Group History](#Update-Group-History)
+    * [Remove Group History](#Remove-Group-History)
 * [Subscription Endpoints](#Subscription-Endpoints)
     * [Get All Subscriptions](#Get-All-Subscriptions)
     * [Get Subscription By ID](#Get-Subscription-By-ID)
@@ -810,6 +819,324 @@ None
 
 [TOP](#Table-of-Contents)
 
+#### Get Group History by Group ID
+Get all history within a particular group
+* **URL**<br>
+/api/grouphistory/:id/
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`groupID=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { data: [[{date: "3/12/2019", item: {item object}, name: "Ken", total: 3, user: "Ken", utcDate: "Tue, 12 Mar 2019 23:16:28 GMT"},{date: "3/12/2019", item: {item object}, name: "Ken", total: 3, user: "Ken", utcDate: "Tue, 12 Mar 2019 23:16:28 GMT"}, {grandTotal: 3}]]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested group history do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/grouphistory/2",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get Group History by User ID
+Get all history within a particular group
+* **URL**<br>
+/api/grouphistory/:id/
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`userID=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { data: [[{date: "3/12/2019", item: {item object}, name: "Ken", total: 3, user: "Ken", utcDate: "Tue, 12 Mar 2019 23:16:28 GMT"},{date: "3/12/2019", item: {item object}, name: "Ken", total: 3, user: "Ken", utcDate: "Tue, 12 Mar 2019 23:16:28 GMT"}, {grandTotal: 3}]]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 404 NOT FOUND<br>
+            **Content:** { message: "The requested group history do not exist." }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/grouphistory/22",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get Group History by Group and User ID
+Get all history within a particular group
+### `NOTE: This is a depreciated endpoint`
+* **URL**<br>
+/api/grouphistory/gethistory/
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+`userID=[integer]`<br>
+`groupID=[integer]`
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { data: [[{date: "3/12/2019", item: {item object}, name: "Ken", total: 3, user: "Ken", utcDate: "Tue, 12 Mar 2019 23:16:28 GMT"},{date: "3/12/2019", item: {item object}, name: "Ken", total: 3, user: "Ken", utcDate: "Tue, 12 Mar 2019 23:16:28 GMT"}, {grandTotal: 3}]]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 500 NOT FOUND<br>
+                **Content:** { error: "Internal server error" }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/gethistory/",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get Group History Total
+Get all history totals within a particular group
+* **URL**<br>
+/api/grouphistory/total/group/:id
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+`groupID=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { data: [{createdAt: "2019-03-11T22:50:36.265Z", groupID: 2, id: 1, imageURL: null, itemID: 1, purchasedOn: "2019-03-11T00:00:00.000Z", total: 1.49, updatedAt: "2019-03-11T22:50:36:265Z", userID: 22}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 500 NOT FOUND<br>
+            **Content:** { error: "Internal server error" }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/total/group/2",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Get All Group History
+Get all historys of all groups
+* **URL**<br>
+/api/grouphistory/
+* **Method:**<br>
+`GET`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { data: [{createdAt: "2019-03-11T22:50:36.265Z", groupID: 2, id: 1, imageURL: null, itemID: 1, purchasedOn: "2019-03-11T00:00:00.000Z", total: 1.49, updatedAt: "2019-03-11T22:50:36:265Z", userID: 22}]}
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 500 NOT FOUND<br>
+            **Content:** { error: "Internal server error" }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/grouphistory/",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
+#### Add Group History
+Adds new group history.
+* **URL**<br>
+/api/grouphistory/
+* **Method:**<br>
+`POST`
+* **URL Params**<br>
+None
+* **Data Params**<br>
+`userID=[integer]`<br>
+`groupID=[integer]`<br>
+`itemID=[integer]`<br>
+`imageURL=[string]`<br>
+`purchasedOn=[string]`<br>
+`createdAt=[string]`<br>
+`updatedAt=[string]`<br>
+`total=[float]`
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "Group history added.", id: 9 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/grouphistory/",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+| Column                 | Description                  | Required |
+|------------------------|------------------------------|----------|
+| userID                 | ID of user                   | Yes      |
+| groupID                | ID of group                  | Yes      |
+| itemID                 | ID of item                   | Yes      |
+| imageURL               | image url of place bought    | No       |
+| total                  | total price of items         | No       |
+| purchasedOn            | date purchased               | No       |
+| createdAt              | Date the history was created | No       |
+| updatedAt              | Date the history was updated | No       |
+
+[TOP](#Table-of-Contents)
+
+### Update Group Member
+Update a particular group history
+* **URL**<br>
+/api/grouphistory/update/:id
+* **Method:**<br>
+`PUT`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+`userID=[integer]`<br>
+`groupID=[integer]`<br>
+`itemID=[integer]`<br>
+`imageURL=[string]`<br>
+`purchasedOn=[string]`<br>
+`createdAt=[string]`<br>
+`updatedAt=[string]`<br>
+`total=[float]`
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "History successfully updated.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested group history does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/grouphistory/update/:id",
+      dataType: "json",
+      type : "PUT",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+#### Data Params Table
+* Note that you will need at least one setting to update -> userID, moderator, etc.
+
+| Column                 | Description                  | Required |
+|------------------------|------------------------------|----------|
+| userID                 | ID of user                   | Yes      |
+| groupID                | ID of group                  | Yes      |
+| itemID                 | ID of item                   | No       |
+| imageURL               | image url of place bought    | No       |
+| total                  | total price of items         | No       |
+| purchasedOn            | date purchased               | No       |
+| createdAt              | Date the history was created | No       |
+| updatedAt              | Date the history was updated | No       |
+
+[TOP](#Table-of-Contents)
+
+### Remove Group Member
+Remove a particular group history
+* **URL**<br>
+/api/grouphistory/remove/:id
+* **Method:**<br>
+`DELETE`
+* **URL Params**<br>
+`id=[integer]`
+* **Data Params**<br>
+None
+* **Success Response:**<br>
+    * **Code:** 200<br>
+      **Content:** { message: "History successfully removed.", id: 13 }
+* **Error Response:**<br>
+    * **Code:** 401 UNAUTHORIZED<br>
+        **Content:** { error: "You are unauthorized to make this request." }<br>
+    * **Code:** 404 NOT FOUND<br>
+        **Content:** { error: "The requested group member does not exist." }<br>
+    OR<br>
+    * **Code:** 500 INTERNAL SERVER ERROR<br>
+        **Content:** { message: "Internal Server Error", data: { err: { "Error Details" } } }
+
+* **Sample Call:**
+  ```javascript
+    $.ajax({
+      url: "/api/grouphistory/remove/12",
+      dataType: "json",
+      type : "DELETE",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+[TOP](#Table-of-Contents)
+
 ## Subscription Endpoints
 #### Un-Protected
 #### Get All Subscriptions
@@ -1026,7 +1353,7 @@ None
 * **Sample Call:**
   ```javascript
     $.ajax({
-      url: "/api/subscription",
+      url: "/api/item",
       dataType: "json",
       type : "GET",
       success : function(r) {
@@ -1060,7 +1387,7 @@ None
 * **Sample Call:**
   ```javascript
     $.ajax({
-      url: "/api/subscription/8",
+      url: "/api/item/8",
       dataType: "json",
       type : "GET",
       success : function(r) {

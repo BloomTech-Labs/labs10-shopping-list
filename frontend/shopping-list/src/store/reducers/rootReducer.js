@@ -37,7 +37,7 @@ import {
   SAVE_PROFILEPIC,
   REMOVE_ACCOUNT,
   ERROR,
-  CLEAR_ERROR
+  CLEAR_ERROR,
 } from "../actions";
 
 const initialState = {
@@ -70,7 +70,8 @@ const initialState = {
 
   inviteInfo: null,
 
-  errorMessage: null
+  errorMessage: null,
+  groupMembers: null,
 };
 
 export const rootReducer = (state = initialState, action) => {
