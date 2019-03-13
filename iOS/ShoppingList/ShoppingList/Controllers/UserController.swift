@@ -199,7 +199,7 @@ class UserController {
     
     
     
-    func getUser(forID id: Int, completion: @escaping (User?) -> Void) {
+    func getUser(forID id: Int, completion: @escaping (Bool) -> Void) {
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(id))
          var request = URLRequest(url: url)
@@ -214,17 +214,18 @@ class UserController {
                 do {
                     let decoder = JSONDecoder()
                     let user = try decoder.decode(User.self, from: value)
-                    completion(user)
+                    userObject = user
+                    completion(true)
                     
                 } catch {
                     print("Could not turn json into user")
-                    completion(nil)
+                    completion(false)
                     return
                 }
                 
             case .failure(let error):
                 NSLog("getUser: \(error.localizedDescription)")
-                completion(nil)
+                completion(false)
                 return
             }
         }
