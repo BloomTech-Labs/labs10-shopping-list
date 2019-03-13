@@ -86,8 +86,7 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     }
     
     @IBAction func openOnlineHelp(_ sender: Any) {
-        let barcodeVC = BarcodeScannerController.instantiate()
-        present(barcodeVC, animated: true, completion: nil)
+        
     }
     
     @IBAction func logoutPressed(_ sender: Any) {

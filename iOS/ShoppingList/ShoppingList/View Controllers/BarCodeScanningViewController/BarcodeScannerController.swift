@@ -192,23 +192,21 @@ extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
                         NSLog("failed to get product name for barcode=\(barcode): \(err)")
                     }
                     
-                   // self.captureSession.stopRunning()
                     guard let name = productName else { return }
                     
                     guard let selectedGroup = selectedGroup else { return }
                     let newItem = Item(name: name, measurement: nil, purchased: false, price: 0, quantity: 0, group: selectedGroup)
-                    ItemController.shared.saveItem(item: newItem) { (_, _) in
-                        
+                    ItemController.shared.saveItem(item: newItem) { (_, _) in }
+                    
+                    if selectedGroup.items != nil {
+                        selectedGroup.items?.append(newItem)
+                    } else {
+                        selectedGroup.items = [newItem]
                     }
-                
+                    
                 }
-                let storyboard = UIStoryboard(name: "MainViewController", bundle: nil)
-                let mainVC = storyboard.instantiateInitialViewController() ??
-                    MainViewController.instantiate()
                 self.delegate?.updatesNeeded()
-                self.present(mainVC, animated: true, completion: nil)
-                
-                
+                dismiss(animated: true, completion: nil)
             }
         }
     }

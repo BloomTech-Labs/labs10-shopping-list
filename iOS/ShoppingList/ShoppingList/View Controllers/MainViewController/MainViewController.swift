@@ -117,6 +117,12 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     
     // MARK: - IBActions
     
+    @IBAction func scanBarcodePressed(_ sender: Any) {
+        let barcodeVC = BarcodeScannerController.instantiate()
+        barcodeVC.delegate = self
+        present(barcodeVC, animated: true, completion: nil)
+    }
+    
     @IBAction func addNewItemButtonPressed(_ sender: Any) {
         Popovers.triggerNewItemPopover(self)
     }
