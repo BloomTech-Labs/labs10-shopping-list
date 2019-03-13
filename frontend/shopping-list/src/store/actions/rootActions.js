@@ -67,6 +67,9 @@ export const CHECK_OUT_COMPLETE = 'CHECK_OUT_COMPLETE';
 export const ERROR = 'ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
 
+export const UPDATE_NOTIFICATION = 'UPDATE_NOTIFICATION';
+export const UPDATE_NOTIFICATION_SUCCESS = 'UPDATE_NOTIFICATION_SUCCESS';
+
 // Defines URL for development and production/staging environments
 let backendURL;
 if(process.env.NODE_ENV === 'development'){
@@ -508,6 +511,33 @@ export const getGroupHistoryList = groupId => {
 export const clearGroupUsers = () => {
   return dispatch => {
     dispatch({type: CLEAR_GROUP_USERS});
+  }
+}
+
+/**
+ * Updates the user's notification preferences
+ * @param id - ID of the group member to update
+ * @param changes - Changes to be replacing the existing options
+ * @returns {Function}
+ */
+export const updateGroupNotification = (id, changes) => {
+  let token = localStorage.getItem('jwt');
+  let options = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const endpoint = axios.put(`${backendURL}/api/groupmember/update/${id}`, changes, options);
+
+  return dispatch => {
+    dispatch({type: UPDATE_NOTIFICATION})
+    endpoint.then(res => {
+      dispatch({type: UPDATE_NOTIFICATION_SUCCESS, payload: res.data.data})
+    }).catch(err => {
+      // console.log(err);
+      dispatch({type: ERROR, payload: err.response.data.error.message})
+    })
   }
 }
 

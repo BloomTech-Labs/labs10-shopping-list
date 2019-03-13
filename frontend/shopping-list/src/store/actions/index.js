@@ -67,5 +67,8 @@ export {
   REMOVE_ACCOUNT,
   removeAccount,
   CLEAR_ERROR,
-  clearError
+  clearError,
+  UPDATE_NOTIFICATION,
+  UPDATE_NOTIFICATION_SUCCESS,
+  updateGroupNotification
 } from "./rootActions";
