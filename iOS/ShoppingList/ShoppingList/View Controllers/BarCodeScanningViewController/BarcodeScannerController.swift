@@ -4,10 +4,13 @@ import UIKit
 import AVFoundation
 import Alamofire
 
-class QRScannerController: UIViewController {
+class BarcodeScannerController: UIViewController, StoryboardInstantiatable {
+    
+    static let storyboardName: StoryboardName = "BarcodeScannerController"
     
     @IBOutlet var messageLabel:UILabel!
-    @IBOutlet var topbar: UIView!
+    @IBOutlet var headerView: UIView!
+    
     var captureSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
@@ -72,7 +75,7 @@ class QRScannerController: UIViewController {
         
         // Move the message label and top bar to the front
         view.bringSubviewToFront(messageLabel)
-        view.bringSubviewToFront(topbar)
+        view.bringSubviewToFront(headerView)
         
         // Initialize QR Code Frame to highlight the QR code
         qrCodeFrameView = UIView()
@@ -83,14 +86,6 @@ class QRScannerController: UIViewController {
             view.addSubview(qrCodeFrameView)
             view.bringSubviewToFront(qrCodeFrameView)
         }
-    }
-    
-    
-  
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
@@ -108,8 +103,6 @@ class QRScannerController: UIViewController {
     struct Product: Codable {
         let product_name: String
     }
-    
-    
     
     func getProductName(barcode: String, completion: @escaping (String?, Error?) -> Void) {
         var ucs = URLComponents(string: "https://api.barcodelookup.com/v2/products")
@@ -158,14 +151,19 @@ class QRScannerController: UIViewController {
             }
         }
         
-        
     }
+    
+    @IBAction func closeButtonPressed(_ sender: Any) {
+        self.delegate?.updatesNeeded()
+        dismiss(animated: true, completion: nil)
+    }
+    
  
     private var done = false
     weak var delegate: PopoverViewDelegate?
 }
 
-extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
+extension BarcodeScannerController: AVCaptureMetadataOutputObjectsDelegate {
    
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -194,23 +192,21 @@ extension QRScannerController: AVCaptureMetadataOutputObjectsDelegate {
                         NSLog("failed to get product name for barcode=\(barcode): \(err)")
                     }
                     
-                   // self.captureSession.stopRunning()
                     guard let name = productName else { return }
                     
                     guard let selectedGroup = selectedGroup else { return }
                     let newItem = Item(name: name, measurement: nil, purchased: false, price: 0, quantity: 0, group: selectedGroup)
-                    ItemController.shared.saveItem(item: newItem) { (_, _) in
-                        
+                    ItemController.shared.saveItem(item: newItem) { (_, _) in }
+                    
+                    if selectedGroup.items != nil {
+                        selectedGroup.items?.append(newItem)
+                    } else {
+                        selectedGroup.items = [newItem]
                     }
-                
+                    
                 }
-                let storyboard = UIStoryboard(name: "MainViewController", bundle: nil)
-                let mainVC = storyboard.instantiateInitialViewController() ??
-                    MainViewController.instantiate()
                 self.delegate?.updatesNeeded()
-                self.present(mainVC, animated: true, completion: nil)
-                
-                
+                dismiss(animated: true, completion: nil)
             }
         }
     }

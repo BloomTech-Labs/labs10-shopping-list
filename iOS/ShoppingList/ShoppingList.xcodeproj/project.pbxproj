@@ -28,13 +28,11 @@
 		44A1680522276F1000227DFB /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A1680422276F1000227DFB /* HistoryController.swift */; };
 		44A16807222F418C00227DFB /* Invitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A16806222F418C00227DFB /* Invitation.swift */; };
 		44A1680922318BE700227DFB /* InviteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A1680822318BE700227DFB /* InviteController.swift */; };
-		44A1680C22381C0C00227DFB /* BarCodeViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44A1680B22381C0B00227DFB /* BarCodeViewController.storyboard */; };
-		44A1680F223820DC00227DFB /* BarCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A1680D223820DC00227DFB /* BarCodeViewController.swift */; };
-		44A16810223820DC00227DFB /* BarCodeScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A1680E223820DC00227DFB /* BarCodeScannerController.swift */; };
+		44A1680C22381C0C00227DFB /* BarcodeScannerController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44A1680B22381C0B00227DFB /* BarcodeScannerController.storyboard */; };
+		44A16810223820DC00227DFB /* BarcodeScannerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A1680E223820DC00227DFB /* BarcodeScannerController.swift */; };
 		96029A422231604800F7F7AE /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96029A412231604700F7F7AE /* MainViewController.storyboard */; };
 		96029A44223189D500F7F7AE /* NoItemsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 96029A43223189D500F7F7AE /* NoItemsView.xib */; };
 		96029A46223198FA00F7F7AE /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96029A45223198FA00F7F7AE /* Double.swift */; };
-		960FBF63221C26220076C662 /* ManageGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */; };
 		960FBF65221C27050076C662 /* AccountInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF64221C27050076C662 /* AccountInformationViewController.swift */; };
 		960FBF68221C31E60076C662 /* AboutShopTrakTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */; };
 		960FBF6B221C41570076C662 /* MessagePopoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 960FBF6A221C41570076C662 /* MessagePopoverView.xib */; };
@@ -118,14 +116,12 @@
 		44A1680422276F1000227DFB /* HistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
 		44A16806222F418C00227DFB /* Invitation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invitation.swift; sourceTree = "<group>"; };
 		44A1680822318BE700227DFB /* InviteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteController.swift; sourceTree = "<group>"; };
-		44A1680B22381C0B00227DFB /* BarCodeViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BarCodeViewController.storyboard; sourceTree = "<group>"; };
-		44A1680D223820DC00227DFB /* BarCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarCodeViewController.swift; sourceTree = "<group>"; };
-		44A1680E223820DC00227DFB /* BarCodeScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarCodeScannerController.swift; sourceTree = "<group>"; };
+		44A1680B22381C0B00227DFB /* BarcodeScannerController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BarcodeScannerController.storyboard; sourceTree = "<group>"; };
+		44A1680E223820DC00227DFB /* BarcodeScannerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarcodeScannerController.swift; sourceTree = "<group>"; };
 		8BC76772DCDB2F67B7FAE732 /* Pods_ShoppingList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShoppingList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96029A412231604700F7F7AE /* MainViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainViewController.storyboard; sourceTree = "<group>"; };
 		96029A43223189D500F7F7AE /* NoItemsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoItemsView.xib; sourceTree = "<group>"; };
 		96029A45223198FA00F7F7AE /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
-		960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageGroupsTableViewController.swift; sourceTree = "<group>"; };
 		960FBF64221C27050076C662 /* AccountInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInformationViewController.swift; sourceTree = "<group>"; };
 		960FBF66221C29D00076C662 /* ShoppingList.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShoppingList.entitlements; sourceTree = "<group>"; };
 		960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutShopTrakTableViewController.swift; sourceTree = "<group>"; };
@@ -290,9 +286,8 @@
 		44A1680A22381BD700227DFB /* BarCodeScanningViewController */ = {
 			isa = PBXGroup;
 			children = (
-				44A1680B22381C0B00227DFB /* BarCodeViewController.storyboard */,
-				44A1680D223820DC00227DFB /* BarCodeViewController.swift */,
-				44A1680E223820DC00227DFB /* BarCodeScannerController.swift */,
+				44A1680B22381C0B00227DFB /* BarcodeScannerController.storyboard */,
+				44A1680E223820DC00227DFB /* BarcodeScannerController.swift */,
 			);
 			path = BarCodeScanningViewController;
 			sourceTree = "<group>";
@@ -351,7 +346,6 @@
 				96700E2D221C025E00F084B3 /* SettingsTableViewController.storyboard */,
 				96700E30221C035600F084B3 /* SettingsTableViewController.swift */,
 				44A167FE22264D5500227DFB /* NavigationController.swift */,
-				960FBF62221C26220076C662 /* ManageGroupsTableViewController.swift */,
 				960FBF64221C27050076C662 /* AccountInformationViewController.swift */,
 				960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */,
 			);
@@ -590,7 +584,7 @@
 				96CBFBEB22285A7700A6B41E /* NewGroupPopoverView.xib in Resources */,
 				96DE3035221637FE00213C3E /* LoginViewController.storyboard in Resources */,
 				96700E2E221C025E00F084B3 /* SettingsTableViewController.storyboard in Resources */,
-				44A1680C22381C0C00227DFB /* BarCodeViewController.storyboard in Resources */,
+				44A1680C22381C0C00227DFB /* BarcodeScannerController.storyboard in Resources */,
 				9691AB552225AEB600C1EE1E /* GroupsPopoverView.xib in Resources */,
 				96476B522215D41300E57EB9 /* Assets.xcassets in Resources */,
 				968D512C222EBA5900179241 /* NewItemPopoverView.xib in Resources */,
@@ -626,7 +620,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/Auth0/Auth0.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
@@ -665,7 +659,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShoppingList/Pods-ShoppingList-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -678,7 +672,6 @@
 				969A84072215C99A0003BB37 /* Chameleon_.m in Sources */,
 				96DE302A221637EB00213C3E /* Constants.swift in Sources */,
 				118646D8221CA9D900D0F04B /* User.swift in Sources */,
-				960FBF63221C26220076C662 /* ManageGroupsTableViewController.swift in Sources */,
 				44A16801222746E600227DFB /* ItemController.swift in Sources */,
 				969A84112215C99A0003BB37 /* Reusable+NSCollectionView.swift in Sources */,
 				44A1680922318BE700227DFB /* InviteController.swift in Sources */,
@@ -692,7 +685,7 @@
 				969A840C2215C99A0003BB37 /* UIAppearance+Swift.m in Sources */,
 				11F5380D221F51EA0046BDFC /* HelperFile.swift in Sources */,
 				96CBFBED22285E7200A6B41E /* NewGroupPopoverView.swift in Sources */,
-				44A16810223820DC00227DFB /* BarCodeScannerController.swift in Sources */,
+				44A16810223820DC00227DFB /* BarcodeScannerController.swift in Sources */,
 				96E7BE60221DC149004EE9FF /* Helpers.swift in Sources */,
 				96700E31221C035600F084B3 /* SettingsTableViewController.swift in Sources */,
 				969A84022215C99A0003BB37 /* UIColor+ChameleonPrivate.m in Sources */,
@@ -712,7 +705,6 @@
 				969A841E2215C99A0003BB37 /* Identifier.swift in Sources */,
 				969A84192215C99A0003BB37 /* Reusable+UITableView.swift in Sources */,
 				969A84142215C99A0003BB37 /* Reusable.swift in Sources */,
-				44A1680F223820DC00227DFB /* BarCodeViewController.swift in Sources */,
 				96029A46223198FA00F7F7AE /* Double.swift in Sources */,
 				44A167FF22264D5500227DFB /* NavigationController.swift in Sources */,
 				969A84052215C99A0003BB37 /* UIButton+Chameleon.m in Sources */,
@@ -891,7 +883,7 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = FXUY9QKNNU;
+				DEVELOPMENT_TEAM = 7LHTMK9AWG;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/ShoppingList/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -917,7 +909,7 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = FXUY9QKNNU;
+				DEVELOPMENT_TEAM = 7LHTMK9AWG;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/ShoppingList/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

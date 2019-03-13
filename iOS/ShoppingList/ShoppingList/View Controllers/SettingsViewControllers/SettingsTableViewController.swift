@@ -14,12 +14,7 @@ import TUSafariActivity
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
     
     static let storyboardName: StoryboardName = "SettingsTableViewController"
-    
-    var userProfile: UserInfo? {
-        didSet {
-            update()
-        }
-    }
+    var userProfile: UserInfo? { didSet { update() }}
     
     // MARK: - Lifecycle methods
     
@@ -53,51 +48,35 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     // MARK: - IBActions
     
     @IBAction func doneButtonPressed(_ sender: Any) {
-        
         dismiss(animated: true, completion: nil)
-    
     }
     
-    @IBAction func billingPressed(_ sender: Any) {
-       // let billingMessage = "To change your subscription type or modify your billing details, access your ShopTrak account online."
-        
+    @IBAction func inviteUser(_ sender: Any) {
         InviteController.shared.createInvite { (inviteCode) in
-            guard let inviterCode = inviteCode?.inviteCode else {return}
-     guard let url = NSURL(string: "https://labs10-shopping-list.netlify.com/invite?\(inviterCode)") else { return }
-            
+            guard let inviterCode = inviteCode?.inviteCode else { return }
+            guard let url = NSURL(string: "https://labs10-shopping-list.netlify.com/invite?\(inviterCode)") else { return }
             
             let activity = TUSafariActivity()
             let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: [activity])
-            activityViewController.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList,
-                                                            UIActivity.ActivityType.assignToContact,
-                                                          //  UIActivity.ActivityType.mail,
-                                                           // UIActivity.ActivityType.message,
-                                                            UIActivity.ActivityType.openInIBooks,
-                                                            UIActivity.ActivityType.print,
-                                                            UIActivity.ActivityType.saveToCameraRoll,
-                                                          //  UIActivity.ActivityType.copyToPasteboard
-            ]
+            activityViewController.excludedActivityTypes = [.addToReadingList, .assignToContact, .openInIBooks, .print, .saveToCameraRoll]
             
             self.present(activityViewController, animated: true, completion: nil)
-
-            
         }
-        
-        
-        //Popovers.triggerMessagePopover(with: billingMessage)
+    }
+    
+    
+    @IBAction func billingPressed(_ sender: Any) {
+        let billingMessage = "To change your subscription type or modify your billing details, access your ShopTrak account online."
+        Popovers.triggerMessagePopover(with: billingMessage)
     }
     
     @IBAction func goToAppSettings(_ sender: Any) {
-        // This will open ShopTrak's settings once we configure push notifications
         let settingsUrl = URL(string: UIApplication.openSettingsURLString)!
         UIApplication.shared.open(settingsUrl)
     }
     
     @IBAction func openOnlineHelp(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "BarCodeViewController", bundle: nil)
-        let barCodeVC = storyboard.instantiateInitialViewController() ??
-            BarCodeViewController.instantiate()
-        present(barCodeVC, animated: true, completion: nil)
+        
     }
     
     @IBAction func logoutPressed(_ sender: Any) {
