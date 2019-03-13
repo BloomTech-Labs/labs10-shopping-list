@@ -3,6 +3,7 @@ const groupHistoryRouter = express.Router();
 const groupHistoryDb = require('../../helpers/groupHistoryModel');
 const itemDb = require('../../helpers/itemModel');
 const userDb = require('../../helpers/userModel');
+const moment = require('moment');
 
 const checkJwt = require('../../validators/checkJwt');
 groupHistoryRouter.use(checkJwt);
@@ -115,6 +116,8 @@ groupHistoryRouter.get('/group/:id', async (req, res) => {
                             hist[i].purchasedItems.push(items[j]);
                         }
                     }
+
+                    hist[i].dateString = moment(hist[i].purchasedOn).format('LLLL')
 
                     if(i === hist.length - 1){
                         console.log('loop complete', hist);
