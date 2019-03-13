@@ -91,7 +91,7 @@
                                 <rect key="frame" x="0.0" y="704" width="375" height="108"/>
                                 <subviews>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWz-Q4-O9g">
-                                        <rect key="frame" x="16" y="16" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="16" width="112" height="56"/>
                                         <color key="backgroundColor" name="Theme"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="56" id="wQe-Fb-QeC"/>
@@ -114,7 +114,6 @@
                                 <constraints>
                                     <constraint firstItem="JWz-Q4-O9g" firstAttribute="leading" secondItem="bSk-hC-hl8" secondAttribute="leading" constant="16" id="1CB-Sx-tsb"/>
                                     <constraint firstItem="JWz-Q4-O9g" firstAttribute="top" secondItem="bSk-hC-hl8" secondAttribute="top" constant="16" id="IpA-ns-qdZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="JWz-Q4-O9g" secondAttribute="trailing" constant="16" id="bPN-2a-VYy"/>
                                     <constraint firstAttribute="height" constant="108" id="djK-go-q5p"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>

@@ -14,12 +14,7 @@ import TUSafariActivity
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
     
     static let storyboardName: StoryboardName = "SettingsTableViewController"
-    
-    var userProfile: UserInfo? {
-        didSet {
-            update()
-        }
-    }
+    var userProfile: UserInfo? { didSet { update() }}
     
     // MARK: - Lifecycle methods
     
@@ -62,8 +57,8 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
        // let billingMessage = "To change your subscription type or modify your billing details, access your ShopTrak account online."
         
         InviteController.shared.createInvite { (inviteCode) in
-            guard let inviterCode = inviteCode?.inviteCode else {return}
-     guard let url = NSURL(string: "https://labs10-shopping-list.netlify.com/invite?\(inviterCode)") else { return }
+            guard let inviterCode = inviteCode?.inviteCode else { return }
+            guard let url = NSURL(string: "https://labs10-shopping-list.netlify.com/invite?\(inviterCode)") else { return }
             
             
             let activity = TUSafariActivity()
@@ -79,8 +74,6 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
             ]
             
             self.present(activityViewController, animated: true, completion: nil)
-
-            
         }
         
         
@@ -88,16 +81,13 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     }
     
     @IBAction func goToAppSettings(_ sender: Any) {
-        // This will open ShopTrak's settings once we configure push notifications
         let settingsUrl = URL(string: UIApplication.openSettingsURLString)!
         UIApplication.shared.open(settingsUrl)
     }
     
     @IBAction func openOnlineHelp(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "BarCodeViewController", bundle: nil)
-        let barCodeVC = storyboard.instantiateInitialViewController() ??
-            BarCodeViewController.instantiate()
-        present(barCodeVC, animated: true, completion: nil)
+        let barcodeVC = BarcodeScannerController.instantiate()
+        present(barcodeVC, animated: true, completion: nil)
     }
     
     @IBAction func logoutPressed(_ sender: Any) {
