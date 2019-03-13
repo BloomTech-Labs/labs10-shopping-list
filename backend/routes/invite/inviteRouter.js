@@ -7,6 +7,7 @@ const groupDb = require('../../helpers/groupModel');
 const inviteDb = require('../../helpers/invitationsModel');
 
 const checkJwt = require('../../validators/checkJwt');
+const checkSubscription = require('../../validators/checkSubscription');
 
 const crypto = require('crypto');
 const moment = require('moment');
@@ -28,30 +29,45 @@ const moment = require('moment');
  * @param inviteCode = randomly generated string identifier
  */
 
-inviteRouter.post('/create', checkJwt, (req, res) => {
+inviteRouter.post('/create', checkJwt, checkSubscription, (req, res) => {
     let info = req.body; // req.body should contain groupID, groupName, userID, userName from the front-end.
+
+    const subType = req.subscriptionType;
 
     let newCode = crypto.randomBytes(14).toString('hex');
 
     info.inviteCode = newCode;
 
     let expiration = moment().add(7, 'days').format();
-    console.log('exp', expiration);
+    // console.log('exp', expiration);
     info.expiration = expiration;
 
-   console.log('invite info', info);
-    inviteDb.add(info).then(status => {
-        console.log('status', status)
-        if(status.length >= 0){
-            console.log('success!');
-            return res.status(201).json({message: `New invitation created with code ${info.inviteCode}.`, inviteCode: info.inviteCode});
-        } else {
-            return res.status(404).json({error: `Could not create invitation.`})
+   // console.log('invite info', info);
+    groupMembersDb.getByGroup(info.groupID).then(rs => {
+        console.log("RS => ", rs);
+        if (subType === 1 && rs.length >= 2) {
+            return res.status(403).json({ warning: `You do not have permission to do that. Only premium members can add more than two members.`})
+        } else if (subType === 1 && rs.length < 2 || subType === 2 && rs.length < 6) {
+            inviteDb.add(info).then(status => {
+                console.log('status', status)
+                if(status.length >= 0){
+                    console.log('success!');
+                    return res.status(201).json({message: `New invitation created with code ${info.inviteCode}.`, inviteCode: info.inviteCode});
+                } else {
+                    return res.status(404).json({error: `Could not create invitation.`})
+                }
+            }).catch(err => {
+                console.log(err);
+                return res.status(500).json({message: "Internal server error", data: err});
+            })
         }
+
     }).catch(err => {
-        console.log(err);
-        return res.status(500).json({message: "Internal server error", data: err});
+        return res.status(500).json(err);
     })
+
+
+
 })
 
 inviteRouter.get('/:code', (req, res) => {

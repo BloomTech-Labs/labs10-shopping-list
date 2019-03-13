@@ -37,10 +37,10 @@ class UserProfile extends React.Component {
     username: "",
     profilePic: "",
     modal14: false,
-      modal16: false,
+    modal16: false,
     hasSaved: false,
     hasPSaved: false,
-      delete: "",
+    delete: "",
   };
   componentWillMount() {
     // this.props.getCurrentUser();
@@ -57,15 +57,13 @@ class UserProfile extends React.Component {
     }
   }
 
-    componentDidMount(){
+  componentDidMount(){
         if(!this.props.currentUser){
             this.props.checkEmail();
         }
 
         if (this.props.currentUser) {
-            this.setState({ username: this.props.currentUser.name }, () => {
-                console.log("STATE => ", this.state.username)
-            });
+            this.setState({ username: this.props.currentUser.name });
         }
     }
 
@@ -130,13 +128,14 @@ class UserProfile extends React.Component {
     });
   };
 
-    handleDeleteAccount = (event) => {
+  handleDeleteAccount = (event) => {
         event.preventDefault();
         if (localStorage.getItem("userId")) {
             this.props.removeAccount();
             this.setState({modal16: false})
+          this.props.history.push("/");
         }
-    }
+  }
 
 
 
@@ -228,12 +227,12 @@ class UserProfile extends React.Component {
                 />
                 <MDBInput
                   label="Email"
-                  disabled="true"
+                  disabled={true}
                   value={email}
                   icon="envelope"
                 />
 
-                <div className="user-profile-header">
+                <div className="user-profile-settings-header">
                     <MDBBtn color="danger" onClick={this.toggle(16)}>
                         Remove Account
                     </MDBBtn>
@@ -281,8 +280,8 @@ class UserProfile extends React.Component {
             ) : null}
             {this.state.subToggle ? (
               <div>
-                <MDBContainer fluid={true}>
-                  <MDBCardGroup deck>
+                <MDBContainer >
+                  <MDBCardGroup deck className="user-profile-subs-container">
                     <MDBCard
                       style={{
                         width: "22rem",
@@ -332,7 +331,7 @@ class UserProfile extends React.Component {
                           disabled={subscriptionType === 2 ? true : false}
                           size="lg"
                         >
-                            {subscriptionType === 1 ? "Subscribed" : "Subscribe"}
+                            {subscriptionType === 1 ? "Subscribe" : "Subscribed"}
                         </MDBBtn>
                       </MDBCardBody>
                     </MDBCard>

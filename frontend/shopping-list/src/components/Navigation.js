@@ -8,8 +8,7 @@ import {connect} from 'react-redux';
 import {checkEmail,} from '../store/actions/rootActions';
 import './Styles/Navigation.css';
 import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
-    MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem,
-    // MDBIcon, MDBFormInline, 
+    MDBDropdownToggle, MDBDropdownMenu,
     MDBBtn } from "mdbreact";
 
 let frontendURL;
@@ -93,15 +92,15 @@ class Navigation extends React.Component{
 
                     <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
                         <MDBNavbarNav left>
-                            <MDBNavItem active={pathname === "/" ? "active" : null} >
+                            <MDBNavItem active={pathname === "/" ? true : false} >
                                 <MDBNavLink to="/">Home</MDBNavLink>
                             </MDBNavItem>
                             {isLoggedIn ? (
                                 <div>
-                                    <MDBNavItem active={pathname === "/groups" ? "active" : null} >
+                                    <MDBNavItem active={pathname === "/groups" ? true : false} >
                                         <MDBNavLink to="/groups">Groups</MDBNavLink>
                                     </MDBNavItem>
-                                    <MDBNavItem active={pathname === "/profile" ? "active" : null} className="nav-mobile" >
+                                    <MDBNavItem active={pathname === "/profile" ? true : false} className="nav-mobile" >
                                         <MDBNavLink to="/profile">My Account</MDBNavLink>
                                     </MDBNavItem>
                                     <MDBNavItem className="nav-mobile">
@@ -124,7 +123,7 @@ class Navigation extends React.Component{
 
                                         </MDBDropdownToggle>
                                         <MDBDropdownMenu className="dropdown-default"
-                                                         style = {{'padding': '20px', 'margin-right': '20px'}}>
+                                                         style = {{'padding': '20px', 'marginRight': '20px'}}>
 
                                             <MDBNavLink to = '/profile' style={{color: "#000000"}}>My Account
                                             </MDBNavLink>
