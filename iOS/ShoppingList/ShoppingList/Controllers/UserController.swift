@@ -128,6 +128,33 @@ class UserController {
         
     }
     
+    func changeUserNameTo(name: String, completion: @escaping (Bool) -> Void) {
+        
+        guard let accessToken = SessionManager.tokens?.idToken else {completion(false); return}
+        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+        
+        let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(userID))
+        
+        let json: [String: Any] = ["name": name]
+        
+        
+        Alamofire.request(url, method: .put, parameters: json, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
+            
+            switch response.result {
+            case .success(_):
+                completion(true)
+                return
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(false)
+                return
+            }
+
+            
+        }
+        
+    }
+    
     
     func updateUser(user: User, email: String? = nil, profilePicture: String? = nil, name: String? = nil, completion: @escaping (Bool, User?) -> Void) {
         
