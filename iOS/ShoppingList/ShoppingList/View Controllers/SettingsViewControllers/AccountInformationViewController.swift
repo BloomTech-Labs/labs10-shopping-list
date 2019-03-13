@@ -43,8 +43,6 @@ class AccountInformationViewController: UIViewController, UIImagePickerControlle
         
         guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-    
-        
         UserController().updateProfilePic(withImage: selectedImage) { (success) in
             if success {
                 print("Changed user profile pic")
