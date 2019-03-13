@@ -30,6 +30,7 @@ extension NavigationController: UINavigationControllerDelegate {
             
             UI {
                 settingsVC.userProfile = profile
+            
             }
         }
     }

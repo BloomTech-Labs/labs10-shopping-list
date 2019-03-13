@@ -11,7 +11,7 @@ class QRScannerController: UIViewController {
     var captureSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
-    let Api_key = "vbtf2hnsr5n2di1j983szw1tk6vt2s"
+    let Api_key = "93t3qvktlhhpxvkpyau8etocbsda14"
     
     
     private let supportedCodeTypes = [AVMetadataObject.ObjectType.upce,
@@ -30,7 +30,7 @@ class QRScannerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
         // Get the back-facing camera for capturing videos
         let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera], mediaType: AVMediaType.video, position: .back)
         
@@ -161,7 +161,7 @@ class QRScannerController: UIViewController {
         
     }
  
-     private var done = false
+    private var done = false
     weak var delegate: PopoverViewDelegate?
 }
 
