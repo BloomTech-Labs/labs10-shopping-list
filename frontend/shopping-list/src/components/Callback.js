@@ -15,7 +15,7 @@ class Callback extends Component {
     console.log('callback', this.props);
 
     if(localStorage.getItem('jwt')){
-      this.props.history.replace('/groups');
+      window.location.href = '/groups'
     }
   }
 
