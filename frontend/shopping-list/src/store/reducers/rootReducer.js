@@ -37,7 +37,8 @@ import {
   SAVE_PROFILEPIC,
   REMOVE_ACCOUNT,
   ERROR,
-  CLEAR_ERROR
+  CLEAR_ERROR,
+  CLEAR_GROUP_HISTORY,
 } from "../actions";
 
 const initialState = {
@@ -263,6 +264,13 @@ export const rootReducer = (state = initialState, action) => {
         groupUserProfiles: null,
         errorMessage: null
       };
+
+    case CLEAR_GROUP_HISTORY:
+      return {
+        ...state,
+        groupHistory: null,
+        groupHistoryList: null,
+      }
 
     case GET_INVITE_INFO:
       return state;

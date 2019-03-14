@@ -3,7 +3,7 @@ import {Doughnut} from 'react-chartjs-2';
 import DatePicker from 'react-datepicker';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {getGroupHistoryList, getUserGroups} from '../store/actions/rootActions';
+import {getGroupHistoryList, getUserGroups, clearGroupHistory} from '../store/actions/rootActions';
 
 import './Styles/GroupData.css';
 
@@ -31,6 +31,10 @@ class GroupDataDoughnut extends React.Component {
         }
     }
 
+    componentWillUnmount(){
+        this.props.clearGroupHistory();
+    }
+
 
     constructor(props){
         super(props);
@@ -40,11 +44,12 @@ class GroupDataDoughnut extends React.Component {
             members: null,
             startDate: moment().subtract(1, 'month').toDate(),
             endDate: moment().toDate(),
-            data: [],
+            data: null,
             dateView: 'month-to-date',
             grandTotal: 0,
             labels: [],
-            chartTitle: 'Expenditures By User'
+            chartTitle: 'Expenditures By User',
+            needsRefresh: false,
         }
     }
 
@@ -86,18 +91,6 @@ class GroupDataDoughnut extends React.Component {
         }
    }
 
-   async getUserLabels(){
-       if(this.state.members){
-        this.setState({
-            needsRefresh: false,
-        })
-        console.log("M E M B E R S", this.state.members)
-            return this.state.members;
-       }
-
-       
-   }
-
    async getPurchaseData(userLabels){
        let purchaseData = [];
        for(let i = 0; i < this.props.groupHistoryList.length; i++){
@@ -107,11 +100,13 @@ class GroupDataDoughnut extends React.Component {
             }
             if(this.props.groupHistoryList[i].userID === userLabels[j].id){
                 if(moment(this.state.startDate).format() < moment(this.props.groupHistoryList[i].purchasedOn).format() && moment(this.state.endDate).format() > moment(this.props.groupHistoryList[i].purchasedOn).format()){
-                purchaseData[j] += this.props.groupHistoryList[i].total;
+                        purchaseData[j] += this.props.groupHistoryList[i].total;
                 }
             }
         }
        }
+
+       let finalData = purchaseData;
 
 
        let grandTotal = purchaseData.reduce(function(accumulator, currentValue){
@@ -121,13 +116,16 @@ class GroupDataDoughnut extends React.Component {
     grandTotal = grandTotal.toFixed(2);
 
        this.setState({
-           data: purchaseData,
+           data: finalData,
            grandTotal: grandTotal,
            needsRefresh: false,
        })
    }
 
    async generateDoughnut() {
+       if(!this.props.groupHistoryList){
+           return -1;
+       }
        await this.getPurchaseData(this.state.members);
 
        let memberLabels = this.state.members.map(member => {
@@ -159,16 +157,19 @@ class GroupDataDoughnut extends React.Component {
    }
 
     render(){
-        if(this.state.needsRefresh === true && this.props.groupHistoryList){
+        if(this.state.needsRefresh === true){
             this.generateDoughnut();
         }
 
         return(
             <div className = 'doughnut-container'>
-            <Doughnut data = {this.state.data} />
-            <h2>{this.state.chartTitle}</h2>
+            <h1>{this.state.chartTitle}</h1>
             <h4>{moment(this.state.startDate).format('MMM Do YYYY')} - {moment(this.state.endDate).format('MMM Do YYYY')}</h4>
             <h4>Grand Total: ${this.state.grandTotal}</h4>
+            {this.state.data ? (
+            <Doughnut data = {this.state.data} />
+            ): null}
+            
             <MDBBtn onClick = {this.handleViewChange} name = 'last-7-days'>Last 7 Days</MDBBtn>
             <MDBBtn onClick = {this.handleViewChange} name = 'month-to-date'>Month-to-Date</MDBBtn>
             <MDBBtn onClick = {this.handleViewChange} name = 'this-month'>This Month</MDBBtn>
@@ -195,5 +196,6 @@ export default withRouter(connect(mapStateToProps, {
     //actions
     getGroupHistoryList,
     getUserGroups,
+    clearGroupHistory
 
 })(GroupDataDoughnut));

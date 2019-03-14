@@ -33,6 +33,7 @@ export const SAVE_GROUP_HISTORY = 'SAVE_GROUP_HISTORY';
 export const GET_GROUP_HISTORY_LIST = 'GET_GROUP_HISTORY_LIST';
 export const SAVE_GROUP_HISTORY_LIST = 'SAVE_GROUP_HISTORY_LIST';
 export const CLEAR_GROUP_USERS = 'CLEAR_GROUP_USERS';
+export const CLEAR_GROUP_HISTORY = 'CLEAR_GROUP_HISTORY';
 
 // GROUP INVITE
 export const GEN_GROUP_INVITE = 'GEN_GROUP_INVITE';
@@ -728,6 +729,17 @@ export const clearItems = () => {
     dispatch({type: CLEAR_ITEMS});
   }
 }
+
+/**
+ * Clear group history from state
+ * @returns {Function}
+ */
+
+ export const clearGroupHistory = () => {
+   return dispatch => {
+     dispatch({type: CLEAR_GROUP_HISTORY});
+   }
+ }
 
 /*
  * PURCHASE ITEM ACTIONS

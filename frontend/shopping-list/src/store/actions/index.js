@@ -67,5 +67,7 @@ export {
   REMOVE_ACCOUNT,
   removeAccount,
   CLEAR_ERROR,
-  clearError
+  clearError,
+  clearGroupHistory,
+  CLEAR_GROUP_HISTORY,
 } from "./rootActions";

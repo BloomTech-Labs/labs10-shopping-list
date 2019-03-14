@@ -15,7 +15,10 @@ class GroupData extends React.Component {
     }
 
     componentWillReceiveProps = (newProps) => {
-        if(newProps.groupHistoryList !== this.props.groupHistoryList){
+        if(newProps.groupHistoryList){
+            this.setState({
+                needsRefresh: true,
+            })
             this.showExpendituresOverTime();
         }
     }
@@ -27,7 +30,7 @@ class GroupData extends React.Component {
         this.state = {
             startDate: moment().subtract(1, 'month').toDate(),
             endDate: moment().toDate(),
-            data: [],
+            data: null,
             chartTitle: 'Expenditures Over Time',
             dateView: 'month-to-date',
             grandTotal: 0
@@ -111,11 +114,16 @@ class GroupData extends React.Component {
             grandTotal: grandTotal,
             needsRefresh: false,
         })
-    }
+}
 
        
 
     async showExpendituresOverTime() {
+        
+        if(!this.props.groupHistoryList){
+            return -1;
+        }
+
         await this.getDateLabels().then(dateLabels => {
             this.getPurchaseData(dateLabels);
         });
@@ -232,10 +240,15 @@ class GroupData extends React.Component {
             </div> */}
 
             <div className = 'chart-container'>
-            <h2>{this.state.chartTitle}</h2>
+            <h1>{this.state.chartTitle}</h1>
             <h4>{moment(this.state.startDate).format('MMM Do YYYY')} - {moment(this.state.endDate).format('MMM Do YYYY')}</h4>
             <h4>Grand Total: ${this.state.grandTotal}</h4>
+
+            {this.state.data !== null ? (
             <Bar data = {this.state.data} width = {600} height = {200}/>
+
+            ) : (null)}
+
 
             <MDBBtn onClick = {this.handleViewChange} name = 'last-7-days'>Last 7 Days</MDBBtn>
             {/* <MDBBtn onClick = {this.handleViewChange} name = 'last-14-days'>Last 14 Days</MDBBtn>

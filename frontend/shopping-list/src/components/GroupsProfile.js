@@ -13,7 +13,8 @@ import {
   submitPaidItems,
   generateGroupInviteUrl,
   getUserGroups,
-  clearError
+  clearError,
+  clearGroupHistory,
 } from "../store/actions/rootActions";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { connect } from "react-redux";
@@ -120,6 +121,7 @@ class GroupsProfile extends Component {
   componentWillUnmount() {
     this.props.clearItems();
     this.props.clearGroupUsers();
+    this.props.clearGroupHistory();
   }
 
   /**
@@ -398,6 +400,7 @@ export default connect(
     getUserProfile,
     generateGroupInviteUrl,
     getUserGroups,
-    clearError
+    clearError,
+    clearGroupHistory
   }
 )(GroupsProfile);

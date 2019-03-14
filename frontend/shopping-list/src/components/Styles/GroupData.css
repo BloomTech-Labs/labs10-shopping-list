@@ -1,12 +1,15 @@
 .data-container {
     width: 100%;
-    margin-top: 100px;
+    margin-top: 40px;
 }
 
 
 .chart-container canvas{
     max-width: 600px;
     max-height: 200px;
+}
+.doughnut-container{
+    margin-bottom: 40px;
 }
 
 .doughnut-container canvas {
