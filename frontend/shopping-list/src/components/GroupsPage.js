@@ -24,7 +24,6 @@ import {
   MDBInput
 } from "mdbreact";
 import GroupCard from "./GroupCard";
-import {Spinner} from 'reactstrap'
 
 import "./Styles/GroupsPage.css";
 

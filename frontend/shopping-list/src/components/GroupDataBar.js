@@ -1,6 +1,5 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
-import DatePicker from 'react-datepicker';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {getGroupHistoryList} from '../store/actions/rootActions';

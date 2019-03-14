@@ -27,7 +27,7 @@ import {
   MDBModal,
   MDBModalHeader,
   MDBModalBody,
-  MDBModalFooter, MDBIcon, MDBInput, MDBListGroup
+  MDBModalFooter
 } from "mdbreact";
 import ItemList from "./ItemList";
 import GroupUserList from "./GroupUserList";
@@ -232,7 +232,7 @@ class GroupsProfile extends Component {
 
     let changes = null;
 
-    if (type == "week") {
+    if (type === "week") {
       changes = {
         weeklyNotification: bl
       }
