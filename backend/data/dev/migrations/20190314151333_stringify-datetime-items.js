@@ -1,4 +1,11 @@
 exports.up = function(knex, Promise) {
+    return knex.schema.table('items', (table) => {
+        table.string('purchasedOn').alter();
+    });
+
+};
+
+exports.down = function(knex, Promise) {
     return knex.schema.createTable('items', (table) => {
         // initialize user table db rows
 
@@ -24,8 +31,4 @@ exports.up = function(knex, Promise) {
 
     });
 
-};
-
-exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('items');
 };
