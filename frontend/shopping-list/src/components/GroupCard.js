@@ -23,7 +23,7 @@ const GroupCard = props => {
           <MDBCardTitle />
           <div className={'group-user-image'}>
             {props.group.members !== undefined
-                ? props.group.members.map(usr => <img  key={usr.name} src={usr.picture} alt='user profile' />)
+                ? props.group.members.map(usr => <img  key={usr.name} src={usr.profilePicture} alt='user profile' />)
               : null}
           </div>
           <MDBNavLink key={props.key} to={`/groups/${props.group.id}`}>
