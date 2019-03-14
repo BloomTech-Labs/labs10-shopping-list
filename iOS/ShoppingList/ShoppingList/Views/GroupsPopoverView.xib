@@ -67,6 +67,7 @@
             <viewLayoutGuide key="safeArea" id="NAv-jw-Y2Z"/>
             <connections>
                 <outlet property="groupsLabel" destination="uFi-K0-LgD" id="xL9-Cy-gfr"/>
+                <outlet property="newGroupButton" destination="WSf-6T-3Ev" id="r3F-qm-7cC"/>
                 <outlet property="tableView" destination="cbz-IA-4YO" id="WtL-wA-0hJ"/>
             </connections>
             <point key="canvasLocation" x="138.40000000000001" y="153.82308845577214"/>
