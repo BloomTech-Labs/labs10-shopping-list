@@ -44,6 +44,7 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     
     @IBOutlet weak var profilePictureImageView: UIImageView!
     @IBOutlet weak var profileNameLabel: UILabel!
+    @IBOutlet weak var inviteUserLabel: UILabel!
     
     // MARK: - IBActions
     
@@ -55,6 +56,7 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
         InviteController.shared.createInvite { (inviteCode) in
             guard let inviterCode = inviteCode?.inviteCode,
                   let selectedGroup = selectedGroup else { return }
+            
             let shareText = "Join my group shopping list '\(selectedGroup.name)' on ShopTrak -> https://labs10-shopping-list.netlify.com/invite?\(inviterCode)"
             
             let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
@@ -75,7 +77,8 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     }
     
     @IBAction func openOnlineHelp(_ sender: Any) {
-        
+        let helpUrl = URL(string: "https://labs10-shopping-list.netlify.com")!
+        UIApplication.shared.open(helpUrl)
     }
     
     @IBAction func logoutPressed(_ sender: Any) {

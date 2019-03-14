@@ -43,22 +43,51 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="grocery-bag" translatesAutoresizingMaskIntoConstraints="NO" id="kc0-0E-8JZ">
+                                <rect key="frame" x="40" y="214" width="295" height="367"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Uj5-7W-NtN" userLabel="ShopTrak logo stack">
+                                <rect key="frame" x="37.5" y="70" width="300" height="70"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ShopTrak basket" translatesAutoresizingMaskIntoConstraints="NO" id="cgK-oi-5w6">
+                                        <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="L6e-ao-DuO"/>
+                                            <constraint firstAttribute="width" constant="70" id="qqi-L5-ZQE"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="shoptrak" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5W-g7-FUU">
+                                        <rect key="frame" x="78" y="0.0" width="222" height="70"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="53"/>
+                                        <color key="textColor" red="0.36834299564361572" green="0.61915522813796997" blue="0.31758928298950195" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.99609178304672241" green="0.99605447053909302" blue="0.99607974290847778" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="Uj5-7W-NtN" firstAttribute="top" secondItem="LgY-Dv-Xsz" secondAttribute="top" constant="50" id="0fR-Io-dsQ"/>
                             <constraint firstItem="LgY-Dv-Xsz" firstAttribute="bottom" secondItem="yPz-pd-gnL" secondAttribute="bottom" constant="30" id="3aR-D7-G0F"/>
+                            <constraint firstItem="kc0-0E-8JZ" firstAttribute="leading" secondItem="LgY-Dv-Xsz" secondAttribute="leading" constant="40" id="7R3-kb-igg"/>
                             <constraint firstItem="LgY-Dv-Xsz" firstAttribute="trailing" secondItem="yPz-pd-gnL" secondAttribute="trailing" constant="16" id="KRH-bW-Dwn"/>
+                            <constraint firstItem="Uj5-7W-NtN" firstAttribute="centerX" secondItem="c1v-pf-t47" secondAttribute="centerX" id="QtW-UM-4d8"/>
+                            <constraint firstItem="yPz-pd-gnL" firstAttribute="top" secondItem="kc0-0E-8JZ" secondAttribute="bottom" id="REV-d2-Iak"/>
                             <constraint firstItem="yPz-pd-gnL" firstAttribute="leading" secondItem="LgY-Dv-Xsz" secondAttribute="leading" constant="16" id="dGQ-oL-aS7"/>
+                            <constraint firstItem="kc0-0E-8JZ" firstAttribute="height" secondItem="c1v-pf-t47" secondAttribute="height" multiplier="0.55" id="egA-gf-0qx"/>
+                            <constraint firstItem="LgY-Dv-Xsz" firstAttribute="trailing" secondItem="kc0-0E-8JZ" secondAttribute="trailing" constant="40" id="hGk-V9-HWG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LgY-Dv-Xsz"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GIf-kn-Czq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1" y="151"/>
+            <point key="canvasLocation" x="0.80000000000000004" y="150.67466266866569"/>
         </scene>
     </scenes>
     <resources>
+        <image name="ShopTrak basket" width="170" height="170"/>
+        <image name="grocery-bag" width="431.51998901367188" height="656.15997314453125"/>
         <namedColor name="Theme">
             <color red="0.16470588235294117" green="0.5725490196078431" blue="0.17647058823529413" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

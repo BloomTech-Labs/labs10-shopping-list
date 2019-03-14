@@ -21,6 +21,8 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     @IBOutlet weak var addNewItemContainer: UIView!
     @IBOutlet weak var checkoutContainer: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var checkoutCountView: UIView!
+    @IBOutlet weak var checkoutCountLabel: UILabel!
     
     
     var currentView: GroupView = .list { didSet { updatesNeeded() }}
@@ -29,6 +31,8 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        checkoutCountView.layer.cornerRadius = checkoutCountView.frame.height / 2
         
         noItemsView = NoItemsView.instantiate()
         noItemsView.frame = tableView.frame
@@ -239,6 +243,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             let showCheckout = selectedItems.count > 0
             addNewItemContainer.alpha = showCheckout ? 0 : 1
             checkoutContainer.alpha = showCheckout ? 1 : 0
+            checkoutCountLabel.text = "\(selectedItems.count)"
         }
     }
     
