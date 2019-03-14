@@ -29,11 +29,12 @@ class GroupData extends React.Component {
             endDate: moment().toDate(),
             data: [],
             chartTitle: 'Expenditures Over Time',
-            dateView: 'month-to-date'
+            dateView: 'month-to-date',
+            grandTotal: 0
         }
     }
 
-    async getMonthToDateLabels(){
+    async getDateLabels(){
         let start = this.state.startDate;
         let end = this.state.endDate;
         let labels = [];
@@ -44,19 +45,33 @@ class GroupData extends React.Component {
          */
 
         let count = 0; // sanity count in case of infinite loop
-        while(start < end){
-            labels.push(moment(start).format('MMM Do'));
-            dateLabels.push(moment(start).format());
-            let newStart = moment(start).add(1, 'days').toDate();
-            // console.log(newStart, 'newStart');
-            start = newStart;
-            // console.log(startCount)
-            count++;
-            if(count === 32){
-                break;
+        if(this.state.dateView !== 'year-to-date'){
+            while(start < end){
+                labels.push(moment(start).format('MMM Do'));
+                dateLabels.push(moment(start).format());
+                let newStart = moment(start).add(1, 'days').toDate();
+                // console.log(newStart, 'newStart');
+                start = newStart;
+                // console.log(startCount)
+                count++;
+                if(count === 32){
+                    break;
+                }
+            }
+        } else {
+            let count = 0;
+            while(start < end){
+                labels.push(moment(start).format('MMM YY'));
+                dateLabels.push(moment(start).format());
+
+                let newStart = moment(start).add(1, 'month').toDate();
+                start = newStart;
+                count++;
+                if(count === 13){
+                    break;
+                }
             }
         }
-
         this.setState({
             labels: labels,
             dateLabels: dateLabels,
@@ -68,7 +83,6 @@ class GroupData extends React.Component {
 
     async getPurchaseData(dateLabels){
         let data = [];
-
         for(let i = 0; i < this.props.groupHistoryList.length; i++){
             for(let j = 0; j < dateLabels.length; j++){
                 if(moment(this.props.groupHistoryList[i].purchasedOn).format('MMM Do YYYY') === moment(dateLabels[j]).format('MMM Do YYYY')){
@@ -77,28 +91,36 @@ class GroupData extends React.Component {
                     data[j] = 0;
                 }
             }
-
         }
 
+        let grandTotal = data.reduce(function(accumulator, currentValue){
+            return accumulator + currentValue;
+        }, 0)
+
         this.setState({
-            data: data
+            data: data,
+            grandTotal: grandTotal
         })
     }
 
        
 
     async showExpendituresOverTime() {
-        if(this.state.dateView === 'month-to-date'){
-            await this.getMonthToDateLabels().then(dateLabels => {
-                this.getPurchaseData(dateLabels);
-            });
+        await this.getDateLabels().then(dateLabels => {
+            this.getPurchaseData(dateLabels);
+        });
+        let chartLabel;
+        if(this.state.dateView !== 'year-to-date'){
+            chartLabel = 'Expenditure Per Day';
+        } else {
+            chartLabel = 'Expenditure Per Month'
         }
 
         let EOTdata = {
                 labels: this.state.labels,
                 datasets: [
                     {
-                        label: `Expenditure Per Day`,
+                        label: `${chartLabel} ($)`,
                         backgroundColor: 'rgba(42,146,45,0.2)',
                         borderColor: 'rgba(42,146,45,1)',
                         borderWidth: 1,
@@ -112,6 +134,7 @@ class GroupData extends React.Component {
             this.setState({
                 chartTitle: 'Expenditures Over Time',
                 data: EOTdata,
+                needsRefresh: false,
             })
     }
 
@@ -137,29 +160,35 @@ class GroupData extends React.Component {
         if(event.target.name === 'last-7-days'){
             this.setState({
                 startDate: moment().subtract(7, 'days').toDate(),
-                endDate: moment().toDate(),
+                endDate: moment().add(1, 'days').toDate(),
                 dateView: event.target.name,
+                needsRefresh: true
             })
         }
 
         if(event.target.name === 'month-to-date'){
             this.setState({
                 startDate: moment().subtract(1, 'month').toDate(),
-                endDate: moment().toDate(),
-                dateView: event.target.name
+                endDate: moment().add(1, 'days').toDate(),
+                dateView: event.target.name,
+                needsRefresh: true,
             })
         }
 
         if(event.target.name === 'year-to-date'){
             this.setState({
                 startDate: moment().subtract(1, 'year').toDate(),
-                endDate: moment().toDate(),
-                dateView: event.target.name
+                endDate: moment().add(1, 'days').toDate(),
+                dateView: event.target.name,
+                needsRefresh: true,
             })
         }
    }
 
     render(){
+        if(this.state.needsRefresh === true){
+            this.showExpendituresOverTime();
+        }
 
         return(
             <div className = 'data-container'>
@@ -184,8 +213,9 @@ class GroupData extends React.Component {
             </div> */}
 
             <div className = 'chart-container'>
-            <h1>{this.state.chartTitle}</h1>
-            <h2>{moment(this.state.startDate).format('MMM Do YYYY')} - {moment(this.state.endDate).format('MMM Do YYYY')}</h2>
+            <h2>{this.state.chartTitle}</h2>
+            <h4>{moment(this.state.startDate).format('MMM Do YYYY')} - {moment(this.state.endDate).format('MMM Do YYYY')}</h4>
+            <h4>Grand Total: ${this.state.grandTotal}</h4>
             <Bar data = {this.state.data} width = {600} height = {200}/>
 
             <MDBBtn onClick = {this.handleViewChange} name = 'last-7-days'>Last 7 Days</MDBBtn>
