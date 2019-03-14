@@ -1,5 +1,5 @@
 import React from 'react';
-import {Doughnut, Bar} from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 import DatePicker from 'react-datepicker';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';

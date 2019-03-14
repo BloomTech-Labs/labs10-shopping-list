@@ -192,6 +192,7 @@ groupRouter.get('/user/:id', async (req, res) => {
 
                 // Create a new user object to get only the needed pairs
                 const user = {
+                    id: usr[0].id,
                     name: usr[0].name,
                     picture: usr[0].profilePicture
                 }

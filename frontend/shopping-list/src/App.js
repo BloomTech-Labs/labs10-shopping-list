@@ -11,7 +11,8 @@ import Navigation from './components/Navigation';
 import BillingPage from './components/BillingPage';
 import Invite from './components/Invite';
 import {getCurrentUser, checkEmail} from './store/actions/rootActions';
-import GroupData from './components/GroupData';
+import GroupDataBar from './components/GroupDataBar';
+import GroupDataDoughnut from './components/GroupDataDoughnut';
 
 class App extends Component {
 
@@ -35,7 +36,8 @@ class App extends Component {
         <Route path='/groups/:id' render={props => <GroupsProfile {...props} />} />
         <Route path = '/billing' component = {BillingPage} />
         <Route path = '/invite' component = {Invite} />
-        <Route path = '/data/:id' component = {GroupData} />
+        <Route path = '/data/:id' component = {GroupDataBar} />
+        <Route path = '/doughnut/:id' component = {GroupDataDoughnut} />
       </Switch>
       </div>
     );
