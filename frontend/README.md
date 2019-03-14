@@ -16,4 +16,5 @@
 ## We suggest that you begin by typing:
 
     cd shopping-list
-    yarn start
+    yarn (or npm) install
+    yarn (or npm) start
