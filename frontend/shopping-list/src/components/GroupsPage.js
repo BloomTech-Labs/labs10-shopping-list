@@ -151,37 +151,43 @@ class GroupsPage extends Component {
 
   render() {
     const user = localStorage.getItem("userId");
-    console.log(user);
-    if (user === null) console.log("NULL")
     return (
             <div className="groups-container">
-              <div className="groups-cards">
-                <div className="add-group-container">
-                  <MDBCard className="text-center">
-                    <MDBCardBody>
-                      <MDBCardTitle>Create New Group</MDBCardTitle>
-                      <MDBCardText>
-                        Create a new group and start inviting to help with the
-                        shopping!
-                      </MDBCardText>
-                      <MDBBtn color="primary" onClick={this.toggle(14)}>
-                        Create
-                      </MDBBtn>
-                    </MDBCardBody>
-                  </MDBCard>
-                </div>
+              {
+                user === null ? <div className="groups-cards">
+                      <h1>You must be logged in to view this page</h1>
+                    </div>
+                  :
+                    <div className="groups-cards">
+                      <div className="add-group-container">
+                        <MDBCard className="text-center">
+                          <MDBCardBody>
+                            <MDBCardTitle>Create New Group</MDBCardTitle>
+                            <MDBCardText>
+                              Create a new group and start inviting to help with the
+                              shopping!
+                            </MDBCardText>
+                            <MDBBtn color="primary" onClick={this.toggle(14)}>
+                              Create
+                            </MDBBtn>
+                          </MDBCardBody>
+                        </MDBCard>
+                      </div>
 
-                {this.props.userGroups !== null
-                    ? this.props.userGroups.map(group => (
-                        <GroupCard
-                            group={group}
-                            key={group.id}
-                            updateGroup={this.saveGroupName}
-                            removeGroup={this.deleteGroup}
-                        />
-                    ))
-                    : null}
-              </div>
+                      {this.props.userGroups !== null
+                          ? this.props.userGroups.map(group => (
+                              <GroupCard
+                                  group={group}
+                                  key={group.id}
+                                  updateGroup={this.saveGroupName}
+                                  removeGroup={this.deleteGroup}
+                              />
+                          ))
+                          : null}
+                    </div>
+
+
+              }
 
               <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
                 <MDBModalHeader toggle={this.toggle(14)}>
@@ -272,6 +278,8 @@ class GroupsPage extends Component {
                     </MDBModalFooter>
                   </MDBModal>
               ) : null}
+
+
             </div>
 
     );
