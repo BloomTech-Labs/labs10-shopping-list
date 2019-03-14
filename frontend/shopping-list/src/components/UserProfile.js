@@ -152,172 +152,182 @@ class UserProfile extends React.Component {
       profilePicture = this.props.currentUser.profilePicture;
       subscriptionType = this.props.currentUser.subscriptionType;
     }
+
+    const user = localStorage.getItem("userId");
     return (
+
       <div className="user-profile-container">
-        <div className="user-profile-header">
-          <MDBBtn
-            className={
-              this.state.generalToggle
-                ? "btn-outline-dark-green"
-                : "btn-dark-green"
-            }
-            onClick={() => {
-              this.generalToggle();
-            }}
-          >
-            General
-          </MDBBtn>
-          <MDBBtn
-            className={
-              this.state.subToggle ? "btn-outline-dark-green" : "btn-dark-green"
-            }
-            onClick={() => {
-              this.subToggle();
-            }}
-          >
-            Subscription
-          </MDBBtn>
-        </div>
-        <div className="user-profile-col">
-          <div className="user-profile-left">
-            <div className="user-profile-pic">
-              <MDBCol>
-                <MDBCard style={{ width: "22rem" }}>
-                  <MDBCardImage
-                    className="img-fluid"
-                    src={profilePicture}
-                    waves
-                  />
-                  <MDBBtn className="btn-dark-green" onClick={this.toggle(14)}>
-                    <MDBIcon className="mr-1" icon="edit" />Change
-                  </MDBBtn>
-                  <MDBCardBody>
-                      <MDBCardTitle>{name} <MDBBadge color="primary">{subscriptionType === 1 ? "FREE" : "PREMIUM"}</MDBBadge></MDBCardTitle>
-                    <MDBCardText>{email}</MDBCardText>
-                      {/*<div className='user-profile-header'>*/}
-                          {/*<MDBBtn color="danger" onClick={this.toggle(14)}>*/}
-                              {/*Remove Account*/}
-                          {/*</MDBBtn>*/}
-                      {/*</div>*/}
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-            </div>
-            {/*<div classname="user-profile-info">*/}
-
-            {/*</div>*/}
-          </div>
-
-          <div className="user-profile-right">
-            {this.state.generalToggle ? (
-              <div className="user-profile-settings">
-                <MDBInput
-                  label="Username"
-                  name="username"
-                  onChange={e => this.handleInput(e)}
-                  valueDefault={this.state.username}
-                  icon="user"
-                />
-                <MDBInput
-                  label="Email"
-                  disabled={true}
-                  value={email}
-                  icon="envelope"
-                />
-
-                <div className="user-profile-settings-header">
-                    <MDBBtn color="danger" onClick={this.toggle(16)}>
-                        Remove Account
-                    </MDBBtn>
-                    <MDBBtn
-                        disabled={this.state.username === localStorage.getItem("name") ? true : false}
+        {
+          user === null ? <div className="user-notlogged">
+            <h1>You must be logged in to view this page</h1>
+          </div> : <div>
+                <div className="user-profile-header">
+                  <MDBBtn
                       className={
-                        this.state.listToggle
-                          ? "btn-outline-dark-green"
-                          : "btn-dark-green"
+                        this.state.generalToggle
+                            ? "btn-outline-dark-green"
+                            : "btn-dark-green"
                       }
                       onClick={() => {
-                        this.saveCurrentUsername();
+                        this.generalToggle();
                       }}
-                    >
-                      Save
-                    </MDBBtn>
+                  >
+                    General
+                  </MDBBtn>
+                  <MDBBtn
+                      className={
+                        this.state.subToggle ? "btn-outline-dark-green" : "btn-dark-green"
+                      }
+                      onClick={() => {
+                        this.subToggle();
+                      }}
+                  >
+                    Subscription
+                  </MDBBtn>
                 </div>
-                  {
-                      this.state.hasSaved ? <MDBAlert color="success">
-                          Username saved!
-                      </MDBAlert> : null
-                  }
-                  {
-                      this.state.hasPSaved ? <MDBAlert color="success">
-                          Profile picture Saved!
-                      </MDBAlert> : null
-                  }
-              </div>
-            ) : null}
-            {this.state.subToggle ? (
-              <div>
-                <MDBContainer >
-                  <MDBCardGroup deck className="user-profile-subs-container">
-                    <MDBCard
-                      style={{
-                        width: "22rem",
-                        height: "245px",
-                        marginTop: "1rem"
-                      }}
-                      className="text-center"
-                    >
-                      <MDBCardHeader color="success-color">Free</MDBCardHeader>
-                      <MDBCardBody>
-                        <MDBCardTitle>
-                          <MDBBadge color="default">$0.00</MDBBadge>
-                        </MDBCardTitle>
-                        <MDBCardText>
-                          Ability to have one group with up to 2 members.
-                        </MDBCardText>
-                        <MDBBtn
-                          className="btn btn-dark-green"
-                          disabled={subscriptionType === 1 ? true : false}
-                          size="lg"
-                        >
-                            {subscriptionType === 1 ? "Subscribed" : "Subscribe"}
-                        </MDBBtn>
-                      </MDBCardBody>
-                    </MDBCard>
+                <div className="user-profile-col">
+                  <div className="user-profile-left">
+                    <div className="user-profile-pic">
+                      <MDBCol>
+                        <MDBCard style={{ width: "22rem" }}>
+                          <MDBCardImage
+                              className="img-fluid"
+                              src={profilePicture}
+                              waves
+                          />
+                          <MDBBtn className="btn-dark-green" onClick={this.toggle(14)}>
+                            <MDBIcon className="mr-1" icon="edit" />Change
+                          </MDBBtn>
+                          <MDBCardBody>
+                            <MDBCardTitle>{name} <MDBBadge color="primary">{subscriptionType === 1 ? "FREE" : "PREMIUM"}</MDBBadge></MDBCardTitle>
+                            <MDBCardText>{email}</MDBCardText>
+                            {/*<div className='user-profile-header'>*/}
+                            {/*<MDBBtn color="danger" onClick={this.toggle(14)}>*/}
+                            {/*Remove Account*/}
+                            {/*</MDBBtn>*/}
+                            {/*</div>*/}
+                          </MDBCardBody>
+                        </MDBCard>
+                      </MDBCol>
+                    </div>
+                    {/*<div classname="user-profile-info">*/}
 
-                    <MDBCard
-                      style={{
-                        width: "22rem",
-                        height: "245px",
-                        marginTop: "1rem"
-                      }}
-                      className="text-center"
-                    >
-                      <MDBCardHeader color="success-color">
-                        Yearly Premium Subscription
-                      </MDBCardHeader>
-                      <MDBCardBody>
-                        <MDBCardTitle>
-                          <MDBBadge color="default">$9.99</MDBBadge>
-                        </MDBCardTitle>
-                        <MDBCardText>
-                          Ability to have unlimited groups with up to 6 members.
-                        </MDBCardText>
-                        <MDBBtn
-                          className="btn btn-dark-green"
-                          disabled={subscriptionType === 2 ? true : false}
-                          size="lg"
-                        >
-                            {subscriptionType === 1 ? "Subscribe" : "Subscribed"}
-                        </MDBBtn>
-                      </MDBCardBody>
-                    </MDBCard>
-                  </MDBCardGroup>
-                </MDBContainer>
+                    {/*</div>*/}
+                  </div>
+
+                  <div className="user-profile-right">
+                    {this.state.generalToggle ? (
+                        <div className="user-profile-settings">
+                          <MDBInput
+                              label="Username"
+                              name="username"
+                              onChange={e => this.handleInput(e)}
+                              valueDefault={this.state.username}
+                              icon="user"
+                          />
+                          <MDBInput
+                              label="Email"
+                              disabled={true}
+                              value={email}
+                              icon="envelope"
+                          />
+
+                          <div className="user-profile-settings-header">
+                            <MDBBtn color="danger" onClick={this.toggle(16)}>
+                              Remove Account
+                            </MDBBtn>
+                            <MDBBtn
+                                disabled={this.state.username === localStorage.getItem("name") ? true : false}
+                                className={
+                                  this.state.listToggle
+                                      ? "btn-outline-dark-green"
+                                      : "btn-dark-green"
+                                }
+                                onClick={() => {
+                                  this.saveCurrentUsername();
+                                }}
+                            >
+                              Save
+                            </MDBBtn>
+                          </div>
+                          {
+                            this.state.hasSaved ? <MDBAlert color="success">
+                              Username saved!
+                            </MDBAlert> : null
+                          }
+                          {
+                            this.state.hasPSaved ? <MDBAlert color="success">
+                              Profile picture Saved!
+                            </MDBAlert> : null
+                          }
+                        </div>
+                    ) : null}
+                    {this.state.subToggle ? (
+                        <div>
+                          <MDBContainer >
+                            <MDBCardGroup deck className="user-profile-subs-container">
+                              <MDBCard
+                                  style={{
+                                    width: "22rem",
+                                    height: "245px",
+                                    marginTop: "1rem"
+                                  }}
+                                  className="text-center"
+                              >
+                                <MDBCardHeader color="success-color">Free</MDBCardHeader>
+                                <MDBCardBody>
+                                  <MDBCardTitle>
+                                    <MDBBadge color="default">$0.00</MDBBadge>
+                                  </MDBCardTitle>
+                                  <MDBCardText>
+                                    Ability to have one group with up to 2 members.
+                                  </MDBCardText>
+                                  <MDBBtn
+                                      className="btn btn-dark-green"
+                                      disabled={subscriptionType === 1 ? true : false}
+                                      size="lg"
+                                  >
+                                    {subscriptionType === 1 ? "Subscribed" : "Subscribe"}
+                                  </MDBBtn>
+                                </MDBCardBody>
+                              </MDBCard>
+
+                              <MDBCard
+                                  style={{
+                                    width: "22rem",
+                                    height: "245px",
+                                    marginTop: "1rem"
+                                  }}
+                                  className="text-center"
+                              >
+                                <MDBCardHeader color="success-color">
+                                  Yearly Premium Subscription
+                                </MDBCardHeader>
+                                <MDBCardBody>
+                                  <MDBCardTitle>
+                                    <MDBBadge color="default">$9.99</MDBBadge>
+                                  </MDBCardTitle>
+                                  <MDBCardText>
+                                    Ability to have unlimited groups with up to 6 members.
+                                  </MDBCardText>
+                                  <MDBBtn
+                                      className="btn btn-dark-green"
+                                      disabled={subscriptionType === 2 ? true : false}
+                                      size="lg"
+                                  >
+                                    {subscriptionType === 1 ? "Subscribe" : "Subscribed"}
+                                  </MDBBtn>
+                                </MDBCardBody>
+                              </MDBCard>
+                            </MDBCardGroup>
+                          </MDBContainer>
+                        </div>
+                    ) : null}
+                  </div>
               </div>
-            ) : null}
-          </div>
-        </div>
+            </div>
+        }
+
 
         <MDBContainer>
           <MDBModal
