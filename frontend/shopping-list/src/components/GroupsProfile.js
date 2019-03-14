@@ -182,6 +182,7 @@ class GroupsProfile extends Component {
    * @returns {*}
    */
   toggleListClass = () => {
+    this.props.getGroupHistory(this.props.match.params.id);
     this.setState({ histToggle: false, listToggle: true });
   };
 

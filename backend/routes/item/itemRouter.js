@@ -209,6 +209,7 @@ itemRouter.put('/:id', (req, res) => {
     let id = req.params.id;
     let changes = req.body;
     // changes.price = parseFloat(changes.price);
+    // changes.purchasedOn =
     console.log('id, changes', id, changes);
     itemDb.getById(id).then(item => {
         let oldItem = item[0];
