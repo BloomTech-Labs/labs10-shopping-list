@@ -16,7 +16,7 @@ class GroupData extends React.Component {
 
     componentWillReceiveProps = (newProps) => {
         if(newProps.groupHistoryList !== this.props.groupHistoryList){
-            this.showExpendituresOverTime(this.state.startDate, this.state.endDate);
+            this.showExpendituresOverTime();
         }
     }
 
@@ -75,7 +75,7 @@ class GroupData extends React.Component {
         this.setState({
             labels: labels,
             dateLabels: dateLabels,
-            needsRefresh: false
+            needsRefresh: false,
         });
 
         return dateLabels;
@@ -85,21 +85,32 @@ class GroupData extends React.Component {
         let data = [];
         for(let i = 0; i < this.props.groupHistoryList.length; i++){
             for(let j = 0; j < dateLabels.length; j++){
-                if(moment(this.props.groupHistoryList[i].purchasedOn).format('MMM Do YYYY') === moment(dateLabels[j]).format('MMM Do YYYY')){
-                    data[j] = this.props.groupHistoryList[i].total;
-                } else {
+                if(!data[j]){
                     data[j] = 0;
+                }
+                if(this.state.dateView !== 'year-to-date'){
+                    if(moment(this.props.groupHistoryList[i].purchasedOn).format('MMM Do YYYY') === moment(dateLabels[j]).format('MMM Do YYYY')){
+                        console.log('MATCH')
+                        data[j] += this.props.groupHistoryList[i].total;
+                    }
+                } else {
+                    if(moment(this.props.groupHistoryList[i].purchasedOn).format('MMM YYYY') === moment(dateLabels[j]).format('MMM YYYY')){
+                        console.log('MATCH')
+                        data[j] += this.props.groupHistoryList[i].total;
                 }
             }
         }
+    }
 
+        console.log('DATA', data);
         let grandTotal = data.reduce(function(accumulator, currentValue){
             return accumulator + currentValue;
         }, 0)
 
         this.setState({
             data: data,
-            grandTotal: grandTotal
+            grandTotal: grandTotal,
+            needsRefresh: false,
         })
     }
 
@@ -178,7 +189,7 @@ class GroupData extends React.Component {
         if(event.target.name === 'year-to-date'){
             this.setState({
                 startDate: moment().subtract(1, 'year').toDate(),
-                endDate: moment().add(1, 'days').toDate(),
+                endDate: moment().add(1, 'month').toDate(),
                 dateView: event.target.name,
                 needsRefresh: true,
             })

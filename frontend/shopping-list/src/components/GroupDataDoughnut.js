@@ -14,6 +14,7 @@ import {MDBBtn} from 'mdbreact';
 class GroupDataDoughnut extends React.Component {
     async componentWillMount(){
         await this.props.getUserGroups(localStorage.getItem('userId'));
+        await this.props.getGroupHistoryList(this.props.match.params.id);
     }
 
     componentWillReceiveProps = newProps => {
@@ -26,10 +27,7 @@ class GroupDataDoughnut extends React.Component {
                 }
             }
         }
-    }
-
-    showDoughnutChart = () => {
-
+        
     }
 
 
@@ -44,6 +42,7 @@ class GroupDataDoughnut extends React.Component {
             data: [],
             dateView: 'month-to-date',
             grandTotal: 0,
+            labels: [],
         }
     }
 
@@ -85,7 +84,64 @@ class GroupDataDoughnut extends React.Component {
         }
    }
 
+   async getUserLabels(){
+       if(this.state.members){
+            return this.state.members;
+       }
+   }
+
+   async getPurchaseData(userLabels){
+       let purchaseData = [];
+       for(let i = 0; i < this.props.groupHistoryList.length; i++){
+        for(let j = 0; j < userLabels.length; j++){
+            if(!purchaseData[j]){
+                purchaseData[j] = 0;
+            }
+            if(this.props.groupHistoryList[i].userID === userLabels[j].id){
+                if(this.state.startDate < this.props.groupHistoryList[i].purchasedOn && this.state.endDate > this.props.groupHistoryList[i].purchasedOn)
+                purchaseData[j] += this.props.groupHistoryList[i].total;
+            }
+        }
+       }
+
+       this.setState({
+        data: purchaseData
+    })
+
+   }
+
+   async generateDoughnut() {
+       console.log('generating donut')
+       await this.getUserLabels().then(userLabels => {
+           this.getPurchaseData(userLabels);
+       });
+
+       let memberLabels = this.state.members.map(member => {
+           return member.name;
+       });
+
+       let DoughnutData = {
+           labels: memberLabels,
+           datasets: [{
+            data: this.state.data,
+            backgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56'
+            ],
+            hoverBackgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56'
+            ]
+        }]
+       }
+   }
+
     render(){
+        if(this.props.groupHistoryList && this.state.members){
+            this.generateDoughnut();
+        }
 
         const data = {
             labels: [
@@ -108,7 +164,6 @@ class GroupDataDoughnut extends React.Component {
             }]
         };
 
-        console.log(this.state,'newstate')
         return(
             <div className = 'doughnut-container'>
             DOUGHNUT
