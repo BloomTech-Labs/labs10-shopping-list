@@ -70,6 +70,26 @@
                                             <constraint firstAttribute="height" constant="56" id="Wai-71-3cJ"/>
                                         </constraints>
                                     </stackView>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="317-oY-FBT">
+                                        <rect key="frame" x="337" y="6" width="30" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="gzS-Cx-nah">
+                                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" name="Theme"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="gzS-Cx-nah" secondAttribute="trailing" id="DhJ-u8-mcD"/>
+                                            <constraint firstAttribute="width" constant="30" id="QAR-uN-snq"/>
+                                            <constraint firstAttribute="height" constant="30" id="YBU-N4-VsY"/>
+                                            <constraint firstItem="gzS-Cx-nah" firstAttribute="leading" secondItem="317-oY-FBT" secondAttribute="leading" id="uHN-ev-MNm"/>
+                                            <constraint firstItem="gzS-Cx-nah" firstAttribute="top" secondItem="317-oY-FBT" secondAttribute="top" id="yGG-qu-mJ9"/>
+                                            <constraint firstAttribute="bottom" secondItem="gzS-Cx-nah" secondAttribute="bottom" id="yXV-3x-4hY"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96624473011217893" green="0.96157688117443896" blue="0.9709125790499189" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
@@ -77,6 +97,8 @@
                                     <constraint firstAttribute="trailing" secondItem="4Na-cG-65R" secondAttribute="trailing" constant="16" id="BPd-tP-MEh"/>
                                     <constraint firstItem="4Na-cG-65R" firstAttribute="top" secondItem="UCD-Fp-yTx" secondAttribute="top" constant="16" id="DIG-BI-GF5"/>
                                     <constraint firstItem="4Na-cG-65R" firstAttribute="leading" secondItem="UCD-Fp-yTx" secondAttribute="leading" constant="16" id="XI0-lc-yV2"/>
+                                    <constraint firstAttribute="trailing" secondItem="317-oY-FBT" secondAttribute="trailing" constant="8" id="c15-iQ-dQz"/>
+                                    <constraint firstItem="317-oY-FBT" firstAttribute="top" secondItem="UCD-Fp-yTx" secondAttribute="top" constant="6" id="ntn-7L-r2T"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
@@ -91,7 +113,7 @@
                                 <rect key="frame" x="0.0" y="704" width="375" height="108"/>
                                 <subviews>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JWz-Q4-O9g">
-                                        <rect key="frame" x="16" y="16" width="343" height="56"/>
+                                        <rect key="frame" x="16" y="16" width="273" height="56"/>
                                         <color key="backgroundColor" name="Theme"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="56" id="wQe-Fb-QeC"/>
@@ -109,13 +131,27 @@
                                             <action selector="addNewItemButtonPressed:" destination="WgK-Rm-0lC" eventType="touchUpInside" id="SoH-33-DaB"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ned-NT-JD9" userLabel="Scan barcode">
+                                        <rect key="frame" x="301" y="16" width="56" height="56"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="56" id="BI7-M9-cLO"/>
+                                            <constraint firstAttribute="height" constant="56" id="FaM-pD-PY5"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="2" minY="4" maxX="2" maxY="4"/>
+                                        <state key="normal" image="Barcode"/>
+                                        <connections>
+                                            <action selector="scanBarcodePressed:" destination="WgK-Rm-0lC" eventType="touchUpInside" id="4Tu-bp-dME"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.9662447301" green="0.96157688119999996" blue="0.97091257900000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="JWz-Q4-O9g" firstAttribute="leading" secondItem="bSk-hC-hl8" secondAttribute="leading" constant="16" id="1CB-Sx-tsb"/>
                                     <constraint firstItem="JWz-Q4-O9g" firstAttribute="top" secondItem="bSk-hC-hl8" secondAttribute="top" constant="16" id="IpA-ns-qdZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="JWz-Q4-O9g" secondAttribute="trailing" constant="16" id="bPN-2a-VYy"/>
+                                    <constraint firstItem="Ned-NT-JD9" firstAttribute="top" secondItem="bSk-hC-hl8" secondAttribute="top" constant="16" id="aFy-nU-GEM"/>
                                     <constraint firstAttribute="height" constant="108" id="djK-go-q5p"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ned-NT-JD9" secondAttribute="trailing" constant="18" id="nk6-om-CCb"/>
+                                    <constraint firstItem="Ned-NT-JD9" firstAttribute="leading" secondItem="JWz-Q4-O9g" secondAttribute="trailing" constant="12" id="sHQ-4D-XiL"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
@@ -231,6 +267,8 @@
                     <connections>
                         <outlet property="addNewItemContainer" destination="bSk-hC-hl8" id="upY-PW-dJy"/>
                         <outlet property="checkoutContainer" destination="UCD-Fp-yTx" id="nv8-Ej-u3R"/>
+                        <outlet property="checkoutCountLabel" destination="gzS-Cx-nah" id="Lhm-SQ-LRO"/>
+                        <outlet property="checkoutCountView" destination="317-oY-FBT" id="Ccy-QZ-NtV"/>
                         <outlet property="groupName" destination="oaN-jX-jJx" id="anJ-Yj-zcH"/>
                         <outlet property="segmentedControl" destination="SQB-cp-EOJ" id="UK5-Wv-Nh3"/>
                         <outlet property="tableView" destination="XsU-Xe-TG5" id="oqo-v8-ORT"/>
@@ -242,6 +280,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Barcode" width="60" height="54"/>
         <image name="Dismiss view" width="300" height="88"/>
         <image name="Options" width="29" height="32"/>
         <namedColor name="Background">

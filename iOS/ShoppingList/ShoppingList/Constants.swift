@@ -17,6 +17,8 @@ var selectedItems: [Item] = []
 var history: [History] = []
 var groupMembers: [GroupMember] = []
 
+var userObject: User?
+
 // MARK: - Popovers
 
 let screen = UIScreen.main.bounds
@@ -55,8 +57,8 @@ struct Popovers {
     static func triggerGroupsPopover(_ delegate: PopoverViewDelegate) {
         let popoverView = GroupsPopoverView.instantiate()
         popoverView.delegate = delegate
-        popoverView.frame = CGRect(x: 20, y: 0, width: screen.width - 40, height: 320)
-        let startPoint = CGPoint(x: screen.width / 2, y: (screen.height / 2) - 160)
+        popoverView.frame = CGRect(x: 20, y: 0, width: screen.width - 40, height: 250)
+        let startPoint = CGPoint(x: screen.width / 2, y: (screen.height / 2) - 125)
         popover.show(popoverView, point: startPoint)
     }
     

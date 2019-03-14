@@ -45,6 +45,7 @@ class GroupsPage extends Component {
   }
 
   componentDidMount() {
+    document.title = `ShopTrak - Groups`;
     if (!this.props.userGroups && this.props.currentUser) {
       this.props.getUserGroups(this.props.currentUser.id);
     }
@@ -111,6 +112,8 @@ class GroupsPage extends Component {
 
       this.setState({ modal15: false });
     }
+    //causes page to reload - added this because the new name would not show otherwise
+    window.location.reload();
   };
 
   handleDeleteGroup = event => {
@@ -127,6 +130,24 @@ class GroupsPage extends Component {
   handleClearError = () => {
     this.props.clearError();
   };
+
+  keyPress = event => {
+    if(event.keyCode === 13){
+      this.handleAddGroup(event);
+    }
+  }
+
+  nameUpdateKeyPress = event => {
+    if(event.keyCode === 13){
+      this.handleUpdateGroupName(event);
+    }
+  }
+
+  deleteKeyPress = event => {
+    if(event.keyCode === 13){
+      this.handleDeleteGroup(event);
+    }
+  }
 
   render() {
     return (
@@ -169,6 +190,7 @@ class GroupsPage extends Component {
                 name={"groupName"}
                 onChange={this.handleInput}
                 defaultValue={this.state.groupName}
+                onKeyDown={this.keyPress}
             />
           </MDBModalBody>
           <MDBModalFooter>
@@ -191,6 +213,7 @@ class GroupsPage extends Component {
               name={"groupName"}
               onChange={this.handleInput}
               defaultValue={this.state.groupName}
+              onKeyDown={this.nameUpdateKeyPress}
             />
           </MDBModalBody>
           <MDBModalFooter>
@@ -212,6 +235,7 @@ class GroupsPage extends Component {
               name={"delete"}
               onChange={this.handleInput}
               defaultValue={this.state.delete}
+              onKeyDown={this.deleteKeyPress}
             />
             <small className="delete-text">{this.state.groupName}</small>
           </MDBModalBody>

@@ -11,9 +11,11 @@ import Alamofire
 import SwiftKeychainWrapper
 import SimpleKeychain
 import Auth0
+import FirebaseStorage
 
 class UserController {
     
+    static let shared = UserController()
     private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
     
     private func userToJSON(user: User) -> [String: Any]? {
@@ -36,10 +38,7 @@ class UserController {
         let url = baseURL.appendingPathComponent("user")
         
         guard let userJSON = userToJSON(user: newUser) else { return }
-        
-       
-        
-        
+
         Alamofire.request(url, method: .post, parameters: userJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
             
             switch response.result {
@@ -64,8 +63,96 @@ class UserController {
     }
     
     
+    func updateProfilePic(withImage image: UIImage, completion: @escaping (Bool) -> Void) {
+        
+        // save to Firebase Storage
+        // storage returns the url
+        // save url to user object
+        // update user profileImage url on API
+        
+        let ref = Storage.storage().reference().child("profileImages").child(String(userID))
+        
+        guard let compressedImage = image.resizeToDatabaseSize() else { completion(false); return}
+        
+        if let uploadData = compressedImage.pngData() {
+            
+            // Reduce size of image before upload
+            ref.putData(uploadData, metadata: nil) { (metaData, error) in
+                if let error = error {
+                    print("Error uploading profile image to storage: \(error)")
+                    completion(false)
+                }
+                
+                ref.downloadURL(completion: { (url, error) in
+                    guard let url = url else { completion(false); return }
+                    
+                    self.updateUserImageOnAPI(withImageURL: url, completion: { (success) in
+                        completion(success)
+                    })
+                })
+            }
+        } else {
+            completion(false)
+        }
+    }
     
-    func updateUser(user: User, email: String?, profilePicture: String?, name: String?, completion: @escaping (User) -> Void) {
+    
+    func updateUserImageOnAPI(withImageURL imageUrl: URL, completion: @escaping (Bool) -> Void) {
+        
+        guard let accessToken = SessionManager.tokens?.idToken else {completion(false); return}
+        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+        
+        let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(userID))
+        
+        let imageURLString = imageUrl.absoluteString
+        userObject?.profilePicture = imageURLString
+        
+        let json: [String: Any] = ["profilePicture": imageURLString]
+        
+        Alamofire.request(url, method: .put, parameters: json, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
+            
+            switch response.result {
+            case .success(_):
+                
+                completion(true)
+                return
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(false)
+                return
+            }
+        }
+        
+    }
+    
+    func changeUserNameTo(name: String, completion: @escaping (Bool) -> Void) {
+        
+        guard let accessToken = SessionManager.tokens?.idToken else {completion(false); return}
+        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
+        
+        let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(userID))
+        
+        let json: [String: Any] = ["name": name]
+        userObject?.name = name
+        
+        Alamofire.request(url, method: .put, parameters: json, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
+            
+            switch response.result {
+            case .success(_):
+                completion(true)
+                return
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(false)
+                return
+            }
+            
+        }
+        
+    }
+    
+    
+    func updateUser(user: User, email: String? = nil, profilePicture: String? = nil, name: String? = nil, completion: @escaping (Bool, User?) -> Void) {
         
         var myUser = user
         
@@ -84,25 +171,31 @@ class UserController {
         
         myUser.updatedAt = Date().dateToString()
         
-        let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(myUser.userID!))
+        guard let accessToken = SessionManager.tokens?.idToken else {completion(false, nil); return}
+        let headers: HTTPHeaders = [ "Authorization": "Bearer \(accessToken)"]
         
-        guard let userJSON = userToJSON(user: myUser) else { return }
+        let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(userID))
         
-        Alamofire.request(url, method: .put, parameters: userJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
+        guard let userJSON = userToJSON(user: myUser) else { completion(false, nil); return }
+        
+        Alamofire.request(url, method: .put, parameters: userJSON, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
             
             switch response.result {
             case .success(_):
                 
-                completion(myUser)
+                completion(true, myUser)
                 return
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(myUser)
+                completion(false, nil)
                 return
             }
         }
     }
-    func getUser(forID id: Int, completion: @escaping (User?) -> Void) {
+    
+    
+    
+    func getUser(forID id: Int, completion: @escaping (Bool) -> Void) {
         guard let accessToken = SessionManager.tokens?.idToken else {return}
         let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(id))
          var request = URLRequest(url: url)
@@ -117,17 +210,18 @@ class UserController {
                 do {
                     let decoder = JSONDecoder()
                     let user = try decoder.decode(User.self, from: value)
-                    completion(user)
+                    userObject = user
+                    completion(true)
                     
                 } catch {
                     print("Could not turn json into user")
-                    completion(nil)
+                    completion(false)
                     return
                 }
                 
             case .failure(let error):
                 NSLog("getUser: \(error.localizedDescription)")
-                completion(nil)
+                completion(false)
                 return
             }
         }

@@ -24,3 +24,31 @@
 ## Endpoint Documentation
 [https://github.com/Lambda-School-Labs/labs10-shopping-list/blob/master/backend/routes/README.md](https://github.com/Lambda-School-Labs/labs10-shopping-list/blob/master/backend/routes/README.md)
 
+
+## .env variables
+### frontend
+    .env file goes inside the shopping-list folder
+    NODE_ENV - should be set to 'development' when testing locally
+    REACT_APP_AUTH0_CLIENT_ID - obtained after setting up auth0
+    REACT_APP_AUTH0_DOMAIN - also obtained when auth0 is set up
+### backend
+    NODE_ENV
+    AUTH0_CLIENT_ID
+    AUTH0_CLIENT_SECRET
+    AUTH0_DOMAIN
+    DB
+    DATABASE_URL
+    PGSSLMODE
+    PG_HOST
+    PG_DATABASE
+    PG_USER
+    PG_PASS
+    EMAIL_PASSWORD
+    EMAIL_ADDRESS
+    EMAIL_SERVICE
+    PUSHER_APP_ID
+    PUSHER_KEY
+    PUSHER_SECRET
+    PUSHER_CLUSTER
+    BEAMS_INSTANCE_ID
+    BEAMS_SECRET_KEY

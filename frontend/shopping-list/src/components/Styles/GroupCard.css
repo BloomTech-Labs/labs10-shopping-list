@@ -14,6 +14,8 @@
 
 .group-card{
     margin-bottom: 40px;
+    margin-top: 2%;
+    width: 25%;
 }
 
 
@@ -40,4 +42,10 @@
     .group-card{
         margin-top: 60px;
     }
+}
+
+.group-user-image img {
+    width: 30px;
+    border-radius: 30px;
+    margin: 3%;
 }

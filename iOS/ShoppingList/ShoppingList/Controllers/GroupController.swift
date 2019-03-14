@@ -156,8 +156,7 @@ class GroupController {
             case .success(_):
                 
                 // This downloads allGroups from server so we have fresh data
-                //TODO: Need current userID here
-                self.getGroups(forUserID: userID! /* XXX: is this right? */, pusher: pusher, completion: { (success) in
+                self.getGroups(forUserID: userID!, pusher: pusher, completion: { (success) in
                     if success {
                         completion(true)
                     } else {

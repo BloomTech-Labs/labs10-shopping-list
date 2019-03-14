@@ -12,6 +12,7 @@ import SimpleKeychain
 import PusherSwift
 import UserNotifications
 import PushNotifications
+import Firebase
 
 
 let defaults = UserDefaults.standard
@@ -21,11 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
    
     
     var window: UIWindow?
-    let pushNotifications = PushNotifications.shared
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        self.pushNotifications.start(instanceId: "1c17ef2c-92ea-486e-af1b-7bc8faa62607")
-        self.pushNotifications.registerForRemoteNotifications()
+
+        FirebaseApp.configure()
+        
+        
+        PushNotifications.shared.start(instanceId: "1c17ef2c-92ea-486e-af1b-7bc8faa62607")
+        PushNotifications.shared.registerForRemoteNotifications()
+
         UNUserNotificationCenter.current().delegate = self
       //  try? self.pushNotifications.subscribe(interest: "group-103")
 
@@ -43,10 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         window?.makeKeyAndVisible()
         
         let loginVC = LoginViewController.instantiate()
-        
         let mainVC = MainViewController.instantiate()
-        mainVC.pusher = self.pushNotifications
-        
         
         self.window?.rootViewController = SessionManager.tokens == nil ? loginVC : mainVC
         
@@ -54,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken : Data) {
-        self.pushNotifications.registerDeviceToken(deviceToken)
+        PushNotifications.shared.registerDeviceToken(deviceToken)
         print(deviceToken)
     }
     
@@ -63,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
-        self.pushNotifications.handleNotification(userInfo: userInfo)
+        PushNotifications.shared.handleNotification(userInfo: userInfo)
         print(userInfo)
         completionHandler(.newData)
     }

@@ -21,36 +21,40 @@ const GroupCard = props => {
         </MDBCardHeader>
         <MDBCardBody>
           <MDBCardTitle />
-          <div>
+          <div className={'group-user-image'}>
             {props.group.members !== undefined
-              ? props.group.members.map(usr => <p key={usr.name}>{usr.name}</p>)
+                ? props.group.members.map(usr => <img  key={usr.name} src={usr.picture} alt='user profile' />)
               : null}
           </div>
           <MDBNavLink key={props.key} to={`/groups/${props.group.id}`}>
             <MDBBtn color="success">Enter</MDBBtn>
           </MDBNavLink>
         </MDBCardBody>
-        <MDBCardFooter style={{ background: "#2A922D" }}>
-          <div className="group-card-footer">
-            <div
-              className="group-card-footer-button"
-              onClick={() =>
-                props.updateGroup(props.group.id, props.group.name)
-              }
-            >
-              <MDBIcon icon="edit" />
-            </div>
+        {
+          props.group.userID !== Number(localStorage.getItem("userId")) ? null :
+              <MDBCardFooter style={{ background: "#2A922D" }}>
+                <div className="group-card-footer">
+                  <div
+                      className="group-card-footer-button"
+                      onClick={() =>
+                          props.updateGroup(props.group.id, props.group.name)
+                      }
+                  >
+                    <MDBIcon icon="edit" />
+                  </div>
 
-            <div
-              className="group-card-footer-button"
-              onClick={() =>
-                props.removeGroup(props.group.id, props.group.name)
-              }
-            >
-              <MDBIcon icon="trash" />
-            </div>
-          </div>
-        </MDBCardFooter>
+                  <div
+                      className="group-card-footer-button"
+                      onClick={() =>
+                          props.removeGroup(props.group.id, props.group.name)
+                      }
+                  >
+                    <MDBIcon icon="trash" />
+                  </div>
+                </div>
+              </MDBCardFooter>
+        }
+
       </MDBCard>
     </div>
   );

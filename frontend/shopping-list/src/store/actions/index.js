@@ -70,4 +70,7 @@ export {
   clearError,
   clearGroupHistory,
   CLEAR_GROUP_HISTORY,
+  UPDATE_NOTIFICATION,
+  UPDATE_NOTIFICATION_SUCCESS,
+  updateGroupNotification
 } from "./rootActions";

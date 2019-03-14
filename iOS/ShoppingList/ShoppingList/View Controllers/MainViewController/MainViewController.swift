@@ -13,7 +13,6 @@ import PushNotifications
 enum GroupView { case list, history, stats }
 
 class MainViewController: UIViewController, StoryboardInstantiatable, PopoverViewDelegate {
-    var pusher: PushNotifications!
     
     static let storyboardName: StoryboardName = "MainViewController"
     var noItemsView: NoItemsView!
@@ -22,6 +21,8 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     @IBOutlet weak var addNewItemContainer: UIView!
     @IBOutlet weak var checkoutContainer: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var checkoutCountView: UIView!
+    @IBOutlet weak var checkoutCountLabel: UILabel!
     
     
     var currentView: GroupView = .list { didSet { updatesNeeded() }}
@@ -30,6 +31,8 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        checkoutCountView.layer.cornerRadius = checkoutCountView.frame.height / 2
         
         noItemsView = NoItemsView.instantiate()
         noItemsView.frame = tableView.frame
@@ -45,17 +48,14 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         GroupController.shared.getUserID { (user) in
             
             guard let id = user?.profile.id,
-                  let name = user?.profile.name else {
-                    return }
+                let name = user?.profile.name else { return }
+            
             userID = id
             userName = name
             
-            guard let pusher = self.pusher else {
-                return
-                
-            }
+            UserController.shared.getUser(forID: id, completion: { (_) in })
             
-            GroupController.shared.getGroups(forUserID: userID, pusher: pusher) { (success) in
+            GroupController.shared.getGroups(forUserID: userID, pusher: PushNotifications.shared) { (success) in
                 if allGroups.count > 0 {
                     selectedGroup = allGroups[0]
                     UI { self.updatesNeeded() }
@@ -120,6 +120,12 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     
     // MARK: - IBActions
     
+    @IBAction func scanBarcodePressed(_ sender: Any) {
+        let barcodeVC = BarcodeScannerController.instantiate()
+        barcodeVC.delegate = self
+        present(barcodeVC, animated: true, completion: nil)
+    }
+    
     @IBAction func addNewItemButtonPressed(_ sender: Any) {
         Popovers.triggerNewItemPopover(self)
     }
@@ -161,7 +167,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReuseIdentifier", for: indexPath)
         guard let itemCell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) as? ItemTableViewCell,
-              let historyCell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath) as? HistoryTableViewCell else { return cell }
+            let historyCell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell", for: indexPath) as? HistoryTableViewCell else { return cell }
         itemCell.tintColor = UIColor(named: "Theme")
         itemCell.accessoryType = .none
         historyCell.accessoryType = .none
@@ -237,6 +243,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             let showCheckout = selectedItems.count > 0
             addNewItemContainer.alpha = showCheckout ? 0 : 1
             checkoutContainer.alpha = showCheckout ? 1 : 0
+            checkoutCountLabel.text = "\(selectedItems.count)"
         }
     }
     

@@ -71,7 +71,8 @@ const initialState = {
 
   inviteInfo: null,
 
-  errorMessage: null
+  errorMessage: null,
+  groupMembers: null,
 };
 
 export const rootReducer = (state = initialState, action) => {

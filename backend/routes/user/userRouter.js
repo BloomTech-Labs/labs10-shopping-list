@@ -211,6 +211,28 @@ userRouter.get('/check/getid', (req, res) => {
                 profilePicture: req.user.picture,
             }
 
+            // send welcome email
+            let transporter = nodemailer.createTransport({
+                service: process.env.EMAIL_SERVICE,
+                auth: {
+                    user: process.env.EMAIL_ADDRESS,
+                    pass: process.env.EMAIL_PASSWORD
+                }
+            });
+            let mailOptions = {
+                from: process.env.EMAIL_ADDRESS,
+                to: newUser.email,
+                subject: 'Welcome to ShopTrak!',
+                text: `Thank you for using ShopTrak. The Lambda Labs 10 Shopping List team hopes you enjoy it.`
+            };
+            transporter.sendMail(mailOptions, function(error, info){
+                if(error){
+                    console.log(error);
+                }else{
+                    console.log(`Email sent: ${info.response}`);
+                }
+            });
+
             return userDb.add(newUser).then(id => {
                 return userDb.getById(id).then(profile => {
                     return res.status(201).json({message: `New user added with ID ${id}.`, profile: profile[0], id:id[0]})

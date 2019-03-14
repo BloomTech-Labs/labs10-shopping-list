@@ -15,6 +15,7 @@ import {
   getUserGroups,
   clearError,
   clearGroupHistory,
+  updateGroupNotification,
 } from "../store/actions/rootActions";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { connect } from "react-redux";
@@ -26,7 +27,7 @@ import {
   MDBModal,
   MDBModalHeader,
   MDBModalBody,
-  MDBModalFooter
+  MDBModalFooter, MDBIcon, MDBInput, MDBListGroup
 } from "mdbreact";
 import ItemList from "./ItemList";
 import GroupUserList from "./GroupUserList";
@@ -38,7 +39,9 @@ import GroupDataDoughnut from './GroupDataDoughnut';
 class GroupsProfile extends Component {
   state = {
     modal14: false,
+    modal15: false,
     modal17: false,
+    modal18: false,
     itemName: "",
     itemPrice: 0.0,
     itemQuantity: 1,
@@ -55,7 +58,9 @@ class GroupsProfile extends Component {
     invites: {
       [this.props.match.params.id]: ""
     },
-    copied: false
+    copied: false,
+    weekly: false,
+    monthly: false,
   };
 
   /**
@@ -83,6 +88,11 @@ class GroupsProfile extends Component {
 
     if (!this.props.userGroups) {
       this.props.getUserGroups(localStorage.getItem("userId"));
+    }
+
+    if (this.props.userGroups !== null) {
+      const group = this.props.userGroups.filter(grp => grp.id === Number(this.props.match.params.id));
+      document.title = `${group[0].name} - Group`;
     }
   }
 
@@ -114,6 +124,14 @@ class GroupsProfile extends Component {
     }
   };
 
+  componentDidMount() {
+    if (this.props.userGroups !== null) {
+      const group = this.props.userGroups.filter(grp => grp.id === Number(this.props.match.params.id));
+      document.title = `${group[0].name} - Group`;
+    }
+
+  }
+
   /**
    * Clear any listeners and unnecessary data
    * @returns {*}
@@ -134,12 +152,13 @@ class GroupsProfile extends Component {
 
   /**
    * Toggles the models
-   * @param viewToToggle - The modal to toggle
+   * @param nr - The modal number to toggle
    * @returns {*}
    */
-  toggle = viewToToggle => () => {
+  toggle = nr => () => {
+    let modalNumber = "modal" + nr;
     this.setState({
-      [viewToToggle]: !this.state[viewToToggle]
+      [modalNumber]: !this.state[modalNumber]
     });
   };
 
@@ -186,7 +205,7 @@ class GroupsProfile extends Component {
     if (this.props.currentUser.subscriptionType === 1 && this.props.groupUsers.length >= 2) {
       this.setState({modal17: true})
     } else {
-      this.setState({ inviToggle: true });
+      this.setState({ modal15: true });
 
     }
 
@@ -204,6 +223,27 @@ class GroupsProfile extends Component {
   handleClearError = () => {
     this.props.clearError();
   };
+
+  handleUpdateNotif = (e, bol, id, type) => {
+    e.preventDefault();
+
+    const bl = bol;
+
+    let changes = null;
+
+    if (type == "week") {
+      changes = {
+        weeklyNotification: bl
+      }
+    } else {
+      changes = {
+        monthlyNotification: bl
+      }
+    }
+
+    this.props.updateGroupNotification(id, changes);
+    this.props.getGroupUsers(this.props.match.params.id);
+  }
 
     /**
      * TODO Create a loading component that can render during data queries
@@ -242,14 +282,12 @@ class GroupsProfile extends Component {
           >
             Invite Member
           </MDBBtn>
-          {/*<MDBBtn*/}
-              {/*className="btn-dark-green"*/}
-            {/*onClick={() => {*/}
-              {/*this.toggleTotal();*/}
-            {/*}}*/}
-          {/*>*/}
-            {/*Total*/}
-          {/*</MDBBtn>*/}
+          <MDBBtn
+              className={"btn-dark-green"}
+              onClick={this.toggle(18)}
+          >
+            Notification Settings
+          </MDBBtn>
         </div>
 
         <div className="group-profile-columns">
@@ -301,11 +339,11 @@ class GroupsProfile extends Component {
         <MDBContainer>
           {/* Invite modal */}
           <MDBModal
-            isOpen={this.state.inviToggle}
-            toggle={this.toggle("inviToggle")}
+            isOpen={this.state.modal15}
+            toggle={this.toggle(15)}
             centered
           >
-            <MDBModalHeader toggle={this.toggle("inviToggle")}>
+            <MDBModalHeader toggle={this.toggle(15)}>
               Group Invitation
             </MDBModalHeader>
             <MDBModalBody>
@@ -316,7 +354,7 @@ class GroupsProfile extends Component {
               </p>
             </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={this.toggle("inviToggle")}>
+              <MDBBtn color="secondary" onClick={this.toggle(15)}>
                 Close
               </MDBBtn>
               <CopyToClipboard text={this.props.invites !== null
@@ -330,6 +368,41 @@ class GroupsProfile extends Component {
                 </MDBBtn>
               </CopyToClipboard>
 
+            </MDBModalFooter>
+          </MDBModal>
+          <MDBModal
+              isOpen={this.state.modal18}
+              toggle={this.toggle(18)}
+              centered
+          >
+            <MDBModalHeader toggle={this.toggle(18)}>Notification Settings</MDBModalHeader>
+            <MDBModalBody>
+              {
+                this.props.groupUsers !== null ? this.props.groupUsers.map((grp, i) => (
+                    <div key={i}>
+                      Update your group notification settings
+                      {
+                        grp.userID === Number(localStorage.getItem("userId")) ?
+                            <div className={"label-check"}>
+                              <div>
+                                <input type="checkbox" name="checkGrp1" id="check1_Opt1" onChange={(e) => this.handleUpdateNotif(e, !grp.weeklyNotification, grp.id, "week")} checked={grp.weeklyNotification} />
+                                <label htmlFor="check1_Opt1">Weekly Notifications</label>
+                                <br></br>
+                                <input type="checkbox" name="checkGrp2" id="check1_Opt2" onChange={(e) => this.handleUpdateNotif(e, !grp.monthlyNotification, grp.id, "month")} checked={grp.monthlyNotification} />
+                                <label htmlFor="check1_Opt2">Monthly Notifications</label>
+
+                              </div>
+                            </div>
+                              : null
+                      }
+                    </div>
+                )) : null
+              }
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn color="secondary" onClick={this.toggle(18)}>
+                Ok
+              </MDBBtn>
             </MDBModalFooter>
           </MDBModal>
           {this.props.errorMessage !== null ? (
@@ -401,6 +474,7 @@ export default connect(
     generateGroupInviteUrl,
     getUserGroups,
     clearError,
-    clearGroupHistory
+    clearGroupHistory,
+    updateGroupNotification
   }
 )(GroupsProfile);
