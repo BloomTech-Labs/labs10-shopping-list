@@ -112,6 +112,7 @@ class GroupsPage extends Component {
 
       this.setState({ modal15: false });
     }
+    window.location.reload();
   };
 
   handleDeleteGroup = event => {
