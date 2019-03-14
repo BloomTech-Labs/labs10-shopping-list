@@ -31,6 +31,8 @@ import ItemList from "./ItemList";
 import GroupUserList from "./GroupUserList";
 import UserCart from "./UserCart";
 import HistoryList from "./HistoryList";
+import GroupDataBar from './GroupDataBar';
+import GroupDataDoughnut from './GroupDataDoughnut';
 
 class GroupsProfile extends Component {
   state = {
@@ -270,8 +272,22 @@ class GroupsProfile extends Component {
             */
           }
           <div className="group-profile-right">
-            <GroupUserList users={this.props.groupUsers} />
-            <UserCart />
+
+          {this.state.listToggle ? (
+            <div>
+              <GroupUserList users={this.props.groupUsers} />
+              <UserCart />
+              </div>
+            ) : null}
+
+            {this.state.histToggle ? (
+              <div>
+              <GroupDataBar/>
+              <GroupDataDoughnut/>
+              </div>
+            ) : null}
+            
+            
           </div>
         </div>
 

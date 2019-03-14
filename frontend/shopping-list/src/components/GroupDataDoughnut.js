@@ -23,15 +23,12 @@ class GroupDataDoughnut extends React.Component {
                 if(newProps.userGroups[i].id === Number(this.props.match.params.id)){
                     this.setState({
                         members: newProps.userGroups[i].members,
+                        needsRefresh: true
                     })
 
                 }
             }
         }
-        if(newProps.groupHistoryList){
-            this.generateDoughnut();
-        }
-        
     }
 
 
@@ -94,6 +91,7 @@ class GroupDataDoughnut extends React.Component {
         this.setState({
             needsRefresh: false,
         })
+        console.log("M E M B E R S", this.state.members)
             return this.state.members;
        }
 
@@ -130,9 +128,7 @@ class GroupDataDoughnut extends React.Component {
    }
 
    async generateDoughnut() {
-       await this.getUserLabels().then(userLabels => {
-           this.getPurchaseData(userLabels);
-       });
+       await this.getPurchaseData(this.state.members);
 
        let memberLabels = this.state.members.map(member => {
            return member.name;
@@ -163,7 +159,7 @@ class GroupDataDoughnut extends React.Component {
    }
 
     render(){
-        if(this.state.needsRefresh === true){
+        if(this.state.needsRefresh === true && this.props.groupHistoryList){
             this.generateDoughnut();
         }
 
