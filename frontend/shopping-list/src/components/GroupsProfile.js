@@ -314,14 +314,28 @@ class GroupsProfile extends Component {
                   </div>
 
                   {
-                    /*
-                     * Right column that displays members and the user's cart components
-                     */
-                  }
-                  <div className="group-profile-right">
-                    <GroupUserList users={this.props.groupUsers} />
-                    <UserCart />
-                  </div>
+           /*
+            * Right column that displays members and the user's cart components
+            */
+          }
+          <div className="group-profile-right">
+
+          {this.state.listToggle ? (
+            <div>
+              <GroupUserList users={this.props.groupUsers} />
+              <UserCart />
+              </div>
+            ) : null}
+
+            {this.state.histToggle ? (
+              <div>
+              <GroupDataBar/>
+              <GroupDataDoughnut/>
+              </div>
+            ) : null}
+            
+            
+          </div>
                 </div>
             </div>
 
