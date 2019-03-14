@@ -22,7 +22,6 @@
 		443C1B4C22160D9E00220C28 /* Shopping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443C1B4B22160D9E00220C28 /* Shopping.swift */; };
 		443C1B4E221B628D00220C28 /* Auth0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 443C1B4D221B628D00220C28 /* Auth0.plist */; };
 		447BEE43221F473300FA1D82 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447BEE42221F473300FA1D82 /* SessionManager.swift */; };
-		44A167FF22264D5500227DFB /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A167FE22264D5500227DFB /* NavigationController.swift */; };
 		44A16801222746E600227DFB /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A16800222746E600227DFB /* ItemController.swift */; };
 		44A16803222766C600227DFB /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A16802222766C600227DFB /* History.swift */; };
 		44A1680522276F1000227DFB /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A1680422276F1000227DFB /* HistoryController.swift */; };
@@ -110,7 +109,6 @@
 		443C1B4B22160D9E00220C28 /* Shopping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shopping.swift; sourceTree = "<group>"; };
 		443C1B4D221B628D00220C28 /* Auth0.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Auth0.plist; sourceTree = "<group>"; };
 		447BEE42221F473300FA1D82 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
-		44A167FE22264D5500227DFB /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		44A16800222746E600227DFB /* ItemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
 		44A16802222766C600227DFB /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		44A1680422276F1000227DFB /* HistoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
@@ -345,7 +343,6 @@
 			children = (
 				96700E2D221C025E00F084B3 /* SettingsTableViewController.storyboard */,
 				96700E30221C035600F084B3 /* SettingsTableViewController.swift */,
-				44A167FE22264D5500227DFB /* NavigationController.swift */,
 				960FBF64221C27050076C662 /* AccountInformationViewController.swift */,
 				960FBF67221C31E60076C662 /* AboutShopTrakTableViewController.swift */,
 			);
@@ -706,7 +703,6 @@
 				969A84192215C99A0003BB37 /* Reusable+UITableView.swift in Sources */,
 				969A84142215C99A0003BB37 /* Reusable.swift in Sources */,
 				96029A46223198FA00F7F7AE /* Double.swift in Sources */,
-				44A167FF22264D5500227DFB /* NavigationController.swift in Sources */,
 				969A84052215C99A0003BB37 /* UIButton+Chameleon.m in Sources */,
 				960FBF6D221C427A0076C662 /* MessagePopoverView.swift in Sources */,
 				969A83C82215C9840003BB37 /* AppDelegate.swift in Sources */,

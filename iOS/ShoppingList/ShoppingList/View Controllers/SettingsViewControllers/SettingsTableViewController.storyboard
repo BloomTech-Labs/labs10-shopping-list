@@ -14,7 +14,7 @@
         <!--Navigation Controller-->
         <scene sceneID="g7F-a4-QEI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HhP-pv-HLw" customClass="NavigationController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="HhP-pv-HLw" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="kdH-lZ-bcF">
                         <rect key="frame" x="0.0" y="44" width="375" height="96"/>
@@ -76,8 +76,8 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="wNy-Ef-UPD" userLabel="Username and subtitle stack">
                                                     <rect key="frame" x="82" y="16.000000000000004" width="243" height="43.333333333333343"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWl-da-U5e">
-                                                            <rect key="frame" x="0.0" y="0.0" width="95.333333333333329" height="25.333333333333332"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWl-da-U5e">
+                                                            <rect key="frame" x="0.0" y="0.0" width="4.666666666666667" height="25.333333333333332"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="21"/>
                                                             <color key="textColor" red="0.35649984137055835" green="0.35649984137055835" blue="0.35649984137055835" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                             <nil key="highlightedColor"/>
@@ -394,22 +394,64 @@
         <!--Your Profile-->
         <scene sceneID="dbC-cx-rjf">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KCW-Kf-DX4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="lJ5-Dz-kvw" customClass="AccountInformationViewController" customModule="ShoppingList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="czl-PX-Uh1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ssd-fe-6be">
-                                <rect key="frame" x="151" y="60" width="95" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Update Photo"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xju-7d-nqj">
+                                <rect key="frame" x="82" y="32" width="211" height="211"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="xju-7d-nqj" secondAttribute="height" multiplier="1:1" id="PEh-vn-XJA"/>
+                                </constraints>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="APd-PV-y9g">
+                                <rect key="frame" x="44" y="271" width="287" height="50"/>
+                                <color key="backgroundColor" red="0.89573276542892266" green="0.89140555400172983" blue="0.9000599768561155" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="IWk-Fs-EJj"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </textField>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ssd-fe-6be">
+                                <rect key="frame" x="44" y="339" width="287" height="50"/>
+                                <color key="backgroundColor" name="Theme"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="G6C-N0-3WA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <state key="normal" title="Change profile picture">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="updatePhoto:" destination="lJ5-Dz-kvw" eventType="touchUpInside" id="iIl-eA-Gyr"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" name="Background"/>
+                        <constraints>
+                            <constraint firstItem="xju-7d-nqj" firstAttribute="top" secondItem="4Rb-jg-yFF" secondAttribute="top" constant="32" id="0sp-2N-wl5"/>
+                            <constraint firstItem="4Rb-jg-yFF" firstAttribute="trailing" secondItem="xju-7d-nqj" secondAttribute="trailing" constant="82" id="2Gu-lA-2WE"/>
+                            <constraint firstItem="APd-PV-y9g" firstAttribute="leading" secondItem="4Rb-jg-yFF" secondAttribute="leading" constant="44" id="6jv-87-eZD"/>
+                            <constraint firstItem="APd-PV-y9g" firstAttribute="top" secondItem="xju-7d-nqj" secondAttribute="bottom" constant="28" id="Gbw-y2-NvI"/>
+                            <constraint firstItem="Ssd-fe-6be" firstAttribute="leading" secondItem="4Rb-jg-yFF" secondAttribute="leading" constant="44" id="QKD-QG-Bvw"/>
+                            <constraint firstItem="xju-7d-nqj" firstAttribute="leading" secondItem="4Rb-jg-yFF" secondAttribute="leading" constant="82" id="SN2-wV-Ml0"/>
+                            <constraint firstItem="4Rb-jg-yFF" firstAttribute="trailing" secondItem="Ssd-fe-6be" secondAttribute="trailing" constant="44" id="T8u-sC-J2o"/>
+                            <constraint firstItem="4Rb-jg-yFF" firstAttribute="trailing" secondItem="APd-PV-y9g" secondAttribute="trailing" constant="44" id="Vcr-Xo-D7y"/>
+                            <constraint firstItem="Ssd-fe-6be" firstAttribute="top" secondItem="APd-PV-y9g" secondAttribute="bottom" constant="18" id="nJq-Pv-OAA"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="4Rb-jg-yFF"/>
                     </view>
                     <navigationItem key="navigationItem" title="Your Profile" id="f65-Wq-hVk">
@@ -419,9 +461,14 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="profileNameTextField" destination="APd-PV-y9g" id="XbE-PE-lGq"/>
+                        <outlet property="profilePictureImageView" destination="xju-7d-nqj" id="U46-Da-plr"/>
+                    </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KCW-Kf-DX4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1825" y="143"/>
+            <point key="canvasLocation" x="1824.8" y="142.61083743842366"/>
         </scene>
         <!--About ShopTrak-->
         <scene sceneID="0Ig-gZ-ieu">

@@ -7,27 +7,45 @@
 //
 
 import UIKit
+import Kingfisher
 
-class AccountInformationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AccountInformationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+    
+    @IBOutlet weak var profilePictureImageView: UIImageView!
+    @IBOutlet weak var profileNameTextField: UITextField!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setup()
+        update()
     }
     
+    private func update() {
+        guard let user = userObject else { return }
+        let profilePictureUrl = URL(string: user.profilePicture)!
+        profilePictureImageView.kf.setImage(with: profilePictureUrl)
+        profileNameTextField.text = user.name
+    }
+    
+    private func setup() {
+        profilePictureImageView.layer.cornerRadius = profilePictureImageView.frame.height / 2
+        profileNameTextField.delegate = self
+    }
     
     // MARK: - IBActions
     
     @IBAction func doneButtonPressed(_ sender: Any) {
+        if let text = profileNameTextField.text {
+            UserController.shared.changeUserNameTo(name: text) { (_) in }
+            profileNameTextField.resignFirstResponder()
+        }
         dismiss(animated: true, completion: nil)
     }
     
     
     @IBAction func updatePhoto(_ sender: Any) {
-        
         showImagePicker()
-        
     }
     
     func showImagePicker() {
@@ -43,13 +61,14 @@ class AccountInformationViewController: UIViewController, UIImagePickerControlle
         
         guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        UserController().updateProfilePic(withImage: selectedImage) { (success) in
-            if success {
-                print("Changed user profile pic")
-            } else {
-                print("Did not change profile pic")
-                
-            }
-        }
+        profilePictureImageView.image = selectedImage
+        UserController.shared.updateProfilePic(withImage: selectedImage) { (_) in }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let text = textField.text else { return false }
+        UserController.shared.changeUserNameTo(name: text) { (_) in }
+        profileNameTextField.resignFirstResponder()
+        return true
     }
 }

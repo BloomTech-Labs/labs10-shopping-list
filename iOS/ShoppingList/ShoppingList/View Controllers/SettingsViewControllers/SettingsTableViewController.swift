@@ -14,7 +14,6 @@ import TUSafariActivity
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
     
     static let storyboardName: StoryboardName = "SettingsTableViewController"
-    var userProfile: UserInfo? { didSet { update() }}
     
     // MARK: - Lifecycle methods
     
@@ -25,8 +24,10 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     }
     
     private func update() {
-        profilePictureImageView.kf.setImage(with: userProfile?.picture)
-        profileNameLabel.text = userProfile?.name
+        guard let user = userObject else { return }
+        let profilePictureUrl = URL(string: user.profilePicture)!
+        profilePictureImageView.kf.setImage(with: profilePictureUrl)
+        profileNameLabel.text = user.name
     }
     
     private func setup() {

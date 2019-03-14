@@ -27,8 +27,8 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     
     // MARK: - Lifecycle methods
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         noItemsView = NoItemsView.instantiate()
         noItemsView.frame = tableView.frame
@@ -44,13 +44,12 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         GroupController.shared.getUserID { (user) in
             
             guard let id = user?.profile.id,
-                let name = user?.profile.name else {
-                    return
-                    
-            }
+                let name = user?.profile.name else { return }
+            
             userID = id
             userName = name
             
+            UserController.shared.getUser(forID: id, completion: { (_) in })
             
             GroupController.shared.getGroups(forUserID: userID, pusher: PushNotifications.shared) { (success) in
                 if allGroups.count > 0 {
