@@ -143,6 +143,12 @@ class GroupsPage extends Component {
     }
   }
 
+  deleteKeyPress = event => {
+    if(event.keyCode === 13){
+      this.handleDeleteGroup(event);
+    }
+  }
+
   render() {
     return (
       <div className="groups-container">
@@ -229,6 +235,7 @@ class GroupsPage extends Component {
               name={"delete"}
               onChange={this.handleInput}
               defaultValue={this.state.delete}
+              onKeyDown={this.deleteKeyPress}
             />
             <small className="delete-text">{this.state.groupName}</small>
           </MDBModalBody>
