@@ -218,11 +218,15 @@ groupRouter.get('/user/:id', async (req, res) => {
     //     if(groups && groups.length > 0){
     //         for(let i = 0; i < groups.length; i++){
     //             groupMembersDb.getByGroup(groups[i].id).then(response => {
-    //                 // console.log('groupmem response', response);
-    //                 groups[i].groupMembers = response; // append members to group
+    //                 console.log('groupmem response', response);
+    //                 groups[i].members = response; // append members to group
+    //                 if(i === groups.length - 1){
+    //                     return res.status(200).json({groups: groups});
+    //                 }
     //             })
+                
     //         }
-    //         return res.status(200).json({groups: groups});
+            
     //     } else {
     //         return res.status(404).json({error: `No groups found for that user.`});
     //     }
