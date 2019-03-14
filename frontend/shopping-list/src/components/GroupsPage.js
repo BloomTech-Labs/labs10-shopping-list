@@ -184,9 +184,7 @@ class GroupsPage extends Component {
                                   removeGroup={this.deleteGroup}
                               />
                           ))
-                          : <div className = 'group-spinner'>Loading group information...
-                                  <Spinner style = {{width: '3rem', height: '3rem'}} type = "grow" />
-                        </div>
+                          : null
                       }
                     </div>
 
