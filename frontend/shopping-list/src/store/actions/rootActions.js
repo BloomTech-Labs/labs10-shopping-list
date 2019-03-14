@@ -117,7 +117,7 @@ export const checkEmail = () => {
       localStorage.removeItem('isLoggedIn');
       localStorage.removeItem('lsid');
       localStorage.removeItem('userId');
-      dispatch({type: ERROR})
+      dispatch({type: ERROR, payload: "Internal error parsing user. Try refreshing the page."})
     })
   }
 }

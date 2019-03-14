@@ -264,7 +264,7 @@ class GroupsPage extends Component {
               {this.props.errorMessage !== null ? (
                   <MDBModal
                       isOpen={this.state.modal17}
-                      toggle={this.toggle(17)}
+                      toggle={this.handleClearError}
                       centered
                   >
                     <MDBModalHeader toggle={this.toggle(17)}>Warning</MDBModalHeader>
