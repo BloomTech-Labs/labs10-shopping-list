@@ -1,7 +1,7 @@
 
 exports.up = function(knex, Promise) {
     return knex.schema.table('groupHistory', (table) => {
-        table.string('purchasedOn').alter();
+        table.string('purchasedOn').notNullable().alter();
     })
   
 };
