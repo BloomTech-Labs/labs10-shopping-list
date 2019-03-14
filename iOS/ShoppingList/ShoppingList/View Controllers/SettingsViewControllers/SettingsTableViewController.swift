@@ -9,12 +9,10 @@
 import UIKit
 import Kingfisher
 import Auth0
-import TUSafariActivity
 
 class SettingsTableViewController: UITableViewController, StoryboardInstantiatable {
     
     static let storyboardName: StoryboardName = "SettingsTableViewController"
-    var userProfile: UserInfo? { didSet { update() }}
     
     // MARK: - Lifecycle methods
     
@@ -25,8 +23,10 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     }
     
     private func update() {
-        profilePictureImageView.kf.setImage(with: userProfile?.picture)
-        profileNameLabel.text = userProfile?.name
+        guard let user = userObject else { return }
+        let profilePictureUrl = URL(string: user.profilePicture)!
+        profilePictureImageView.kf.setImage(with: profilePictureUrl)
+        profileNameLabel.text = user.name
     }
     
     private func setup() {
@@ -44,6 +44,7 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     
     @IBOutlet weak var profilePictureImageView: UIImageView!
     @IBOutlet weak var profileNameLabel: UILabel!
+    @IBOutlet weak var inviteUserLabel: UILabel!
     
     // MARK: - IBActions
     
@@ -53,12 +54,12 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     
     @IBAction func inviteUser(_ sender: Any) {
         InviteController.shared.createInvite { (inviteCode) in
-            guard let inviterCode = inviteCode?.inviteCode else { return }
-            guard let url = NSURL(string: "https://labs10-shopping-list.netlify.com/invite?\(inviterCode)") else { return }
+            guard let inviterCode = inviteCode?.inviteCode,
+                  let selectedGroup = selectedGroup else { return }
             
-            let activity = TUSafariActivity()
-            let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: [activity])
-            activityViewController.excludedActivityTypes = [.addToReadingList, .assignToContact, .openInIBooks, .print, .saveToCameraRoll]
+            let shareText = "Join my group shopping list '\(selectedGroup.name)' on ShopTrak -> https://labs10-shopping-list.netlify.com/invite?\(inviterCode)"
+            
+            let activityViewController = UIActivityViewController(activityItems: [shareText], applicationActivities: nil)
             
             self.present(activityViewController, animated: true, completion: nil)
         }
@@ -76,7 +77,8 @@ class SettingsTableViewController: UITableViewController, StoryboardInstantiatab
     }
     
     @IBAction func openOnlineHelp(_ sender: Any) {
-        
+        let helpUrl = URL(string: "https://labs10-shopping-list.netlify.com")!
+        UIApplication.shared.open(helpUrl)
     }
     
     @IBAction func logoutPressed(_ sender: Any) {

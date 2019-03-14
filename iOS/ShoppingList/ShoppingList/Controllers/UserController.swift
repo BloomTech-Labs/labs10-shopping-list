@@ -15,6 +15,7 @@ import FirebaseStorage
 
 class UserController {
     
+    static let shared = UserController()
     private var baseURL = URL(string: "https://shoptrak-backend.herokuapp.com/api/")!
     
     private func userToJSON(user: User) -> [String: Any]? {
@@ -37,10 +38,7 @@ class UserController {
         let url = baseURL.appendingPathComponent("user")
         
         guard let userJSON = userToJSON(user: newUser) else { return }
-        
-       
-        
-        
+
         Alamofire.request(url, method: .post, parameters: userJSON, encoding: JSONEncoding.default).validate().responseJSON { (response) in
             
             switch response.result {
@@ -80,14 +78,13 @@ class UserController {
             
             // Reduce size of image before upload
             ref.putData(uploadData, metadata: nil) { (metaData, error) in
-                if error != nil {
-                    print("error uploading profile image to storage: \(error!)")
+                if let error = error {
+                    print("Error uploading profile image to storage: \(error)")
                     completion(false)
                 }
                 
                 ref.downloadURL(completion: { (url, error) in
                     guard let url = url else { completion(false); return }
-                    // TODO: save url to user object
                     
                     self.updateUserImageOnAPI(withImageURL: url, completion: { (success) in
                         completion(success)
@@ -108,9 +105,9 @@ class UserController {
         let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(userID))
         
         let imageURLString = imageUrl.absoluteString
+        userObject?.profilePicture = imageURLString
         
         let json: [String: Any] = ["profilePicture": imageURLString]
-        
         
         Alamofire.request(url, method: .put, parameters: json, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
             
@@ -136,7 +133,7 @@ class UserController {
         let url = baseURL.appendingPathComponent("user").appendingPathComponent(String(userID))
         
         let json: [String: Any] = ["name": name]
-        
+        userObject?.name = name
         
         Alamofire.request(url, method: .put, parameters: json, encoding: JSONEncoding.default, headers: headers).validate().responseJSON { (response) in
             
@@ -149,7 +146,6 @@ class UserController {
                 completion(false)
                 return
             }
-
             
         }
         

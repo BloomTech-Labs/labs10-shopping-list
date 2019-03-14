@@ -37,23 +37,37 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cbz-IA-4YO">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                    <rect key="frame" x="0.0" y="50" width="375" height="130"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GROUPS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uFi-K0-LgD">
+                    <rect key="frame" x="16" y="15" width="343" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Amm-y1-XtP"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="16"/>
+                    <color key="textColor" red="0.42112151019999999" green="0.42112151019999999" blue="0.42112151019999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" name="Background"/>
             <constraints>
+                <constraint firstItem="NAv-jw-Y2Z" firstAttribute="trailing" secondItem="uFi-K0-LgD" secondAttribute="trailing" constant="16" id="B8Z-8U-I69"/>
                 <constraint firstItem="WSf-6T-3Ev" firstAttribute="top" secondItem="cbz-IA-4YO" secondAttribute="bottom" constant="16" id="OLb-q6-4V3"/>
                 <constraint firstItem="NAv-jw-Y2Z" firstAttribute="bottom" secondItem="WSf-6T-3Ev" secondAttribute="bottom" constant="12" id="XmB-lO-6nu"/>
+                <constraint firstItem="uFi-K0-LgD" firstAttribute="leading" secondItem="NAv-jw-Y2Z" secondAttribute="leading" constant="16" id="aOv-tC-AOn"/>
                 <constraint firstItem="cbz-IA-4YO" firstAttribute="leading" secondItem="NAv-jw-Y2Z" secondAttribute="leading" id="fJJ-eS-iJe"/>
                 <constraint firstItem="WSf-6T-3Ev" firstAttribute="leading" secondItem="NAv-jw-Y2Z" secondAttribute="leading" constant="12" id="k0S-g4-yuc"/>
                 <constraint firstItem="cbz-IA-4YO" firstAttribute="trailing" secondItem="NAv-jw-Y2Z" secondAttribute="trailing" id="o26-PJ-AjV"/>
                 <constraint firstItem="NAv-jw-Y2Z" firstAttribute="trailing" secondItem="WSf-6T-3Ev" secondAttribute="trailing" constant="12" id="qVO-Uh-czl"/>
-                <constraint firstItem="cbz-IA-4YO" firstAttribute="top" secondItem="NAv-jw-Y2Z" secondAttribute="top" id="xQk-fC-371"/>
+                <constraint firstItem="cbz-IA-4YO" firstAttribute="top" secondItem="uFi-K0-LgD" secondAttribute="bottom" constant="14" id="soI-yu-QxJ"/>
+                <constraint firstItem="uFi-K0-LgD" firstAttribute="top" secondItem="NAv-jw-Y2Z" secondAttribute="top" constant="15" id="vNh-8Y-BZm"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="NAv-jw-Y2Z"/>
             <connections>
+                <outlet property="groupsLabel" destination="uFi-K0-LgD" id="xL9-Cy-gfr"/>
+                <outlet property="newGroupButton" destination="WSf-6T-3Ev" id="r3F-qm-7cC"/>
                 <outlet property="tableView" destination="cbz-IA-4YO" id="WtL-wA-0hJ"/>
             </connections>
             <point key="canvasLocation" x="138.40000000000001" y="153.82308845577214"/>

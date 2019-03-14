@@ -21,14 +21,18 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
     @IBOutlet weak var addNewItemContainer: UIView!
     @IBOutlet weak var checkoutContainer: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var checkoutCountView: UIView!
+    @IBOutlet weak var checkoutCountLabel: UILabel!
     
     
     var currentView: GroupView = .list { didSet { updatesNeeded() }}
     
     // MARK: - Lifecycle methods
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        checkoutCountView.layer.cornerRadius = checkoutCountView.frame.height / 2
         
         noItemsView = NoItemsView.instantiate()
         noItemsView.frame = tableView.frame
@@ -44,13 +48,12 @@ class MainViewController: UIViewController, StoryboardInstantiatable, PopoverVie
         GroupController.shared.getUserID { (user) in
             
             guard let id = user?.profile.id,
-                let name = user?.profile.name else {
-                    return
-                    
-            }
+                let name = user?.profile.name else { return }
+            
             userID = id
             userName = name
             
+            UserController.shared.getUser(forID: id, completion: { (_) in })
             
             GroupController.shared.getGroups(forUserID: userID, pusher: PushNotifications.shared) { (success) in
                 if allGroups.count > 0 {
@@ -240,6 +243,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             let showCheckout = selectedItems.count > 0
             addNewItemContainer.alpha = showCheckout ? 0 : 1
             checkoutContainer.alpha = showCheckout ? 1 : 0
+            checkoutCountLabel.text = "\(selectedItems.count)"
         }
     }
     

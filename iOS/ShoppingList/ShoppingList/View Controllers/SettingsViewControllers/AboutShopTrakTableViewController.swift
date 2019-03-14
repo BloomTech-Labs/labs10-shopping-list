@@ -22,7 +22,7 @@ class AboutShopTrakTableViewController: UITableViewController {
     }
     
     @IBAction func openIGListKit(_ sender: Any) {
-        let url = URL(string: "https://github.com/Instagram/IGListKit")!
+        let url = URL(string: "https://github.com/Alamofire/Alamofire")!
         UIApplication.shared.open(url)
     }
     @IBAction func openPopover(_ sender: Any) {

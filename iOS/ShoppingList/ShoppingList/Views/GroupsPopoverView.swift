@@ -26,6 +26,18 @@ class GroupsPopoverView: UIView, NibInstantiatable, UITableViewDelegate, UITable
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "ItemTableViewCell", bundle: nil), forCellReuseIdentifier: "ItemCell")
+        let groupsText = allGroups.count == 1 ? "\(allGroups.count) GROUP" : "\(allGroups.count) GROUPS"
+        groupsLabel.text = groupsText
+        
+        guard let user = userObject else { return }
+        
+        if user.subscriptionType == 1  && allGroups.count >= 1 {
+            newGroupButton.isEnabled = false
+            newGroupButton.alpha = 0.5
+        } else {
+            newGroupButton.isEnabled = true
+            newGroupButton.alpha = 1
+        }
     }
     
     @IBAction func newGroupButtonPressed(_ sender: Any) {
@@ -72,5 +84,7 @@ class GroupsPopoverView: UIView, NibInstantiatable, UITableViewDelegate, UITable
     }
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var groupsLabel: UILabel!
+    @IBOutlet weak var newGroupButton: UIButton!
     
 }
