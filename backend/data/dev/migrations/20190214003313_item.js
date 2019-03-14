@@ -11,7 +11,7 @@ exports.up = function(knex, Promise) {
         table.float('price').notNullable();
         table.integer('quantity').notNullable();
         table.string('measurement', 255);
-        table.date('purchasedOn');
+        table.string('purchasedOn');
 
         // will eventually be a foreign key when category table is created
         table.string('category', 255).references('category').inTable('categories').onDelete("SET NULL");
