@@ -250,6 +250,7 @@ class GroupsProfile extends Component {
      * @returns {*}
      */
   render() {
+      const user = localStorage.getItem("userId");
     return (
       <div className={"group-profile-container"}>
         <div className={"group-profile-header"}>
@@ -330,6 +331,79 @@ class GroupsProfile extends Component {
             
           </div>
         </div>
+        {
+          user === null ? <div className="user-notlogged user-notlogged-groups-pf">
+                <h1>You must be logged in to view this page</h1>
+              </div>
+              :
+              <div>
+              <div className={"group-profile-header"}>
+                {
+                  /*
+                   * Buttons to display List, History, Invite Members and toggle Total/Net
+                   */
+                }
+                <MDBBtn
+                    className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+                    onClick={() => {
+                      this.toggleListClass();
+                    }}
+                >
+                  List
+                </MDBBtn>
+                <MDBBtn
+                    className={this.state.histToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+                    onClick={() => {
+                      this.toggleHistClass();
+                    }}
+                >
+                  History
+                </MDBBtn>
+                <MDBBtn
+                    className="btn-dark-green"
+                    onClick={() => {
+                      this.toggleInviClass();
+                    }}
+                >
+                  Invite Member
+                </MDBBtn>
+                <MDBBtn
+                    className={"btn-dark-green"}
+                    onClick={this.toggle(18)}
+                >
+                  Notification Settings
+                </MDBBtn>
+              </div>
+
+                <div className="group-profile-columns">
+                  {
+                    /*
+                     * Left column that displays List and History Components
+                     */
+                  }
+                  <div className="group-profile-left">
+                    {this.state.listToggle ? (
+                        <ItemList items={this.props.groupItems} group={this.props.userGroups} />
+                    ) : null}
+
+                    {this.state.histToggle ? (
+                        <HistoryList history={this.props.groupHistoryList} />
+                    ) : null}
+                  </div>
+
+                  {
+                    /*
+                     * Right column that displays members and the user's cart components
+                     */
+                  }
+                  <div className="group-profile-right">
+                    <GroupUserList users={this.props.groupUsers} />
+                    <UserCart />
+                  </div>
+                </div>
+            </div>
+
+        }
 
         {
          /*
@@ -377,10 +451,10 @@ class GroupsProfile extends Component {
           >
             <MDBModalHeader toggle={this.toggle(18)}>Notification Settings</MDBModalHeader>
             <MDBModalBody>
+              Update your group notification settings
               {
                 this.props.groupUsers !== null ? this.props.groupUsers.map((grp, i) => (
                     <div key={i}>
-                      Update your group notification settings
                       {
                         grp.userID === Number(localStorage.getItem("userId")) ?
                             <div className={"label-check"}>

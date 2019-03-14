@@ -110,8 +110,15 @@ export const checkEmail = () => {
       localStorage.setItem('userId', res.data.id);
 
     }).catch(err => {
-      console.log(err);
-      dispatch({type: ERROR})
+      localStorage.removeItem('name');
+      localStorage.removeItem('email');
+      localStorage.removeItem('jwt');
+      localStorage.removeItem('img_url');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('lsid');
+      localStorage.removeItem('userId');
+      dispatch({type: ERROR, payload: "Internal error parsing user. Try refreshing the page."})
     })
   }
 }

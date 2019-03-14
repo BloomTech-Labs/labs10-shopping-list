@@ -150,126 +150,138 @@ class GroupsPage extends Component {
   }
 
   render() {
+    const user = localStorage.getItem("userId");
     return (
-      <div className="groups-container">
-        <div className="groups-cards">
-          <div className="add-group-container">
-            <MDBCard className="text-center">
-              <MDBCardBody>
-                <MDBCardTitle>Create New Group</MDBCardTitle>
-                <MDBCardText>
-                  Create a new group and start inviting to help with the
-                  shopping!
-                </MDBCardText>
-                <MDBBtn color="primary" onClick={this.toggle(14)}>
-                  Create
-                </MDBBtn>
-              </MDBCardBody>
-            </MDBCard>
-          </div>
+            <div className="groups-container">
+              {
+                user === null ? <div className="user-notlogged user-notlogged-groups">
+                      <h1>You must be logged in to view this page</h1>
+                    </div>
+                  :
+                    <div className="groups-cards">
+                      <div className="add-group-container">
+                        <MDBCard className="text-center">
+                          <MDBCardBody>
+                            <MDBCardTitle>Create New Group</MDBCardTitle>
+                            <MDBCardText>
+                              Create a new group and start inviting to help with the
+                              shopping!
+                            </MDBCardText>
+                            <MDBBtn color="primary" onClick={this.toggle(14)}>
+                              Create
+                            </MDBBtn>
+                          </MDBCardBody>
+                        </MDBCard>
+                      </div>
 
-          {this.props.userGroups !== null
-            ? this.props.userGroups.map(group => (
-                <GroupCard
-                  group={group}
-                  key={group.id}
-                  updateGroup={this.saveGroupName}
-                  removeGroup={this.deleteGroup}
-                />
-              ))
-            : null}
-        </div>
+                      {this.props.userGroups !== null
+                          ? this.props.userGroups.map(group => (
+                              <GroupCard
+                                  group={group}
+                                  key={group.id}
+                                  updateGroup={this.saveGroupName}
+                                  removeGroup={this.deleteGroup}
+                              />
+                          ))
+                          : null}
+                    </div>
 
-        <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
-          <MDBModalHeader toggle={this.toggle(14)}>
-            Create A New Group
-          </MDBModalHeader>
-          <MDBModalBody>
-            <MDBInput
-                label="Group Name"
-                name={"groupName"}
-                onChange={this.handleInput}
-                defaultValue={this.state.groupName}
-                onKeyDown={this.keyPress}
-            />
-          </MDBModalBody>
-          <MDBModalFooter>
-            <MDBBtn color="secondary" onClick={this.toggle(14)}>
-              Close
-            </MDBBtn>
-            <MDBBtn color="primary" onClick={this.handleAddGroup}>
-              Create
-            </MDBBtn>
-          </MDBModalFooter>
-        </MDBModal>
 
-        <MDBModal isOpen={this.state.modal15} toggle={this.toggle(15)} centered>
-          <MDBModalHeader toggle={this.toggle(15)}>
-            <p>Update Group Name</p>
-          </MDBModalHeader>
-          <MDBModalBody>
-            <MDBInput
-              label="Change Group Name"
-              name={"groupName"}
-              onChange={this.handleInput}
-              defaultValue={this.state.groupName}
-              onKeyDown={this.nameUpdateKeyPress}
-            />
-          </MDBModalBody>
-          <MDBModalFooter>
-            <MDBBtn color="secondary" onClick={this.toggle(15)}>
-              Close
-            </MDBBtn>
-            <MDBBtn color="primary" onClick={this.handleUpdateGroupName}>
-              Update
-            </MDBBtn>
-          </MDBModalFooter>
-        </MDBModal>
+              }
 
-        <MDBModal isOpen={this.state.modal16} toggle={this.toggle(16)} centered>
-          <MDBModalHeader toggle={this.toggle(16)}>Delete Group</MDBModalHeader>
-          <MDBModalBody>
-            <h6>Type the full name of the group to completely remove it.</h6>
-            <MDBInput
-              label="Group Name"
-              name={"delete"}
-              onChange={this.handleInput}
-              defaultValue={this.state.delete}
-              onKeyDown={this.deleteKeyPress}
-            />
-            <small className="delete-text">{this.state.groupName}</small>
-          </MDBModalBody>
-          <MDBModalFooter>
-            <MDBBtn color="secondary" onClick={this.toggle(16)}>
-              Close
-            </MDBBtn>
-            <MDBBtn
-              color="primary"
-              onClick={this.handleDeleteGroup}
-              disabled={this.state.groupName !== this.state.delete}
-            >
-              Delete
-            </MDBBtn>
-          </MDBModalFooter>
-        </MDBModal>
-        {this.props.errorMessage !== null ? (
-          <MDBModal
-            isOpen={this.state.modal17}
-            toggle={this.toggle(17)}
-            centered
-          >
-            <MDBModalHeader toggle={this.toggle(17)}>Warning</MDBModalHeader>
-            <MDBModalBody>
-              <h6>{this.props.errorMessage}</h6>
-            </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={this.handleClearError}>
-                Ok
-              </MDBBtn>
-            </MDBModalFooter>
-          </MDBModal>
-        ) : null}
-      </div>
+              <MDBModal isOpen={this.state.modal14} toggle={this.toggle(14)} centered>
+                <MDBModalHeader toggle={this.toggle(14)}>
+                  Create A New Group
+                </MDBModalHeader>
+                <MDBModalBody>
+                  <MDBInput
+                      label="Group Name"
+                      name={"groupName"}
+                      onChange={this.handleInput}
+                      defaultValue={this.state.groupName}
+                      onKeyDown={this.keyPress}
+                  />
+                </MDBModalBody>
+                <MDBModalFooter>
+                  <MDBBtn color="secondary" onClick={this.toggle(14)}>
+                    Close
+                  </MDBBtn>
+                  <MDBBtn color="primary" onClick={this.handleAddGroup}>
+                    Create
+                  </MDBBtn>
+                </MDBModalFooter>
+              </MDBModal>
+
+              <MDBModal isOpen={this.state.modal15} toggle={this.toggle(15)} centered>
+                <MDBModalHeader toggle={this.toggle(15)}>
+                  <p>Update Group Name</p>
+                </MDBModalHeader>
+                <MDBModalBody>
+                  <MDBInput
+                      label="Change Group Name"
+                      name={"groupName"}
+                      onChange={this.handleInput}
+                      defaultValue={this.state.groupName}
+                      onKeyDown={this.nameUpdateKeyPress}
+                  />
+                </MDBModalBody>
+                <MDBModalFooter>
+                  <MDBBtn color="secondary" onClick={this.toggle(15)}>
+                    Close
+                  </MDBBtn>
+                  <MDBBtn color="primary" onClick={this.handleUpdateGroupName}>
+                    Update
+                  </MDBBtn>
+                </MDBModalFooter>
+              </MDBModal>
+
+              <MDBModal isOpen={this.state.modal16} toggle={this.toggle(16)} centered>
+                <MDBModalHeader toggle={this.toggle(16)}>Delete Group</MDBModalHeader>
+                <MDBModalBody>
+                  <h6>Type the full name of the group to completely remove it.</h6>
+                  <MDBInput
+                      label="Group Name"
+                      name={"delete"}
+                      onChange={this.handleInput}
+                      defaultValue={this.state.delete}
+                      onKeyDown={this.deleteKeyPress}
+                  />
+                  <small className="delete-text">{this.state.groupName}</small>
+                </MDBModalBody>
+                <MDBModalFooter>
+                  <MDBBtn color="secondary" onClick={this.toggle(16)}>
+                    Close
+                  </MDBBtn>
+                  <MDBBtn
+                      color="primary"
+                      onClick={this.handleDeleteGroup}
+                      disabled={this.state.groupName !== this.state.delete}
+                  >
+                    Delete
+                  </MDBBtn>
+                </MDBModalFooter>
+              </MDBModal>
+              {this.props.errorMessage !== null ? (
+                  <MDBModal
+                      isOpen={this.state.modal17}
+                      toggle={this.handleClearError}
+                      centered
+                  >
+                    <MDBModalHeader toggle={this.toggle(17)}>Warning</MDBModalHeader>
+                    <MDBModalBody>
+                      <h6>{this.props.errorMessage}</h6>
+                    </MDBModalBody>
+                    <MDBModalFooter>
+                      <MDBBtn color="secondary" onClick={this.handleClearError}>
+                        Ok
+                      </MDBBtn>
+                    </MDBModalFooter>
+                  </MDBModal>
+              ) : null}
+
+
+            </div>
+
     );
   }
 }
