@@ -106,7 +106,9 @@ class GroupDataDoughnut extends React.Component {
         }
        }
 
-       let finalData = purchaseData;
+       let finalData = purchaseData.map(cost => {
+           return cost.toFixed(2);
+       });
 
 
        let grandTotal = purchaseData.reduce(function(accumulator, currentValue){
