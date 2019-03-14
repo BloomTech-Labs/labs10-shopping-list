@@ -21,7 +21,7 @@ class History extends React.Component {
   }
 
   render() {
-    console.log(this.props.history);
+    console.log("TRIP =>", this.props.trip);
     return (
       <div className="history-items" key={this.props.key}>
         <MDBCard>
@@ -33,9 +33,9 @@ class History extends React.Component {
               </small>
             </div>
             <MDBListGroup>
-              {this.props.trip.purchasedItems.map(item => {
+              {this.props.trip.purchasedItems !== undefined ? this.props.trip.purchasedItems.map(item => {
                 return <p>{item.name}</p>
-              })}
+              }) : null}
 
               <h4>${this.props.trip.total.toFixed(2)}</h4>
             </MDBListGroup>
