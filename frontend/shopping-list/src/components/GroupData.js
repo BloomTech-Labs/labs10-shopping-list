@@ -23,21 +23,42 @@ class GroupData extends React.Component {
         super(props);
 
         this.state = {
-            startDate: moment().toDate(),
+            startDate: moment().subtract(1, 'month').toDate(),
             endDate: moment().toDate(),
             data: {},
             chartTitle: 'Expenditures Over Time',
-            dateView: 'this-month'
+            dateView: 'month-to-date'
         }
     }
 
     showExpendituresOverTime = (start, end) => {
         console.log('start, end', start, end);
-
+        let labels = [];
+        /**
+         * This loop will give us labels for the previous month
+         */
+        if(this.state.dateView === 'month-to-date'){
+            let count = 0; // sanity count in case of infinite loop
+            // assign to vars so as not to mutate
+            let startCount = start;
+            let endCount = end;
+            while(startCount < endCount){
+                labels.push(moment(startCount).format('MMM Do'));
+                let newStart = moment(startCount).add(1, 'days').toDate();
+                // console.log(newStart, 'newStart');
+                startCount = newStart;
+                // console.log(startCount)
+                count++;
+                if(count === 32){
+                    break;
+                }
+            }
+            console.log("LABELS", labels);
+        }
 
 
         let EOTdata = {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                labels: labels,
                 datasets: [
                     {
                         label: `${this.state.chartTitle}: ${moment(start).format('MMM Do YYYY')} - ${moment(end).format('MMM Do YYYY')}`,
@@ -121,6 +142,7 @@ class GroupData extends React.Component {
             <MDBBtn onClick = {this.handleViewChange} name = 'last-14-days'>Last 14 Days</MDBBtn>
             <MDBBtn onClick = {this.handleViewChange} name = 'this-month'>This Month</MDBBtn>
             <MDBBtn onClick = {this.handleViewChange} name = 'last-month'>Last Month</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'month-to-date'>Month-to-Date</MDBBtn>
             <MDBBtn onClick = {this.handleViewChange} name = 'last-3-months'>Last 3 Months</MDBBtn>
             <MDBBtn onClick = {this.handleViewChange} name = 'last-6-months'>Last 6 Months</MDBBtn>
             <MDBBtn onClick = {this.handleViewChange} name = 'last-12-months'>Last 12 Months</MDBBtn>
