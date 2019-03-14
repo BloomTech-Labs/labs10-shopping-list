@@ -112,6 +112,7 @@ class GroupsPage extends Component {
 
       this.setState({ modal15: false });
     }
+    //causes page to reload - added this because the new name would not show otherwise
     window.location.reload();
   };
 
