@@ -25,7 +25,6 @@ class UserCart extends React.Component {
   };
   
   keyPress = event => {
-    console.log(`key press ${event.keyCode}`);
     if(event.keyCode === 13){
       this.handleCheckout(event);
     }

@@ -129,6 +129,12 @@ class GroupsPage extends Component {
     this.props.clearError();
   };
 
+  keyPress = event => {
+    if(event.keyCode === 13){
+      this.handleAddGroup(event);
+    }
+  }
+
   render() {
     return (
       <div className="groups-container">
@@ -170,6 +176,7 @@ class GroupsPage extends Component {
                 name={"groupName"}
                 onChange={this.handleInput}
                 defaultValue={this.state.groupName}
+                onKeyDown={this.keyPress}
             />
           </MDBModalBody>
           <MDBModalFooter>
