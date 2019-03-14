@@ -160,6 +160,11 @@ groupRouter.get('/user/:id', async (req, res) => {
     // get all groups user is a member of via groupmembers
     groupMembersDb.getByUser(userID).then(joinedGroups => {
         // console.log('joined groups', joinedGroups);
+        
+        // return immediately if no groups are joined
+        if(joinedGroups.length === 0){
+            return res.status(200).json({groups: []});
+        }
 
         // get all group profiles via groupID
         for(let i = 0; i < joinedGroups.length; i++){
@@ -189,12 +194,16 @@ groupRouter.get('/user/:id', async (req, res) => {
                                 // console.log('finished profile', groupProfiles[j]);
                                 if(k === groupMembers.length - 1){
                                     finalProfiles.push(groupProfiles[j]);
-                                }
 
-                                if(i === joinedGroups.length - 1){
-                                    console.log('final profiles', finalProfiles);
-                                    return res.status(200).json({groups: finalProfiles});
+                                    if(i === joinedGroups.length - 1 && joinedGroups.length > 1){
+                                        console.log('final profiles', finalProfiles);
+                                        return res.status(200).json({groups: finalProfiles});
+                                    } else if (joinedGroups.length === 1 && i === 0){
+                                        // handle users with only a single group
+                                        return res.status(200).json({groups: finalProfiles});
+                                    }
                                 }
+                                
                             })
                         }
                     })
