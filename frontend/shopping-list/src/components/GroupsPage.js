@@ -135,6 +135,12 @@ class GroupsPage extends Component {
     }
   }
 
+  nameUpdateKeyPress = event => {
+    if(event.keyCode === 13){
+      this.handleUpdateGroupName(event);
+    }
+  }
+
   render() {
     return (
       <div className="groups-container">
@@ -199,6 +205,7 @@ class GroupsPage extends Component {
               name={"groupName"}
               onChange={this.handleInput}
               defaultValue={this.state.groupName}
+              onKeyDown={this.nameUpdateKeyPress}
             />
           </MDBModalBody>
           <MDBModalFooter>
