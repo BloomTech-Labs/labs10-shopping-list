@@ -28,6 +28,10 @@ class GroupDataDoughnut extends React.Component {
         }
     }
 
+    showDoughnutChart = () => {
+
+    }
+
 
     constructor(props){
         super(props);
@@ -35,14 +39,42 @@ class GroupDataDoughnut extends React.Component {
         this.state = {
             total: 0,
             members: null,
+            startDate: moment().subtract(1, 'month').toDate(),
+            endDate: moment().toDate(),
+            data: [],
+            dateView: 'month-to-date',
+            grandTotal: 0,
         }
     }
 
     render(){
+
+        const data = {
+            labels: [
+                'Red',
+                'Green',
+                'Yellow'
+            ],
+            datasets: [{
+                data: [300, 50, 100],
+                backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56'
+                ],
+                hoverBackgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56'
+                ]
+            }]
+        };
+
         console.log(this.state,'newstate')
         return(
             <div className = 'doughnut-container'>
             DOUGHNUT
+            <Doughnut data = {data} />
             </div>
         )
     }
