@@ -15,7 +15,7 @@ class UserCart extends React.Component {
       error: "",
     };
   }
-
+  
   handleChange = event => {
     event.preventDefault();
     console.log(event.target.value);
@@ -23,6 +23,12 @@ class UserCart extends React.Component {
       [event.target.name]: event.target.value
     });
   };
+  
+  keyPress = event => {
+    if(event.keyCode === 13){
+      this.handleCheckout(event);
+    }
+  }
 
   handleCheckout = event => {
     event.preventDefault();
@@ -68,6 +74,7 @@ class UserCart extends React.Component {
     });
   };
 
+
   render() {
     return (
       <div className="user-cart-container">
@@ -97,6 +104,7 @@ class UserCart extends React.Component {
             valueDefault={this.state.amount}
             value={this.state.amount}
             onChange={this.handleChange}
+            onKeyDown={this.keyPress}
           />
           <MDBBtn className="btn-dark-green" onClick={this.handleCheckout}>
             Check out
