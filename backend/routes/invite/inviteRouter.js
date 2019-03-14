@@ -104,9 +104,31 @@ inviteRouter.get('/:code', (req, res) => {
 // if invitation is accepted, add new user to groupMembers db
 
 inviteRouter.post('/join', checkJwt, (req, res) => { // req.body must contain the invitation code
+    console.log(req.user);
+
+    var newID;
+
     usersDb.getIdByEmail(req.user.email).then(id => {
+        if(!id || id.length === 0){
+            console.log('no user found, creating new user');
+
+            let newUser = {
+                email: req.user.email,
+                name: req.user.name,
+                profilePicture: req.user.picture
+            }
+
+            usersDb.add(newUser).then(id =>{
+                console.log('newuser ID', id[0]);
+                newID = id[0].id;
+            })
+        } else {
+            newID = id[0].id;
+        }
+        console.log('JOIN ID', id);
+        console.log(newID = newID);
         let newMember = {};
-        newMember.userID = id[0].id; // start constructing the newMember
+        newMember.userID = newID; // start constructing the newMember
         inviteDb.getByCode(req.body.inviteCode).then(invite => {
             // console.log(invite[0].usedBefore);
             if(invite[0].usedBefore === 0 || invite[0].usedBefore === false){

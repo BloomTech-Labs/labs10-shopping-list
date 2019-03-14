@@ -40,8 +40,8 @@ class HistoryList extends React.Component {
         </h1>
         <div className="item-list">
           {this.props.groupHistoryList !== null ? (
-            this.props.groupHistoryList.map((hist, index) => (
-              <History grpHistory={hist} key={index} />
+            this.props.groupHistoryList.map(trip => (
+              <History trip={trip} key={trip.id} />
             ))
           ) : (
             <div>Loading History....</div>

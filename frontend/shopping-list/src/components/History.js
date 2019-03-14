@@ -21,28 +21,23 @@ class History extends React.Component {
   }
 
   render() {
+    console.log(this.props.history);
     return (
       <div className="history-items" key={this.props.key}>
         <MDBCard>
           <MDBCardBody>
             <div className="d-flex w-100 justify-content-between">
-              <h5 className="mb-1">{this.props.grpHistory[0].user}</h5>
+              <h5 className="mb-1">{this.props.trip.userName}</h5>
               <small className="text-muted">
-                {this.props.grpHistory[0].date}
+                {this.props.trip.dateString}
               </small>
             </div>
             <MDBListGroup>
-              {this.props.grpHistory.map((current, index, arr) => (
-                <p key={index} className="mb-1 history-item">
-                  {current.name}
-                </p>
-              ))}
-              <h5 className="mb-1">
-                Total: $
-                {this.props.grpHistory[
-                  this.props.grpHistory.length - 1
-                ].grandTotal.toFixed(2)}
-              </h5>
+              {this.props.trip.purchasedItems.map(item => {
+                return <p>{item.name}</p>
+              })}
+
+              <h4>${this.props.trip.total.toFixed(2)}</h4>
             </MDBListGroup>
           </MDBCardBody>
         </MDBCard>

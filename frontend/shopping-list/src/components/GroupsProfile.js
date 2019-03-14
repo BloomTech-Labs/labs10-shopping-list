@@ -14,6 +14,7 @@ import {
   generateGroupInviteUrl,
   getUserGroups,
   clearError,
+  clearGroupHistory,
   updateGroupNotification,
 } from "../store/actions/rootActions";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -32,6 +33,8 @@ import ItemList from "./ItemList";
 import GroupUserList from "./GroupUserList";
 import UserCart from "./UserCart";
 import HistoryList from "./HistoryList";
+import GroupDataBar from './GroupDataBar';
+import GroupDataDoughnut from './GroupDataDoughnut';
 
 class GroupsProfile extends Component {
   state = {
@@ -136,6 +139,7 @@ class GroupsProfile extends Component {
   componentWillUnmount() {
     this.props.clearItems();
     this.props.clearGroupUsers();
+    this.props.clearGroupHistory();
   }
 
   /**
@@ -249,6 +253,84 @@ class GroupsProfile extends Component {
       const user = localStorage.getItem("userId");
     return (
       <div className={"group-profile-container"}>
+        <div className={"group-profile-header"}>
+          {
+           /*
+            * Buttons to display List, History, Invite Members and toggle Total/Net
+            */
+          }
+          <MDBBtn
+            className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+            onClick={() => {
+              this.toggleListClass();
+            }}
+          >
+            List
+          </MDBBtn>
+          <MDBBtn
+              className={this.state.histToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+            onClick={() => {
+              this.toggleHistClass();
+            }}
+          >
+            History
+          </MDBBtn>
+          <MDBBtn
+              className="btn-dark-green"
+            onClick={() => {
+              this.toggleInviClass();
+            }}
+          >
+            Invite Member
+          </MDBBtn>
+          <MDBBtn
+              className={"btn-dark-green"}
+              onClick={this.toggle(18)}
+          >
+            Notification Settings
+          </MDBBtn>
+        </div>
+
+        <div className="group-profile-columns">
+          {
+           /*
+            * Left column that displays List and History Components
+            */
+          }
+          <div className="group-profile-left">
+            {this.state.listToggle ? (
+              <ItemList items={this.props.groupItems} group={this.props.userGroups} />
+            ) : null}
+
+            {this.state.histToggle ? (
+              <HistoryList history={this.props.groupHistoryList} />
+            ) : null}
+          </div>
+
+          {
+           /*
+            * Right column that displays members and the user's cart components
+            */
+          }
+          <div className="group-profile-right">
+
+          {this.state.listToggle ? (
+            <div>
+              <GroupUserList users={this.props.groupUsers} />
+              <UserCart />
+              </div>
+            ) : null}
+
+            {this.state.histToggle ? (
+              <div>
+              <GroupDataBar/>
+              <GroupDataDoughnut/>
+              </div>
+            ) : null}
+            
+            
+          </div>
+        </div>
         {
           user === null ? <div className="user-notlogged user-notlogged-groups-pf">
                 <h1>You must be logged in to view this page</h1>
@@ -322,7 +404,6 @@ class GroupsProfile extends Component {
             </div>
 
         }
-
 
         {
          /*
@@ -467,6 +548,7 @@ export default connect(
     generateGroupInviteUrl,
     getUserGroups,
     clearError,
+    clearGroupHistory,
     updateGroupNotification
   }
 )(GroupsProfile);

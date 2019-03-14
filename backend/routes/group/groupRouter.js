@@ -179,30 +179,35 @@ groupRouter.get('/user/:id', async (req, res) => {
             groups.push(grp);
         }
 
+        // Defined to get a list of users
+        var users = [];
         // Loop through and gather each member of the group
         for (let i = 0; i < groups.length; i++) {
             const grpMember = await groupMembersDb.getByGroup(groups[i].id);
 
-            // Defined to get a list of users
-            let users = [];
 
             // Gather a list of users in each group
             for (let j = 0; j < grpMember.length; j++) {
                 const usr = await usersDb.getById(grpMember[j].userID);
-
+                console.log('usr', usr[0]);
                 // Create a new user object to get only the needed pairs
+                if(usr.length > 0 && !users.some(u => u['name'] === usr[0].name)){
                 const user = {
+                    id: usr[0].id,
                     name: usr[0].name,
                     picture: usr[0].profilePicture
                 }
                 users.push(user);
+                }
             }
             groups[i].members = users;
         }
 
         return res.status(200).json({groups: groups});
     } catch(err) {
+        console.log(err);
         return res.status(500).json({error: `Internal server error.`})
+        
     }
 
 
@@ -213,11 +218,15 @@ groupRouter.get('/user/:id', async (req, res) => {
     //     if(groups && groups.length > 0){
     //         for(let i = 0; i < groups.length; i++){
     //             groupMembersDb.getByGroup(groups[i].id).then(response => {
-    //                 // console.log('groupmem response', response);
-    //                 groups[i].groupMembers = response; // append members to group
+    //                 console.log('groupmem response', response);
+    //                 groups[i].members = response; // append members to group
+    //                 if(i === groups.length - 1){
+    //                     return res.status(200).json({groups: groups});
+    //                 }
     //             })
+                
     //         }
-    //         return res.status(200).json({groups: groups});
+            
     //     } else {
     //         return res.status(404).json({error: `No groups found for that user.`});
     //     }

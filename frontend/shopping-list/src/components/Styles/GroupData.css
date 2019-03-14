@@ -1,0 +1,19 @@
+.data-container {
+    width: 100%;
+    margin-top: 40px;
+}
+
+
+.chart-container canvas{
+    max-width: 600px;
+    max-height: 200px;
+}
+.doughnut-container{
+    margin-bottom: 40px;
+}
+
+.doughnut-container canvas {
+    margin-top: 60px;
+    max-width: 600px;
+    max-height: 600px;
+}
