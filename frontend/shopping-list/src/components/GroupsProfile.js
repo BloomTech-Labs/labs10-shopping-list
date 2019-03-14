@@ -255,90 +255,85 @@ class GroupsProfile extends Component {
       <div className={"group-profile-container"}>
         {
           user === null ? <div className="user-notlogged user-notlogged-groups-pf">
-                <h1>You must be logged in to view this page</h1>
-              </div>
-              :
+            <h1>You must be logged in to view this page</h1>
+          </div> :
               <div>
-              <div className={"group-profile-header"}>
-                {
-                  /*
-                   * Buttons to display List, History, Invite Members and toggle Total/Net
-                   */
-                }
-                <MDBBtn
-                    className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
-                    onClick={() => {
-                      this.toggleListClass();
-                    }}
-                >
-                  List
-                </MDBBtn>
-                <MDBBtn
-                    className={this.state.histToggle ? "btn-outline-dark-green" : "btn-dark-green"}
-                    onClick={() => {
-                      this.toggleHistClass();
-                    }}
-                >
-                  History
-                </MDBBtn>
-                <MDBBtn
-                    className="btn-dark-green"
-                    onClick={() => {
-                      this.toggleInviClass();
-                    }}
-                >
-                  Invite Member
-                </MDBBtn>
-                <MDBBtn
-                    className={"btn-dark-green"}
-                    onClick={this.toggle(18)}
-                >
-                  Notification Settings
-                </MDBBtn>
-              </div>
-
-                <div className="group-profile-columns">
+                <div className={"group-profile-header"}>
                   {
                     /*
-                     * Left column that displays List and History Components
+                     * Buttons to display List, History, Invite Members and toggle Total/Net
                      */
                   }
-                  <div className="group-profile-left">
-                    {this.state.listToggle ? (
-                        <ItemList items={this.props.groupItems} group={this.props.userGroups} />
-                    ) : null}
-
-                    {this.state.histToggle ? (
-                        <HistoryList history={this.props.groupHistoryList} />
-                    ) : null}
-                  </div>
-
-                  {
-           /*
-            * Right column that displays members and the user's cart components
-            */
-          }
-          <div className="group-profile-right">
-
-          {this.state.listToggle ? (
-            <div>
-              <GroupUserList users={this.props.groupUsers} />
-              <UserCart />
-              </div>
-            ) : null}
-
-            {this.state.histToggle ? (
-              <div>
-              <GroupDataBar/>
-              <GroupDataDoughnut/>
-              </div>
-            ) : null}
-            
-            
-          </div>
+                  <MDBBtn
+                      className={this.state.listToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+                      onClick={() => {
+                        this.toggleListClass();
+                      }}
+                  >
+                    List
+                  </MDBBtn>
+                  <MDBBtn
+                      className={this.state.histToggle ? "btn-outline-dark-green" : "btn-dark-green"}
+                      onClick={() => {
+                        this.toggleHistClass();
+                      }}
+                  >
+                    History
+                  </MDBBtn>
+                  <MDBBtn
+                      className="btn-dark-green"
+                      onClick={() => {
+                        this.toggleInviClass();
+                      }}
+                  >
+                    Invite Member
+                  </MDBBtn>
+                  <MDBBtn
+                      className={"btn-dark-green"}
+                      onClick={this.toggle(18)}
+                  >
+                    Notification Settings
+                  </MDBBtn>
                 </div>
-            </div>
 
+                <div className="group-profile-columns">
+                {
+                  /*
+                   * Left column that displays List and History Components
+                   */
+                }
+                <div className="group-profile-left">
+                  {this.state.listToggle ? (
+                      <ItemList items={this.props.groupItems} group={this.props.userGroups} />
+                  ) : null}
+
+                  {this.state.histToggle ? (
+                      <HistoryList history={this.props.groupHistoryList} />
+                  ) : null}
+                </div>
+
+                {
+                  /*
+                   * Right column that displays members and the user's cart components
+                   */
+                }
+                <div className="group-profile-right">
+                  {this.state.listToggle ? (
+                      <div>
+                        <GroupUserList users={this.props.groupUsers} />
+                        <UserCart />
+                      </div>
+                  ) : null}
+
+                  {this.state.histToggle ? (
+                      <div>
+                        <GroupDataBar/>
+                        <GroupDataDoughnut/>
+                      </div>
+                  ) : null}
+                  </div>
+                </div>
+              </div>
         }
 
         {
