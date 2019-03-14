@@ -154,7 +154,7 @@ class GroupsPage extends Component {
     return (
             <div className="groups-container">
               {
-                user === null ? <div className="groups-cards">
+                user === null ? <div className="user-notlogged user-notlogged-groups">
                       <h1>You must be logged in to view this page</h1>
                     </div>
                   :

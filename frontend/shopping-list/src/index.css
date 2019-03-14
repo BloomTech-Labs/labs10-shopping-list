@@ -1,0 +1,13 @@
+.user-notlogged {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-notlogged-groups {
+    padding-top: 40px;
+}
+
+.user-notlogged-groups-pf {
+    padding-top: 15px;
+}
