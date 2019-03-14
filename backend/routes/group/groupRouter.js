@@ -155,86 +155,69 @@ function fetch_group_mem(id) {
 // TODO: Refactor for better performance
 groupRouter.get('/user/:id', async (req, res) => {
     let userID = req.params.id;
-    let groups = [];
+    var finalProfiles = [];
 
-    try {
-        // Gather all records for the particular user
-        const members = await groupMembersDb.getByUser(userID);
-
-        // Loop and gather each group the user is in and append them to the groups array
-        for(let i = 0; i < members.length; i++) {
-            let group = await groupDb.getById(members[i].groupID);
-
-            // Create a new group object so we can append members to it
-            let grp = {
-                id: group[0].id,
-                userID: group[0].userID,
-                name: group[0].name,
-                token: group[0].token,
-                createdAt: group[0].createdAt,
-                updatedAt: group[0].updatedAt,
-                members: []
-            }
-
-            groups.push(grp);
+    // get all groups user is a member of via groupmembers
+    groupMembersDb.getByUser(userID).then(joinedGroups => {
+        // console.log('joined groups', joinedGroups);
+        
+        // return immediately if no groups are joined
+        if(joinedGroups.length === 0){
+            return res.status(200).json({groups: []});
         }
 
-        // Defined to get a list of users
-        var users = [];
-        // Loop through and gather each member of the group
-        for (let i = 0; i < groups.length; i++) {
-            const grpMember = await groupMembersDb.getByGroup(groups[i].id);
+        // get all group profiles via groupID
+        for(let i = 0; i < joinedGroups.length; i++){
+            groupDb.getById(joinedGroups[i].groupID).then(groupProfiles => {
+                // console.log('group profiles', groupProfiles);
 
+                for(let j = 0; j < groupProfiles.length; j++){
+                    //initialize an empty array for each group profile's members
+                    if(!groupProfiles[j].members){
+                        groupProfiles[j].members = [];
+                    }
+                    
+                    // get all members of each group via groupmembers
+                    groupMembersDb.getByGroup(groupProfiles[j].id).then(groupMembers => {    
+                        // console.log('group members', groupMembers);
 
-            // Gather a list of users in each group
-            for (let j = 0; j < grpMember.length; j++) {
-                const usr = await usersDb.getById(grpMember[j].userID);
-                console.log('usr', usr[0]);
-                // Create a new user object to get only the needed pairs
-                if(usr.length > 0 && !users.some(u => u['name'] === usr[0].name)){
-                const user = {
-                    id: usr[0].id,
-                    name: usr[0].name,
-                    picture: usr[0].profilePicture
+                        // get all user profiles via userdb
+                        for(let k = 0; k < groupMembers.length; k++){
+                            usersDb.getById(groupMembers[k].userID).then(userProfile => {
+                                // console.log('userProfile', userProfile[0]);
+                                if(userProfile && userProfile[0] !== undefined){
+                                    groupProfiles[j].members[k] = userProfile[0];
+                                } else {
+                                    let removed = {id: 0, name: 'Removed User', email: 'removed', profilePicture: 'https://i.imgur.com/M8kRKQC.png'};
+                                    groupProfiles[j].members[k] = removed;
+                                }
+                                // console.log('finished profile', groupProfiles[j]);
+                                if(k === groupMembers.length - 1){
+                                    finalProfiles.push(groupProfiles[j]);
+
+                                    if(i === joinedGroups.length - 1 && joinedGroups.length > 1){
+                                        console.log('final profiles', finalProfiles);
+                                        return res.status(200).json({groups: finalProfiles});
+                                    } else if (joinedGroups.length === 1 && i === 0){
+                                        // handle users with only a single group
+                                        return res.status(200).json({groups: finalProfiles});
+                                    }
+                                }
+                                
+                            })
+                        }
+                    })
                 }
-                users.push(user);
-                }
-            }
-            groups[i].members = users;
+            })
         }
-
-        return res.status(200).json({groups: groups});
-    } catch(err) {
+    }).catch(err => {
         console.log(err);
         return res.status(500).json({error: `Internal server error.`})
-        
-    }
-
-
-
-
-    // groupDb.getByUser(userID).then(groups => {
-    //     // console.log('get groups response', groups);
-    //     if(groups && groups.length > 0){
-    //         for(let i = 0; i < groups.length; i++){
-    //             groupMembersDb.getByGroup(groups[i].id).then(response => {
-    //                 console.log('groupmem response', response);
-    //                 groups[i].members = response; // append members to group
-    //                 if(i === groups.length - 1){
-    //                     return res.status(200).json({groups: groups});
-    //                 }
-    //             })
-                
-    //         }
-            
-    //     } else {
-    //         return res.status(404).json({error: `No groups found for that user.`});
-    //     }
-    // }).catch(err => {
-    //     console.log(err);
-    //     return res.status(500).json({error: `Internal server error.`})
-    // })
+    })
 })
+
+
+
 
 
 // function contains(a, obj) {
