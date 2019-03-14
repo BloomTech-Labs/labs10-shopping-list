@@ -328,9 +328,15 @@ class GroupsProfile extends Component {
               </div>
             ) : null}
             
-            
           </div>
         </div>
+
+
+
+
+
+
+
         {
           user === null ? <div className="user-notlogged user-notlogged-groups-pf">
                 <h1>You must be logged in to view this page</h1>
@@ -375,32 +381,6 @@ class GroupsProfile extends Component {
                 </MDBBtn>
               </div>
 
-                <div className="group-profile-columns">
-                  {
-                    /*
-                     * Left column that displays List and History Components
-                     */
-                  }
-                  <div className="group-profile-left">
-                    {this.state.listToggle ? (
-                        <ItemList items={this.props.groupItems} group={this.props.userGroups} />
-                    ) : null}
-
-                    {this.state.histToggle ? (
-                        <HistoryList history={this.props.groupHistoryList} />
-                    ) : null}
-                  </div>
-
-                  {
-                    /*
-                     * Right column that displays members and the user's cart components
-                     */
-                  }
-                  <div className="group-profile-right">
-                    <GroupUserList users={this.props.groupUsers} />
-                    <UserCart />
-                  </div>
-                </div>
             </div>
 
         }
