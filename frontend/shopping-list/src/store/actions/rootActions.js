@@ -896,7 +896,7 @@ export const checkOut = info => {
     groupID: Number(info.groupId),
     itemID: Number(itemIds[0]),
     total: Number(info.amount),
-    purchasedOn: moment().toDate(),
+    purchasedOn: moment().format(),
   }
 
 
@@ -904,7 +904,7 @@ export const checkOut = info => {
   for(let i = 0; i < items.length; i++){
     items[i].purchased = 1;
     items[i].purchasedBy = Number(info.userId);
-    items[i].purchasedOn = moment().toDate();
+    items[i].purchasedOn = moment().format();
 
     // console.log('items[i]', items[i]);
     axios.put(`${backendURL}/api/item/${items[i].id}`, items[i], options).then(res => {
