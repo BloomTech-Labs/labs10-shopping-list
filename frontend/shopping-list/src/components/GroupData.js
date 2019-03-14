@@ -10,12 +10,14 @@ import moment from 'moment';
 import {MDBBtn} from 'mdbreact';
 
 class GroupData extends React.Component {
-    componentWillMount(){
-        this.props.getGroupHistoryList(this.props.match.params.id);
+    async componentWillMount(){
+        await this.props.getGroupHistoryList(this.props.match.params.id);
     }
 
-    componentDidMount(){
-        this.showExpendituresOverTime(this.state.startDate, this.state.endDate);
+    componentWillReceiveProps = (newProps) => {
+        if(newProps.groupHistoryList !== this.props.groupHistoryList){
+            this.showExpendituresOverTime(this.state.startDate, this.state.endDate);
+        }
     }
 
 
@@ -25,49 +27,84 @@ class GroupData extends React.Component {
         this.state = {
             startDate: moment().subtract(1, 'month').toDate(),
             endDate: moment().toDate(),
-            data: {},
+            data: [],
             chartTitle: 'Expenditures Over Time',
             dateView: 'month-to-date'
         }
     }
 
-    showExpendituresOverTime = (start, end) => {
-        console.log('start, end', start, end);
+    async getMonthToDateLabels(){
+        let start = this.state.startDate;
+        let end = this.state.endDate;
         let labels = [];
+        let dateLabels = [];
+        
         /**
          * This loop will give us labels for the previous month
          */
-        if(this.state.dateView === 'month-to-date'){
-            let count = 0; // sanity count in case of infinite loop
-            // assign to vars so as not to mutate
-            let startCount = start;
-            let endCount = end;
-            while(startCount < endCount){
-                labels.push(moment(startCount).format('MMM Do'));
-                let newStart = moment(startCount).add(1, 'days').toDate();
-                // console.log(newStart, 'newStart');
-                startCount = newStart;
-                // console.log(startCount)
-                count++;
-                if(count === 32){
-                    break;
-                }
+
+        let count = 0; // sanity count in case of infinite loop
+        while(start < end){
+            labels.push(moment(start).format('MMM Do'));
+            dateLabels.push(moment(start).format());
+            let newStart = moment(start).add(1, 'days').toDate();
+            // console.log(newStart, 'newStart');
+            start = newStart;
+            // console.log(startCount)
+            count++;
+            if(count === 32){
+                break;
             }
-            console.log("LABELS", labels);
         }
 
+        this.setState({
+            labels: labels,
+            dateLabels: dateLabels,
+            needsRefresh: false
+        });
+
+        return dateLabels;
+    }
+
+    async getPurchaseData(dateLabels){
+        let data = [];
+
+        for(let i = 0; i < this.props.groupHistoryList.length; i++){
+            for(let j = 0; j < dateLabels.length; j++){
+                if(moment(this.props.groupHistoryList[i].purchasedOn).format('MMM Do YYYY') === moment(dateLabels[j]).format('MMM Do YYYY')){
+                    data[j] = this.props.groupHistoryList[i].total;
+                } else {
+                    data[j] = 0;
+                }
+            }
+
+        }
+
+        this.setState({
+            data: data
+        })
+    }
+
+       
+
+    async showExpendituresOverTime() {
+        if(this.state.dateView === 'month-to-date'){
+            await this.getMonthToDateLabels().then(dateLabels => {
+                this.getPurchaseData(dateLabels);
+            });
+        }
 
         let EOTdata = {
-                labels: labels,
+                labels: this.state.labels,
                 datasets: [
                     {
-                        label: `${this.state.chartTitle}: ${moment(start).format('MMM Do YYYY')} - ${moment(end).format('MMM Do YYYY')}`,
+                        label: `Expenditure Per Day`,
                         backgroundColor: 'rgba(42,146,45,0.2)',
                         borderColor: 'rgba(42,146,45,1)',
                         borderWidth: 1,
                         hoverBackgroundColor: 'rgba(42,146,45,0.4)',
                         hoverBorderColor: 'rgba(42,146,45,1)',
-                        data: [65, 59, 80, 81, 56, 55, 40]
+                        data: this.state.data
                     }
                 ]
             }
@@ -78,37 +115,49 @@ class GroupData extends React.Component {
             })
     }
 
-    refreshChart = (start, end) => {
-        console.log('new chart');
-        if(this.state.chartTitle === 'Expenditures Over Time'){
-            this.showExpendituresOverTime(start, end);
-        }
-    }
+    // handleChangeEnd = date => {
+    //     console.log(date);
+    //     this.setState({
+    //         endDate: date,
+    //     })
 
-    handleChangeEnd = date => {
-        console.log(date);
-        this.setState({
-            endDate: date,
-        })
+    //     this.refreshChart(this.state.startDate, date);
+    // }
 
-        this.refreshChart(this.state.startDate, date);
-    }
+    // handleChangeStart = date => {
+    //     console.log(date);
+    //     this.setState({
+    //         startDate: date,
+    //     })
 
-    handleChangeStart = date => {
-        console.log(date);
-        this.setState({
-            startDate: date,
-        })
-
-        this.refreshChart(date, this.state.endDate);
-    }
+    //     this.refreshChart(date, this.state.endDate);
+    // }
 
     handleViewChange = event => {
-        console.log(event.target.name);
-        this.setState({
-            dateView: event.target.name
-        })
-    }
+        if(event.target.name === 'last-7-days'){
+            this.setState({
+                startDate: moment().subtract(7, 'days').toDate(),
+                endDate: moment().toDate(),
+                dateView: event.target.name,
+            })
+        }
+
+        if(event.target.name === 'month-to-date'){
+            this.setState({
+                startDate: moment().subtract(1, 'month').toDate(),
+                endDate: moment().toDate(),
+                dateView: event.target.name
+            })
+        }
+
+        if(event.target.name === 'year-to-date'){
+            this.setState({
+                startDate: moment().subtract(1, 'year').toDate(),
+                endDate: moment().toDate(),
+                dateView: event.target.name
+            })
+        }
+   }
 
     render(){
 
@@ -116,7 +165,7 @@ class GroupData extends React.Component {
             <div className = 'data-container'>
 
             {/* A datepicker for custom time ranges */}
-            <div className = 'date-picker-container'>
+            {/* <div className = 'date-picker-container'>
             <DatePicker
                 selected={this.state.startDate}
                 selectsStart
@@ -132,29 +181,34 @@ class GroupData extends React.Component {
                 endDate={this.state.endDate}
                 onChange={this.handleChangeEnd}
             />            
-            </div>
+            </div> */}
 
             <div className = 'chart-container'>
-            <Bar data = {this.state.data} width = {600} height = {200} />
+            <h1>{this.state.chartTitle}</h1>
+            <h2>{moment(this.state.startDate).format('MMM Do YYYY')} - {moment(this.state.endDate).format('MMM Do YYYY')}</h2>
+            <Bar data = {this.state.data} width = {600} height = {200}/>
 
-            Date View:
             <MDBBtn onClick = {this.handleViewChange} name = 'last-7-days'>Last 7 Days</MDBBtn>
-            <MDBBtn onClick = {this.handleViewChange} name = 'last-14-days'>Last 14 Days</MDBBtn>
+            {/* <MDBBtn onClick = {this.handleViewChange} name = 'last-14-days'>Last 14 Days</MDBBtn>
             <MDBBtn onClick = {this.handleViewChange} name = 'this-month'>This Month</MDBBtn>
-            <MDBBtn onClick = {this.handleViewChange} name = 'last-month'>Last Month</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'last-month'>Last Month</MDBBtn> */}
             <MDBBtn onClick = {this.handleViewChange} name = 'month-to-date'>Month-to-Date</MDBBtn>
-            <MDBBtn onClick = {this.handleViewChange} name = 'last-3-months'>Last 3 Months</MDBBtn>
+            {/* <MDBBtn onClick = {this.handleViewChange} name = 'last-3-months'>Last 3 Months</MDBBtn>
             <MDBBtn onClick = {this.handleViewChange} name = 'last-6-months'>Last 6 Months</MDBBtn>
             <MDBBtn onClick = {this.handleViewChange} name = 'last-12-months'>Last 12 Months</MDBBtn>
             <MDBBtn onClick = {this.handleViewChange} name = 'this-year'>This Year</MDBBtn>
-            <MDBBtn onClick = {this.handleViewChange} name = 'last-year'>Last Year</MDBBtn>
-            <MDBBtn onClick = {this.handleViewChange} name = 'all-time'>All Time</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'last-year'>Last Year</MDBBtn> */}
+            
+            {/* <MDBBtn onClick = {this.handleViewChange} name = 'all-time'>All Time</MDBBtn> */}
+
+            <MDBBtn onClick = {this.handleViewChange} name = 'year-to-date'>Year-to-Date</MDBBtn>
+
 
             </div>
 
-            <div className = 'chart-container'>
+            {/* <div className = 'chart-container'>
             <Doughnut data = {this.state.data} width = {600} height = {200} />
-            </div>
+            </div> */}
             
 
             </div>
