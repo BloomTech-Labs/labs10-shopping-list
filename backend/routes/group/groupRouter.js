@@ -201,6 +201,9 @@ groupRouter.get('/user/:id', async (req, res) => {
                 }
             })
         }
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({error: `Internal server error.`})
     })
 })
 

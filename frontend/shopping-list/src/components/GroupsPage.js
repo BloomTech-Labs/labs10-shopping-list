@@ -24,6 +24,7 @@ import {
   MDBInput
 } from "mdbreact";
 import GroupCard from "./GroupCard";
+import {Spinner} from 'reactstrap'
 
 import "./Styles/GroupsPage.css";
 
@@ -183,7 +184,10 @@ class GroupsPage extends Component {
                                   removeGroup={this.deleteGroup}
                               />
                           ))
-                          : null}
+                          : <div className = 'group-spinner'>Loading group information...
+                                  <Spinner style = {{width: '3rem', height: '3rem'}} type = "grow" />
+                        </div>
+                      }
                     </div>
 
 
