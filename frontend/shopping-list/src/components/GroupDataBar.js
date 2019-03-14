@@ -90,19 +90,16 @@ class GroupData extends React.Component {
                 }
                 if(this.state.dateView !== 'year-to-date'){
                     if(moment(this.props.groupHistoryList[i].purchasedOn).format('MMM Do YYYY') === moment(dateLabels[j]).format('MMM Do YYYY')){
-                        console.log('MATCH')
                         data[j] += this.props.groupHistoryList[i].total;
                     }
                 } else {
                     if(moment(this.props.groupHistoryList[i].purchasedOn).format('MMM YYYY') === moment(dateLabels[j]).format('MMM YYYY')){
-                        console.log('MATCH')
                         data[j] += this.props.groupHistoryList[i].total;
+                    }   
                 }
             }
         }
-    }
 
-        console.log('DATA', data);
         let grandTotal = data.reduce(function(accumulator, currentValue){
             return accumulator + currentValue;
         }, 0)

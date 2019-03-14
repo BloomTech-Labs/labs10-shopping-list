@@ -22,10 +22,14 @@ class GroupDataDoughnut extends React.Component {
             for(let i = 0; i < newProps.userGroups.length; i++){
                 if(newProps.userGroups[i].id === Number(this.props.match.params.id)){
                     this.setState({
-                        members: newProps.userGroups[i].members
+                        members: newProps.userGroups[i].members,
                     })
+
                 }
             }
+        }
+        if(newProps.groupHistoryList){
+            this.generateDoughnut();
         }
         
     }
@@ -43,6 +47,7 @@ class GroupDataDoughnut extends React.Component {
             dateView: 'month-to-date',
             grandTotal: 0,
             labels: [],
+            chartTitle: 'Expenditures By User'
         }
     }
 
@@ -86,8 +91,13 @@ class GroupDataDoughnut extends React.Component {
 
    async getUserLabels(){
        if(this.state.members){
+        this.setState({
+            needsRefresh: false,
+        })
             return this.state.members;
        }
+
+       
    }
 
    async getPurchaseData(userLabels){
@@ -98,20 +108,27 @@ class GroupDataDoughnut extends React.Component {
                 purchaseData[j] = 0;
             }
             if(this.props.groupHistoryList[i].userID === userLabels[j].id){
-                if(this.state.startDate < this.props.groupHistoryList[i].purchasedOn && this.state.endDate > this.props.groupHistoryList[i].purchasedOn)
+                if(moment(this.state.startDate).format() < moment(this.props.groupHistoryList[i].purchasedOn).format() && moment(this.state.endDate).format() > moment(this.props.groupHistoryList[i].purchasedOn).format()){
                 purchaseData[j] += this.props.groupHistoryList[i].total;
+                }
             }
         }
        }
 
-       this.setState({
-        data: purchaseData
-    })
 
+       let grandTotal = purchaseData.reduce(function(accumulator, currentValue){
+        return accumulator + currentValue;
+    }, 0)
+
+
+       this.setState({
+           data: purchaseData,
+           grandTotal: grandTotal,
+           needsRefresh: false,
+       })
    }
 
    async generateDoughnut() {
-       console.log('generating donut')
        await this.getUserLabels().then(userLabels => {
            this.getPurchaseData(userLabels);
        });
@@ -120,7 +137,7 @@ class GroupDataDoughnut extends React.Component {
            return member.name;
        });
 
-       let DoughnutData = {
+       let doughnutData = {
            labels: memberLabels,
            datasets: [{
             data: this.state.data,
@@ -136,38 +153,22 @@ class GroupDataDoughnut extends React.Component {
             ]
         }]
        }
+
+
+       this.setState({
+           data: doughnutData,
+           needsRefresh: false,
+       })
    }
 
     render(){
-        if(this.props.groupHistoryList && this.state.members){
+        if(this.state.needsRefresh === true){
             this.generateDoughnut();
         }
 
-        const data = {
-            labels: [
-                'Red',
-                'Green',
-                'Yellow'
-            ],
-            datasets: [{
-                data: [300, 50, 100],
-                backgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
-                ],
-                hoverBackgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
-                ]
-            }]
-        };
-
         return(
             <div className = 'doughnut-container'>
-            DOUGHNUT
-            <Doughnut data = {data} />
+            <Doughnut data = {this.state.data} />
             <h2>{this.state.chartTitle}</h2>
             <h4>{moment(this.state.startDate).format('MMM Do YYYY')} - {moment(this.state.endDate).format('MMM Do YYYY')}</h4>
             <h4>Grand Total: ${this.state.grandTotal}</h4>
