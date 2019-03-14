@@ -106,13 +106,32 @@ groupHistoryRouter.get('/group/:id', async (req, res) => {
                     hist[i].userName = user[0].name;
                 }
 
+                /**
+                 * Compares two object properties returning true or false
+                 * @param x - first object property
+                 * @param y - second object property
+                 * @returns {boolean}
+                 * @constructor
+                 */
+                function CompareObjProperties(x, y) {
+                    for (var prop in x) {
+                        for (var prop in y) {
+                            if (x !== y) {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                }
+
                 itemDb.getByGroup(groupID).then(items => {
                     if(!hist[i].purchasedItems){
                         // initialize an array for the purchased items
                         hist[i].purchasedItems = [];
                     }
                     for(let j = 0; j < items.length; j++){
-                        if(hist[i].purchasedOn === items[j].purchasedOn){
+                        const isString = CompareObjProperties(hist[i].purchasedOn, items[j].purchasedOn);
+                        if(isString && items[j].purchasedOn !== null){
                             hist[i].purchasedItems.push(items[j]);
                         }
                     }
@@ -120,7 +139,7 @@ groupHistoryRouter.get('/group/:id', async (req, res) => {
                     hist[i].dateString = moment(hist[i].purchasedOn).format('LLLL')
 
                     if(i === hist.length - 1){
-                        console.log('loop complete', hist);
+                        // console.log('loop complete', hist);
                         return res.status(200).json({data: hist});
                     }
                 })

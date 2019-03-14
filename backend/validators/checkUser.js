@@ -136,7 +136,7 @@ async function routeCheck(req, res, next, userId){
                   }
               })
 
-              console.log(member);
+              // console.log(member);
               if(member.length === 0 || !member){
                   return res.status(403).json({warning: `You do not have permission to do that.`})
               } else {
