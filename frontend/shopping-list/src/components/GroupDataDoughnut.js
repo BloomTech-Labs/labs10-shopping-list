@@ -118,8 +118,9 @@ class GroupDataDoughnut extends React.Component {
 
        let grandTotal = purchaseData.reduce(function(accumulator, currentValue){
         return accumulator + currentValue;
-    }, 0)
+    }, 0);
 
+    grandTotal = grandTotal.toFixed(2);
 
        this.setState({
            data: purchaseData,

@@ -102,7 +102,9 @@ class GroupData extends React.Component {
 
         let grandTotal = data.reduce(function(accumulator, currentValue){
             return accumulator + currentValue;
-        }, 0)
+        }, 0);
+
+        grandTotal = grandTotal.toFixed(2);
 
         this.setState({
             data: data,
