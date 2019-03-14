@@ -183,6 +183,15 @@ class GroupData extends React.Component {
                 needsRefresh: true,
             })
         }
+
+        if(event.target.name === 'this-month'){
+            this.setState({
+                startDate: moment().startOf('month').toDate(),
+                endDate: moment().toDate(),
+                dateView: event.target.name,
+                needsRefresh: true,
+            })
+        }
    }
 
     render(){
@@ -230,6 +239,7 @@ class GroupData extends React.Component {
             <MDBBtn onClick = {this.handleViewChange} name = 'last-year'>Last Year</MDBBtn> */}
             
             {/* <MDBBtn onClick = {this.handleViewChange} name = 'all-time'>All Time</MDBBtn> */}
+            <MDBBtn onClick = {this.handleViewChange} name = 'this-month'>This Month</MDBBtn>
 
             <MDBBtn onClick = {this.handleViewChange} name = 'year-to-date'>Year-to-Date</MDBBtn>
 

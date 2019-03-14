@@ -47,6 +47,44 @@ class GroupDataDoughnut extends React.Component {
         }
     }
 
+    handleViewChange = event => {
+        if(event.target.name === 'last-7-days'){
+            this.setState({
+                startDate: moment().subtract(7, 'days').toDate(),
+                endDate: moment().toDate(),
+                dateView: event.target.name,
+                needsRefresh: true
+            })
+        }
+
+        if(event.target.name === 'month-to-date'){
+            this.setState({
+                startDate: moment().subtract(1, 'month').toDate(),
+                endDate: moment().toDate(),
+                dateView: event.target.name,
+                needsRefresh: true,
+            })
+        }
+
+        if(event.target.name === 'year-to-date'){
+            this.setState({
+                startDate: moment().subtract(1, 'year').toDate(),
+                endDate: moment().toDate(),
+                dateView: event.target.name,
+                needsRefresh: true,
+            })
+        }
+
+        if(event.target.name === 'this-month'){
+            this.setState({
+                startDate: moment().startOf('month').toDate(),
+                endDate: moment().toDate(),
+                dateView: event.target.name,
+                needsRefresh: true,
+            })
+        }
+   }
+
     render(){
 
         const data = {
@@ -75,6 +113,13 @@ class GroupDataDoughnut extends React.Component {
             <div className = 'doughnut-container'>
             DOUGHNUT
             <Doughnut data = {data} />
+            <h2>{this.state.chartTitle}</h2>
+            <h4>{moment(this.state.startDate).format('MMM Do YYYY')} - {moment(this.state.endDate).format('MMM Do YYYY')}</h4>
+            <h4>Grand Total: ${this.state.grandTotal}</h4>
+            <MDBBtn onClick = {this.handleViewChange} name = 'last-7-days'>Last 7 Days</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'month-to-date'>Month-to-Date</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'this-month'>This Month</MDBBtn>
+            <MDBBtn onClick = {this.handleViewChange} name = 'year-to-date'>Year-to-Date</MDBBtn>
             </div>
         )
     }
