@@ -26,6 +26,8 @@ class GroupsPopoverView: UIView, NibInstantiatable, UITableViewDelegate, UITable
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         tableView.register(UINib(nibName: "ItemTableViewCell", bundle: nil), forCellReuseIdentifier: "ItemCell")
+        let groupsText = allGroups.count == 1 ? "\(allGroups.count) GROUP" : "\(allGroups.count) GROUPS"
+        groupsLabel.text = groupsText
     }
     
     @IBAction func newGroupButtonPressed(_ sender: Any) {
@@ -72,5 +74,6 @@ class GroupsPopoverView: UIView, NibInstantiatable, UITableViewDelegate, UITable
     }
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var groupsLabel: UILabel!
     
 }
