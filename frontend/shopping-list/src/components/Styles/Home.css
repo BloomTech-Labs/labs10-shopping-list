@@ -160,6 +160,10 @@ section {
     width: 100%;
 }
 
+.about-icon i, .value-icon i{
+    margin: 10px;
+}
+
 .about-text, .value-text {
     padding: 0px 20px;
 }
