@@ -37,7 +37,7 @@ class Home extends React.Component{
                 <div className = 'about-tile-grid'>
                     <div className = 'about-tile'>
                         <div className = 'about-icon'>
-                        <MDBIcon icon="users" size = '3x'/>
+                        <MDBIcon icon="users" size = '3x' className = 'light-blue-text'/>
                         </div>
                         <div className = 'about-text'>
                         <h3>Roommates? <br></br>Handled.</h3>
@@ -47,7 +47,7 @@ class Home extends React.Component{
 
                     <div className = 'about-tile'>
                         <div className = 'about-icon'>
-                        <MDBIcon icon="glass-cheers" size = '3x'/>
+                        <MDBIcon icon="glass-cheers" size = '3x' className = 'purple-text'/>
                         </div>
                         <div className = 'about-text'>
                         <h3>Parties?<br></br>We can dig it.</h3>
@@ -59,9 +59,9 @@ class Home extends React.Component{
 
                     <div className = 'about-tile'>
                         <div className = 'about-icon'>
-                        <MDBIcon icon="utensils" size = '3x'/>                        </div>
+                        <MDBIcon icon="utensils" size = '3x'className = 'amber-text'/>                        </div>
                         <div className = 'about-text'>
-                        <h3>Your pantry,<br></br> planned.</h3>
+                        <h3>Your pantry, <br></br>planned.</h3>
                             <p>
                             Planning meals means getting the right ingredients. But who can keep track of them all? You, that's who.
                             </p>
@@ -77,17 +77,17 @@ class Home extends React.Component{
 
                     <div className = 'value-tile'>
                         <div className = 'value-icon'>
-                        <MDBIcon icon="hand-holding-usd" size = '3x' />
+                        <MDBIcon icon="hand-holding-usd" size = '3x' className = 'green-text' />
                         </div>
                         <div className = 'value-text'>
-                            <h3>Reduce waste,<br></br> save money.</h3>
+                            <h3>Reduce waste, save money.</h3>
                             <p>Stay up-to-date on who's bought what. No more wasted food, no more wasted money.</p>
                         </div>
                     </div>
 
                     <div className = 'value-tile'>
                         <div className = 'value-icon'>
-                        <MDBIcon icon="shopping-cart" size = '3x'/>
+                        <MDBIcon icon="shopping-cart" size = '3x' className = 'deep-orange-text' />
                         </div>
                         <div className = 'value-text'>
                             <h3>Shop with confidence.</h3>
@@ -99,7 +99,7 @@ class Home extends React.Component{
 
                     <div className = 'value-tile'>
                         <div className = 'value-icon'>
-                        <MDBIcon icon="chart-pie" size = '3x'/>
+                        <MDBIcon icon="chart-pie" size = '3x' className = 'indigo-text'/>
                         </div>
                         <div className = 'value-text'>
                             <h3>All your trips, at a glance.</h3>

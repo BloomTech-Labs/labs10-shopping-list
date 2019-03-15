@@ -121,9 +121,7 @@
 }
 
 section {
-    margin: 20px 0px;
     align-items: center;
-    margin: 0 5px;
 }
 
 .button:hover{
@@ -136,6 +134,7 @@ section {
 
 .about h2, .value h2 {
     text-align: center;
+    margin: 40px;
 }
 
 .about-tile-grid, .value-tile-grid {
