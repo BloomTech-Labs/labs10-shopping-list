@@ -173,6 +173,52 @@ section {
     text-align: justify;
 }
 
+.plans {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    margin: 40px 0px;
+}
+
+.plans .card {
+    width: 40%;
+    margin: 0 5%;
+}
+
+.plans .card-header{
+    background: #2A922D;
+    color: white;
+    text-align: center;
+}
+
+.plans .card-title h2{
+    text-align: center;
+}
+
+.plans .card-title p{
+    text-align: center;
+    font-size: 0.75rem;
+}
+
+.plans .card-text {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.plans .card-footer {
+    text-align: center;
+}
+
+.plans .card-footer button {
+    background: #2A922D !important;
+}
+
+footer {
+    text-align: center;
+    margin: 40px 0px;
+    color: lightgray;
+}
+
 @media only screen and (max-width: 767px){
 
     .home-banner-overlay h1{
