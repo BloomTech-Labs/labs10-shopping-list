@@ -1,16 +1,52 @@
 import React from 'react';
 import '../components/Styles/Home.css';
+import Auth0Lock from 'auth0-lock';
 
 import groceryBag from '../images/grocery-bag.jpg';
-import bicycleBags from '../images/bicycle-bags.jpg';
-import tomatoShare from '../images/tomato-share.jpg';
-import laptopWoman from '../images/laptop-woman.jpg';
 import {MDBIcon, MDBBtn, MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBCardText, MDBCardFooter} from 'mdbreact';
+
+
+let frontendURL;
+if(process.env.NODE_ENV === 'development'){
+    frontendURL = 'http://localhost:3000';
+} else {
+    frontendURL = `https://labs10-shopping-list.netlify.com`
+}
+
+var lockOptions = {
+    auth: {
+        redirectUrl: `${frontendURL}/callback`,
+        responseType: 'token id_token',
+        params: {
+            scope: 'profile openid email'
+        }
+    },
+    theme: {
+        primaryColor: '#FF7043'
+    },
+    languageDictionary: {
+        title: 'ShopTrak'
+    }
+}
+
+var lock = new Auth0Lock(
+    process.env.REACT_APP_AUTH0_CLIENT_ID,
+    process.env.REACT_APP_AUTH0_DOMAIN,
+    lockOptions
+)
+
 
 class Home extends React.Component{
         componentDidMount() {
                 document.title = `ShopTrak`;
         }
+
+        
+        signIn = (event) => {
+            event.preventDefault();
+            lock.show();
+        }
+
 
         render(){
         return(
@@ -128,7 +164,7 @@ class Home extends React.Component{
                         </MDBCardText>
                     </MDBCardBody>
                     <MDBCardFooter>
-                        <MDBBtn>Sign Up</MDBBtn>
+                        <MDBBtn onClick = {this.signIn}>Sign Up</MDBBtn>
                     </MDBCardFooter>
                 </MDBCard>
 
@@ -145,7 +181,7 @@ class Home extends React.Component{
                         </MDBCardText>
                     </MDBCardBody>
                     <MDBCardFooter>
-                        <MDBBtn>Sign Up</MDBBtn>
+                        <MDBBtn onClick = {this.signIn}>Sign Up</MDBBtn>
                     </MDBCardFooter>
                 </MDBCard>
                 
