@@ -69,7 +69,6 @@ class Navigation extends React.Component{
 
     signIn = (event) => {
         event.preventDefault();
-        console.log('click');
         lock.show();
     }
 
