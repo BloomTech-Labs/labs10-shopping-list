@@ -5,6 +5,7 @@ import groceryBag from '../images/grocery-bag.jpg';
 import bicycleBags from '../images/bicycle-bags.jpg';
 import tomatoShare from '../images/tomato-share.jpg';
 import laptopWoman from '../images/laptop-woman.jpg';
+import {MDBIcon} from 'mdbreact';
 
 class Home extends React.Component{
         componentDidMount() {
@@ -25,23 +26,92 @@ class Home extends React.Component{
                 <div className = 'home-banner-overlay'>
                 <h1>SHOPTRAK</h1>
 
-                <h2>Share what you shop.</h2>
+                <h2>Shared living, made simple.</h2>
                 </div>
 
                 </header>
 
                 <main className = 'home-content'>
                 <section className = 'about'>
-                <h2>About</h2>
-                <p>
-                    ShopTrak makes it easy to document shared expenses with other members of your household. Once all the members of your household are joined together in a group, you can make shopping lists and keep track of how much each person has spent on shopping trips. 
-                </p>
+                    <h2>Get your shopping lists on the same page.</h2>
+                <div className = 'about-tile-grid'>
+                    <div className = 'about-tile'>
+                        <div className = 'about-icon'>
+                        <MDBIcon icon="users" size = '3x'/>
+                        </div>
+                        <div className = 'about-text'>
+                        <h3>Roommates? <br></br>Handled.</h3>
+                            <p>Shared living means shared expenses, but keeping a tally can be a hassle. Keep track of everyone's contributions with ShopTrak.</p>
+                        </div>
+                    </div>
 
-                <p>Planning a party? ShopTrak can help with that as well. Event planning is made simple with our shopping list interface. Event organizers can keep track of expenses and make sure they have everything they need to make a plan come together.</p>
-                
-                <p>Any time you need to track and share shopping expenditures with a group, ShopTrak can help keep things organized and make sure everyone contributes equally.</p>
+                    <div className = 'about-tile'>
+                        <div className = 'about-icon'>
+                        <MDBIcon icon="glass-cheers" size = '3x'/>
+                        </div>
+                        <div className = 'about-text'>
+                        <h3>Parties?<br></br>We can dig it.</h3>
+                            <p>
+                            The more the merrier! Create shopping lists for events, dinner parties, and get-togethers with up to 6 members.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className = 'about-tile'>
+                        <div className = 'about-icon'>
+                        <MDBIcon icon="utensils" size = '3x'/>                        </div>
+                        <div className = 'about-text'>
+                        <h3>Your pantry,<br></br> planned.</h3>
+                            <p>
+                            Planning meals means getting the right ingredients. But who can keep track of them all? You, that's who.
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 </section>
                 
+                <section className = 'value'>
+                <h2>Imagine the possibilities.</h2>
+
+                <div className = 'value-tile-grid'>
+
+                    <div className = 'value-tile'>
+                        <div className = 'value-icon'>
+                        <MDBIcon icon="hand-holding-usd" size = '3x' />
+                        </div>
+                        <div className = 'value-text'>
+                            <h3>Reduce waste,<br></br> save money.</h3>
+                            <p>Stay up-to-date on who's bought what. No more wasted food, no more wasted money.</p>
+                        </div>
+                    </div>
+
+                    <div className = 'value-tile'>
+                        <div className = 'value-icon'>
+                        <MDBIcon icon="shopping-cart" size = '3x'/>
+                        </div>
+                        <div className = 'value-text'>
+                            <h3>Shop with confidence.</h3>
+                            <p>
+                                Your shopping list stays with you wherever you go, so you never have to worry about forgetting an item.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className = 'value-tile'>
+                        <div className = 'value-icon'>
+                        <MDBIcon icon="chart-pie" size = '3x'/>
+                        </div>
+                        <div className = 'value-text'>
+                            <h3>All your trips, at a glance.</h3>
+                            <p>
+                            Every shopping trip you complete is logged so you can monitor trends, record expenditures, and stay under budget.
+                            </p>
+                        </div>
+                    </div>
+
+                    </div>
+
+                </section>
 
                 <section className = 'features'>
                 <h2>Features</h2>
