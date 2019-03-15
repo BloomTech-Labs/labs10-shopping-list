@@ -40,7 +40,7 @@ class HistoryList extends React.Component {
         </h1>
         <div className="item-list">
           {this.props.groupHistoryList !== null ? (
-            this.props.groupHistoryList.map(trip => (
+            this.props.groupHistoryList.slice(0).reverse().map(trip => (
               <History trip={trip} key={trip.id} />
             ))
           ) : (
