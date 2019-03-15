@@ -134,13 +134,15 @@ section {
 
 .about h2, .value h2 {
     text-align: center;
-    margin: 40px;
+    margin: 40px 0px;
+    width: 100%;
 }
 
 .about-tile-grid, .value-tile-grid {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    
 }
 
 
@@ -237,6 +239,14 @@ footer {
         flex-flow: column nowrap;
     }
 
+    .about-tile-grid, .value-tile-grid{
+        flex-flow: column nowrap;
+        width: 100%;
+    }
+
+    .about-tile, .value-tile {
+        width: 100%;
+    }
 
     .tile-img{
         width: 100%;
@@ -244,5 +254,14 @@ footer {
 
     .tile-text{
         width: 100%;
+    }
+
+    .plans {
+        flex-flow: column nowrap;
+    }
+
+    .plans .card{
+        width: 100%;
+        margin: 20px 0px;
     }
 }
