@@ -45,20 +45,7 @@ class BillingForm extends React.Component {
     render(){
         return(
             <div className="billing-form">  
-            <h1>Billing</h1>
-                 <p>Choose your subscription</p>
-                 <form>
-                 <input 
-                    type="radio" 
-                    name="subscription"
-                    onClick={this.yearlySub}
-                />1 Year Subscription - $9.99 <br/>
-                <input 
-                    type="radio" 
-                    name="subscription" 
-                    onClick={this.premiumSub}
-                />1 Year Premium Subscription - $29.99
-                </form>
+            
                 <StripeCheckout
                     amount={this.state.amount}
                     name="Shoptrak"
@@ -67,7 +54,7 @@ class BillingForm extends React.Component {
                     currency="USD"
                     token={res => this.onToken(res)}
                 >
-                    {this.props.children}
+                    
                 </StripeCheckout>
             </div>
         )
