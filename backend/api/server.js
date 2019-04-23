@@ -14,6 +14,8 @@ var allowCrossDomain = function(req, res, next) {
     next();
 }
 
+server.use(allowCrossDomain);
+
 // initialize server to set content-type to application/json, allows us to easily pass JSON objects through endpoints
 server.use(express.json());
 server.use(bodyParser.urlencoded({
@@ -38,8 +40,6 @@ server.use(morgan('dev'));
 
 // apiRouter will handle addresses passed to the /api endpoint
 server.use('/api', apiRouter);
-
-server.use(allowCrossDomain);
 
 // test http get request
 server.get('/', (req, res) => {
