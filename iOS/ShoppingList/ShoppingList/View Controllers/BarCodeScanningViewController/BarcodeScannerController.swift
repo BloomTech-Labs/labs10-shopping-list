@@ -14,7 +14,7 @@ class BarcodeScannerController: UIViewController, StoryboardInstantiatable {
     var captureSession = AVCaptureSession()
     var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var qrCodeFrameView: UIView?
-    let Api_key = "93t3qvktlhhpxvkpyau8etocbsda14"
+    let Api_key = "ee0vobr7471omx6fjn63zxzq9hz6hl"
     
     
     private let supportedCodeTypes = [AVMetadataObject.ObjectType.upce,
@@ -35,7 +35,7 @@ class BarcodeScannerController: UIViewController, StoryboardInstantiatable {
         super.viewDidLoad()
        
         // Get the back-facing camera for capturing videos
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInDualCamera], mediaType: AVMediaType.video, position: .back)
+        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInTrueDepthCamera, .builtInDualCamera, .builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back)
         
         guard let captureDevice = deviceDiscoverySession.devices.first else {
             print("Failed to get the camera device")
@@ -107,7 +107,7 @@ class BarcodeScannerController: UIViewController, StoryboardInstantiatable {
     func getProductName(barcode: String, completion: @escaping (String?, Error?) -> Void) {
         var ucs = URLComponents(string: "https://api.barcodelookup.com/v2/products")
         ucs?.queryItems = [
-            URLQueryItem(name: "key", value: "2w4ia6ph7zd6vxytlojkeisu66eqtm"),
+            URLQueryItem(name: "key", value: Api_key),
             URLQueryItem(name: "barcode", value: barcode)
         ]
         
